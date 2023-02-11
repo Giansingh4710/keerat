@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" />
+  <title>Play Random Paath</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script type="text/javascript" src="./TRACKS.js"></script>
+</head>
+
+<body class="app">
+  <h1 id="MainTitle">Paath Player</h1>
+  <div id="disclaimer">Listen to Bani and Enjoy😊</div>
+
+  <div id="trackPlaying">
+    <h3><a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a></h3>
+    <audio onended="playNextTrack()" onerror="" controls autoPlay="true"></audio>
+    <br>
+    <button id="saveTrackBtn"> SAVE </button>
+  </div>
+
+  <div>
+    <h4 id="trackMsg"></h4>
+    <button onclick="playPreviousTrack()">&#8592; Previous</button>
+    <button id="playRandomTrack" onclick="playRandTrack()">Random Track</button>
+    <button autofocus="autofocus" onclick="playNextTrack()">Next &rarr;</button>
+  </div>
+
+  <div id="optionMenu" class="modaal">
+    <div class="modal-content">
+      <input checked type="checkbox" id="adiAKJ" name="adiAKJ" onclick="excludeOrIncludeTracks()" />
+      <label for="adiAKJ">Bhai Mohan Singh Ji AKJ Adi Guru Granth Sahib Ji Paath</label>
+      <br />
+      <input checked type="checkbox" id="adiPaathBodh" name="adiPaathBodh" onclick="excludeOrIncludeTracks()" />
+      <label for="adiPaathBodh">2016 Gurdwara Dukh Nivaran Patiala Paath Adi Guru Granth Sahib Ji Bodh Samagam</label>
+      <br />
+      <input checked type="checkbox" id="dasamOnkarSingh" name="dasamOnkarSingh" onclick="excludeOrIncludeTracks()" />
+      <label for="dasamOnkarSingh">Bhai Onkar Singh Ji Sri Dasam Mahraj Bani</label>
+      <br />
+      <input checked type="checkbox" id="dasamKabaalSingh" name="dasamKabaalSingh" onclick="excludeOrIncludeTracks()" />
+      <label for="dasamKabaalSingh">Bhai Kabaal Singh Ji (Hazoor Sahib wale)</label>
+    </div>
+  </div>
+
+  <div id="forSearch">
+    <input placeholder="Search for Track:" id="searchInput" oninput="searchForShabad(this.value)" />
+    <ol id="searchResults"></ol>
+  </div>
+
+  <div>
+    <button onclick="toggleSavedTracks()">Toggle Saved Tracks</button>
+    <ol id="savedShabads"></ol>
+  </div>
+
+  <button onclick="toggleShowingTracks()">Show Tracks (Toggle)</button>
+  <div id="showAllTracks"></div>
+
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <label for="noteForSavedTrack">Enter a note if you would like (not needed):</label>
+      <div>
+        <textarea multiline placeholder="ex: Amazing Bani at 10:00" id="noteForSavedTrack"></textarea>
+      </div>
+      <div>
+        <button onclick="saveTrack()">Save</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script>
+  let TRACK_LINKS = [
+    ...bhai_mohan_singhji_adi_mahraj_links,
+    ...patiala_dukh_nivaran_paath_bodh_2016_links,
+    ...bhai_onkar_singhji_dasam_paath_links,
+    ...kabaal_singh_dasam,
+  ];
+
+  const ALL_OPTS = {
+    "adiAKJ": {
+      checked: true,
+      trackLinks: bhai_mohan_singhji_adi_mahraj_links,
+    },
+    "adiPaathBodh": {
+      checked: true,
+      trackLinks: patiala_dukh_nivaran_paath_bodh_2016_links,
+    }, "dasamOnkarSingh": {
+      checked: true,
+      trackLinks: bhai_onkar_singhji_dasam_paath_links,
+    }, "dasamKabaalSingh": {
+      checked: true,
+      trackLinks: kabaal_singh_dasam,
+    }
+  };
+
+  function excludeOrIncludeTracks() {
+    let newLinks = []
+    for (const opt in ALL_OPTS) {
+      const val = document.getElementById(opt).checked;
+      ALL_OPTS[opt].checked = val
+      if (val) {
+        newLinks.push(...ALL_OPTS[opt].trackLinks)
+      }else{
+        /* newLinks.push(...Array(ALL_OPTS[opt].trackLinks.length).fill("")) */
+      }
+    }
+    console.log(newLinks.length)
+    TRACK_LINKS = [...newLinks]
+  }
+
+</script>
+<script type="text/javascript" src="./scripts.js"></script>
+
+</html>

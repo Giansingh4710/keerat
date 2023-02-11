@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" />
+  <title>Bhagat Ji Pothis</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script type="text/javascript" src="./TRACKS.js"></script>
+</head>
+
+
+<body class="app">
+  <h1 id="MainTitle">Bhagat Ji Pothis</h1>
+  <div id="disclaimer">Listen to the Pothis and gain Sharda for Guru Sahib😊</div>
+  <div id="trackPlaying"></div>
+  <div>
+    <h4 id="trackMsg"></h4>
+    <button onclick="playPreviousTrack()">&#8592; Previous</button>
+    <button id="playNext" autofocus="autofocus" onclick="playNextTrack()">
+      Play 
+    </button>
+  </div>
+
+  <div class="forSearch">
+    <div>
+      <h2>Search for Track:</h2>
+      <input
+        placeholder="Ang 12"
+        id="searchInput"
+        oninput="searchForShabad(this.value)"
+      />
+    </div>
+    <ol id="searchResults"></ol>
+  </div>
+  <div id="optionMenu" class="modaal">
+    <div class="modal-content">
+      <input checked type="checkbox" id="1. Gareebi Pothi" name="1. Gareebi Pothi" onclick="excludeOrIncludeTracks()" />
+      <label for="1. Gareebi Pothi">1. Gareebi Pothi</label>
+      <br />
+      <input  type="checkbox" id="2. BalUpdesh_Mp3_Final" name="2. BalUpdesh_Mp3_Final" onclick="excludeOrIncludeTracks()" />
+      <label for="2. BalUpdesh_Mp3_Final">2. BalUpdesh_Mp3_Final</label>
+      <br />
+      <input  type="checkbox" id="3. Bansavli Pothi" name="3. Bansavli Pothi" onclick="excludeOrIncludeTracks()" />
+      <label for="3. Bansavli Pothi">3. Bansavli Pothi</label>
+      <br />
+      <input  type="checkbox" id="4. Sukhmani Sahib Steek" name="4. Sukhmani Sahib Steek" onclick="excludeOrIncludeTracks()" />
+      <label for="4. Sukhmani Sahib Steek">4. Sukhmani Sahib Steek</label>
+      <br />
+      <input  type="checkbox" id="5. Guru Granth Sahib Ithaas" name="5. Guru Granth Sahib Ithaas" onclick="excludeOrIncludeTracks()" />
+      <label for="5. Guru Granth Sahib Ithaas">5. Guru Granth Sahib Ithaas</label>
+      <br />
+      <input  type="checkbox" id="6. Panj Sanskaar" name="6. Panj Sanskaar" onclick="excludeOrIncludeTracks()" />
+      <label for="6. Panj Sanskaar">6. Panj Sanskaar</label>
+      <br />
+      <input  type="checkbox" id="7. Question Answer" name="7. Question Answer" onclick="excludeOrIncludeTracks()" />
+      <label for="7. Question Answer">7. Question Answer</label>
+      <br />
+      <input  type="checkbox" id="8. Vishram Pothi" name="8. Vishram Pothi" onclick="excludeOrIncludeTracks()" />
+      <label for="8. Vishram Pothi">8. Vishram Pothi</label>
+      <br />
+
+    </div>
+  </div>
+</body>
+<script>
+  let TRACK_NAMES = [
+    ...GareebiNames,
+    // ...BalUpdesh_Mp3_FinalNames,
+    // ...BansavliNames,
+    // ...SukhmaniNames,
+    // ...GuruGranthJiNames,
+    // ...SanskaarNames,
+    // ...QuestionNames,
+    // ...VishramNames,
+  ]
+  let TRACK_LINKS = [
+    ...GareebiLinks,
+    // ...BalUpdesh_Mp3_FinalLinks,
+    // ...BansavliLinks,
+    // ...SukhmaniLinks,
+    // ...GuruGranthJiLinks,
+    // ...SanskaarLinks,
+    // ...QuestionLinks,
+    // ...VishramLinks,
+  ];
+
+
+  const ALL_OPTS = {
+    "1. Gareebi Pothi":{
+      checked: document.getElementById('1. Gareebi Pothi').checked,
+      trackNames:GareebiNames,
+      trackLinks:GareebiLinks,
+    },
+    "2. BalUpdesh_Mp3_Final":{
+      checked: document.getElementById('2. BalUpdesh_Mp3_Final').checked,
+      trackNames:BalUpdesh_Mp3_FinalNames,
+      trackLinks:BalUpdesh_Mp3_FinalLinks,
+    },
+    "3. Bansavli Pothi":{
+      checked: document.getElementById('3. Bansavli Pothi').checked,
+      trackNames:BansavliNames,
+      trackLinks:BansavliLinks,
+    },
+    "4. Sukhmani Sahib Steek":{
+      checked: document.getElementById('4. Sukhmani Sahib Steek').checked,
+      trackNames:SukhmaniNames,
+      trackLinks:SukhmaniLinks,
+    },
+    "5. Guru Granth Sahib Ithaas":{
+      checked: document.getElementById('5. Guru Granth Sahib Ithaas').checked,
+      trackNames:GuruGranthJiNames,
+      trackLinks:GuruGranthJiLinks,
+    },
+    "6. Panj Sanskaar":{
+      checked: document.getElementById('6. Panj Sanskaar').checked,
+      trackNames:SanskaarNames,
+      trackLinks:SanskaarLinks,
+    },
+    "7. Question Answer":{
+      checked: document.getElementById('7. Question Answer').checked,
+      trackNames:QuestionNames,
+      trackLinks:QuestionLinks,
+    },
+    "8. Vishram Pothi":{
+      checked: document.getElementById('8. Vishram Pothi').checked,
+      trackNames:VishramNames,
+      trackLinks:VishramLinks,
+    },
+  };
+
+  function excludeOrIncludeTracks() {
+    let newLinks = []
+    let newNames = []
+    for (const opt in ALL_OPTS) {
+      const val = document.getElementById(opt).checked;
+      ALL_OPTS[opt].checked = val
+      if(val){
+        newNames.push(...ALL_OPTS[opt].trackNames)
+        newLinks.push(...ALL_OPTS[opt].trackLinks)
+      }else{
+        const lenOfTracksInOpt=ALL_OPTS[opt].trackNames.length //could have been trackLinks too. both are same length
+        for (let i=0;i<lenOfTracksInOpt;i++){
+          newLinks.push('_')
+          newNames.push('_')
+        }
+      }
+    }
+    console.log(newLinks)
+    console.log(newNames)
+    TRACK_LINKS=[...newLinks]
+    TRACK_NAMES=[...newNames]
+    // console.log(TRACK_LINKS)
+  }
+</script>
+<script type="text/javascript" src="./scripts.js"></script>
+
+</html>
