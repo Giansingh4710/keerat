@@ -16,8 +16,33 @@
   background-color: #00ffff;
   border-radius: 0.5em;
 }
-#forSearch {
+
+#forSavedTracks {
+  margin:1em;
   padding:1em;
+  border-radius: 1em;
+  background-color: tan;
+}
+
+#forSearch {
+  margin:1em;
+  padding:1em;
+  border-radius: 1em;
+  background-color: teal;
+}
+
+#forShowTracks{
+  margin: 1em;
+  padding:1em;
+  border-radius: 1em;
+  background-color: tan;
+}
+
+#searchInput{
+  border-radius: 1em;
+  margin: 1em;
+  padding:1em;
+  /* text-align: center; */
 }
 
 .modal {

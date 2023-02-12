@@ -20,8 +20,7 @@
     <audio onended="playNextTrack()" onerror="" controls autoPlay="true"></audio>
     <br>
     <button id="saveTrackBtn"> SAVE </button>
-    <h4 id="trackMsg"></h4>
-
+    <br>
     <button onclick="playPreviousTrack()">&#8592; Previous</button>
     <button id="playRandomTrack" onclick="playRandTrack()">Random Track</button>
     <button autofocus="autofocus" onclick="playNextTrack()">Next &rarr;</button>
@@ -43,18 +42,20 @@
     </div>
   </div>
 
+  <div id="forSavedTracks">
+    <button onclick="toggleSavedTracks()">Toggle Saved Tracks</button>
+    <ol id="savedShabads"></ol>
+  </div>
+
   <div id="forSearch">
     <input placeholder="Search for Track:" id="searchInput" oninput="searchForShabad(this.value)" />
     <ol id="searchResults"></ol>
   </div>
 
-  <div>
-    <button onclick="toggleSavedTracks()">Toggle Saved Tracks</button>
-    <ol id="savedShabads"></ol>
+  <div id="forShowTracks">
+    <button onclick="toggleShowingTracks()">Show Tracks (Toggle)</button>
+    <div id="showAllTracks"></div>
   </div>
-
-  <button onclick="toggleShowingTracks()">Show Tracks (Toggle)</button>
-  <div id="showAllTracks"></div>
 
 
   <div id="myModal" class="modal">
@@ -69,6 +70,8 @@
       </div>
     </div>
   </div>
+
+  <button onclick="localStorage.clear()">Reset Saved/Local Storage</button>
 </body>
 
 <script>
@@ -103,7 +106,7 @@
       ALL_OPTS[opt].checked = val
       if (val) {
         newLinks.push(...ALL_OPTS[opt].trackLinks)
-      }else{
+      } else {
         /* newLinks.push(...Array(ALL_OPTS[opt].trackLinks.length).fill("")) */
       }
     }

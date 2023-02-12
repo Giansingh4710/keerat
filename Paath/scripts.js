@@ -7,48 +7,49 @@ navigatorStuff()
 activateModal();
 
 function playNextTrack() {
-  if (tracksPlayed.length - 1 === currentTrackPointer) {
-    if (tracksPlayed.length === 0)
-      playRandTrack()
-    else
-      playTrack(tracksPlayed[currentTrackPointer]+1,true);
+  if (tracksPlayed.length === 0) {
+    playRandTrack();
     return;
   }
-  currentTrackPointer += 1;
-  playTrack(tracksPlayed[currentTrackPointer]);
+
+  let newTrackInd;
+
+  if (tracksPlayed.length - 1 === currentTrackPointer) {
+    newTrackInd = tracksPlayed[currentTrackPointer] + 1;
+    newTrackInd = newTrackInd > TRACK_LINKS.length - 1 ? 0 : newTrackInd;
+    tracksPlayed.push(newTrackInd);
+    currentTrackPointer += 1
+  } else {
+    currentTrackPointer += 1;
+    newTrackInd = tracksPlayed[currentTrackPointer];
+  }
+  playTrack(TRACK_LINKS[newTrackInd]);
 }
 
 function playPreviousTrack() {
-  if (currentTrackPointer < 1) {
-    const newTrkInd = tracksPlayed[currentTrackPointer]-1;
-    tracksPlayed.unshift(newTrkInd);
-    playTrack(newTrkInd);
-    return;
+  let newTrackInd;
+  if (currentTrackPointer === 0) {
+    newTrackInd = tracksPlayed[currentTrackPointer] - 1;
+    newTrackInd = newTrackInd === -1 ? TRACK_LINKS.length - 1 : newTrackInd;
+    tracksPlayed.unshift(newTrackInd);
+  } else {
+    currentTrackPointer -= 1;
+    newTrackInd = tracksPlayed[currentTrackPointer]
   }
-  currentTrackPointer -= 1;
-  playTrack(tracksPlayed[currentTrackPointer]);
+
+  playTrack(TRACK_LINKS[newTrackInd]);
 }
 
 function playRandTrack() {
   const randNum = Math.floor(Math.random() * TRACK_LINKS.length);
-  playTrack(randNum,true);
+  tracksPlayed.push(randNum);
+  currentTrackPointer = tracksPlayed.length - 1;
+  playTrack(TRACK_LINKS[randNum]);
 }
 
-function playTrack(trkInd, pushToLst = false, showMsg = false) {
-  console.log(tracksPlayed,currentTrackPointer)
-  const h4 = document.getElementById("trackMsg");
-  h4.innerText = "";
-  if (pushToLst) {
-    tracksPlayed.push(trkInd);
-    currentTrackPointer = tracksPlayed.length - 1;
-    if (showMsg) {
-      h4.innerText = showMsg;
-    }
-  }
-
-  const theNameOfTrack = getNameOfTrack(TRACK_LINKS[trkInd]);
-  const theLinkOfTrack = TRACK_LINKS[trkInd];
-
+function playTrack(theLinkOfTrack) {
+  console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack)
+  const theNameOfTrack = getNameOfTrack(theLinkOfTrack);
   const aTag = document.getElementById("trackNameAtag");
   const audioTag = document.getElementsByTagName("audio")[0];
 
@@ -65,21 +66,22 @@ function playTrack(trkInd, pushToLst = false, showMsg = false) {
       album: 'Vaheguru Jio'
     })
   }
-  localStorage.setItem("LastPlayed: " + MAIN_TITLE, trkInd)
+  /* localStorage.setItem("LastPlayed: " + MAIN_TITLE, theLinkOfTrack) */
+  localStorage.setItem(`LastPlayed: ${MAIN_TITLE}`, theLinkOfTrack)
 }
 
 function saveTrack() {
   const note = document.getElementById("noteForSavedTrack");
-  putTrackInLocalStorage(tracksPlayed[currentTrackPointer], note.value);
+  putTrackInLocalStorage(TRACK_LINKS[tracksPlayed[currentTrackPointer]], note.value);
   note.value = "";
   let modal = document.getElementById("myModal");
   modal.style.display = "none";
 }
 
-function deleteSavedTrack(trkInd) {
+function deleteSavedTrack(link) {
   let savedTracks = localStorage.getItem(MAIN_TITLE);
   savedTracks = JSON.parse(savedTracks);
-  delete savedTracks[trkInd];
+  delete savedTracks[link];
   localStorage.setItem(MAIN_TITLE, JSON.stringify(savedTracks));
   toggleSavedTracks();
   toggleSavedTracks();
@@ -105,29 +107,30 @@ function toggleSavedTracks() {
 
   let savedTracks = localStorage.getItem(MAIN_TITLE);
   savedTracks = JSON.parse(savedTracks);
+  /* console.log(savedTracks) */
 
-  for (const theTrackInd in savedTracks) {
-    const theNameOfTrack = getNameOfTrack(TRACK_LINKS[theTrackInd])
-    const trkMsg = savedTracks[theTrackInd].replace("\n", " ");
+  for (const link in savedTracks) {
+    const theNameOfTrack = getNameOfTrack(link)
+    const trkMsg = savedTracks[link].replaceAll("\n", " ");
     li = document.createElement("li");
-    li.innerHTML = `
-      <button onclick="playTrack(${theTrackInd},true,'${trkMsg}')" > ${theNameOfTrack}</button> 
-      <button onclick="deleteSavedTrack(${theTrackInd})" >DELETE</button>
-      <p>${trkMsg}</p>`;
+    li.innerHTML = `${trkMsg}<button onclick="playTrack('${link}')" > ${theNameOfTrack}</button><button onclick="deleteSavedTrack('${link}')" >DELETE</button>`;
     ol.appendChild(li);
-    console.log(theNameOfTrack, ": ", trkMsg);
+    /* console.log(theNameOfTrack, ": ", trkMsg); */
   }
 }
 
 function playTrackFromLastTime() {
-  const trackInd = parseInt(localStorage.getItem("LastPlayed: " + MAIN_TITLE));
-  if (trackInd){
+  const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`);
+
+  if (link) {
     console.log("Played from Last Session");
-    playTrack(trackInd, true);
+    tracksPlayed.push(TRACK_LINKS.indexOf(link));
+    currentTrackPointer = tracksPlayed.length - 1;
+    playTrack(link);
   }
-  else{
-    playNextTrack();
+  else {
     console.log("Could not get link from last session!");
+    playNextTrack();
   }
 }
 
@@ -135,38 +138,40 @@ function searchForShabad(e) {
   const searchVal = e;
   const ol = document.getElementById("searchResults");
 
-  const allLinksWithWord = [];
+  const allLinksWithWordInds = [];
 
   const searchWordsLst = searchVal.toLowerCase().split(' ')
   TRACK_LINKS.forEach((link, index) => {
     /* const trackName = getNameOfTrack(link) */
     const trackName = link.toLowerCase()
     let allWordsInTrackName = true
-    for(const word of searchWordsLst){
-      if (!trackName.includes(word)){
+    for (const word of searchWordsLst) {
+      if (!trackName.includes(word)) {
         allWordsInTrackName = false;
         break
       }
     }
-    if(allWordsInTrackName){
-      allLinksWithWord.push(index);
+    if (allWordsInTrackName) {
+      allLinksWithWordInds.push(index);
     }
   });
 
-  ol.innerHTML = `<p>${allLinksWithWord.length} Results Found</p>`;
+  ol.innerHTML = `<p>${allLinksWithWordInds.length} Results Found</p>`;
   if (searchVal === "") {
     ol.innerHTML = "";
     return;
   };
-  for (const index of allLinksWithWord) {
+
+  for (const index of allLinksWithWordInds) {
     li = document.createElement("li");
-    li.innerHTML = `<button onclick="playTrack(${index},true)">${getNameOfTrack(TRACK_LINKS[index])}</button>`;
+    /* console.log(TRACK_LINKS[index]) */
+    li.innerHTML = `<button onclick="playTrackForSearchedTrack(${index})">${getNameOfTrack(TRACK_LINKS[index])}</button>`;
     ol.appendChild(li);
   }
 }
 
 
-function navigatorStuff(){
+function navigatorStuff() {
   navigator.mediaSession.setActionHandler('previoustrack', () => playPreviousTrack())
   navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack())
   navigator.mediaSession.setActionHandler('play', () => {
@@ -210,3 +215,8 @@ function toggleShowingTracks() {
   }
 }
 
+function playTrackForSearchedTrack(ind){
+  playTrack(TRACK_LINKS[ind]);
+  tracksPlayed.push(ind);
+  currentTrackPointer = tracksPlayed.length-1;
+}
