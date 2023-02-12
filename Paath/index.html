@@ -15,15 +15,13 @@
   <h1 id="MainTitle">Paath Player</h1>
   <div id="disclaimer">Listen to Bani and Enjoy😊</div>
 
-  <div id="trackPlaying">
+  <div id="trackPlaying" style="display:none">
     <h3><a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a></h3>
     <audio onended="playNextTrack()" onerror="" controls autoPlay="true"></audio>
     <br>
     <button id="saveTrackBtn"> SAVE </button>
-  </div>
-
-  <div>
     <h4 id="trackMsg"></h4>
+
     <button onclick="playPreviousTrack()">&#8592; Previous</button>
     <button id="playRandomTrack" onclick="playRandTrack()">Random Track</button>
     <button autofocus="autofocus" onclick="playNextTrack()">Next &rarr;</button>
@@ -71,8 +69,8 @@
       </div>
     </div>
   </div>
-
 </body>
+
 <script>
   let TRACK_LINKS = [
     ...bhai_mohan_singhji_adi_mahraj_links,
@@ -112,8 +110,8 @@
     console.log(newLinks.length)
     TRACK_LINKS = [...newLinks]
   }
-
 </script>
+
 <script type="text/javascript" src="./scripts.js"></script>
 
 </html>

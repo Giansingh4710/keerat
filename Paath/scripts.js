@@ -121,11 +121,16 @@ function toggleSavedTracks() {
 
 function playTrackFromLastTime() {
   const trackInd = parseInt(localStorage.getItem("LastPlayed: " + MAIN_TITLE));
-  if (trackInd)
+  if (trackInd){
+    console.log("Played from Last Session");
     playTrack(trackInd, true);
-  else
-    console.log("Could not get link from last session!")
+  }
+  else{
+    playNextTrack();
+    console.log("Could not get link from last session!");
+  }
 }
+
 function searchForShabad(e) {
   const searchVal = e;
   const ol = document.getElementById("searchResults");

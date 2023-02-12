@@ -5,13 +5,16 @@
     "ubuntu", "cantarell", "fira sans", "droid sans", "helvetica neue",
     sans-serif;
 }
+
 #disclaimer {
   text-align: center;
   border: 2px solid #34568b;
   margin:20px;
 }
-#playNext {
+
+#playRandomTrack {
   background-color: #00ffff;
+  border-radius: 0.5em;
 }
 #forSearch {
   padding:1em;
