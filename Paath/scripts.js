@@ -206,7 +206,7 @@ function toggleShowingTracks() {
     const ol = document.createElement('ol')
     for (const link of TRACK_LINKS) {
       const li = document.createElement('li')
-      li.innerHTML += `<a href='${link}'>${getNameOfTrack(link)}</a>`
+      li.innerHTML += `<button onclick="playTrack('${link}')">${getNameOfTrack(link)}</button>`
       ol.appendChild(li)
     }
     theDiv.appendChild(ol)
