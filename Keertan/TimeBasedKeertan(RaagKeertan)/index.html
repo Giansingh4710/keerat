@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="styles.css" />
   <script type="text/javascript" src="./TRACKS.js"></script>
 </head>
+
 <body id="body">
   <h1 id="MainTitle" class="text">Keertan Based On the Current Time:</h1>
   <div id="tracksType" class="text">Vaheguru</div>
@@ -36,8 +38,8 @@
     </button>
   </div>
 
-    <button onclick="toggleShowingTracks()">Show All Tracks (Toggle)</button>
-    <div id="showAllTracks" class="text"></div>
+  <button onclick="toggleShowingTracks()">Show All Tracks (Toggle)</button>
+  <div id="showAllTracks" class="text"></div>
 </body>
 
 <script>
@@ -97,32 +99,32 @@
 
 
     TRACK_LINKS = theTracks[THE_TIME_PERIOD]
-    showTracksDiv.innerHTML=''
+    showTracksDiv.innerHTML = ''
 
-    const imgPath = "./imgs/"+THE_TIME_PERIOD.replaceAll(" ",'')+'.jpg'
+    const imgPath = "./imgs/" + THE_TIME_PERIOD.replaceAll(" ", '') + '.jpg'
     console.log(imgPath)
-    document.getElementById('body').style.backgroundImage =  `url("${imgPath}")`
+    document.getElementById('body').style.backgroundImage = `url("${imgPath}")`
     document.getElementById('tracksType').innerText = THE_TIME_PERIOD + " : 'Tracks in total for this time Period': " + TRACK_LINKS.length
   }
 
-  function toggleShowingTracks(){
-    if(showTracksDiv.innerHTML!=''){
-      showTracksDiv.innerHTML=''
-    }else{
-      showTracksDiv.innerHTML=`<h5>There are ${TRACK_LINKS.length} tracks</h5>`
+  function toggleShowingTracks() {
+    if (showTracksDiv.innerHTML != '') {
+      showTracksDiv.innerHTML = ''
+    } else {
+      showTracksDiv.innerHTML = `<h5>There are ${TRACK_LINKS.length} tracks</h5>`
       const ol = document.createElement('ol')
-      for(const link of TRACK_LINKS){
+      for (const link of TRACK_LINKS) {
         const li = document.createElement('li')
-        li.innerHTML+=`<a href='${link}'>${getNameOfTrack(link)}</a>`
+        li.innerHTML += `<a href='${link}'>${getNameOfTrack(link)}</a>`
         ol.appendChild(li)
       }
       showTracksDiv.appendChild(ol)
     }
   }
 
-  function getNameOfTrack(link){return link.split('/').slice(-1)[0]}
+  function getNameOfTrack(link) {return link.split('/').slice(-1)[0]}
   changeTracksPool()
 </script>
-  <script type="text/javascript" src="./script.js"></script>
+<script type="text/javascript" src="./script.js"></script>
 
 </html>

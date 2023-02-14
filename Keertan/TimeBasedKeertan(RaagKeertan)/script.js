@@ -1,4 +1,3 @@
-let isChromium = false;
 const tracksPlayed = [];
 let currentTrackPointer = -1;
 const keertani = document.getElementById("MainTitle").innerText;
@@ -58,8 +57,7 @@ function playTrack(trkInd, pushToLst = false, showMsg = false) {
   trackPlaying.innerHTML += `
     <audio onended="playNextTrack()" onerror="" controls autoPlay={true} src='${theLinkOfTrack}' >
       your browers doesn't support this file or the the file is corrupted
-    </audio>
-    <button id="saveTrackBtn"> SAVE </button> `;
+    </audio>`
 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({

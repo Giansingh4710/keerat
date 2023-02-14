@@ -1,6 +1,30 @@
 const tracksPlayed = [];
 let currentTrackPointer = -1;
+
+document.getElementById("MainTitle").innerText = document.getElementsByTagName('title')[0].innerHTML
 const MAIN_TITLE = document.getElementById("MainTitle").innerText;
+
+let TRACK_LINKS = []
+Object.keys(ALL_OPTS).forEach((title)=>{
+  const div_to_put_opts = document.getElementById("tracksOpts");
+  input = document.createElement("input");
+  input.checked = ALL_OPTS[title].checked
+  input.type = "checkbox"
+  input.id = title
+  input.name = title
+  input.onclick = ()=> excludeOrIncludeTracks()
+
+  label = document.createElement("label");
+  label.setAttribute("for",title);
+  label.innerText = title
+
+  div_to_put_opts.appendChild(input);
+  div_to_put_opts.appendChild(label);
+  div_to_put_opts.appendChild(document.createElement("br"));
+
+  TRACK_LINKS.push(...ALL_OPTS[title].trackLinks)
+})
+
 
 playTrackFromLastTime()
 navigatorStuff()
@@ -117,6 +141,9 @@ function toggleSavedTracks() {
     ol.appendChild(li);
     /* console.log(theNameOfTrack, ": ", trkMsg); */
   }
+  if ( !savedTracks ||Object.keys(savedTracks).length === 0){
+    ol.innerText = "No Saved Tracks. Click the Save button to Save tracks"
+  }
 }
 
 function playTrackFromLastTime() {
@@ -219,4 +246,16 @@ function playTrackForSearchedTrack(ind){
   playTrack(TRACK_LINKS[ind]);
   tracksPlayed.push(ind);
   currentTrackPointer = tracksPlayed.length-1;
+}
+
+function excludeOrIncludeTracks() {
+  let newLinks = []
+  for (const opt in ALL_OPTS) {
+    const val = document.getElementById(opt).checked;
+    ALL_OPTS[opt].checked = val
+    if (val) {
+      newLinks.push(...ALL_OPTS[opt].trackLinks)
+    } 
+  }
+  TRACK_LINKS = [...newLinks]
 }

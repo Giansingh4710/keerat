@@ -6,7 +6,7 @@
     sans-serif;
 }
 
-#disclaimer {
+#MainTitle {
   text-align: center;
   border: 2px solid #34568b;
   margin:20px;
@@ -59,7 +59,7 @@
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-.modal-content {
+.modal-content, #tracksOpts {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
