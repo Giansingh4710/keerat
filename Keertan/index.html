@@ -23,17 +23,8 @@
     "Time Based Keertan (Raag Keertan)",
     "Darbar Sahib Puratan Keertan SGPC",
   ]
-  const optsParent = document.getElementById("optsParent")
-  allOpts.forEach(str => {
-    const div = document.createElement('div')
-    const href = str.replaceAll(' ', '');
-
-    div.innerText = str;
-    div.onclick = () => location.href = href;
-    div.classList.add("opt")
-
-    optsParent.appendChild(div)
-  })
 </script>
+
+<script type="text/javascript" src="../optionScreensUtils/scripts.js"></script>
 
 </html>
