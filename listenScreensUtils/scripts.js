@@ -4,6 +4,9 @@ let currentTrackPointer = -1;
 document.getElementById("MainTitle").innerText = document.getElementsByTagName('title')[0].innerHTML
 const MAIN_TITLE = document.getElementById("MainTitle").innerText;
 
+const savedTracksKey = `SavedTracks: ${MAIN_TITLE}` //for localStorage
+const checkedOptsKey = `CheckedOptions: ${MAIN_TITLE}` //for localStorage
+
 let TRACK_LINKS = []
 Object.keys(ALL_OPTS).forEach((title)=>{
   const div_to_put_opts = document.getElementById("tracksOpts");
@@ -90,7 +93,6 @@ function playTrack(theLinkOfTrack) {
       album: 'Vaheguru Jio'
     })
   }
-  /* localStorage.setItem("LastPlayed: " + MAIN_TITLE, theLinkOfTrack) */
   localStorage.setItem(`LastPlayed: ${MAIN_TITLE}`, theLinkOfTrack)
 }
 
@@ -103,23 +105,24 @@ function saveTrack() {
 }
 
 function deleteSavedTrack(link) {
-  let savedTracks = localStorage.getItem(MAIN_TITLE);
+  let savedTracks = localStorage.getItem(savedTracksKey);
   savedTracks = JSON.parse(savedTracks);
   delete savedTracks[link];
-  localStorage.setItem(MAIN_TITLE, JSON.stringify(savedTracks));
+  localStorage.setItem(savedTracksKey, JSON.stringify(savedTracks));
   toggleSavedTracks();
   toggleSavedTracks();
 }
 
-function putTrackInLocalStorage(trackInd, note) {
-  let savedTracks = localStorage.getItem(MAIN_TITLE);
-  if (!savedTracks) {
-    savedTracks = {};
+function putTrackInLocalStorage(link, note) {
+  let savedItems = localStorage.getItem(savedTracksKey);
+  if (!savedItems) {
+    savedItems = {};
   } else {
-    savedTracks = JSON.parse(savedTracks);
+    savedItems = JSON.parse(savedItems);
   }
-  savedTracks[trackInd] = note;
-  localStorage.setItem(MAIN_TITLE, JSON.stringify(savedTracks));
+
+  savedItems[link] = note;
+  localStorage.setItem(savedTracksKey, JSON.stringify(savedItems));
 }
 
 function toggleSavedTracks() {
@@ -129,7 +132,7 @@ function toggleSavedTracks() {
     return;
   }
 
-  let savedTracks = localStorage.getItem(MAIN_TITLE);
+  let savedTracks = localStorage.getItem(`SavedTracks: ${MAIN_TITLE}`);
   savedTracks = JSON.parse(savedTracks);
   /* console.log(savedTracks) */
 
@@ -143,21 +146,6 @@ function toggleSavedTracks() {
   }
   if ( !savedTracks ||Object.keys(savedTracks).length === 0){
     ol.innerText = "No Saved Tracks. Click the Save button to Save tracks"
-  }
-}
-
-function playTrackFromLastTime() {
-  const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`);
-
-  if (link) {
-    console.log("Played from Last Session");
-    tracksPlayed.push(TRACK_LINKS.indexOf(link));
-    currentTrackPointer = tracksPlayed.length - 1;
-    playTrack(link);
-  }
-  else {
-    console.log("Could not get link from last session!");
-    playNextTrack();
   }
 }
 
@@ -249,13 +237,43 @@ function playTrackForSearchedTrack(ind){
 }
 
 function excludeOrIncludeTracks() {
-  let newLinks = []
+  const newLinks = []
+  const checkedOpts = {}
   for (const opt in ALL_OPTS) {
     const val = document.getElementById(opt).checked;
     ALL_OPTS[opt].checked = val
     if (val) {
       newLinks.push(...ALL_OPTS[opt].trackLinks)
-    } 
+      checkedOpts[opt] = true
+    }else{
+      checkedOpts[opt] = false
+    }
   }
+  localStorage.setItem(checkedOptsKey, JSON.stringify(checkedOpts))
   TRACK_LINKS = [...newLinks]
 }
+
+function playTrackFromLastTime() {
+  const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`);
+  if (link) {
+    console.log("Played from Last Session");
+    tracksPlayed.push(TRACK_LINKS.indexOf(link));
+    currentTrackPointer = tracksPlayed.length - 1;
+    playTrack(link);
+  }
+  else {
+    console.log("Could not get link from last session!");
+    playNextTrack();
+  }
+
+  const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey));//{opt:true/false}
+  if(checkedOpts){
+    for (const opt in checkedOpts) {
+      document.getElementById(opt).checked = checkedOpts[opt]
+    }
+    excludeOrIncludeTracks(); //to change tracks pool
+  }else{
+    console.log("Could not get Checked Options from last Session");
+  }
+}
+
