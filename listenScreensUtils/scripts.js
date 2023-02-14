@@ -75,7 +75,7 @@ function playRandTrack() {
 }
 
 function playTrack(theLinkOfTrack) {
-  console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack)
+  console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack,getTypeOfTrack(theLinkOfTrack))
   const theNameOfTrack = getNameOfTrack(theLinkOfTrack);
   const aTag = document.getElementById("trackNameAtag");
   const audioTag = document.getElementsByTagName("audio")[0];
@@ -89,8 +89,8 @@ function playTrack(theLinkOfTrack) {
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: theNameOfTrack,
-      artist: MAIN_TITLE,
-      album: 'Vaheguru Jio'
+      artist: getTypeOfTrack(theLinkOfTrack),
+      album: MAIN_TITLE,
     })
   }
   localStorage.setItem(`LastPlayed: ${MAIN_TITLE}`, theLinkOfTrack)
@@ -275,5 +275,24 @@ function playTrackFromLastTime() {
   }else{
     console.log("Could not get Checked Options from last Session");
   }
+}
+
+function getTypeOfTrack(link){
+  let trackType = "Unable To Get Info";
+  const ind = TRACK_LINKS.indexOf(link)
+  if(ind>-1){
+    let totalTrack = 0;
+    for (const opt in ALL_OPTS) {
+      if(ALL_OPTS[opt].checked){
+        const len = ALL_OPTS[opt].trackLinks.length;
+        totalTrack += len
+        if(ind <= totalTrack){
+          trackType = opt
+          break;
+        }
+      }
+    }
+  }
+  return trackType;
 }
 
