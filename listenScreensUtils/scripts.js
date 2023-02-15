@@ -29,7 +29,7 @@ Object.keys(ALL_OPTS).forEach((title)=>{
 })
 
 
-playTrackFromLastTime()
+get_last_track_and_checked()
 navigatorStuff()
 activateModal();
 
@@ -64,7 +64,11 @@ function playPreviousTrack() {
     newTrackInd = tracksPlayed[currentTrackPointer]
   }
 
-  playTrack(TRACK_LINKS[newTrackInd]);
+  if(TRACK_LINKS[newTrackInd] === undefined){
+    playRandTrack()
+  }else{
+    playTrack(TRACK_LINKS[newTrackInd]);
+  }
 }
 
 function playRandTrack() {
@@ -75,7 +79,12 @@ function playRandTrack() {
 }
 
 function playTrack(theLinkOfTrack) {
-  console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack,getTypeOfTrack(theLinkOfTrack))
+  const artist = getTypeOfTrack(theLinkOfTrack)
+  /* console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack,artist) */
+  console.log(
+    tracksPlayed,
+    `CurrentTrackPointer Index: ${currentTrackPointer}`,
+  )
   const theNameOfTrack = getNameOfTrack(theLinkOfTrack);
   const aTag = document.getElementById("trackNameAtag");
   const audioTag = document.getElementsByTagName("audio")[0];
@@ -85,11 +94,13 @@ function playTrack(theLinkOfTrack) {
   audioTag.src = theLinkOfTrack
 
   document.getElementById("trackPlaying").style.display = "block"
+  document.getElementById("trackFromWhichOpt").innerText = artist
+  
 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: theNameOfTrack,
-      artist: getTypeOfTrack(theLinkOfTrack),
+      artist: artist,
       album: MAIN_TITLE,
     })
   }
@@ -127,8 +138,11 @@ function putTrackInLocalStorage(link, note) {
 
 function toggleSavedTracks() {
   const ol = document.getElementById("savedShabads");
+  ol.style.display = "block";
   if (ol.innerHTML !== "") {
     ol.innerHTML = "";
+    ol.style.display = "none";
+    ol.style.display = "none";
     return;
   }
 
@@ -146,6 +160,34 @@ function toggleSavedTracks() {
   }
   if ( !savedTracks ||Object.keys(savedTracks).length === 0){
     ol.innerText = "No Saved Tracks. Click the Save button to Save tracks"
+  }
+}
+
+function toggleShowingTracks() {
+  const theDiv = document.getElementById("showAllTracks")
+  if (theDiv.innerHTML === "") {
+    theDiv.innerHTML = `<h5>There are ${TRACK_LINKS.length} tracks</h5>`
+    const ol = document.createElement('ol')
+    for (const link of TRACK_LINKS) {
+      const li = document.createElement('li')
+      li.innerHTML += `<button onclick="playTrack('${link}')">${getNameOfTrack(link)}</button>`
+      ol.appendChild(li)
+    }
+    theDiv.appendChild(ol)
+  } else {
+    theDiv.innerHTML = ''
+  }
+}
+
+function toggleShowingOpts(){
+  const theDiv = document.getElementById("tracksOpts")
+  const toggleBtn = document.getElementById("toggleShowingOpts")
+  if (theDiv.style.display !== "none") {
+    theDiv.style.display = "none"
+    toggleBtn.innerText = "Show The Options"
+  } else {
+    theDiv.style.display = "block"
+    toggleBtn.innerText = "Hide The Options"
   }
 }
 
@@ -214,21 +256,6 @@ function activateModal() {
   };
 }
 
-function toggleShowingTracks() {
-  const theDiv = document.getElementById("showAllTracks")
-  if (theDiv.innerHTML === "") {
-    theDiv.innerHTML = `<h5>There are ${TRACK_LINKS.length} tracks</h5>`
-    const ol = document.createElement('ol')
-    for (const link of TRACK_LINKS) {
-      const li = document.createElement('li')
-      li.innerHTML += `<button onclick="playTrack('${link}')">${getNameOfTrack(link)}</button>`
-      ol.appendChild(li)
-    }
-    theDiv.appendChild(ol)
-  } else {
-    theDiv.innerHTML = ''
-  }
-}
 
 function playTrackForSearchedTrack(ind){
   playTrack(TRACK_LINKS[ind]);
@@ -253,7 +280,17 @@ function excludeOrIncludeTracks() {
   TRACK_LINKS = [...newLinks]
 }
 
-function playTrackFromLastTime() {
+function get_last_track_and_checked() {
+  const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey));//{opt:true/false}
+  if(checkedOpts){
+    for (const opt in checkedOpts) {
+      document.getElementById(opt).checked = checkedOpts[opt]
+    }
+    excludeOrIncludeTracks(); //to change tracks pool
+  }else{
+    console.log("Could not get Checked Options from last Session");
+  }
+
   const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`);
   if (link) {
     console.log("Played from Last Session");
@@ -266,15 +303,6 @@ function playTrackFromLastTime() {
     playNextTrack();
   }
 
-  const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey));//{opt:true/false}
-  if(checkedOpts){
-    for (const opt in checkedOpts) {
-      document.getElementById(opt).checked = checkedOpts[opt]
-    }
-    excludeOrIncludeTracks(); //to change tracks pool
-  }else{
-    console.log("Could not get Checked Options from last Session");
-  }
 }
 
 function getTypeOfTrack(link){

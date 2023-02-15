@@ -1,4 +1,5 @@
-.app {
+body {
+  background-color: #0074D9;
   text-align: center;
   align-items: center;
   font-family: -apple-system, blinkmacsystemfont, "segoe ui", "roboto", "oxygen",
@@ -12,37 +13,49 @@
   margin:20px;
 }
 
-#playRandomTrack {
-  background-color: #00ffff;
-  border-radius: 0.5em;
+#trackNameAtag:link {
+  color: #FFA501;
 }
 
-#forSavedTracks {
-  margin:1em;
-  padding:1em;
-  border-radius: 1em;
-  background-color: tan;
+#trackNavigationBtns{
+  display: flex;
 }
-
-#forSearch {
-  margin:1em;
-  padding:1em;
-  border-radius: 1em;
-  background-color: teal;
-}
-
-#forShowTracks{
+#saveTrackBtn{
   margin: 1em;
-  padding:1em;
-  border-radius: 1em;
-  background-color: tan;
+}
+.trackNavBtn{
+  margin: 1em;
+  flex:1;
 }
 
-#searchInput{
+button {
+  background-color: #FFA500; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 2px #888888; 
+}
+button:hover {
+  background-color: #3e8e41; 
+}
+
+.sectionDisplay {
+  margin:1em;
+  /* padding:1em; */
   border-radius: 1em;
-  margin: 1em;
-  padding:1em;
-  /* text-align: center; */
+  background-color: navy;
+  color: white;
+}
+.sectionDisplay:empty {
+  background-color: tomato;
+  display: none;
+}
+
+.sectionDisplay[style*="display:none"],
+.sectionDisplay:empty {
+  display: none;
 }
 
 .modal {
@@ -59,8 +72,9 @@
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-.modal-content, #tracksOpts {
+.modal-content{
   background-color: #fefefe;
+  border-radius: 10em;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;

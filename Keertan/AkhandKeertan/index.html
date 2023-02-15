@@ -11,53 +11,7 @@
   <script type="text/javascript" src="./TRACKS.js"></script>
 </head>
 
-<body class="app">
-  <h1 id="MainTitle"></h1>
-
-  <div id="trackPlaying" style="display:none">
-    <h3><a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a></h3>
-    <audio onended="playNextTrack()" onerror="" controls autoPlay="true"></audio>
-    <br>
-    <button id="saveTrackBtn"> SAVE </button>
-    <br>
-    <button onclick="playPreviousTrack()">&#8592; Previous</button>
-    <button id="playRandomTrack" onclick="playRandTrack()">Random Track</button>
-    <button autofocus="autofocus" onclick="playNextTrack()">Next &rarr;</button>
-  </div>
-
-  <div id="optionMenu" class="modaal">
-    <div id="tracksOpts"></div>
-  </div>
-
-  <div id="forSavedTracks">
-    <button onclick="toggleSavedTracks()">Toggle Saved Tracks</button>
-    <ol id="savedShabads"></ol>
-  </div>
-
-  <div id="forSearch">
-    <input placeholder="Search for Track:" id="searchInput" oninput="searchForShabad(this.value)" />
-    <ol id="searchResults"></ol>
-  </div>
-
-  <div id="forShowTracks">
-    <button onclick="toggleShowingTracks()">Show Tracks (Toggle)</button>
-    <div id="showAllTracks"></div>
-  </div>
-
-
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <label for="noteForSavedTrack">Enter a note if you would like (not needed):</label>
-      <div>
-        <textarea multiline placeholder="ex: Amazing Bani at 10:00" id="noteForSavedTrack"></textarea>
-      </div>
-      <div>
-        <button onclick="saveTrack()">Save</button>
-      </div>
-    </div>
-  </div>
-</body>
+<script src="../../listenScreensUtils/htmlBody.js"></script>
 
 <script>
   const ALL_OPTS = {

@@ -1,5 +1,14 @@
+body {
+  background-color: #0074D9;
+  text-align: center;
+  align-items: center;
+  font-family: -apple-system, blinkmacsystemfont, "segoe ui", "roboto", "oxygen",
+    "ubuntu", "cantarell", "fira sans", "droid sans", "helvetica neue",
+    sans-serif;
+}
+
 #header {
-  background-color: tan;
+  background-color: #FFA501;
   font-weight: bold;
   text-align: center;
   padding: 20px;
@@ -18,7 +27,7 @@
 .opt {
   flex: 1;
   width: 20em;
-  background-color: orchid;
+  background-color: skyblue;
   padding: 1em;
   margin: 1em;
   height: 7em;
