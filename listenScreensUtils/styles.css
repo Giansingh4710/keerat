@@ -48,15 +48,6 @@ button:hover {
   background-color: navy;
   color: white;
 }
-.sectionDisplay:empty {
-  background-color: tomato;
-  display: none;
-}
-
-.sectionDisplay[style*="display:none"],
-.sectionDisplay:empty {
-  display: none;
-}
 
 .modal {
   display: none; /* Hidden by default */
