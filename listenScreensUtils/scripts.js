@@ -243,7 +243,10 @@ function navigatorStuff() {
   })
 }
 
-function getNameOfTrack(link) { return link.split('/').slice(-1)[0] }
+function getNameOfTrack(link) { 
+  const title = link.split('/').slice(-1)[0]
+  return decodeURIComponent(decodeURIComponent(title))
+}
 
 function activateModal() {
   let modal = document.getElementById("myModal");
