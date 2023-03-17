@@ -327,3 +327,11 @@ function getTypeOfTrack(link){
   return trackType;
 }
 
+function toggleDropdown() {
+  let x = document.getElementsByClassName("topnav")[0];
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
