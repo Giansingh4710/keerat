@@ -109,14 +109,17 @@ body {
 }
 
 /* ------------------------------------------ */
-#MainTitle {
+.border{
   text-align: center;
   border: 2px solid #34568b;
-  margin:20px;
+  margin: 20px;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 #trackNameAtag:link {
   color: #FFA501;
+  word-wrap: break-word;
 }
 
 #trackNavigationBtns{

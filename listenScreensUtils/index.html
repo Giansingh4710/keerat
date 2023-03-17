@@ -1,35 +1,46 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
 <nav class="topnav">
-    <a href="/" class="active">Home</a>
-    <div class="dropdown">
-      <button class="dropbtn">
-        Keertan
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="dropdown-content">
-        <a href="/Keertan/AkhandKeertan/">Akhand Keertan</a>
-        <a href="/Keertan/DarbarSahibPuratanKeertanSGPC">Darbar Sahib Puratan Keertan</a>
-        <a href="/Keertan/TimeBasedKeertan(RaagKeertan)">Time Based Keertan (Raag Keertan)</a>
-      </div>
+  <a href="/" class="active">Home</a>
+  <div class="dropdown">
+    <button class="dropbtn">
+      Keertan
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="/Keertan/AkhandKeertan/">Akhand Keertan</a>
+      <a href="/Keertan/DarbarSahibPuratanKeertanSGPC"
+        >Darbar Sahib Puratan Keertan</a
+      >
+      <a href="/Keertan/TimeBasedKeertan(RaagKeertan)"
+        >Time Based Keertan (Raag Keertan)</a
+      >
     </div>
-    <a href="/BhagatJaswantSinghJi/">Bhagat Jaswant Singh Ji</a>
-    <a href="/Paath/">Paath</a>
-    <a href="/PanjGranthi(BhaiJaswantSinghJi)/">Panj Granthi</a>
-    <a href="/SantGianiGurbachanSinghJiSGGSKatha/">Sant Giani Gurbachan Singh Ji SGGS Katha</a>
-    <a
-      href="javascript:void(0);"
-      style="font-size: 15px"
-      class="icon"
-      onclick="toggleDropdown()"
-      >&#9776;</a
-    >
+  </div>
+  <a href="/BhagatJaswantSinghJi/">Bhagat Jaswant Singh Ji</a>
+  <a href="/Paath/">Paath</a>
+  <a href="/PanjGranthi(BhaiJaswantSinghJi)/">Panj Granthi</a>
+  <a href="/SantGianiGurbachanSinghJiSGGSKatha/"
+    >Sant Giani Gurbachan Singh Ji SGGS Katha</a
+  >
+  <a
+    href="javascript:void(0);"
+    style="font-size: 15px"
+    class="icon"
+    onclick="toggleDropdown()"
+    >&#9776;</a
+  >
 </nav>
 
 <body>
-  <h1 id="MainTitle"></h1>
+
+  <h1 class="border" id="MainTitle"></h1>
+  <p class="border" id="tracksData"></p>
 
   <div id="trackPlaying" style="display: none">
-    <div id="trackInfo">
+    <div id="trackInfo" class="border">
       <h4 id="trackFromWhichOpt"></h4>
       <h3>
         <a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a>

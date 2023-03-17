@@ -280,7 +280,8 @@ function excludeOrIncludeTracks() {
     }
   }
   localStorage.setItem(checkedOptsKey, JSON.stringify(checkedOpts))
-  TRACK_LINKS = [...newLinks]
+  TRACK_LINKS = newLinks
+  document.getElementById("tracksData").innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
 }
 
 function get_last_track_and_checked() {
@@ -292,6 +293,7 @@ function get_last_track_and_checked() {
     excludeOrIncludeTracks(); //to change tracks pool
   }else{
     console.log("Could not get Checked Options from last Session");
+    document.getElementById("tracksData").innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
   }
 
   const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`);
