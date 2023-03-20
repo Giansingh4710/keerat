@@ -355,3 +355,15 @@ function goBack10() {
 function goForawrd10() {
   document.getElementsByTagName('audio')[0].currentTime += 10
 }
+
+function pauseTrack(){
+  const audioPlayer = document.getElementsByTagName('audio')[0]
+  const btn = document.getElementById('playPauseBtn')
+  if (audioPlayer.paused){
+    audioPlayer.play()
+    btn.src = "/imgs/pause.png"
+  }else{
+    audioPlayer.pause()
+    btn.src = "/imgs/play.png"
+  }
+}

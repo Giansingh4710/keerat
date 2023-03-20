@@ -150,15 +150,20 @@ body {
 
 .border{
   text-align: center;
-  border: 2px solid #34568b;
-  margin: 20px;
+  border: 3px solid #34568b;
+  /* margin: 5px; */
   padding: 5px;
   border-radius: 10px;
 }
 
+#playBackOptions{
+  display: flex;
+  justify-content: space-around;
+}
+
 .skip10btn {
-  border-radius: 50%;
   background-color: #EDDF6A;
+  border-radius: 50%;
 }
 .skip10btn img {
   height: 30px;

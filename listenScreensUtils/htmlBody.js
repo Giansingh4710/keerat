@@ -45,18 +45,21 @@ document.write('\
       <h3> \
         <a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a> \
       </h3> \
-      <div id="audioDiv"> \
+      <audio \
+        onended="playNextTrack()" \
+        onerror="" \
+        controls \
+        autoplay="true" \
+      ></audio> \
+      <div id="playBackOptions"> \
         <button onclick="goBack10()" class="skip10btn"> \
-          <img src="/imgs/back10.png"/> \
+          <img src="/imgs/back10.png" /> \
         </button> \
-        <audio \
-          onended="playNextTrack()" \
-          onerror="" \
-          controls \
-          autoplay="true" \
-        ></audio> \
+        <button onclick="pauseTrack()" class="skip10btn"> \
+          <img src="/imgs/pause.png" id="playPauseBtn" /> \
+        </button> \
         <button onclick="goForawrd10()" class="skip10btn"> \
-          <img src="/imgs/forward10.png"/> \
+          <img src="/imgs/forward10.png" /> \
         </button> \
       </div> \
     </div> \
