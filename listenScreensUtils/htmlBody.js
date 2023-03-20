@@ -36,7 +36,6 @@ document.write('\
 </nav> \
  \
 <body> \
- \
   <h1 class="border" id="MainTitle"></h1> \
   <p class="border" id="tracksData"></p> \
  \
@@ -46,12 +45,20 @@ document.write('\
       <h3> \
         <a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a> \
       </h3> \
-      <audio \
-        onended="playNextTrack()" \
-        onerror="" \
-        controls \
-        autoplay="true" \
-      ></audio> \
+      <div id="audioDiv"> \
+        <button onclick="goBack10()" class="skip10btn"> \
+          <img src="/imgs/back10.png"/> \
+        </button> \
+        <audio \
+          onended="playNextTrack()" \
+          onerror="" \
+          controls \
+          autoplay="true" \
+        ></audio> \
+        <button onclick="goForawrd10()" class="skip10btn"> \
+          <img src="/imgs/forward10.png"/> \
+        </button> \
+      </div> \
     </div> \
     <button class="basicBtn" id="saveTrackBtn">SAVE</button> \
     <div id="trackNavigationBtns"> \

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracks Indexed</title>
+  <link rel="stylesheet" type="text/css" href="./styles.css" />
+</head>
+
+<body>
+  <input class="search-container" type="text" placeholder="Search..." oninput="searchForTrack(this.value)">
+
+  <div id="audioContent">
+    <h2 id="DescOfTrack"></h2>
+    <h3 id="playingArtist"></h3>
+    <p>
+      Start of Description:
+      <button id="timeStampOfDecs"></button>
+    </p>
+    <a id="TrackTitle"></a>
+    <div id="audioDiv">
+      <button onclick="goBack10()"> <img src="/imgs/back10.png" class="skip10btn" /> </button>
+      <audio autoplay controls></audio>
+      <button onclick="goForawrd10()"> <img src="/imgs/forward10.png" class="skip10btn" /> </button>
+    </div>
+    <details id="trackShabadIdDetails"></details>
+  </div>
+
+  <select id='pickKeertani' onchange="displayData()">
+    <option value='All'>All</option>
+  </select>
+
+  <div id="myModal">
+    <form id="modal-content" onsubmit="formValidation(event)" method="post"
+      action="http://45.76.2.28/trackIndex/addData.php">
+      <span id="closeModal">&times;</span>
+      <div class="userInputItem">
+        <label for="userDesc">Description:</label>
+        <input id="userDesc" name="description" placeholder="bin ek naam ik chit leen"></input>
+      </div>
+      <div class="userInputItem">
+        <label for="userKeertani">Keertani:</label>
+        <select id='userPickKeertani' onchange="modalSelectChanged()">
+          <option value='Add New'>Add New</option>
+        </select>
+        <input id="userKeertani" name="keertani" style="display:none" placeholder="SDO Ji"></input>
+      </div>
+      <div class="userInputItem">
+        <label for="userLink">Link:</label>
+        <input type="url" id="userLink" name="link"
+          placeholder="http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai%20Joginder%20Singh%20Talwara/Man%20kio%20bairaag%20kurehigaa.mp3"></input>
+      </div>
+      <div class="userInputItem">
+        <label for="usedShabadId">Shabad ID:</label>
+        <input id="usedShabadId" name="shabadId" placeholder="687"></input>
+        <a id="sttmLink" href="https://www.sikhitothemax.org/shabad?id=687&q=Ahrp&type=1&source=all&highlight=9290">
+          <p>https://www.sikhitothemax.org/shabad?id=</p>
+          <p id="highlightShabadId">687</p>
+          <p>&q=Ahrp&type=1&source=all&highlight=9290</p>
+        </a>
+      </div>
+      <div class="userInputItem">
+        <label for="userTimestamp">Timestamp of where Description Happened:</label>
+        <div id="userTimestamp">
+          <input name="hours" id="hours" type="number" min="0" max="59" inputmode="numeric"></input>:
+          <input name="mins" id="mins" type="number" min="0" max="59" inputmode="numeric"></input>:
+          <input name="secs" id="secs" type="number" min="0" max="59" inputmode="numeric"></input>
+        </div>
+        <div id="userTimestamp">
+          <label for="hours">hours:</label>
+          <label for="mins">minutes:</label>
+          <label for="secs">seconds</label>
+        </div>
+      </div>
+      <button>Add</button>
+    </form>
+  </div>
+
+  <div id="addTrack">
+    <button id="addTrackBtn">
+      <span>&#43;</span>
+    </button>
+  </div>
+
+  <div id='trackNodes'></div>
+</body>
+
+<script type="text/javascript" src="./allShabads.js"></script>
+<script>
+  const ALL_TRACKS_DATA = [];
+
+  function goBack10() {document.getElementsByTagName('audio')[0].currentTime -= 10}
+  function goForawrd10() {document.getElementsByTagName('audio')[0].currentTime += 10}
+
+  function trackNodeBtnClicked(obj) {
+    const audioContent = document.getElementById('audioContent')
+    audioContent.style.display = 'block'
+    document.getElementById('DescOfTrack').innerText = obj.description
+    document.getElementById('playingArtist').innerText = obj.keertani
+    document.getElementById('timeStampOfDecs').innerText = obj.timeStamp
+    document.getElementById('TrackTitle').innerText = getTrackTitle(obj.link)
+    document.getElementById('TrackTitle').href = obj.link
+    document.getElementsByTagName('audio')[0].src = obj.link
+
+    document.getElementById('timeStampOfDecs').onclick = function () {
+      const timeLst = obj.timeStamp.split(':')
+      let totalSeconds = 0
+      let muliplier = 1
+      for (let i = timeLst.length - 1; i > -1; i--) {
+        totalSeconds += muliplier * parseInt(timeLst[i])
+        muliplier *= 60
+      }
+      document.getElementsByTagName('audio')[0].currentTime = totalSeconds
+    }
+    if (obj.shabadId != '') {
+      const details = document.getElementById('trackShabadIdDetails')
+      const summary = document.createElement('summary')
+      summary.innerText = `Shabad ID: ${obj.shabadId}`
+      details.innerText = allShabadsAdi[obj.shabadId].join('\n')
+      details.appendChild(summary)
+    }
+  }
+
+  function displayData(objLst = ALL_TRACKS_DATA, alreadyFiltered = false) {
+    /*
+      <button>
+        <div class="description">Description: Aaoo Hamare Raam Pyare Jio</div>
+        <div class="artist">Keertani: Bhai Harpreet Singh</div>
+        <div class="timestamp">Time Stamp: 37:18</div>
+        <a class="link" href="">Track Title</a>
+        <details>
+          <summary>Shabad ID: 687</summary>
+          ਆਉ ਹਮਾਰੈ ਰਾਮ ਪਿਆਰੇ ਜੀਉ ॥
+          Come to me, O my Beloved Lord.
+        </details>
+      </button>
+    */
+    const ol = document.getElementById('trackNodes')
+    ol.innerHTML = '';
+
+    let theData = objLst
+    if (!alreadyFiltered)
+      theData = filterDataByChosenOpt(objLst)
+
+    for (let i = theData.length - 1; i > -1; i--) {
+      const obj = theData[i];
+      const btn = document.createElement('button')
+      btn.onclick = () => trackNodeBtnClicked(obj)
+      btn.setAttribute('class', 'trackNodeBtn')
+
+      const divTopBar = document.createElement('div')
+      divTopBar.setAttribute('class', 'topBarLine')
+
+      const divNodeNum = document.createElement('div')
+      divNodeNum.setAttribute('class', 'nodeNum')
+      divNodeNum.innerText = `# ${i + 1}`
+      divTopBar.appendChild(divNodeNum)
+
+      const divDesc = document.createElement('div')
+      divDesc.setAttribute('class', 'description')
+      divDesc.innerText = `Description: ${obj.description}`
+      divTopBar.appendChild(divDesc)
+
+      btn.appendChild(divTopBar)
+
+      const divArt = document.createElement('div')
+      divArt.setAttribute('class', 'artist')
+      divArt.innerText = `Keertani: ${obj.keertani}`
+      btn.appendChild(divArt)
+
+      const divTime = document.createElement('div')
+      divTime.setAttribute('class', 'timestamp')
+      divTime.innerText = `Time Stamp: ${obj.timeStamp}`
+      btn.appendChild(divTime)
+
+      const aLink = document.createElement('a')
+      aLink.setAttribute('class', 'link')
+      aLink.href = obj.link
+      aLink.innerText = getTrackTitle(obj.link)
+      btn.appendChild(aLink)
+
+      if (obj.shabadId != '') {
+        const details = document.createElement('details')
+        const summary = document.createElement('summary')
+        summary.innerText = `Shabad ID: ${obj.shabadId}`
+        details.innerText = allShabadsAdi[obj.shabadId].join('\n')
+        details.appendChild(summary)
+        btn.appendChild(details)
+      }
+
+      ol.appendChild(btn)
+      /* const li = document.createElement('li') */
+      /* li.appendChild(btn) */
+      /* ol.appendChild(li) */
+    }
+  }
+
+  function searchForTrack(e) {
+    const ol = document.getElementById("trackNodes");
+    const wordsEntered = e.toLowerCase().split(' ')
+
+    const theData = filterDataByChosenOpt()
+
+    const results = theData.filter(obj => {
+      const values = Object.values(obj);
+      if (obj.shabadId != "") values.push(...allShabadsAdi[obj.shabadId])
+      for (const word of wordsEntered) {
+        const wordInTrackObj = values.some(line => line.toLowerCase().includes(word));
+        if (!wordInTrackObj) {
+          return false;
+        }
+      }
+      return true;
+    });
+    displayData(results, true)
+  }
+
+  function putOptsInSelect() {
+    const allKeertanis = []
+    ALL_TRACKS_DATA.forEach((track) => {
+      if (!allKeertanis.includes(track.keertani)) {
+        allKeertanis.push(track.keertani)
+      }
+    })
+
+    const select = document.getElementById('pickKeertani')
+    const selectModal = document.getElementById('userPickKeertani')
+    for (const keertani of allKeertanis) {
+      const opt = document.createElement('option')
+      opt.setAttribute('value', keertani)
+      opt.innerText = keertani
+      select.appendChild(opt)
+
+      const optForModal = opt.cloneNode(true)
+      selectModal.prepend(optForModal)
+    }
+    console.log("putOps")
+    modalSelectChanged() //so that the input field will get the value if modal not changed
+  }
+
+  function filterDataByChosenOpt() {
+    const opt = document.getElementById('pickKeertani').value
+    return theData = ALL_TRACKS_DATA.filter((item) => {
+      if (opt == "All") {
+        return true
+      } else if (opt == item.keertani) {
+        return true
+      }
+    })
+  }
+
+  function modalStuff() {
+    const modal = document.getElementById("myModal");
+    const btn = document.getElementById("addTrackBtn");
+    const span = document.getElementById("closeModal");
+    btn.onclick = () => modal.style.display = "block";
+    span.onclick = () => modal.style.display = "none";
+    window.onclick = function (event) {
+      if (event.target == modal) {modal.style.display = "none";}
+    };
+  }
+
+  function modalSelectChanged() {
+    const opt = document.getElementById('userPickKeertani').value
+    const inputKeertani = document.getElementById('userKeertani')
+    if (opt === "Add New") {
+      inputKeertani.style.display = "block";
+    } else {
+      inputKeertani.style.display = "none";
+      inputKeertani.value = opt
+    }
+  }
+
+  function getTrackTitle(link) {return decodeURIComponent(link.replace(/%20/g, ' ').split('/').splice(-1))}
+
+  fetch("http://45.76.2.28/trackIndex/getData.php").then((res) => {
+    if (!res.ok) throw new Error("Something went wrong!");
+    return res.json()
+  }).then((data) => {
+    for (const obj of data) {
+      ALL_TRACKS_DATA.push(obj)
+    }
+    displayData();
+    putOptsInSelect()
+  }).catch((err) => {
+    console.log(err)
+  })
+
+  function formValidation(e) {
+    e.preventDefault()
+    const form = document.querySelector("#modal-content")
+
+    const desc = document.querySelector("#userDesc")
+    const keertani = document.querySelector("#userKeertani")
+    const link = document.querySelector("#userLink")
+    if (link.value === "") {
+      alert("Link is empty")
+    } else {
+      form.submit()
+    }
+  }
+  modalStuff();
+</script>
+
+</html>

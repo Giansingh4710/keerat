@@ -1,0 +1,176 @@
+body {
+  background-color: #0074d9;
+  font-family: -apple-system, blinkmacsystemfont, 'segoe ui', 'roboto', 'oxygen',
+    'ubuntu', 'cantarell', 'fira sans', 'droid sans', 'helvetica neue',
+    sans-serif;
+  text-align: center;
+  align-items: center;
+}
+
+/* ---------------ModalStuff-------------------------- */
+#myModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  /* background-color: rgb(0, 0, 0); */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#modal-content {
+  /* background-color: #fefefe; */
+  background-color: #ff7f50;
+  margin: auto;
+  padding: 2em;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 1em;
+}
+
+.userInputItem {
+  text-align: center;
+  align-items: center;
+  background-color: #0077be;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#userKeertani {
+  align-self: center;
+  left: 10%;
+}
+
+#sttmLink p {
+  display: inline;
+}
+
+#sttmLink {
+  font-size: 0.6em;
+}
+
+#highlightShabadId {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: greenyellow;
+}
+
+#closeModal {
+  color: black;
+  float: right;
+  top: 500px;
+  font-size: 61px;
+  font-weight: bold;
+}
+
+#closeModal:hover,
+#closeModal:focus {
+  color: #aaa;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* ------------------------------------------------ */
+
+.search-container {
+  padding: 10px;
+  margin: 10px;
+  width: 92%;
+  border: 4px solid #ccc;
+  font-size: 1em;
+  border-radius: 10px;
+}
+
+#addTrackBtn {
+  /* color: white; */
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px #888888;
+}
+
+#addTrack span {
+  font-size: 5em;
+}
+
+/* -------------------------------- */
+#audioContent {
+  display: none;
+  background-color: #efdaf8;
+  border-radius: 10px;
+}
+
+.skip10btn{
+  height: 30px;
+  width: auto;
+  border-radius: 1em;
+}
+
+.trackNodeBtn {
+  /* all: unset; */
+  padding: 5px;
+  margin: 5px;
+  background-color: #eddf6a;
+  border-radius: 5px;
+  width: 98%;
+}
+
+.topBarLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nodeNum {
+  color: blue;
+  border: 1px solid black;
+  padding: 1px;
+  /* position: absolute; */
+  /* top: 0px; */
+  /* right: 0px; */
+}
+
+.description {
+  flex: 1;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.artist,
+.link,
+.timestamp {
+  display: inline-block;
+  font-size: 12px;
+  color: #768bf3;
+  /* background-color:#F9CD39; */
+  margin-right: 15px;
+}
+
+.link {
+  color: #333;
+  overflow-wrap: anywhere;
+  /* text-decoration: none; */
+}
+
+summary {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #333;
+}
+
+/* Style the details text */
+details > * {
+  margin-left: 10px;
+  font-size: 16px;
+  color: #666;
+}

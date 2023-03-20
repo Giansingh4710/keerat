@@ -1,101 +1,97 @@
-const tracksPlayed = [];
-let currentTrackPointer = -1;
+const tracksPlayed = []
+let currentTrackPointer = -1
 
-document.getElementById("MainTitle").innerText = document.getElementsByTagName('title')[0].innerHTML
-const MAIN_TITLE = document.getElementById("MainTitle").innerText;
+document.getElementById('MainTitle').innerText =
+  document.getElementsByTagName('title')[0].innerHTML
+const MAIN_TITLE = document.getElementById('MainTitle').innerText
 
 const savedTracksKey = `SavedTracks: ${MAIN_TITLE}` //for localStorage
 const checkedOptsKey = `CheckedOptions: ${MAIN_TITLE}` //for localStorage
 
 let TRACK_LINKS = []
-Object.keys(ALL_OPTS).forEach((title)=>{
-  const div_to_put_opts = document.getElementById("tracksOpts");
-  input = document.createElement("input");
+Object.keys(ALL_OPTS).forEach((title) => {
+  const div_to_put_opts = document.getElementById('tracksOpts')
+  input = document.createElement('input')
   input.checked = ALL_OPTS[title].checked
-  input.type = "checkbox"
+  input.type = 'checkbox'
   input.id = title
   input.name = title
-  input.onclick = ()=> excludeOrIncludeTracks()
+  input.onclick = () => excludeOrIncludeTracks()
 
-  label = document.createElement("label");
-  label.setAttribute("for",title);
+  label = document.createElement('label')
+  label.setAttribute('for', title)
   label.innerText = title
 
-  div_to_put_opts.appendChild(input);
-  div_to_put_opts.appendChild(label);
-  div_to_put_opts.appendChild(document.createElement("br"));
+  div_to_put_opts.appendChild(input)
+  div_to_put_opts.appendChild(label)
+  div_to_put_opts.appendChild(document.createElement('br'))
 
   TRACK_LINKS.push(...ALL_OPTS[title].trackLinks)
 })
 
-
 get_last_track_and_checked()
 navigatorStuff()
-activateModal();
+activateModal()
 
 function playNextTrack() {
   if (tracksPlayed.length === 0) {
-    playRandTrack();
-    return;
+    playRandTrack()
+    return
   }
 
-  let newTrackInd;
+  let newTrackInd
 
   if (tracksPlayed.length - 1 === currentTrackPointer) {
-    newTrackInd = tracksPlayed[currentTrackPointer] + 1;
-    newTrackInd = newTrackInd > TRACK_LINKS.length - 1 ? 0 : newTrackInd;
-    tracksPlayed.push(newTrackInd);
+    newTrackInd = tracksPlayed[currentTrackPointer] + 1
+    newTrackInd = newTrackInd > TRACK_LINKS.length - 1 ? 0 : newTrackInd
+    tracksPlayed.push(newTrackInd)
     currentTrackPointer += 1
   } else {
-    currentTrackPointer += 1;
-    newTrackInd = tracksPlayed[currentTrackPointer];
+    currentTrackPointer += 1
+    newTrackInd = tracksPlayed[currentTrackPointer]
   }
-  playTrack(TRACK_LINKS[newTrackInd]);
+  playTrack(TRACK_LINKS[newTrackInd])
 }
 
 function playPreviousTrack() {
-  let newTrackInd;
+  let newTrackInd
   if (currentTrackPointer === 0) {
-    newTrackInd = tracksPlayed[currentTrackPointer] - 1;
-    newTrackInd = newTrackInd === -1 ? TRACK_LINKS.length - 1 : newTrackInd;
-    tracksPlayed.unshift(newTrackInd);
+    newTrackInd = tracksPlayed[currentTrackPointer] - 1
+    newTrackInd = newTrackInd === -1 ? TRACK_LINKS.length - 1 : newTrackInd
+    tracksPlayed.unshift(newTrackInd)
   } else {
-    currentTrackPointer -= 1;
+    currentTrackPointer -= 1
     newTrackInd = tracksPlayed[currentTrackPointer]
   }
 
-  if(TRACK_LINKS[newTrackInd] === undefined){
+  if (TRACK_LINKS[newTrackInd] === undefined) {
     playRandTrack()
-  }else{
-    playTrack(TRACK_LINKS[newTrackInd]);
+  } else {
+    playTrack(TRACK_LINKS[newTrackInd])
   }
 }
 
 function playRandTrack() {
-  const randNum = Math.floor(Math.random() * TRACK_LINKS.length);
-  tracksPlayed.push(randNum);
-  currentTrackPointer = tracksPlayed.length - 1;
-  playTrack(TRACK_LINKS[randNum]);
+  const randNum = Math.floor(Math.random() * TRACK_LINKS.length)
+  tracksPlayed.push(randNum)
+  currentTrackPointer = tracksPlayed.length - 1
+  playTrack(TRACK_LINKS[randNum])
 }
 
 function playTrack(theLinkOfTrack) {
   const artist = getTypeOfTrack(theLinkOfTrack)
   /* console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack,artist) */
-  console.log(
-    tracksPlayed,
-    `CurrentTrackPointer Index: ${currentTrackPointer}`,
-  )
-  const theNameOfTrack = getNameOfTrack(theLinkOfTrack);
-  const aTag = document.getElementById("trackNameAtag");
-  const audioTag = document.getElementsByTagName("audio")[0];
+  console.log(tracksPlayed, `CurrentTrackPointer Index: ${currentTrackPointer}`)
+  const theNameOfTrack = getNameOfTrack(theLinkOfTrack)
+  const aTag = document.getElementById('trackNameAtag')
+  const audioTag = document.getElementsByTagName('audio')[0]
 
-  aTag.innerText = theNameOfTrack;
-  aTag.href = theLinkOfTrack;
+  aTag.innerText = theNameOfTrack
+  aTag.href = theLinkOfTrack
   audioTag.src = theLinkOfTrack
 
-  document.getElementById("trackPlaying").style.display = "block"
-  document.getElementById("trackFromWhichOpt").innerText = artist
-  
+  document.getElementById('trackPlaying').style.display = 'block'
+  document.getElementById('trackFromWhichOpt').innerText = artist
 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
@@ -108,69 +104,74 @@ function playTrack(theLinkOfTrack) {
 }
 
 function saveTrack() {
-  const note = document.getElementById("noteForSavedTrack");
-  putTrackInLocalStorage(TRACK_LINKS[tracksPlayed[currentTrackPointer]], note.value);
-  note.value = "";
-  let modal = document.getElementById("myModal");
-  modal.style.display = "none";
+  const note = document.getElementById('noteForSavedTrack')
+  putTrackInLocalStorage(
+    TRACK_LINKS[tracksPlayed[currentTrackPointer]],
+    note.value
+  )
+  note.value = ''
+  let modal = document.getElementById('myModal')
+  modal.style.display = 'none'
 }
 
 function deleteSavedTrack(link) {
-  let savedTracks = localStorage.getItem(savedTracksKey);
-  savedTracks = JSON.parse(savedTracks);
-  delete savedTracks[link];
-  localStorage.setItem(savedTracksKey, JSON.stringify(savedTracks));
-  toggleSavedTracks();
-  toggleSavedTracks();
+  let savedTracks = localStorage.getItem(savedTracksKey)
+  savedTracks = JSON.parse(savedTracks)
+  delete savedTracks[link]
+  localStorage.setItem(savedTracksKey, JSON.stringify(savedTracks))
+  toggleSavedTracks()
+  toggleSavedTracks()
 }
 
 function putTrackInLocalStorage(link, note) {
-  let savedItems = localStorage.getItem(savedTracksKey);
+  let savedItems = localStorage.getItem(savedTracksKey)
   if (!savedItems) {
-    savedItems = {};
+    savedItems = {}
   } else {
-    savedItems = JSON.parse(savedItems);
+    savedItems = JSON.parse(savedItems)
   }
 
-  savedItems[link] = note;
-  localStorage.setItem(savedTracksKey, JSON.stringify(savedItems));
+  savedItems[link] = note
+  localStorage.setItem(savedTracksKey, JSON.stringify(savedItems))
 }
 
 function toggleSavedTracks() {
-  const ol = document.getElementById("savedShabads");
-  ol.style.display = "block";
-  if (ol.innerHTML !== "") {
-    ol.innerHTML = "";
-    ol.style.display = "none";
-    ol.style.display = "none";
-    return;
+  const ol = document.getElementById('savedShabads')
+  ol.style.display = 'block'
+  if (ol.innerHTML !== '') {
+    ol.innerHTML = ''
+    ol.style.display = 'none'
+    ol.style.display = 'none'
+    return
   }
 
-  let savedTracks = localStorage.getItem(`SavedTracks: ${MAIN_TITLE}`);
-  savedTracks = JSON.parse(savedTracks);
+  let savedTracks = localStorage.getItem(`SavedTracks: ${MAIN_TITLE}`)
+  savedTracks = JSON.parse(savedTracks)
   /* console.log(savedTracks) */
 
   for (const link in savedTracks) {
     const theNameOfTrack = getNameOfTrack(link)
-    const trkMsg = savedTracks[link].replaceAll("\n", " ");
-    li = document.createElement("li");
-    li.innerHTML = `${trkMsg}<button onclick="playTrack('${link}')" > ${theNameOfTrack}</button><button onclick="deleteSavedTrack('${link}')" >DELETE</button>`;
-    ol.appendChild(li);
+    const trkMsg = savedTracks[link].replaceAll('\n', ' ')
+    li = document.createElement('li')
+    li.innerHTML = `${trkMsg}<button onclick="playTrack('${link}')" > ${theNameOfTrack}</button><button onclick="deleteSavedTrack('${link}')" >DELETE</button>`
+    ol.appendChild(li)
     /* console.log(theNameOfTrack, ": ", trkMsg); */
   }
-  if ( !savedTracks ||Object.keys(savedTracks).length === 0){
-    ol.innerText = "No Saved Tracks. Click the Save button to Save tracks"
+  if (!savedTracks || Object.keys(savedTracks).length === 0) {
+    ol.innerText = 'No Saved Tracks. Click the Save button to Save tracks'
   }
 }
 
 function toggleShowingTracks() {
-  const theDiv = document.getElementById("showAllTracks")
-  if (theDiv.innerHTML === "") {
+  const theDiv = document.getElementById('showAllTracks')
+  if (theDiv.innerHTML === '') {
     theDiv.innerHTML = `<h5>There are ${TRACK_LINKS.length} tracks</h5>`
     const ol = document.createElement('ol')
     for (const link of TRACK_LINKS) {
       const li = document.createElement('li')
-      li.innerHTML += `<button onclick="playTrack('${link}')">${getNameOfTrack(link)}</button>`
+      li.innerHTML += `<button onclick="playTrack('${link}')">${getNameOfTrack(
+        link
+      )}</button>`
       ol.appendChild(li)
     }
     theDiv.appendChild(ol)
@@ -179,23 +180,23 @@ function toggleShowingTracks() {
   }
 }
 
-function toggleShowingOpts(){
-  const theDiv = document.getElementById("tracksOpts")
-  const toggleBtn = document.getElementById("toggleShowingOpts")
-  if (theDiv.style.display !== "none") {
-    theDiv.style.display = "none"
-    toggleBtn.innerText = "Show The Options"
+function toggleShowingOpts() {
+  const theDiv = document.getElementById('tracksOpts')
+  const toggleBtn = document.getElementById('toggleShowingOpts')
+  if (theDiv.style.display !== 'none') {
+    theDiv.style.display = 'none'
+    toggleBtn.innerText = 'Show The Options'
   } else {
-    theDiv.style.display = "block"
-    toggleBtn.innerText = "Hide The Options"
+    theDiv.style.display = 'block'
+    toggleBtn.innerText = 'Hide The Options'
   }
 }
 
 function searchForShabad(e) {
-  const searchVal = e;
-  const ol = document.getElementById("searchResults");
+  const searchVal = e
+  const ol = document.getElementById('searchResults')
 
-  const allLinksWithWordInds = [];
+  const allLinksWithWordInds = []
 
   const searchWordsLst = searchVal.toLowerCase().split(' ')
   TRACK_LINKS.forEach((link, index) => {
@@ -204,136 +205,153 @@ function searchForShabad(e) {
     let allWordsInTrackName = true
     for (const word of searchWordsLst) {
       if (!trackName.includes(word)) {
-        allWordsInTrackName = false;
+        allWordsInTrackName = false
         break
       }
     }
     if (allWordsInTrackName) {
-      allLinksWithWordInds.push(index);
+      allLinksWithWordInds.push(index)
     }
-  });
+  })
 
-  ol.innerHTML = `<p>${allLinksWithWordInds.length} Results Found</p>`;
-  if (searchVal === "") {
-    ol.innerHTML = "";
-    return;
-  };
+  ol.innerHTML = `<p>${allLinksWithWordInds.length} Results Found</p>`
+  if (searchVal === '') {
+    ol.innerHTML = ''
+    return
+  }
 
   for (const index of allLinksWithWordInds) {
-    li = document.createElement("li");
+    li = document.createElement('li')
     /* console.log(TRACK_LINKS[index]) */
-    li.innerHTML = `<button onclick="playTrackForSearchedTrack(${index})">${getNameOfTrack(TRACK_LINKS[index])}</button>`;
-    ol.appendChild(li);
+    li.innerHTML = `<button onclick="playTrackForSearchedTrack(${index})">${getNameOfTrack(
+      TRACK_LINKS[index]
+    )}</button>`
+    ol.appendChild(li)
   }
 }
 
-
 function navigatorStuff() {
-  navigator.mediaSession.setActionHandler('previoustrack', () => playPreviousTrack())
+  navigator.mediaSession.setActionHandler('previoustrack', () =>
+    playPreviousTrack()
+  )
   navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack())
   navigator.mediaSession.setActionHandler('play', () => {
     const theAudioPlayer = document.getElementsByTagName('audio')[0]
-    console.log("Played");
+    console.log('Played')
     theAudioPlayer.play()
   })
   navigator.mediaSession.setActionHandler('pause', () => {
     const theAudioPlayer = document.getElementsByTagName('audio')[0]
-    console.log("Paused");
+    console.log('Paused')
     theAudioPlayer.pause()
   })
 }
 
-function getNameOfTrack(link) { 
+function getNameOfTrack(link) {
   const title = link.split('/').slice(-1)[0]
   return decodeURIComponent(decodeURIComponent(title))
 }
 
 function activateModal() {
-  let modal = document.getElementById("myModal");
-  let btn = document.getElementById("saveTrackBtn");
-  let span = document.getElementsByClassName("close")[0];
-  btn.onclick = function() { modal.style.display = "block"; };
-  span.onclick = function() { modal.style.display = "none"; };
-  window.onclick = function(event) {
-    if (event.target == modal) { modal.style.display = "none"; }
-  };
+  let modal = document.getElementById('myModal')
+  let btn = document.getElementById('saveTrackBtn')
+  let span = document.getElementsByClassName('close')[0]
+  btn.onclick = function () {
+    modal.style.display = 'block'
+  }
+  span.onclick = function () {
+    modal.style.display = 'none'
+  }
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = 'none'
+    }
+  }
 }
 
-
-function playTrackForSearchedTrack(ind){
-  playTrack(TRACK_LINKS[ind]);
-  tracksPlayed.push(ind);
-  currentTrackPointer = tracksPlayed.length-1;
+function playTrackForSearchedTrack(ind) {
+  playTrack(TRACK_LINKS[ind])
+  tracksPlayed.push(ind)
+  currentTrackPointer = tracksPlayed.length - 1
 }
 
 function excludeOrIncludeTracks() {
   const newLinks = []
   const checkedOpts = {}
   for (const opt in ALL_OPTS) {
-    const val = document.getElementById(opt).checked;
+    const val = document.getElementById(opt).checked
     ALL_OPTS[opt].checked = val
     if (val) {
       newLinks.push(...ALL_OPTS[opt].trackLinks)
       checkedOpts[opt] = true
-    }else{
+    } else {
       checkedOpts[opt] = false
     }
   }
   localStorage.setItem(checkedOptsKey, JSON.stringify(checkedOpts))
   TRACK_LINKS = newLinks
-  document.getElementById("tracksData").innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
+  document.getElementById(
+    'tracksData'
+  ).innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
 }
 
 function get_last_track_and_checked() {
-  const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey));//{opt:true/false}
-  if(checkedOpts){
+  const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey)) //{opt:true/false}
+  if (checkedOpts) {
     for (const opt in checkedOpts) {
       document.getElementById(opt).checked = checkedOpts[opt]
     }
-    excludeOrIncludeTracks(); //to change tracks pool
-  }else{
-    console.log("Could not get Checked Options from last Session");
-    document.getElementById("tracksData").innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
+    excludeOrIncludeTracks() //to change tracks pool
+  } else {
+    console.log('Could not get Checked Options from last Session')
+    document.getElementById(
+      'tracksData'
+    ).innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
   }
 
-  const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`);
+  const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`)
   if (link) {
-    console.log("Played from Last Session");
-    tracksPlayed.push(TRACK_LINKS.indexOf(link));
-    currentTrackPointer = tracksPlayed.length - 1;
-    playTrack(link);
+    console.log('Played from Last Session')
+    tracksPlayed.push(TRACK_LINKS.indexOf(link))
+    currentTrackPointer = tracksPlayed.length - 1
+    playTrack(link)
+  } else {
+    console.log('Could not get link from last session!')
+    playNextTrack()
   }
-  else {
-    console.log("Could not get link from last session!");
-    playNextTrack();
-  }
-
 }
 
-function getTypeOfTrack(link){
-  let trackType = "Unable To Get Info";
+function getTypeOfTrack(link) {
+  let trackType = 'Unable To Get Info'
   const ind = TRACK_LINKS.indexOf(link)
-  if(ind>-1){
-    let totalTrack = 0;
+  if (ind > -1) {
+    let totalTrack = 0
     for (const opt in ALL_OPTS) {
-      if(ALL_OPTS[opt].checked){
-        const len = ALL_OPTS[opt].trackLinks.length;
+      if (ALL_OPTS[opt].checked) {
+        const len = ALL_OPTS[opt].trackLinks.length
         totalTrack += len
-        if(ind <= totalTrack){
+        if (ind <= totalTrack) {
           trackType = opt
-          break;
+          break
         }
       }
     }
   }
-  return trackType;
+  return trackType
 }
 
 function toggleDropdown() {
-  let x = document.getElementsByClassName("topnav")[0];
-  if (x.className === "topnav") {
-    x.className += " responsive";
+  let x = document.getElementsByClassName('topnav')[0]
+  if (x.className === 'topnav') {
+    x.className += ' responsive'
   } else {
-    x.className = "topnav";
+    x.className = 'topnav'
   }
+}
+
+function goBack10() {
+  document.getElementsByTagName('audio')[0].currentTime -= 10
+}
+function goForawrd10() {
+  document.getElementsByTagName('audio')[0].currentTime += 10
 }
