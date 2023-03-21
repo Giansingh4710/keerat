@@ -114,12 +114,16 @@
       }
       document.getElementsByTagName('audio')[0].currentTime = totalSeconds
     }
-    if (obj.shabadId != '') {
-      const details = document.getElementById('trackShabadIdDetails')
+
+    const details = document.getElementById('trackShabadIdDetails')
+    if (obj.shabadId != '' && allShabadsAdi[obj.shabadId] ) {
       const summary = document.createElement('summary')
       summary.innerText = `Shabad ID: ${obj.shabadId}`
       details.innerText = allShabadsAdi[obj.shabadId].join('\n')
       details.appendChild(summary)
+      details.style.display = "block"
+    }else{
+      details.style.display = "none"
     }
   }
 
@@ -181,7 +185,7 @@
       aLink.innerText = getTrackTitle(obj.link)
       btn.appendChild(aLink)
 
-      if (obj.shabadId != '') {
+      if (obj.shabadId != '' && allShabadsAdi[obj.shabadId] ) {
         const details = document.createElement('details')
         const summary = document.createElement('summary')
         summary.innerText = `Shabad ID: ${obj.shabadId}`

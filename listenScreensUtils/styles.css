@@ -206,3 +206,10 @@ body {
   background-color: navy;
   color: white;
 }
+
+#checkBtnsOpts{
+  display: flex;
+  justify-content: space-around;
+  padding:1em;
+}
+

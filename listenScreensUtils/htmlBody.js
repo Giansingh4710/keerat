@@ -20,12 +20,12 @@ document.write('\
       > \
     </div> \
   </div> \
-  <a href="/BhagatJaswantSinghJi/">Bhagat Jaswant Singh Ji</a> \
   <a href="/Paath/">Paath</a> \
-  <a href="/PanjGranthi(BhaiJaswantSinghJi)/">Panj Granthi</a> \
   <a href="/SantGianiGurbachanSinghJiSGGSKatha/" \
     >Sant Giani Gurbachan Singh Ji SGGS Katha</a \
   > \
+  <a href="/BhagatJaswantSinghJi/">Bhagat Jaswant Singh Ji</a> \
+  <a href="/PanjGranthi(BhaiJaswantSinghJi)/">Panj Granthi</a> \
   <a \
     href="javascript:void(0);" \
     style="font-size: 15px" \
@@ -52,13 +52,13 @@ document.write('\
         autoplay="true" \
       ></audio> \
       <div id="playBackOptions"> \
-        <button onclick="goBack10()" class="skip10btn"> \
+        <button onclick="skipTrackTime(-10)" class="skip10btn"> \
           <img src="/imgs/back10.png" /> \
         </button> \
-        <button onclick="pauseTrack()" class="skip10btn"> \
+        <button onclick="togglePausePlayTrack()" class="skip10btn"> \
           <img src="/imgs/pause.png" id="playPauseBtn" /> \
         </button> \
-        <button onclick="goForawrd10()" class="skip10btn"> \
+        <button onclick="skipTrackTime(10)" class="skip10btn"> \
           <img src="/imgs/forward10.png" /> \
         </button> \
       </div> \
@@ -92,7 +92,17 @@ document.write('\
       Hide The Options \
     </button> \
     <div class="sectionDisplay"> \
-      <div id="tracksOpts"></div> \
+      <div id="tracksOpts"> \
+        <div id="checkBtnsOpts"> \
+          <button class="basicBtn" onclick="check_uncheck_opts(false)"> \
+            Uncheck All Options \
+          </button> \
+          <button class="basicBtn" onclick="check_uncheck_opts(true)"> \
+            Check All Options \
+          </button> \
+        </div> \
+        <!-- Options(label/checkbox inputs) will go here --> \
+      </div> \
     </div> \
   </div> \
  \

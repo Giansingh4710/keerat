@@ -1,34 +1,14 @@
 const tracksPlayed = []
+let TRACK_LINKS = []
 let currentTrackPointer = -1
 
-document.getElementById('MainTitle').innerText =
-  document.getElementsByTagName('title')[0].innerHTML
-const MAIN_TITLE = document.getElementById('MainTitle').innerText
+const MAIN_TITLE = document.getElementsByTagName('title')[0].innerHTML
+document.getElementById('MainTitle').innerText = MAIN_TITLE
 
 const savedTracksKey = `SavedTracks: ${MAIN_TITLE}` //for localStorage
 const checkedOptsKey = `CheckedOptions: ${MAIN_TITLE}` //for localStorage
 
-let TRACK_LINKS = []
-Object.keys(ALL_OPTS).forEach((title) => {
-  const div_to_put_opts = document.getElementById('tracksOpts')
-  input = document.createElement('input')
-  input.checked = ALL_OPTS[title].checked
-  input.type = 'checkbox'
-  input.id = title
-  input.name = title
-  input.onclick = () => excludeOrIncludeTracks()
-
-  label = document.createElement('label')
-  label.setAttribute('for', title)
-  label.innerText = title
-
-  div_to_put_opts.appendChild(input)
-  div_to_put_opts.appendChild(label)
-  div_to_put_opts.appendChild(document.createElement('br'))
-
-  TRACK_LINKS.push(...ALL_OPTS[title].trackLinks)
-})
-
+put_options()
 get_last_track_and_checked()
 navigatorStuff()
 activateModal()
@@ -349,14 +329,34 @@ function toggleDropdown() {
   }
 }
 
-function goBack10() {
-  document.getElementsByTagName('audio')[0].currentTime -= 10
-}
-function goForawrd10() {
-  document.getElementsByTagName('audio')[0].currentTime += 10
+function put_options(){
+  const opts = Object.keys(ALL_OPTS)
+  const div_to_put_opts = document.getElementById('tracksOpts')
+  for(const title of opts){
+    input = document.createElement('input')
+    input.checked = ALL_OPTS[title].checked
+    input.type = 'checkbox'
+    input.id = title
+    input.name = title
+    input.onclick = () => excludeOrIncludeTracks()
+
+    label = document.createElement('label')
+    label.setAttribute('for', title)
+    label.innerText = title
+
+    div_to_put_opts.appendChild(input)
+    div_to_put_opts.appendChild(label)
+    div_to_put_opts.appendChild(document.createElement('br'))
+
+    TRACK_LINKS.push(...ALL_OPTS[title].trackLinks)
+  }
 }
 
-function pauseTrack(){
+function skipTrackTime(skipBy=10) {
+  document.getElementsByTagName('audio')[0].currentTime += parseInt(skipBy)
+}
+
+function togglePausePlayTrack(){
   const audioPlayer = document.getElementsByTagName('audio')[0]
   const btn = document.getElementById('playPauseBtn')
   if (audioPlayer.paused){
@@ -366,4 +366,13 @@ function pauseTrack(){
     audioPlayer.pause()
     btn.src = "/imgs/play.png"
   }
+}
+
+function check_uncheck_opts(val=false){
+  const opts = Object.keys(ALL_OPTS)
+  for(const title of opts){
+    input = document.getElementById(title)
+    input.checked = val
+  }
+  excludeOrIncludeTracks()
 }
