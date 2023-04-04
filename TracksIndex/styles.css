@@ -1,3 +1,7 @@
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #0074d9;
   font-family: -apple-system, blinkmacsystemfont, 'segoe ui', 'roboto', 'oxygen',
@@ -106,6 +110,16 @@ body {
   display: none;
   background-color: #efdaf8;
   border-radius: 10px;
+  padding: 1em;
+}
+
+audio{
+  border-radius: 10px;
+  margin: 1em;
+}
+
+#TrackTitle{
+  word-wrap: anywhere;
 }
 
 .skip10btn{
@@ -114,7 +128,7 @@ body {
   border-radius: 1em;
 }
 
-.trackNodeBtn {
+.trackNode {
   /* all: unset; */
   padding: 5px;
   margin: 5px;
@@ -146,7 +160,7 @@ body {
 }
 
 .artist,
-.link,
+.playTrackBtnWithTitle,
 .timestamp {
   display: inline-block;
   font-size: 12px;
@@ -155,10 +169,8 @@ body {
   margin-right: 15px;
 }
 
-.link {
-  color: #333;
-  overflow-wrap: anywhere;
-  /* text-decoration: none; */
+.playTrackBtnWithTitle{
+  word-wrap: anywhere;
 }
 
 summary {

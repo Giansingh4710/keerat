@@ -21,9 +21,7 @@
     </p>
     <a id="TrackTitle"></a>
     <div id="audioDiv">
-      <button onclick="goBack10()"> <img src="/imgs/back10.png" class="skip10btn" /> </button>
       <audio autoplay controls></audio>
-      <button onclick="goForawrd10()"> <img src="/imgs/forward10.png" class="skip10btn" /> </button>
     </div>
     <details id="trackShabadIdDetails"></details>
   </div>
@@ -84,15 +82,24 @@
     </button>
   </div>
 
-  <div id='trackNodes'></div>
+  <h4 id="trackInfo">Vajhee</h4>
+  <ol reversed id='trackNodes'></ol>
 </body>
 
-<script type="text/javascript" src="http://45.76.2.28/files/allShabads.js"></script>
+<!-- <script type="text/javascript" src="http://45.76.2.28/files/allShabads.js"></script> -->
+<script type="text/javascript" src="./allShabads.js"></script>
 <script>
   const ALL_TRACKS_DATA = [];
+  modalStuff();
 
-  function goBack10() {document.getElementsByTagName('audio')[0].currentTime -= 10}
-  function goForawrd10() {document.getElementsByTagName('audio')[0].currentTime += 10}
+  function scrollToDivAccodingToUrl() {
+    const url = window.location.href;
+    const theId = url.split("#").splice(-1)[0]
+    if (theId !== url)
+      document.getElementById(theId).scrollIntoView();
+    else
+      console.log("Unable to scroll to ID")
+  }
 
   function trackNodeBtnClicked(obj) {
     const audioContent = document.getElementById('audioContent')
@@ -116,30 +123,32 @@
     }
 
     const details = document.getElementById('trackShabadIdDetails')
-    if (obj.shabadId != '' && allShabadsAdi[obj.shabadId] ) {
+    if (obj.shabadId != '' && ALL_SHABADS[obj.shabadId]) {
       const summary = document.createElement('summary')
       summary.innerText = `Shabad ID: ${obj.shabadId}`
-      details.innerText = allShabadsAdi[obj.shabadId].join('\n')
+      details.innerText = ALL_SHABADS[obj.shabadId].join('\n')
       details.appendChild(summary)
       details.style.display = "block"
-    }else{
+    } else {
       details.style.display = "none"
     }
+
+    document.getElementById('audioContent').scrollIntoView();
   }
 
   function displayData(objLst = ALL_TRACKS_DATA, alreadyFiltered = false) {
     /*
-      <button>
+      <li>
         <div class="description">Description: Aaoo Hamare Raam Pyare Jio</div>
         <div class="artist">Keertani: Bhai Harpreet Singh</div>
         <div class="timestamp">Time Stamp: 37:18</div>
-        <a class="link" href="">Track Title</a>
+        <button>Track Title</button>
         <details>
           <summary>Shabad ID: 687</summary>
           ਆਉ ਹਮਾਰੈ ਰਾਮ ਪਿਆਰੇ ਜੀਉ ॥
           Come to me, O my Beloved Lord.
         </details>
-      </button>
+      </li>
     */
     const ol = document.getElementById('trackNodes')
     ol.innerHTML = '';
@@ -148,18 +157,20 @@
     if (!alreadyFiltered)
       theData = filterDataByChosenOpt(objLst)
 
+    document.getElementById('trackInfo').innerText = `Found ${theData.length} Tracks`
+
     for (let i = theData.length - 1; i > -1; i--) {
       const obj = theData[i];
-      const btn = document.createElement('button')
-      btn.onclick = () => trackNodeBtnClicked(obj)
-      btn.setAttribute('class', 'trackNodeBtn')
+      const mainDivCont = document.createElement('li')
+      mainDivCont.setAttribute('class', 'trackNode')
+      mainDivCont.setAttribute('id', obj.id)
 
       const divTopBar = document.createElement('div')
       divTopBar.setAttribute('class', 'topBarLine')
 
       const divNodeNum = document.createElement('div')
       divNodeNum.setAttribute('class', 'nodeNum')
-      divNodeNum.innerText = `# ${i + 1}`
+      divNodeNum.innerText = `# ${obj.id}`
       divTopBar.appendChild(divNodeNum)
 
       const divDesc = document.createElement('div')
@@ -167,49 +178,47 @@
       divDesc.innerText = `Description: ${obj.description}`
       divTopBar.appendChild(divDesc)
 
-      btn.appendChild(divTopBar)
+      mainDivCont.appendChild(divTopBar)
 
       const divArt = document.createElement('div')
       divArt.setAttribute('class', 'artist')
       divArt.innerText = `Keertani: ${obj.keertani}`
-      btn.appendChild(divArt)
+      mainDivCont.appendChild(divArt)
 
       const divTime = document.createElement('div')
       divTime.setAttribute('class', 'timestamp')
       divTime.innerText = `Time Stamp: ${obj.timeStamp}`
-      btn.appendChild(divTime)
+      mainDivCont.appendChild(divTime)
 
-      const aLink = document.createElement('a')
-      aLink.setAttribute('class', 'link')
-      aLink.href = obj.link
-      aLink.innerText = getTrackTitle(obj.link)
-      btn.appendChild(aLink)
+      const playTrackBtn = document.createElement('button')
+      playTrackBtn.setAttribute('class', 'playTrackBtnWithTitle')
+      playTrackBtn.innerText = getTrackTitle(obj.link)
+      playTrackBtn.onclick = () => trackNodeBtnClicked(obj)
+      mainDivCont.appendChild(playTrackBtn)
 
-      if (obj.shabadId != '' && allShabadsAdi[obj.shabadId] ) {
+      if (obj.shabadId != '' && ALL_SHABADS[obj.shabadId]) {
         const details = document.createElement('details')
         const summary = document.createElement('summary')
         summary.innerText = `Shabad ID: ${obj.shabadId}`
-        details.innerText = allShabadsAdi[obj.shabadId].join('\n')
+        details.innerText = ALL_SHABADS[obj.shabadId].join('\n')
         details.appendChild(summary)
-        btn.appendChild(details)
+        mainDivCont.appendChild(details)
       }
 
-      ol.appendChild(btn)
-      /* const li = document.createElement('li') */
-      /* li.appendChild(btn) */
-      /* ol.appendChild(li) */
+      ol.appendChild(mainDivCont)
     }
   }
 
   function searchForTrack(e) {
-    const ol = document.getElementById("trackNodes");
     const wordsEntered = e.toLowerCase().split(' ')
 
     const theData = filterDataByChosenOpt()
 
     const results = theData.filter(obj => {
       const values = Object.values(obj);
-      if (obj.shabadId != "") values.push(...allShabadsAdi[obj.shabadId])
+      if (obj.shabadId != '' && ALL_SHABADS[obj.shabadId])
+        values.push(ALL_SHABADS[obj.shabadId].join('\n'));
+
       for (const word of wordsEntered) {
         const wordInTrackObj = values.some(line => line.toLowerCase().includes(word));
         if (!wordInTrackObj) {
@@ -240,7 +249,6 @@
       const optForModal = opt.cloneNode(true)
       selectModal.prepend(optForModal)
     }
-    console.log("putOps")
     modalSelectChanged() //so that the input field will get the value if modal not changed
   }
 
@@ -283,11 +291,14 @@
     if (!res.ok) throw new Error("Something went wrong!");
     return res.json()
   }).then((data) => {
-    for (const obj of data) {
+    for (let i = 0; i < data.length; i++) {
+      const obj = data[i];
+      obj.id = `${i + 1}`;
       ALL_TRACKS_DATA.push(obj)
     }
     displayData();
-    putOptsInSelect()
+    putOptsInSelect();
+    scrollToDivAccodingToUrl();
   }).catch((err) => {
     console.log(err)
   })
@@ -305,7 +316,6 @@
       form.submit()
     }
   }
-  modalStuff();
 </script>
 
 </html>
