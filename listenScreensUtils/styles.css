@@ -1,10 +1,17 @@
 body {
-  background-color: #0074D9;
+  background-color: #AABBBD;
+  /* background-color: #f7f7f7; */
   text-align: center;
   align-items: center;
   font-family: -apple-system, blinkmacsystemfont, "segoe ui", "roboto", "oxygen",
     "ubuntu", "cantarell", "fira sans", "droid sans", "helvetica neue",
     sans-serif;
+  /* margin: 0; */
+}
+
+audio {
+  width: 100%;
+  /* margin-top: 10px; */
 }
 
 /* ---------------navbar stuff----------------- */
@@ -156,27 +163,38 @@ body {
   border-radius: 10px;
 }
 
+#trackPlaying {
+  display: flex;
+}
+
+#trackInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#trackNameAtag:link {
+  word-wrap: break-word;
+}
+
 #playBackOptions{
   display: flex;
   justify-content: space-around;
 }
 
 .skip10btn {
-  background-color: #EDDF6A;
+  /* background-color: grey; */
   border-radius: 50%;
+  margin: 1em;
 }
 .skip10btn img {
   height: 30px;
   width: 30px;
 }
 
-#trackNameAtag:link {
-  color: #FFA501;
-  word-wrap: break-word;
-}
-
 #trackNavigationBtns{
   display: flex;
+  margin: 0 10px;
 }
 #saveTrackBtn{
   margin: 1em;
@@ -201,7 +219,6 @@ body {
 
 .sectionDisplay {
   margin:1em;
-  /* padding:1em; */
   border-radius: 1em;
   background-color: navy;
   color: white;
@@ -210,6 +227,7 @@ body {
 #checkBtnsOpts{
   display: flex;
   justify-content: space-around;
-  padding:1em;
+  padding: 1em;
 }
+
 
