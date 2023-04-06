@@ -41,8 +41,8 @@ document.write('\
  \
   <div id="trackPlaying" style="display: none"> \
     <div id="trackInfo" class="border"> \
-      <h4 id="trackFromWhichOpt"></h4> \
-      <h3> \
+      <h4 style="margin: 0" id="trackFromWhichOpt"></h4> \
+      <h3 style="margin: 10px"> \
         <a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a> \
       </h3> \
       <audio \
