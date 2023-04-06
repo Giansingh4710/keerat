@@ -1,5 +1,6 @@
 body {
-  background-color: #AABBBD;
+  /* background-color: #AABBBD; */
+  background-color: #0074D9;
   /* background-color: #f7f7f7; */
   text-align: center;
   align-items: center;
@@ -185,7 +186,7 @@ audio {
 .skip10btn {
   /* background-color: grey; */
   border-radius: 50%;
-  /* margin: 1em; */
+  margin: 1em;
 }
 .skip10btn img {
   height: 30px;
