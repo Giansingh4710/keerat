@@ -211,19 +211,21 @@ function searchForShabad(e) {
 }
 
 function navigatorStuff() {
-  navigator.mediaSession.setActionHandler('previoustrack', () =>
-    playPreviousTrack()
+  const theAudioPlayer = document.getElementsByTagName('audio')[0]
+  navigator.mediaSession.setActionHandler('play', () => theAudioPlayer.play())
+  navigator.mediaSession.setActionHandler('pause', () => theAudioPlayer.pause())
+
+  navigator.mediaSession.setActionHandler('seekforward', () =>
+    skipTrackTime(10)
   )
-  navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack())
-  navigator.mediaSession.setActionHandler('play', () => {
-    const theAudioPlayer = document.getElementsByTagName('audio')[0]
-    console.log('Played')
-    theAudioPlayer.play()
-  })
-  navigator.mediaSession.setActionHandler('pause', () => {
-    const theAudioPlayer = document.getElementsByTagName('audio')[0]
-    console.log('Paused')
-    theAudioPlayer.pause()
+  navigator.mediaSession.setActionHandler('seekbackward', () =>
+    skipTrackTime(-10)
+  )
+  navigator.mediaSession.setActionHandler('previoustrack', playPreviousTrack)
+  navigator.mediaSession.setActionHandler('nexttrack', playNextTrack)
+
+  navigator.mediaSession.setActionHandler('seekto', function (event) {
+    theAudioPlayer.currentTime = event.seekTime
   })
 }
 
@@ -329,10 +331,10 @@ function toggleDropdown() {
   }
 }
 
-function put_options(){
+function put_options() {
   const opts = Object.keys(ALL_OPTS)
   const div_to_put_opts = document.getElementById('tracksOpts')
-  for(const title of opts){
+  for (const title of opts) {
     input = document.createElement('input')
     input.checked = ALL_OPTS[title].checked
     input.type = 'checkbox'
@@ -352,25 +354,25 @@ function put_options(){
   }
 }
 
-function skipTrackTime(skipBy=10) {
+function skipTrackTime(skipBy = 10) {
   document.getElementsByTagName('audio')[0].currentTime += parseInt(skipBy)
 }
 
-function togglePausePlayTrack(){
+function togglePausePlayTrack() {
   const audioPlayer = document.getElementsByTagName('audio')[0]
   const btn = document.getElementById('playPauseBtn')
-  if (audioPlayer.paused){
+  if (audioPlayer.paused) {
     audioPlayer.play()
-    btn.src = "/imgs/pause.png"
-  }else{
+    btn.src = '/imgs/pause.png'
+  } else {
     audioPlayer.pause()
-    btn.src = "/imgs/play.png"
+    btn.src = '/imgs/play.png'
   }
 }
 
-function check_uncheck_opts(val=false){
+function check_uncheck_opts(val = false) {
   const opts = Object.keys(ALL_OPTS)
-  for(const title of opts){
+  for (const title of opts) {
     input = document.getElementById(title)
     input.checked = val
   }
