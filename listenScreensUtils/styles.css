@@ -1,7 +1,6 @@
 body {
-  /* background-color: #AABBBD; */
-  background-color: #0074D9;
   /* background-color: #f7f7f7; */
+  background-color: #0074D9;
   text-align: center;
   align-items: center;
   font-family: -apple-system, blinkmacsystemfont, "segoe ui", "roboto", "oxygen",
@@ -174,8 +173,11 @@ audio {
   align-items: center;
 }
 
-#trackNameAtag:link {
+#trackNameAtag {
+  width: 90%;
   word-wrap: break-word;
+  font-weight: bold;
+  margin: 1em;
 }
 
 #playBackOptions{
