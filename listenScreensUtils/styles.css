@@ -194,6 +194,9 @@ audio {
   height: 30px;
   width: 30px;
 }
+#pickSkipInterval{
+  margin: 5px;
+}
 
 #trackNavigationBtns{
   display: flex;

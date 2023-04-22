@@ -49,16 +49,25 @@
         autoplay="true"
       ></audio>
       <div id="playBackOptions">
-        <button onclick="skipTrackTime(-10)" class="skip10btn">
+        <button onclick="skipTrackTime()" class="skip10btn">
           <img src="/imgs/back10.png" />
         </button>
         <button onclick="togglePausePlayTrack()" class="skip10btn">
           <img src="/imgs/pause.png" id="playPauseBtn" />
         </button>
-        <button onclick="skipTrackTime(10)" class="skip10btn">
+        <button onclick="skipTrackTime()" class="skip10btn">
           <img src="/imgs/forward10.png" />
         </button>
       </div>
+
+      <label for="pickSkipInterval">Skip Interval</label>
+      <select id="pickSkipInterval" onchange="changeInterval()">
+        <option value="5">5 Seconds</option>
+        <option value="10">10 Seconds</option>
+        <option value="15">15 Seconds</option>
+        <option value="30">30 Seconds</option>
+        <option value="60">60 Seconds</option>
+      </select>
     </div>
     <button class="basicBtn" id="saveTrackBtn">SAVE</button>
     <div id="trackNavigationBtns">

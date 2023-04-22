@@ -1,12 +1,15 @@
 const tracksPlayed = []
 let TRACK_LINKS = []
 let currentTrackPointer = -1
+let skipByInterval = "10";
 
 const MAIN_TITLE = document.getElementsByTagName('title')[0].innerHTML
 document.getElementById('MainTitle').innerText = MAIN_TITLE
 
+
 const savedTracksKey = `SavedTracks: ${MAIN_TITLE}` //for localStorage
-const checkedOptsKey = `CheckedOptions: ${MAIN_TITLE}` //for localStorage
+const checkedOptsKey = `CheckedOptions: ${MAIN_TITLE}`
+const skipByKey =`Skip By Interval: ${MAIN_TITLE}`
 
 put_options()
 get_last_track_and_checked()
@@ -298,9 +301,14 @@ function get_last_track_and_checked() {
     currentTrackPointer = tracksPlayed.length - 1
     playTrack(link)
   } else {
-    console.log('Could not get link from last session!')
     playNextTrack()
   }
+
+  const skipByOpt = JSON.parse(localStorage.getItem(skipByKey)) 
+  if (skipByOpt){
+    skipByInterval = skipByOpt;
+  }
+  document.getElementById('pickSkipInterval').value = skipByInterval
 }
 
 function getTypeOfTrack(link) {
@@ -354,10 +362,6 @@ function put_options() {
   }
 }
 
-function skipTrackTime(skipBy = 10) {
-  document.getElementsByTagName('audio')[0].currentTime += parseInt(skipBy)
-}
-
 function togglePausePlayTrack() {
   const audioPlayer = document.getElementsByTagName('audio')[0]
   const btn = document.getElementById('playPauseBtn')
@@ -377,4 +381,16 @@ function check_uncheck_opts(val = false) {
     input.checked = val
   }
   excludeOrIncludeTracks()
+}
+
+function skipTrackTime() {
+  document.getElementsByTagName('audio')[0].currentTime += parseInt(skipByInterval)
+}
+
+
+function changeInterval(){
+  const chosed_skipByOpt = document.getElementById('pickSkipInterval').value
+  skipByInterval = chosed_skipByOpt
+  localStorage.setItem(skipByKey, chosed_skipByOpt)
+
 }
