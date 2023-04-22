@@ -50,13 +50,13 @@ document.write('\
         autoplay="true" \
       ></audio> \
       <div id="playBackOptions"> \
-        <button onclick="skipTrackTime()" class="skip10btn"> \
+        <button onclick="skipTrackTime(-1)" class="skip10btn"> \
           <img src="/imgs/back10.png" /> \
         </button> \
         <button onclick="togglePausePlayTrack()" class="skip10btn"> \
           <img src="/imgs/pause.png" id="playPauseBtn" /> \
         </button> \
-        <button onclick="skipTrackTime()" class="skip10btn"> \
+        <button onclick="skipTrackTime(1)" class="skip10btn"> \
           <img src="/imgs/forward10.png" /> \
         </button> \
       </div> \

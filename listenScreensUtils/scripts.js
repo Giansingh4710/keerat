@@ -219,10 +219,10 @@ function navigatorStuff() {
   navigator.mediaSession.setActionHandler('pause', () => theAudioPlayer.pause())
 
   navigator.mediaSession.setActionHandler('seekforward', () =>
-    skipTrackTime(10)
+    skipTrackTime(1)
   )
   navigator.mediaSession.setActionHandler('seekbackward', () =>
-    skipTrackTime(-10)
+    skipTrackTime(-1)
   )
   navigator.mediaSession.setActionHandler('previoustrack', playPreviousTrack)
   navigator.mediaSession.setActionHandler('nexttrack', playNextTrack)
@@ -383,8 +383,8 @@ function check_uncheck_opts(val = false) {
   excludeOrIncludeTracks()
 }
 
-function skipTrackTime() {
-  document.getElementsByTagName('audio')[0].currentTime += parseInt(skipByInterval)
+function skipTrackTime(direction) {
+  document.getElementsByTagName('audio')[0].currentTime += parseInt(skipByInterval) * direction
 }
 
 
