@@ -26,6 +26,7 @@ document.write('\
   > \
   <a href="/BhagatJaswantSinghJi/">Bhagat Jaswant Singh Ji</a> \
   <a href="/PanjGranthi(BhaiJaswantSinghJi)/">Panj Granthi</a> \
+  <a href="/MiscellaneousTopics">Miscellaneous Topics</a> \
   <a \
     href="javascript:void(0);" \
     style="font-size: 15px" \
