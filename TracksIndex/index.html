@@ -12,7 +12,7 @@
 <body>
   <input class="search-container" type="text" placeholder="Search..." oninput="searchForTrack(this.value)">
 
-  <div id="audioContent">
+  <div id="current_playing_audio">
     <h2 id="DescOfTrack"></h2>
     <h3 id="playingArtist"></h3>
     <p>
@@ -30,7 +30,9 @@
     <option value='All'>All</option>
   </select>
 
-  <div id="myModal">
+
+  <dialog id="myModal">
+    <!-- <div id="myModal"> -->
     <form id="modal-content" onsubmit="formValidation(event)" method="post"
       action="http://45.76.2.28/trackIndex/addData.php">
       <span id="closeModal">&times;</span>
@@ -52,7 +54,12 @@
       </div>
       <div class="userInputItem">
         <label for="usedShabadId">Shabad ID:</label>
-        <input onChange="console.log(this.value);" id="usedShabadId" name="shabadId" placeholder="687"></input>
+        <input list="shabadId_list_opts" id="usedShabadId" name="shabadId" placeholder="687 or ਤਕਮਲ" oninput="add_shabad_from_user_input()"></input>
+        <datalist id="shabadId_list_opts">
+          <option value="Option 1"></option>
+          <option value="Option 2"></option>
+          <option value="Option 3">
+        </datalist>
         <a id="sttmLink" href="https://www.sikhitothemax.org/shabad?id=687&q=Ahrp&type=1&source=all&highlight=9290">
           <p>https://www.sikhitothemax.org/shabad?id=</p>
           <p id="highlightShabadId">687</p>
@@ -72,12 +79,13 @@
           <label for="secs">seconds</label>
         </div>
       </div>
+
       <button>Add</button>
     </form>
-  </div>
+  </dialog>
 
-  <div id="addTrack">
-    <button id="addTrackBtn">
+  <div id="showModalDiv">
+    <button id="showModalBtn">
       <span>&#43;</span>
     </button>
   </div>
@@ -92,6 +100,51 @@
   const ALL_TRACKS_DATA = [];
   modalStuff();
 
+  function add_shabad_from_user_input(){
+    const input_tag = document.getElementById("usedShabadId")
+    const user_input = input_tag.value
+
+    if (user_input === ''){
+      return
+    }
+    const list_opts = document.getElementById("shabadId_list_opts")
+    list_opts.innerHTML = ''
+
+    const keyObj = findShabadsKey(user_input)
+    for(let key in keyObj){
+      const opt = document.createElement('option')
+      opt.value = key
+      opt.innerText = keyObj[key]
+      list_opts.appendChild(opt)
+      // console.log(keyObj[key])
+    }
+  }
+
+  function findShabadsKey(searchInput) {
+    const all_matched_shabad_keys = {}
+    for (const key in ALL_SHABADS) {
+      const shabadArray = ALL_SHABADS[key]
+
+      for (const line of shabadArray) {
+        const wordsArray = line.split(' ')
+
+        let line_matched = true
+        for (let i = 0; i < searchInput.length; i++) {
+          if (!line_matched) break
+          if (wordsArray.length === i || wordsArray[i][0].toLowerCase() !== searchInput[i].toLowerCase()) {
+            line_matched = false
+          }
+        }
+
+        if (line_matched) {
+          all_matched_shabad_keys[key] = line
+          break
+        }
+      }
+    }
+    return all_matched_shabad_keys
+  }
+
   function scrollToDivAccodingToUrl() {
     const url = window.location.href;
     const theId = url.split("#").splice(-1)[0]
@@ -102,8 +155,8 @@
   }
 
   function trackNodeBtnClicked(obj) {
-    const audioContent = document.getElementById('audioContent')
-    audioContent.style.display = 'block'
+    const current_playing_audio = document.getElementById('current_playing_audio')
+    current_playing_audio.style.display = 'block'
     document.getElementById('DescOfTrack').innerText = obj.description
     document.getElementById('playingArtist').innerText = obj.keertani
     document.getElementById('timeStampOfDecs').innerText = obj.timeStamp
@@ -133,7 +186,7 @@
       details.style.display = "none"
     }
 
-    document.getElementById('audioContent').scrollIntoView();
+    document.getElementById('current_playing_audio').scrollIntoView();
   }
 
   function displayData(objLst = ALL_TRACKS_DATA, alreadyFiltered = false) {
@@ -262,15 +315,33 @@
     })
   }
 
+
   function modalStuff() {
     const modal = document.getElementById("myModal");
-    const btn = document.getElementById("addTrackBtn");
-    const span = document.getElementById("closeModal");
-    btn.onclick = () => modal.style.display = "block";
-    span.onclick = () => modal.style.display = "none";
-    window.onclick = function (event) {
-      if (event.target == modal) {modal.style.display = "none";}
-    };
+    const showModalBtn = document.getElementById("showModalBtn");
+    const closeModalButton = document.getElementById("closeModal");
+
+    showModalBtn.addEventListener('click', () => {
+      modal.showModal()
+    })
+    closeModalButton.addEventListener('click', () => {
+      modal.close();
+
+      //clear inputs
+      const userInputItems = document.querySelectorAll('.userInputItem');
+      userInputItems.forEach((item) => {
+        const inputTags = item.getElementsByTagName('input')
+        for (const tag of inputTags) {
+          tag.value = '';
+        }
+      });
+    });
+    window.addEventListener('click', (event) => {
+      // click outsite modal = close
+      if (event.target === modal) {
+        modal.close();
+      }
+    });
   }
 
   function modalSelectChanged() {

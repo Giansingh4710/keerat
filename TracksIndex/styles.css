@@ -12,7 +12,7 @@ body {
 }
 
 /* ---------------ModalStuff-------------------------- */
-#myModal {
+#myModalNO {
   display: none;
   position: fixed;
   z-index: 1;
@@ -93,7 +93,7 @@ body {
   border-radius: 10px;
 }
 
-#addTrackBtn {
+#showModalBtn {
   /* color: white; */
   padding: 10px 20px;
   border-radius: 5px;
@@ -101,12 +101,12 @@ body {
   box-shadow: 2px 2px 2px #888888;
 }
 
-#addTrack span {
+#showModalDiv span {
   font-size: 5em;
 }
 
 /* -------------------------------- */
-#audioContent {
+#current_playing_audio {
   display: none;
   background-color: #efdaf8;
   border-radius: 10px;
