@@ -82,6 +82,12 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
+.shabad_opt_from_userinput{
+  background-color: white;
+  margin: 5px;
+  border-radius: 5px;
+}
 /* ------------------------------------------------ */
 
 .search-container {
