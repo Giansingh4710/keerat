@@ -3,6 +3,9 @@ let TRACK_LINKS = []
 let currentTrackPointer = -1
 let skipByInterval = "10";
 
+let currentLink; // make it eaiser for sending to database
+let currentArtist;
+
 const MAIN_TITLE = document.getElementsByTagName('title')[0].innerHTML
 document.getElementById('MainTitle').innerText = MAIN_TITLE
 
@@ -63,6 +66,9 @@ function playRandTrack() {
 
 function playTrack(theLinkOfTrack) {
   const artist = getTypeOfTrack(theLinkOfTrack)
+  currentArtist = artist;
+  currentLink = theLinkOfTrack;
+
   /* console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack,artist) */
   console.log(tracksPlayed, `CurrentTrackPointer Index: ${currentTrackPointer}`)
   const theNameOfTrack = getNameOfTrack(theLinkOfTrack)

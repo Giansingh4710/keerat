@@ -53,6 +53,7 @@
           placeholder="http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai%20Joginder%20Singh%20Talwara/Man%20kio%20bairaag%20kurehigaa.mp3"></input>
       </div>
       <div class="userInputItem">
+        <p id="theShabadSelected"></p>
         <label for="usedShabadId">Shabad ID:</label>
         <input list="shabadId_list_opts" id="usedShabadId" name="shabadId" placeholder="687 or ਤਕਮਲ"
           oninput="add_shabad_from_user_input()"></input>
@@ -115,6 +116,7 @@
       opt.onclick = () => {
         list_opts.innerHTML = ''
         input_tag.value = key
+        document.getElementById("theShabadSelected").textContent = keyObj[key]
       }
       // opt.value = key
       opt.innerText = keyObj[key]
@@ -152,10 +154,11 @@
   function scrollToDivAccodingToUrl() {
     const url = window.location.href;
     const theId = url.split("#").splice(-1)[0]
-    if (theId !== url)
-      document.getElementById(theId).scrollIntoView();
-    else
-      console.log("Unable to scroll to ID")
+    document.getElementById(theId).getElementsByTagName('button')[0].click()
+    // if (theId !== url)
+    //   document.getElementById(theId).scrollIntoView();
+    // else
+    //   console.log("Unable to scroll to ID")
   }
 
   function trackNodeBtnClicked(obj) {
@@ -204,6 +207,7 @@
           <summary>Shabad ID: 687</summary> ਆਉ ਹਮਾਰੈ ਰਾਮ ਪਿਆਰੇ ਜੀਉ ॥
           Come to me, O my Beloved Lord.
         </details>
+        <button>Copy</button>
       </li>
     */
     const ol = document.getElementById('trackNodes')
@@ -333,6 +337,8 @@
 
       //clear inputs
       document.getElementById("shabadId_list_opts").innerHTML = ''
+      document.getElementById("theShabadSelected").textContent = ''
+
       const userInputItems = document.querySelectorAll('.userInputItem');
       userInputItems.forEach((item) => {
         const inputTags = item.getElementsByTagName('input')
@@ -385,11 +391,17 @@
     const desc = document.querySelector("#userDesc")
     const keertani = document.querySelector("#userKeertani")
     const link = document.querySelector("#userLink")
+
     if (link.value === "") {
       alert("Link is empty")
-    } else {
-      form.submit()
-    }
+      return
+    } 
+
+    const additionalField = document.createElement("input");
+    additionalField.name = "linkToGoTo";
+    additionalField.value = window.location.href;
+    form.appendChild(additionalField);
+    form.submit()
   }
 </script>
 

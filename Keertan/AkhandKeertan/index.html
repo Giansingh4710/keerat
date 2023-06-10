@@ -16,6 +16,23 @@
 
   <script src="../../listenScreensUtils/htmlBody.js"></script>
 
+  <script src="./save_modal.js"></script>
+  <script>
+    //logic to show and hide modal
+    const dialog = document.getElementById('dialog')
+    const closeBtn = document.getElementById('closeModal')
+    const openBtn = document.getElementById('openModal')
+
+    const openDialog = () => dialog.classList.add('show-dialog')
+    const closeDialog = () => dialog.classList.remove('show-dialog')
+    closeBtn.addEventListener('click', closeDialog)
+    openBtn.addEventListener('click', openDialog)
+
+    window.addEventListener('click', (event) => {
+      if (event.target === dialog) closeDialog()
+    })
+  </script>
+
   <script>
     const ALL_OPTS = {
       'Bhai Mohinder Singh Ji SDO': {
@@ -52,9 +69,90 @@
       },
     }
   </script>
-
   <script
     type="text/javascript"
     src="../../listenScreensUtils/scripts.js"
   ></script>
+
+  <script type="text/javascript" src="/TracksIndex/allShabads.js"></script>
+  <script>
+    //logic for the stuff in the modal
+    function add_shabad_from_user_input() {
+      const input_tag = document.getElementById('usedShabadId')
+      const user_input = input_tag.value
+      const list_opts = document.getElementById('shabadId_list_opts')
+      list_opts.innerHTML = ''
+      if (user_input === '') return
+
+      let max_items_to_show = 10
+      const keyObj = findShabadsKey(user_input)
+      for (let key in keyObj) {
+        const opt = document.createElement('p')
+        opt.classList.add('shabad_opt_from_userinput')
+        opt.onclick = () => {
+          list_opts.innerHTML = ''
+          input_tag.value = key
+          document.getElementById('theShabadSelected').textContent = keyObj[key]
+        }
+        // opt.value = key
+        opt.innerText = keyObj[key]
+        list_opts.appendChild(opt)
+        max_items_to_show -= 1
+        if (max_items_to_show < 0) break
+      }
+    }
+
+    function add_to_form_to_send_to_server(name, value) {
+      const form = document.querySelector('#modal-content')
+      const additionalField = document.createElement('input')
+      additionalField.name = name
+      additionalField.value = value
+      form.appendChild(additionalField)
+    }
+
+    function formValidation(e) {
+      e.preventDefault()
+      const form = document.querySelector('#modal-content')
+
+      const desc = document.querySelector('#userDesc')
+      const sbd = document.querySelector('#usedShabadId')
+      if (sbd.value === '' && desc.value ==='') {
+        alert('No Shabad or Description')
+        return
+      }
+
+      add_to_form_to_send_to_server('linkToGoTo', window.location.href)
+      add_to_form_to_send_to_server('keertani', currentArtist)
+      add_to_form_to_send_to_server('link', currentLink)
+      form.submit()
+    }
+
+    function findShabadsKey(searchInput) {
+      const all_matched_shabad_keys = {}
+      for (const key in ALL_SHABADS) {
+        const shabadArray = ALL_SHABADS[key]
+
+        for (const line of shabadArray) {
+          const wordsArray = line.split(' ')
+
+          let line_matched = true
+          for (let i = 0; i < searchInput.length; i++) {
+            if (!line_matched) break
+            if (
+              wordsArray.length === i ||
+              wordsArray[i][0].toLowerCase() !== searchInput[i].toLowerCase()
+            ) {
+              line_matched = false
+            }
+          }
+
+          if (line_matched) {
+            all_matched_shabad_keys[key] = line
+            break
+          }
+        }
+      }
+      return all_matched_shabad_keys
+    }
+  </script>
 </html>
