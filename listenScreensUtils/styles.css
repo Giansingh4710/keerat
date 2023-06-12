@@ -155,6 +155,16 @@ audio {
   }
 /* -------------------- modal end -------------- */
 
+
+#searchInput {
+  /* width: 100%; */
+  /* height: 40px; */
+  border: none;
+  border-radius: 20px;
+  padding: 5px;
+  /* text-align: center; */
+}
+
 .border{
   text-align: center;
   border: 3px solid #34568b;

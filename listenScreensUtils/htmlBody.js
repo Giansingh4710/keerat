@@ -39,6 +39,16 @@ document.write('\
  \
 <body> \
   <h1 class="border" id="MainTitle"></h1> \
+  <div id="forSearch" class="section"> \
+    <input \
+      placeholder="Search for Track:" \
+      id="searchInput" \
+      oninput="searchForShabad(this.value)" \
+    /> \
+    <div class="sectionDisplay"> \
+      <ol id="searchResults"></ol> \
+    </div> \
+  </div> \
   <p class="border" id="tracksData"></p> \
  \
   <div id="trackPlaying" style="display: none"> \
@@ -122,18 +132,6 @@ document.write('\
     </button> \
     <div class="sectionDisplay"> \
       <ol id="savedShabads"></ol> \
-    </div> \
-  </div> \
- \
-  <hr /> \
-  <div id="forSearch" class="section"> \
-    <input \
-      placeholder="Search for Track:" \
-      id="searchInput" \
-      oninput="searchForShabad(this.value)" \
-    /> \
-    <div class="sectionDisplay"> \
-      <ol id="searchResults"></ol> \
     </div> \
   </div> \
  \
