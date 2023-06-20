@@ -1,26 +1,27 @@
 const tracksPlayed = []
 let TRACK_LINKS = []
 let currentTrackPointer = -1
-let skipByInterval = "10";
+let skipByInterval = '10'
+let shuffle = false
 
-let currentLink; // make it eaiser for sending to database
-let currentArtist;
+let currentLink // make it easier for sending to database
+let currentArtist
 
 const MAIN_TITLE = document.getElementsByTagName('title')[0].innerHTML
 document.getElementById('MainTitle').innerText = MAIN_TITLE
 
-
 const savedTracksKey = `SavedTracks: ${MAIN_TITLE}` //for localStorage
 const checkedOptsKey = `CheckedOptions: ${MAIN_TITLE}`
-const skipByKey =`Skip By Interval: ${MAIN_TITLE}`
+const skipByKey = `Skip By Interval: ${MAIN_TITLE}`
 
 put_options()
 get_last_track_and_checked()
 navigatorStuff()
-activateModal()
+local_save_track_modal()
+global_modal_initialisation()
 
 function playNextTrack() {
-  if (tracksPlayed.length === 0) {
+  if (tracksPlayed.length === 0 || shuffle) {
     playRandTrack()
     return
   }
@@ -37,6 +38,16 @@ function playNextTrack() {
     newTrackInd = tracksPlayed[currentTrackPointer]
   }
   playTrack(TRACK_LINKS[newTrackInd])
+}
+
+function toggleShuffle() {
+  shuffle = !shuffle
+  document.getElementById('shuffle').innerText = shuffle
+    ? 'Shuffle: ON'
+    : 'Shuffle: OFF'
+  document.getElementById('shuffleBtn').style.backgroundColor = shuffle
+    ? '#886BE4'
+    : '#FFA500'
 }
 
 function playPreviousTrack() {
@@ -66,8 +77,8 @@ function playRandTrack() {
 
 function playTrack(theLinkOfTrack) {
   const artist = getTypeOfTrack(theLinkOfTrack)
-  currentArtist = artist;
-  currentLink = theLinkOfTrack;
+  currentArtist = artist
+  currentLink = theLinkOfTrack
 
   /* console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack,artist) */
   console.log(tracksPlayed, `CurrentTrackPointer Index: ${currentTrackPointer}`)
@@ -99,7 +110,7 @@ function saveTrack() {
     note.value
   )
   note.value = ''
-  let modal = document.getElementById('myModal')
+  let modal = document.getElementById('saveTrackLocalModal')
   modal.style.display = 'none'
 }
 
@@ -224,16 +235,14 @@ function navigatorStuff() {
   navigator.mediaSession.setActionHandler('play', () => theAudioPlayer.play())
   navigator.mediaSession.setActionHandler('pause', () => theAudioPlayer.pause())
 
-  navigator.mediaSession.setActionHandler('seekforward', () =>
-    skipTrackTime(1)
-  )
+  navigator.mediaSession.setActionHandler('seekforward', () => skipTrackTime(1))
   navigator.mediaSession.setActionHandler('seekbackward', () =>
     skipTrackTime(-1)
   )
   navigator.mediaSession.setActionHandler('previoustrack', playPreviousTrack)
   navigator.mediaSession.setActionHandler('nexttrack', playNextTrack)
 
-  navigator.mediaSession.setActionHandler('seekto', function (event) {
+  navigator.mediaSession.setActionHandler('seekto', function(event) {
     theAudioPlayer.currentTime = event.seekTime
   })
 }
@@ -243,17 +252,17 @@ function getNameOfTrack(link) {
   return decodeURIComponent(decodeURIComponent(title))
 }
 
-function activateModal() {
-  let modal = document.getElementById('myModal')
+function local_save_track_modal() {
+  let modal = document.getElementById('saveTrackLocalModal')
   let btn = document.getElementById('saveTrackBtn')
-  let span = document.getElementsByClassName('close')[0]
-  btn.onclick = function () {
+  let span = document.getElementById('saveTrackLocalModalClose')
+  btn.onclick = function() {
     modal.style.display = 'block'
   }
-  span.onclick = function () {
+  span.onclick = function() {
     modal.style.display = 'none'
   }
-  window.onclick = function (event) {
+  window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = 'none'
     }
@@ -310,9 +319,9 @@ function get_last_track_and_checked() {
     playNextTrack()
   }
 
-  const skipByOpt = JSON.parse(localStorage.getItem(skipByKey)) 
-  if (skipByOpt){
-    skipByInterval = skipByOpt;
+  const skipByOpt = JSON.parse(localStorage.getItem(skipByKey))
+  if (skipByOpt) {
+    skipByInterval = skipByOpt
   }
   document.getElementById('pickSkipInterval').value = skipByInterval
 }
@@ -390,13 +399,129 @@ function check_uncheck_opts(val = false) {
 }
 
 function skipTrackTime(direction) {
-  document.getElementsByTagName('audio')[0].currentTime += parseInt(skipByInterval) * direction
+  document.getElementsByTagName('audio')[0].currentTime +=
+    parseInt(skipByInterval) * direction
 }
 
-
-function changeInterval(){
+function changeInterval() {
   const chosed_skipByOpt = document.getElementById('pickSkipInterval').value
   skipByInterval = chosed_skipByOpt
   localStorage.setItem(skipByKey, chosed_skipByOpt)
+}
 
+function global_modal_initialisation() {
+  //logic to show and hide modal
+  const dialog = document.getElementById('dialog')
+  const closeBtn = document.getElementById('closeModal')
+  const openBtn = document.getElementById('openModal')
+
+  const openDialog = () => dialog.classList.add('show-dialog')
+  const closeDialog = () => dialog.classList.remove('show-dialog')
+  closeBtn.addEventListener('click', closeDialog)
+  openBtn.addEventListener('click', openDialog)
+
+  window.addEventListener('click', (event) => {
+    if (event.target === dialog) closeDialog()
+  })
+}
+
+function add_shabad_from_user_input() {
+  const input_tag = document.getElementById('usedShabadId')
+  const user_input = input_tag.value
+  const list_opts = document.getElementById('shabadId_list_opts')
+  list_opts.innerHTML = ''
+  if (user_input === '') return
+
+  let max_items_to_show = 10
+  const keyObj = findShabadsKey(user_input)
+  for (let key in keyObj) {
+    const opt = document.createElement('p')
+    opt.classList.add('shabad_opt_from_userinput')
+    opt.onclick = () => {
+      list_opts.innerHTML = ''
+      input_tag.value = key
+      document.getElementById('theShabadSelected').textContent = keyObj[key]
+    }
+    // opt.value = key
+    opt.innerText = keyObj[key]
+    list_opts.appendChild(opt)
+    max_items_to_show -= 1
+    if (max_items_to_show < 0) break
+  }
+}
+
+function add_to_form_to_send_to_server(name, value) {
+  const form = document.querySelector('#modal-content')
+  const additionalField = document.createElement('input')
+  additionalField.name = name
+  additionalField.value = value
+  form.appendChild(additionalField)
+  return additionalField
+}
+
+function formValidation(e) {
+  e.preventDefault()
+  const form = document.querySelector('#modal-content')
+
+  const desc = document.querySelector('#userDesc')
+  const sbd = document.querySelector('#usedShabadId')
+  if (sbd.value === '' && desc.value === '') {
+    alert('No Shabad or Description')
+    return
+  }
+
+  // add_to_form_to_send_to_server('linkToGoTo', window.location.href)
+  const itm1 = add_to_form_to_send_to_server('linkToGoTo', 'false')
+  const itm2 = add_to_form_to_send_to_server('keertani', currentArtist)
+  const itm3 = add_to_form_to_send_to_server('link', currentLink)
+
+  fetch('http://45.76.2.28/trackIndex/addData.php', {
+    method: 'POST',
+    body: new FormData(e.target),
+  })
+    .then((res) => {
+      console.log(res)
+      document.getElementById('formInfo').innerText = 'Submitted!!!'
+    })
+    .catch((error) => {
+      const msg = 'Error submitting the form:' + error
+      console.log(msg)
+      document.getElementById('formInfo').innerText = msg
+    })
+
+  form.removeChild(itm1)
+  form.removeChild(itm2)
+  form.removeChild(itm3)
+
+  desc.value = ''
+  sbd.value = ''
+  document.getElementById('dialog').classList.remove('show-dialog')
+}
+
+function findShabadsKey(searchInput) {
+  const all_matched_shabad_keys = {}
+  for (const key in ALL_SHABADS) {
+    const shabadArray = ALL_SHABADS[key]
+
+    for (const line of shabadArray) {
+      const wordsArray = line.split(' ')
+
+      let line_matched = true
+      for (let i = 0; i < searchInput.length; i++) {
+        if (!line_matched) break
+        if (
+          wordsArray.length === i ||
+          wordsArray[i][0].toLowerCase() !== searchInput[i].toLowerCase()
+        ) {
+          line_matched = false
+        }
+      }
+
+      if (line_matched) {
+        all_matched_shabad_keys[key] = line
+        break
+      }
+    }
+  }
+  return all_matched_shabad_keys
 }

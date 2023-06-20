@@ -1,7 +1,4 @@
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <nav class="topnav">
   <a href="/" class="active">Home</a>
   <div class="dropdown">
@@ -11,39 +8,24 @@
     </button>
     <div class="dropdown-content">
       <a href="/Keertan/AkhandKeertan/">Akhand Keertan</a>
-      <a href="/Keertan/DarbarSahibPuratanKeertanSGPC"
-        >Darbar Sahib Puratan Keertan</a
-      >
-      <a href="/Keertan/TimeBasedKeertan(RaagKeertan)"
-        >Time Based Keertan (Raag Keertan)</a
-      >
+      <a href="/Keertan/DarbarSahibPuratanKeertanSGPC">Darbar Sahib Puratan Keertan</a>
+      <a href="/Keertan/TimeBasedKeertan(RaagKeertan)">Time Based Keertan (Raag Keertan)</a>
     </div>
   </div>
   <a href="/Paath/">Paath</a>
-  <a href="/SantGianiGurbachanSinghJiSGGSKatha/"
-    >Sant Giani Gurbachan Singh Ji SGGS Katha</a
-  >
+  <a href="/SantGianiGurbachanSinghJiSGGSKatha/">Sant Giani Gurbachan Singh Ji SGGS Katha</a>
   <a href="/BhagatJaswantSinghJi/">Bhagat Jaswant Singh Ji</a>
   <a href="/PanjGranthi(BhaiJaswantSinghJi)/">Panj Granthi</a>
   <a href="/MiscellaneousTopics">Miscellaneous Topics</a>
   <a href="http://keerat.xyz/TracksIndex/">Tracks Indexed</a>
-  <a
-    href="javascript:void(0);"
-    style="font-size: 15px"
-    class="icon"
-    onclick="toggleDropdown()"
-    >&#9776;</a
-  >
+  <a href="javascript:void(0);" style="font-size: 15px" class="icon" onclick="toggleDropdown()">&#9776;</a>
 </nav>
 
+<script type="text/javascript" src="/TracksIndex/allShabads.js"></script>
 <body>
   <h1 class="border" id="MainTitle"></h1>
   <div id="forSearch" class="section">
-    <input
-      placeholder="Search for Track:"
-      id="searchInput"
-      oninput="searchForShabad(this.value)"
-    />
+    <input placeholder="Search for Track:" id="searchInput" oninput="searchForShabad(this.value)" />
     <div class="sectionDisplay">
       <ol id="searchResults"></ol>
     </div>
@@ -54,12 +36,7 @@
     <div id="trackInfo" class="border">
       <h4 style="margin: 0" id="trackFromWhichOpt"></h4>
       <a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a>
-      <audio
-        onended="playNextTrack()"
-        onerror=""
-        controls
-        autoplay="true"
-      ></audio>
+      <audio onended="playNextTrack()" onerror="" controls autoplay="true"></audio>
       <div id="playBackOptions">
         <button onclick="skipTrackTime(-1)" class="skip10btn">
           <img src="/imgs/back10.png" />
@@ -81,18 +58,13 @@
         <option value="60">60 Seconds</option>
       </select>
     </div>
-    <button class="basicBtn" id="saveTrackBtn">SAVE</button>
     <div id="trackNavigationBtns">
       <button class="basicBtn trackNavBtn" onclick="playPreviousTrack()">
-        &#8592; Previous
+        &#8592; Back
       </button>
-      <button
-        class="basicBtn trackNavBtn"
-        onclick="playRandTrack()"
-        id="playRandomTrack"
-        autofocus
-      >
-        Random Track
+      <button id="shuffleBtn" class="basicBtn" onclick="toggleShuffle()">
+        <img src="/imgs/shuffle_icon.png" />
+        <p id="shuffle">Shuffle: OFF</p>
       </button>
       <button class="basicBtn trackNavBtn" onclick="playNextTrack()">
         Next &rarr;
@@ -102,11 +74,7 @@
 
   <hr />
   <div id="optionMenu" class="section">
-    <button
-      class="basicBtn"
-      id="toggleShowingOpts"
-      onclick="toggleShowingOpts()"
-    >
+    <button class="basicBtn" id="toggleShowingOpts" onclick="toggleShowingOpts()">
       Hide The Options
     </button>
     <div class="sectionDisplay">
@@ -125,9 +93,10 @@
   </div>
 
   <hr />
+  <button class="basicBtn" id="saveTrackBtn">Save Track Locally</button>
   <div id="forSavedTracks" class="section">
     <button class="basicBtn" onclick="toggleSavedTracks()">
-      Toggle Saved Tracks
+      Show Saved Tracks (Toggle)
     </button>
     <div class="sectionDisplay">
       <ol id="savedShabads"></ol>
@@ -144,24 +113,62 @@
     </div>
   </div>
 
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <label for="noteForSavedTrack"
-        >Enter a note if you would like (not needed):</label
-      >
+  <div id="saveTrackLocalModal" class="modal">
+    <div id="saveTrackLocalModal-content">
+      <span id="saveTrackLocalModalClose">&times;</span>
+      <label for="noteForSavedTrack">Enter a note if you would like (not needed):</label>
       <div>
-        <textarea
-          multiline
-          placeholder="ex: Amazing Bani at 10:00"
-          id="noteForSavedTrack"
-        ></textarea>
+        <textarea multiline placeholder="ex: Amazing Bani at 10:00" id="noteForSavedTrack"></textarea>
       </div>
       <div>
         <button class="basicBtn" onclick="saveTrack()">Save</button>
       </div>
     </div>
   </div>
+
+  <div id="dialog" class="dialog">
+    <div class="dialog-content">
+      <p id="formInfo"></p>
+      <form id="modal-content" onsubmit="formValidation(event)" method="post"
+        action="http://45.76.2.28/trackIndex/addData.php">
+        <span id="closeModal">&times;</span>
+        <div class="userInputItem">
+          <label for="userDesc">Description:</label>
+          <input id="userDesc" name="description" placeholder="bin ek naam ik chit leen"></input>
+        </div>
+        <div class="userInputItem">
+          <p id="theShabadSelected"></p>
+          <label for="usedShabadId">Shabad ID:</label>
+          <input list="shabadId_list_opts" id="usedShabadId" name="shabadId" placeholder="687 or ਤਕਮਲ"
+            oninput="add_shabad_from_user_input()"></input>
+          <div id="shabadId_list_opts">
+          </div>
+
+          <a id="sttmLink" href="https://www.sikhitothemax.org/shabad?id=687&q=Ahrp&type=1&source=all&highlight=9290">
+            <p>https://www.sikhitothemax.org/shabad?id=</p>
+            <p id="highlightShabadId">687</p>
+            <p>&q=Ahrp&type=1&source=all&highlight=9290</p>
+          </a>
+        </div>
+        <div class="userInputItem">
+          <label for="userTimestamp">Timestamp of where Description Happened:</label>
+          <div id="userTimestamp">
+            <input name="hours" id="hours" type="number" min="0" max="59" inputmode="numeric"></input>:
+            <input name="mins" id="mins" type="number" min="0" max="59" inputmode="numeric"></input>:
+            <input name="secs" id="secs" type="number" min="0" max="59" inputmode="numeric"></input>
+          </div>
+          <div id="userTimestamp">
+            <label for="hours">hours:</label>
+            <label for="mins">minutes:</label>
+            <label for="secs">seconds</label>
+          </div>
+        </div>
+
+        <button>Add</button>
+      </form>
+    </div>
+  </div>
+  <button id="openModal">Save to Global Database</button>
 
   <!-- <button onclick="localStorage.clear()">Reset Saved/Local Storage</button> -->
 </body>
