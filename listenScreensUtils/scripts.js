@@ -13,9 +13,10 @@ document.getElementById('MainTitle').innerText = MAIN_TITLE
 const savedTracksKey = `SavedTracks: ${MAIN_TITLE}` //for localStorage
 const checkedOptsKey = `CheckedOptions: ${MAIN_TITLE}`
 const skipByKey = `Skip By Interval: ${MAIN_TITLE}`
+const lastTimeStampKey = `Last Time Saved Interval: ${MAIN_TITLE}`
 
 put_options()
-get_last_track_and_checked()
+get_last_track_reset_stuff()
 navigatorStuff()
 local_save_track_modal()
 global_modal_initialisation()
@@ -295,7 +296,7 @@ function excludeOrIncludeTracks() {
   ).innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
 }
 
-function get_last_track_and_checked() {
+function get_last_track_reset_stuff() {
   const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey)) //{opt:true/false}
   if (checkedOpts) {
     for (const opt in checkedOpts) {
@@ -324,6 +325,18 @@ function get_last_track_and_checked() {
     skipByInterval = skipByOpt
   }
   document.getElementById('pickSkipInterval').value = skipByInterval
+
+  const timeOfAudio = localStorage.getItem(lastTimeStampKey)
+  if (timeOfAudio) {
+    document.getElementsByTagName('audio')[0].currentTime = timeOfAudio
+  }
+  window.addEventListener('unload', () => {
+    localStorage.setItem(
+      lastTimeStampKey,
+      document.getElementsByTagName('audio')[0].currentTime
+    )
+    // This function will be called before the browser is closed or the page is unloaded. However, note that modern browsers may restrict what you can do in this event handler for security reasons.
+  })
 }
 
 function getTypeOfTrack(link) {
@@ -470,32 +483,12 @@ function formValidation(e) {
     return
   }
 
-  // add_to_form_to_send_to_server('linkToGoTo', window.location.href)
-  const itm1 = add_to_form_to_send_to_server('linkToGoTo', 'false')
-  const itm2 = add_to_form_to_send_to_server('keertani', currentArtist)
-  const itm3 = add_to_form_to_send_to_server('link', currentLink)
+  // const itm1 = add_to_form_to_send_to_server('linkToGoTo', 'false')
+  add_to_form_to_send_to_server('linkToGoTo', window.location.href)
+  add_to_form_to_send_to_server('keertani', currentArtist)
+  add_to_form_to_send_to_server('link', currentLink)
 
-  fetch('http://45.76.2.28/trackIndex/addData.php', {
-    method: 'POST',
-    body: new FormData(e.target),
-  })
-    .then((res) => {
-      console.log(res)
-      document.getElementById('formInfo').innerText = 'Submitted!!!'
-    })
-    .catch((error) => {
-      const msg = 'Error submitting the form:' + error
-      console.log(msg)
-      document.getElementById('formInfo').innerText = msg
-    })
-
-  form.removeChild(itm1)
-  form.removeChild(itm2)
-  form.removeChild(itm3)
-
-  desc.value = ''
-  sbd.value = ''
-  document.getElementById('dialog').classList.remove('show-dialog')
+  form.submit()
 }
 
 function findShabadsKey(searchInput) {
