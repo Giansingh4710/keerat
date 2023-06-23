@@ -20,6 +20,7 @@ get_last_track_reset_stuff()
 navigatorStuff()
 local_save_track_modal()
 global_modal_initialisation()
+toggleShowingOpts()
 
 function playNextTrack() {
   if (tracksPlayed.length === 0 || shuffle) {
