@@ -23,7 +23,7 @@ document.write('\
   <a href="javascript:void(0);" style="font-size: 15px" class="icon" onclick="toggleDropdown()">&#9776;</a> \
 </nav> \
  \
-<script type="text/javascript" src="/TracksIndex/allShabads.js"></script> \
+<script type="text/javascript" src="/assets/allShabads.js"></script> \
  \
 <body> \
   <h1 class="border" id="MainTitle"></h1> \
