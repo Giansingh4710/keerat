@@ -8,6 +8,7 @@ let currentLink // make it easier for sending to database
 let currentArtist
 
 const MAIN_TITLE = document.getElementsByTagName('title')[0].innerHTML
+const theAudioPlayer = document.getElementsByTagName('audio')[0]
 document.getElementById('MainTitle').innerText = MAIN_TITLE
 
 const savedTracksKey = `SavedTracks: ${MAIN_TITLE}` //for localStorage
@@ -15,12 +16,15 @@ const checkedOptsKey = `CheckedOptions: ${MAIN_TITLE}`
 const skipByKey = `Skip By Interval: ${MAIN_TITLE}`
 const lastTimeStampKey = `Last Time Saved Interval: ${MAIN_TITLE}`
 
-put_options()
 get_last_track_reset_stuff()
 navigatorStuff()
 local_save_track_modal()
 global_modal_initialisation()
-toggleShowingOpts()
+
+window.onbeforeunload = () => {
+  localStorage.setItem(lastTimeStampKey, theAudioPlayer.currentTime)
+  return null
+}
 
 function playNextTrack() {
   if (tracksPlayed.length === 0 || shuffle) {
@@ -50,6 +54,8 @@ function toggleShuffle() {
   document.getElementById('shuffleBtn').style.backgroundColor = shuffle
     ? '#886BE4'
     : '#FFA500'
+
+  localStorage.setItem('shuffle', shuffle)
 }
 
 function playPreviousTrack() {
@@ -86,11 +92,10 @@ function playTrack(theLinkOfTrack) {
   console.log(tracksPlayed, `CurrentTrackPointer Index: ${currentTrackPointer}`)
   const theNameOfTrack = getNameOfTrack(theLinkOfTrack)
   const aTag = document.getElementById('trackNameAtag')
-  const audioTag = document.getElementsByTagName('audio')[0]
 
   aTag.innerText = theNameOfTrack
   aTag.href = theLinkOfTrack
-  audioTag.src = theLinkOfTrack
+  theAudioPlayer.src = theLinkOfTrack
 
   document.getElementById('trackPlaying').style.display = 'block'
   document.getElementById('trackFromWhichOpt').innerText = artist
@@ -188,9 +193,11 @@ function toggleShowingOpts() {
   if (theDiv.style.display !== 'none') {
     theDiv.style.display = 'none'
     toggleBtn.innerText = 'Show The Options'
+    localStorage.setItem('showOpts', false)
   } else {
     theDiv.style.display = 'block'
     toggleBtn.innerText = 'Hide The Options'
+    localStorage.setItem('showOpts', true)
   }
 }
 
@@ -233,7 +240,6 @@ function searchForShabad(e) {
 }
 
 function navigatorStuff() {
-  const theAudioPlayer = document.getElementsByTagName('audio')[0]
   navigator.mediaSession.setActionHandler('play', () => theAudioPlayer.play())
   navigator.mediaSession.setActionHandler('pause', () => theAudioPlayer.pause())
 
@@ -298,6 +304,8 @@ function excludeOrIncludeTracks() {
 }
 
 function get_last_track_reset_stuff() {
+  put_options()
+
   const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey)) //{opt:true/false}
   if (checkedOpts) {
     for (const opt in checkedOpts) {
@@ -329,15 +337,12 @@ function get_last_track_reset_stuff() {
 
   const timeOfAudio = localStorage.getItem(lastTimeStampKey)
   if (timeOfAudio) {
-    document.getElementsByTagName('audio')[0].currentTime = timeOfAudio
+    theAudioPlayer.currentTime = timeOfAudio
   }
-  window.addEventListener('unload', () => {
-    localStorage.setItem(
-      lastTimeStampKey,
-      document.getElementsByTagName('audio')[0].currentTime
-    )
-    // This function will be called before the browser is closed or the page is unloaded. However, note that modern browsers may restrict what you can do in this event handler for security reasons.
-  })
+
+  if (localStorage.getItem('shuffle') === 'true') toggleShuffle()
+
+  if (localStorage.getItem('showOpts') === 'false') toggleShowingOpts()
 }
 
 function getTypeOfTrack(link) {
@@ -392,13 +397,12 @@ function put_options() {
 }
 
 function togglePausePlayTrack() {
-  const audioPlayer = document.getElementsByTagName('audio')[0]
   const btn = document.getElementById('playPauseBtn')
-  if (audioPlayer.paused) {
-    audioPlayer.play()
+  if (theAudioPlayer.paused) {
+    theAudioPlayer.play()
     btn.src = '/imgs/pause.png'
   } else {
-    audioPlayer.pause()
+    theAudioPlayer.pause()
     btn.src = '/imgs/play.png'
   }
 }
@@ -413,8 +417,7 @@ function check_uncheck_opts(val = false) {
 }
 
 function skipTrackTime(direction) {
-  document.getElementsByTagName('audio')[0].currentTime +=
-    parseInt(skipByInterval) * direction
+  theAudioPlayer.currentTime += parseInt(skipByInterval) * direction
 }
 
 function changeInterval() {
