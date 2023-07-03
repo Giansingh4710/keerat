@@ -251,6 +251,10 @@ audio {
   word-wrap: break-word;
   font-weight: bold;
   margin: 1em;
+  color: darkblue;
+}
+#trackNameAtag:visited {
+  text-decoration-color: hotpink;
 }
 
 #playBackOptions{
