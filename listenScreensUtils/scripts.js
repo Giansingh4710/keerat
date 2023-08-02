@@ -250,7 +250,7 @@ function navigatorStuff() {
   navigator.mediaSession.setActionHandler('previoustrack', playPreviousTrack)
   navigator.mediaSession.setActionHandler('nexttrack', playNextTrack)
 
-  navigator.mediaSession.setActionHandler('seekto', function(event) {
+  navigator.mediaSession.setActionHandler('seekto', function (event) {
     theAudioPlayer.currentTime = event.seekTime
   })
 }
@@ -264,13 +264,13 @@ function local_save_track_modal() {
   let modal = document.getElementById('saveTrackLocalModal')
   let btn = document.getElementById('saveTrackBtn')
   let span = document.getElementById('saveTrackLocalModalClose')
-  btn.onclick = function() {
+  btn.onclick = function () {
     modal.style.display = 'block'
   }
-  span.onclick = function() {
+  span.onclick = function () {
     modal.style.display = 'none'
   }
-  window.onclick = function(event) {
+  window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = 'none'
     }
@@ -444,6 +444,7 @@ function global_modal_initialisation() {
 
 function add_shabad_from_user_input() {
   const input_tag = document.getElementById('usedShabadId')
+  const decs_input = document.getElementById('userDesc')
   const user_input = input_tag.value
   const list_opts = document.getElementById('shabadId_list_opts')
   list_opts.innerHTML = ''
@@ -451,16 +452,20 @@ function add_shabad_from_user_input() {
 
   let max_items_to_show = 10
   const keyObj = findShabadsKey(user_input)
-  for (let key in keyObj) {
+  for (let shabad_key in keyObj) {
+    const line_ind = keyObj[shabad_key]
+    const sbd = ALL_SHABADS[shabad_key]
     const opt = document.createElement('p')
+
     opt.classList.add('shabad_opt_from_userinput')
     opt.onclick = () => {
       list_opts.innerHTML = ''
-      input_tag.value = key
-      document.getElementById('theShabadSelected').textContent = keyObj[key]
+      input_tag.value = shabad_key
+      if (decs_input.value === '')
+        decs_input.value = sbd[line_ind + 1]
+      document.getElementById('theShabadSelected').textContent = sbd[line_ind]
     }
-    // opt.value = key
-    opt.innerText = keyObj[key]
+    opt.innerText = sbd[line_ind]
     list_opts.appendChild(opt)
     max_items_to_show -= 1
     if (max_items_to_show < 0) break
@@ -500,7 +505,9 @@ function findShabadsKey(searchInput) {
   for (const key in ALL_SHABADS) {
     const shabadArray = ALL_SHABADS[key]
 
-    for (const line of shabadArray) {
+    for (let pu_ln_idx = 0; pu_ln_idx < shabadArray.length; pu_ln_idx += 3) {
+      const line = shabadArray[pu_ln_idx]
+      // for (const line of shabadArray) {
       const wordsArray = line.split(' ')
 
       let line_matched = true
@@ -515,7 +522,7 @@ function findShabadsKey(searchInput) {
       }
 
       if (line_matched) {
-        all_matched_shabad_keys[key] = line
+        all_matched_shabad_keys[key] = pu_ln_idx
         break
       }
     }
