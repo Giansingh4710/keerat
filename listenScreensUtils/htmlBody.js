@@ -146,12 +146,6 @@ document.write('\
             oninput="add_shabad_from_user_input()"></input> \
           <div id="shabadId_list_opts"> \
           </div> \
- \
-          <a id="sttmLink" href="https://www.sikhitothemax.org/shabad?id=687&q=Ahrp&type=1&source=all&highlight=9290"> \
-            <p>https://www.sikhitothemax.org/shabad?id=</p> \
-            <p id="highlightShabadId">687</p> \
-            <p>&q=Ahrp&type=1&source=all&highlight=9290</p> \
-          </a> \
         </div> \
         <div class="userInputItem"> \
           <label for="userTimestamp">Timestamp of where Description Happened:</label> \

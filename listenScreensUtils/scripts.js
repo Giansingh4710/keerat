@@ -508,14 +508,14 @@ function findShabadsKey(searchInput) {
     for (let pu_ln_idx = 0; pu_ln_idx < shabadArray.length; pu_ln_idx += 3) {
       const line = shabadArray[pu_ln_idx]
       // for (const line of shabadArray) {
-      const wordsArray = line.split(' ')
+      const first_letters = first_letters_gurmukhi(line)
 
       let line_matched = true
       for (let i = 0; i < searchInput.length; i++) {
         if (!line_matched) break
         if (
-          wordsArray.length === i ||
-          wordsArray[i][0].toLowerCase() !== searchInput[i].toLowerCase()
+          first_letters.length === i ||
+          first_letters[i] !== searchInput[i]
         ) {
           line_matched = false
         }
@@ -528,4 +528,66 @@ function findShabadsKey(searchInput) {
     }
   }
   return all_matched_shabad_keys
+}
+
+function first_letters_gurmukhi(words) {
+  if (typeof words !== 'string') return words
+
+  let newWords = words
+
+  const reverseMapping = {
+    ਉ: 'ੳ',
+    ਊ: 'ੳ',
+    ਆ: 'ਅ',
+    ਆਂ: 'ਅ',
+    ਐ: 'ਅ',
+    ਔ: 'ਅ',
+    ਇ: 'ੲ',
+    ਈ: 'ੲ',
+    ਏ: 'ੲ',
+    // 'ੋੁ': 'uo',
+  }
+
+  const simplifications = [
+    ['E', 'a'],
+    ['ਓ', 'ੳ'],
+    ['L', 'l'],
+    ['ਲ਼', 'ਲ'],
+    ['S', 's'],
+    ['ਸ਼', 'ਸ'],
+    ['z', 'j'],
+    ['ਜ਼', 'ਜ'],
+    ['Z', 'g'],
+    ['ਗ਼', 'ਗ'],
+    ['\\^', 'K'],
+    ['ਖ਼', 'ਖ'],
+    ['ƒ', 'n'],
+    ['ਨੂੰ', 'ਨ'],
+    ['&', 'P'],
+    ['ਫ਼', 'ਫ'],
+  ]
+  simplifications.forEach((e) => {
+    newWords = newWords.replace(new RegExp(e[0], 'g'), e[1])
+  })
+
+  newWords = newWords
+    .replace(/\]/g, '')
+    .replace(/\[/g, '')
+    .replace(/॥/g, '')
+    .replace(/।/g, '')
+    .replace(/rhwau dUjw/g, '')
+    .replace(/rhwau/g, '')
+    .replace(/[0-9]/g, '')
+    .replace(/[;,.]/g, '')
+
+  function firstLetter(word) {
+    let letter = word[0]
+    if (letter in reverseMapping) {
+      letter = reverseMapping[letter]
+    }
+    return letter
+  }
+
+  const letters = newWords.split(' ').map(firstLetter).join('')
+  return letters
 }

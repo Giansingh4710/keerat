@@ -187,17 +187,6 @@ audio {
     justify-content: center;
     flex-direction: column;
   }
-  #sttmLink p {
-    display: inline;
-  }
-  #sttmLink {
-    font-size: 0.1em;
-  }
-  #highlightShabadId {
-    font-weight: bold;
-    font-size: 1.5em;
-    color: greenyellow;
-  }
   #closeModal {
     color: black;
     float: right;
@@ -213,6 +202,7 @@ audio {
   }
   .shabad_opt_from_userinput {
     background-color: white;
+    font-size: 0.5em;
     margin: 5px;
     border-radius: 5px;
   }
