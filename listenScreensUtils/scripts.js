@@ -433,7 +433,10 @@ function global_modal_initialisation() {
   const openBtn = document.getElementById('openModal')
 
   const openDialog = () => dialog.classList.add('show-dialog')
-  const closeDialog = () => dialog.classList.remove('show-dialog')
+  const closeDialog = () => {
+    dialog.classList.remove('show-dialog')
+    document.getElementsByTagName('details')[0].open = false
+  }
   closeBtn.addEventListener('click', closeDialog)
   openBtn.addEventListener('click', openDialog)
 
@@ -451,7 +454,112 @@ function add_shabad_from_user_input() {
   if (user_input === '') return
 
   let max_items_to_show = 10
-  const keyObj = findShabadsKey(user_input)
+
+  const mapping = {
+    a: 'ੳ',
+    A: 'ਅ',
+    s: 'ਸ',
+    S: 'ਸ਼',
+    d: 'ਦ',
+    D: 'ਧ',
+    f: 'ਡ',
+    F: 'ਢ',
+    g: 'ਗ',
+    G: 'ਘ',
+    h: 'ਹ',
+    H: '੍ਹ',
+    j: 'ਜ',
+    J: 'ਝ',
+    k: 'ਕ',
+    K: 'ਖ',
+    l: 'ਲ',
+    L: 'ਲ਼',
+    q: 'ਤ',
+    Q: 'ਥ',
+    w: 'ਾ',
+    W: 'ਾਂ',
+    e: 'ੲ',
+    E: 'ਓ',
+    r: 'ਰ',
+    R: '੍ਰ',
+    '®': '੍ਰ',
+    t: 'ਟ',
+    T: 'ਠ',
+    y: 'ੇ',
+    Y: 'ੈ',
+    u: 'ੁ',
+    ü: 'ੁ',
+    U: 'ੂ',
+    '¨': 'ੂ',
+    i: 'ਿ',
+    I: 'ੀ',
+    o: 'ੋ',
+    O: 'ੌ',
+    p: 'ਪ',
+    P: 'ਫ',
+    z: 'ਜ਼',
+    Z: 'ਗ਼',
+    x: 'ਣ',
+    X: 'ਯ',
+    c: 'ਚ',
+    C: 'ਛ',
+    v: 'ਵ',
+    V: 'ੜ',
+    b: 'ਬ',
+    B: 'ਭ',
+    n: 'ਨ',
+    ƒ: 'ਨੂੰ',
+    N: 'ਂ',
+    ˆ: 'ਂ',
+    m: 'ਮ',
+    M: 'ੰ',
+    µ: 'ੰ',
+    '`': 'ੱ',
+    '~': 'ੱ',
+    '¤': 'ੱ',
+    Í: '੍ਵ',
+    ç: '੍ਚ',
+    '†': '੍ਟ',
+    œ: '੍ਤ',
+    '˜': '੍ਨ',
+    '´': 'ੵ',
+    Ï: 'ੵ',
+    æ: '਼',
+    Î: '੍ਯ',
+    ì: 'ਯ',
+    í: '੍ਯ',
+    1: '੧',
+    2: '੨',
+    3: '੩',
+    4: '੪',
+    5: '੫',
+    6: '੬',
+    '^': 'ਖ਼',
+    7: '੭',
+    '&': 'ਫ਼',
+    8: '੮',
+    9: '੯',
+    0: '੦',
+    '\\': 'ਞ',
+    '|': 'ਙ',
+    '[': '।',
+    ']': '॥',
+    '<': 'ੴ',
+    '¡': 'ੴ',
+    Å: 'ੴ',
+    Ú: 'ਃ',
+    Ç: '☬',
+    '@': 'ੑ',
+    '‚': '❁',
+    '•': '੶',
+    ' ': ' ',
+  }
+  const gurmukhi_input = user_input
+    .split('')
+    .map((char) => mapping[char] || char)
+    .join('')
+  input_tag.value = gurmukhi_input
+  const keyObj = findShabadsKey(gurmukhi_input)
   for (let shabad_key in keyObj) {
     const line_ind = keyObj[shabad_key]
     const sbd = ALL_SHABADS[shabad_key]
@@ -459,10 +567,11 @@ function add_shabad_from_user_input() {
 
     opt.classList.add('shabad_opt_from_userinput')
     opt.onclick = () => {
-      list_opts.innerHTML = ''
+      list_opts.innerHTML = `<details><summary>${shabad_key}</summary><div id="shabad_details_form">${ALL_SHABADS[shabad_key]}</div></details>`
       input_tag.value = shabad_key
-      if (decs_input.value === '')
+      if (decs_input.value === '') {
         decs_input.value = sbd[line_ind + 1]
+      }
       document.getElementById('theShabadSelected').textContent = sbd[line_ind]
     }
     opt.innerText = sbd[line_ind]
@@ -497,10 +606,12 @@ function formValidation(e) {
   add_to_form_to_send_to_server('keertani', currentArtist)
   add_to_form_to_send_to_server('link', currentLink)
 
+  localStorage.setItem(lastTimeStampKey, theAudioPlayer.currentTime)
   form.submit()
 }
 
 function findShabadsKey(searchInput) {
+  if (searchInput.length < 3) return {}
   const all_matched_shabad_keys = {}
   for (const key in ALL_SHABADS) {
     const shabadArray = ALL_SHABADS[key]
@@ -513,10 +624,7 @@ function findShabadsKey(searchInput) {
       let line_matched = true
       for (let i = 0; i < searchInput.length; i++) {
         if (!line_matched) break
-        if (
-          first_letters.length === i ||
-          first_letters[i] !== searchInput[i]
-        ) {
+        if (first_letters.length === i || first_letters[i] !== searchInput[i]) {
           line_matched = false
         }
       }

@@ -206,6 +206,12 @@ audio {
     margin: 5px;
     border-radius: 5px;
   }
+  #shabad_details_form {
+    font-size: 0.2em;
+    background-color:#14148F ;
+    color: white;
+  }
+}
 
 /* -------------------- modal end -------------- */
 
