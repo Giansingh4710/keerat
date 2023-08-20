@@ -569,9 +569,8 @@ function add_shabad_from_user_input() {
     opt.onclick = () => {
       list_opts.innerHTML = `<details><summary>${shabad_key}</summary><div id="shabad_details_form">${ALL_SHABADS[shabad_key]}</div></details>`
       input_tag.value = shabad_key
-      if (decs_input.value === '') {
-        decs_input.value = sbd[line_ind + 1]
-      }
+      // if (decs_input.value === '') {}
+      decs_input.value = sbd[line_ind + 1]
       document.getElementById('theShabadSelected').textContent = sbd[line_ind]
     }
     opt.innerText = sbd[line_ind]
