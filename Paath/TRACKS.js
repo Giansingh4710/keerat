@@ -1,3 +1,11 @@
+const PanjGranthi = [
+  "http://45.41.235.33/~daassto1/audios/paath/PanjGranthiBhaiJaswantSinghJi/Asa Kee Vaar.mp3",
+  "http://45.41.235.33/~daassto1/audios/paath/PanjGranthiBhaiJaswantSinghJi/Bavan Akhri M5.mp3",
+  "http://45.41.235.33/~daassto1/audios/paath/PanjGranthiBhaiJaswantSinghJi/Dakhni Oankar.mp3",
+  "http://45.41.235.33/~daassto1/audios/paath/PanjGranthiBhaiJaswantSinghJi/Sidh Gosth.mp3",
+  "http://45.41.235.33/~daassto1/audios/paath/PanjGranthiBhaiJaswantSinghJi/Sukhmani Sahib.mp3",
+]
+
 const patiala_dukh_nivaran_paath_bodh_2016_links=[
   "http://www.gurmatveechar.com//audios/Gurbani_Ucharan/2016_Gurdwara_Dukh Nivaran_Patiala_Paath_Bodh_Samagam/0001.Ang.0001.to.0005.mp3",
   "http://www.gurmatveechar.com//audios/Gurbani_Ucharan/2016_Gurdwara_Dukh Nivaran_Patiala_Paath_Bodh_Samagam/0002.Ang.0005.to.0008.mp3",

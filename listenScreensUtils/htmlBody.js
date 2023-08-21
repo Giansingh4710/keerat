@@ -17,7 +17,6 @@ document.write('\
   <a href="/Paath/">Paath</a> \
   <a href="/SantGianiGurbachanSinghJiSGGSKatha/">Sant Giani Gurbachan Singh Ji SGGS Katha</a> \
   <a href="/BhagatJaswantSinghJi/">Bhagat Jaswant Singh Ji</a> \
-  <a href="/PanjGranthi(BhaiJaswantSinghJi)/">Panj Granthi</a> \
   <a href="/MiscellaneousTopics">Miscellaneous Topics</a> \
   <a href="/GianiSherSinghJi">Giani Sher Singh Ji</a> \
   <a href="http://45.76.2.28/trackIndex">Tracks Indexed</a> \
