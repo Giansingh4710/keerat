@@ -88,7 +88,6 @@ function playTrack(theLinkOfTrack) {
   currentArtist = artist
   currentLink = theLinkOfTrack
 
-  /* console.log(tracksPlayed, currentTrackPointer, theLinkOfTrack,artist) */
   console.log(tracksPlayed, `CurrentTrackPointer Index: ${currentTrackPointer}`)
   const theNameOfTrack = getNameOfTrack(theLinkOfTrack)
   const aTag = document.getElementById('trackNameAtag')
@@ -154,7 +153,6 @@ function toggleSavedTracks() {
 
   let savedTracks = localStorage.getItem(`SavedTracks: ${MAIN_TITLE}`)
   savedTracks = JSON.parse(savedTracks)
-  /* console.log(savedTracks) */
 
   for (const link in savedTracks) {
     const theNameOfTrack = getNameOfTrack(link)
@@ -162,7 +160,6 @@ function toggleSavedTracks() {
     li = document.createElement('li')
     li.innerHTML = `${trkMsg}<button onclick="playTrack('${link}')" > ${theNameOfTrack}</button><button onclick="deleteSavedTrack('${link}')" >DELETE</button>`
     ol.appendChild(li)
-    /* console.log(theNameOfTrack, ": ", trkMsg); */
   }
   if (!savedTracks || Object.keys(savedTracks).length === 0) {
     ol.innerText = 'No Saved Tracks. Click the Save button to Save tracks'
@@ -231,7 +228,6 @@ function searchForShabad(e) {
 
   for (const index of allLinksWithWordInds) {
     li = document.createElement('li')
-    /* console.log(TRACK_LINKS[index]) */
     li.innerHTML = `<button onclick="playTrackForSearchedTrack(${index})">${getNameOfTrack(
       TRACK_LINKS[index]
     )}</button>`
@@ -250,7 +246,7 @@ function navigatorStuff() {
   navigator.mediaSession.setActionHandler('previoustrack', playPreviousTrack)
   navigator.mediaSession.setActionHandler('nexttrack', playNextTrack)
 
-  navigator.mediaSession.setActionHandler('seekto', function (event) {
+  navigator.mediaSession.setActionHandler('seekto', function(event) {
     theAudioPlayer.currentTime = event.seekTime
   })
 }
@@ -264,13 +260,13 @@ function local_save_track_modal() {
   let modal = document.getElementById('saveTrackLocalModal')
   let btn = document.getElementById('saveTrackBtn')
   let span = document.getElementById('saveTrackLocalModalClose')
-  btn.onclick = function () {
+  btn.onclick = function() {
     modal.style.display = 'block'
   }
-  span.onclick = function () {
+  span.onclick = function() {
     modal.style.display = 'none'
   }
-  window.onclick = function (event) {
+  window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = 'none'
     }
@@ -304,45 +300,80 @@ function excludeOrIncludeTracks() {
 }
 
 function get_last_track_reset_stuff() {
-  put_options()
+  function put_options() {
+    const opts = Object.keys(ALL_OPTS)
+    const div_to_put_opts = document.getElementById('tracksOpts')
+    for (const title of opts) {
+      input = document.createElement('input')
+      input.checked = ALL_OPTS[title].checked
+      input.type = 'checkbox'
+      input.id = title
+      input.name = title
+      input.onclick = () => excludeOrIncludeTracks()
 
-  const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey)) //{opt:true/false}
-  if (checkedOpts) {
-    for (const opt in checkedOpts) {
-      document.getElementById(opt).checked = checkedOpts[opt]
+      label = document.createElement('label')
+      label.setAttribute('for', title)
+      label.innerText = title
+
+      div_to_put_opts.appendChild(input)
+      div_to_put_opts.appendChild(label)
+      div_to_put_opts.appendChild(document.createElement('br'))
+
+      TRACK_LINKS.push(...ALL_OPTS[title].trackLinks)
     }
-    excludeOrIncludeTracks() //to change tracks pool
-  } else {
-    console.log('Could not get Checked Options from last Session')
-    document.getElementById(
-      'tracksData'
-    ).innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
   }
-
-  const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`)
-  if (link) {
-    console.log('Played from Last Session')
-    tracksPlayed.push(TRACK_LINKS.indexOf(link))
-    currentTrackPointer = tracksPlayed.length - 1
-    playTrack(link)
-  } else {
-    playNextTrack()
+  function check_boxes() {
+    const checkedOpts = JSON.parse(localStorage.getItem(checkedOptsKey)) //{opt:true/false}
+    if (checkedOpts) {
+      for (const opt in checkedOpts) {
+        document.getElementById(opt).checked = checkedOpts[opt]
+      }
+      excludeOrIncludeTracks() //to change tracks pool
+    } else {
+      document.getElementById(
+        'tracksData'
+      ).innerText = `Total Tracks in Queue: ${TRACK_LINKS.length}`
+    }
   }
+  function choose_track() {
+    const url = window.location.href
+    if (url.includes('#')) {
+      const theId = parseInt(url.split('#')[1])
+      if (TRACK_LINKS[theId]) {
+        tracksPlayed.push(theId)
+        currentTrackPointer = 0
+        playTrack(TRACK_LINKS[theId])
+        return
+      }
+    }
 
-  const skipByOpt = JSON.parse(localStorage.getItem(skipByKey))
-  if (skipByOpt) {
-    skipByInterval = skipByOpt
+    const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`)
+    if (link) {
+      tracksPlayed.push(TRACK_LINKS.indexOf(link))
+      currentTrackPointer = 0
+      playTrack(link)
+      const timeOfAudio = localStorage.getItem(lastTimeStampKey)
+      if (timeOfAudio) {
+        theAudioPlayer.currentTime = timeOfAudio
+      }
+    } else {
+      playRandTrack()
+    }
   }
-  document.getElementById('pickSkipInterval').value = skipByInterval
-
-  const timeOfAudio = localStorage.getItem(lastTimeStampKey)
-  if (timeOfAudio) {
-    theAudioPlayer.currentTime = timeOfAudio
+  function put_skip_interval() {
+    const skipByOpt = JSON.parse(localStorage.getItem(skipByKey))
+    if (skipByOpt) {
+      skipByInterval = skipByOpt
+    }
+    document.getElementById('pickSkipInterval').value = skipByInterval
   }
 
   if (localStorage.getItem('shuffle') === 'true') toggleShuffle()
-
   if (localStorage.getItem('showOpts') === 'false') toggleShowingOpts()
+  put_options()
+  check_boxes()
+  choose_track()
+  put_skip_interval()
 }
 
 function getTypeOfTrack(link) {
@@ -370,29 +401,6 @@ function toggleDropdown() {
     x.className += ' responsive'
   } else {
     x.className = 'topnav'
-  }
-}
-
-function put_options() {
-  const opts = Object.keys(ALL_OPTS)
-  const div_to_put_opts = document.getElementById('tracksOpts')
-  for (const title of opts) {
-    input = document.createElement('input')
-    input.checked = ALL_OPTS[title].checked
-    input.type = 'checkbox'
-    input.id = title
-    input.name = title
-    input.onclick = () => excludeOrIncludeTracks()
-
-    label = document.createElement('label')
-    label.setAttribute('for', title)
-    label.innerText = title
-
-    div_to_put_opts.appendChild(input)
-    div_to_put_opts.appendChild(label)
-    div_to_put_opts.appendChild(document.createElement('br'))
-
-    TRACK_LINKS.push(...ALL_OPTS[title].trackLinks)
   }
 }
 
@@ -697,4 +705,10 @@ function first_letters_gurmukhi(words) {
 
   const letters = newWords.split(' ').map(firstLetter).join('')
   return letters
+}
+
+function copyLink() {
+  const url = window.location.href.split('#')[0]
+  const copyText = url + '#' + tracksPlayed[currentTrackPointer]
+  navigator.clipboard.writeText(copyText)
 }

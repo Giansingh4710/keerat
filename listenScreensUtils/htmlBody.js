@@ -39,6 +39,7 @@ document.write('\
     <div id="trackInfo" class="border"> \
       <h4 style="margin: 0" id="trackFromWhichOpt"></h4> \
       <a id="trackNameAtag" target="_blank" rel="noopener noreferrer"></a> \
+      <button id="copyTrackBtn" onclick="copyLink()">Copy Track Link</button> \
       <audio onended="playNextTrack()" onerror="" controls autoplay="true"></audio> \
       <div id="playBackOptions"> \
         <button onclick="skipTrackTime(-1)" class="skip10btn"> \
