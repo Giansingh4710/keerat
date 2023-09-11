@@ -336,15 +336,13 @@ function get_last_track_reset_stuff() {
     }
   }
   function choose_track() {
-    const url = window.location.href
-    if (url.includes('#')) {
-      const theId = parseInt(url.split('#')[1])
-      if (TRACK_LINKS[theId]) {
-        tracksPlayed.push(theId)
-        currentTrackPointer = 0
-        playTrack(TRACK_LINKS[theId])
-        return
-      }
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlInd = parseInt(urlParams.get('trackIndex'))
+    if (urlInd) {
+      tracksPlayed.push(urlInd)
+      currentTrackPointer = 0
+      playTrack(TRACK_LINKS[urlInd])
+      return
     }
 
     const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`)
@@ -708,7 +706,8 @@ function first_letters_gurmukhi(words) {
 }
 
 function copyLink() {
-  const url = window.location.href.split('#')[0]
-  const copyText = url + '#' + tracksPlayed[currentTrackPointer]
-  navigator.clipboard.writeText(copyText)
+  const url = new URL(window.location.href.split('?')[0].split('#')[0])
+  url.searchParams.append('trackIndex', tracksPlayed[currentTrackPointer]);
+  console.log(url.href)
+  navigator.clipboard.writeText(url.href)
 }
