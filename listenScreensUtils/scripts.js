@@ -342,6 +342,11 @@ function get_last_track_reset_stuff() {
       tracksPlayed.push(urlInd)
       currentTrackPointer = 0
       playTrack(TRACK_LINKS[urlInd])
+
+      const play_track_from = parseInt(urlParams.get('time'))
+      if (play_track_from) {
+        theAudioPlayer.currentTime = play_track_from
+      }
       return
     }
 
@@ -708,6 +713,7 @@ function first_letters_gurmukhi(words) {
 function copyLink() {
   const url = new URL(window.location.href.split('?')[0].split('#')[0])
   url.searchParams.append('trackIndex', tracksPlayed[currentTrackPointer]);
+  url.searchParams.append('time', parseInt(theAudioPlayer.currentTime));
   console.log(url.href)
   navigator.clipboard.writeText(url.href)
 }
