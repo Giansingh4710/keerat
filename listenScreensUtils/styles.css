@@ -211,17 +211,16 @@ audio {
     background-color:#14148F ;
     color: white;
   }
-}
 
 /* -------------------- modal end -------------- */
 
 #searchInput {
-  /* width: 100%; */
-  /* height: 40px; */
-  border: none;
-  border-radius: 20px;
-  padding: 5px;
-  /* text-align: center; */
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1em;
+  text-align: center;
 }
 
 .border{
