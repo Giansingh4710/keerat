@@ -1484,8 +1484,8 @@ const SDO_TRACK_LINKS = [
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/015 Bhai Mohinder Singh ji (SDO) Gives New Year Blessings (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/016 Bhai Mohinder SinghJi SDO (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/017 Bhai Mohinder Singh Ji SDO (heeraRattan).mp3',
-  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/018 Bhai Mohinder Singh Ji SDO 1979 Milwaukee USA #1 (heeraRattan).mp3',
-  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/019 Bhai Mohinder Singh Ji SDO 1979 Milwaukee #2 (heeraRattan).mp3',
+  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/018 Bhai Mohinder Singh Ji SDO 1979 Milwaukee USA 1 (heeraRattan).mp3',
+  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/019 Bhai Mohinder Singh Ji SDO 1979 Milwaukee 2 (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/020 Bhai Mohinder Singh Ji SDO Patiala 1980-6B (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/021 Bhai Mohinder Singh Ji SDO. ਐਸਾ ਕੀਰਤਨੁ ਕਰਿ ਮਨ ਮੇਰੇ ॥ (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/022 Bhai Mohinder Singh Ji SDO ਚਿਤ ਚੇਤਸਿ ਕੀ ਨਹੀ ਬਾਵਰਿਆ ॥ Canada 1988 (7B) (heeraRattan).mp3',
@@ -1493,12 +1493,12 @@ const SDO_TRACK_LINKS = [
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/024 Bhai Mohinder Singh Ji SDO ਮਨ ਏਕੁ ਨ ਚੇਤਸਿ ਮੂੜ ਮਨਾ ॥ Canada 1988 1A (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/025 Bhai Mohinder Singh Ji SDO ਹਰਿ ਸਿਮਰੀ ਦਿਨ ਸਭਿ ਰੈਣ ॥ 1988 5A (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/026 bhai Mohinder Singh Ji SDO ਦੇਖਹੁ ਅਚਰਜੁ ਭਇਆ॥ 1988 Canada 2B (heeraRattan).mp3',
-  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/027 Bhai Mohinder Singh Ji SDO ਗੁਰ ਦੀਖਿਆ ਜਿਹ ਮਨਿ ਬਸੈ Canada 1989 2B# (heeraRattan).mp3',
+  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/027 Bhai Mohinder Singh Ji SDO ਗੁਰ ਦੀਖਿਆ ਜਿਹ ਮਨਿ ਬਸੈ Canada 1989 2B (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/028 Bhai Mohinder Singh Ji SDO ਧੰਨੁ ਸੁ ਵੇਲਾ ਜਿਤੁ ਮੈ ਸਤਿਗੁਰੁ ਮਿਲਿਆ ॥ 1988 Canada (heeraRattan).mp3',
-  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/029 Bhai Mohinder Singh Ji SDO ਨਾਮ ਰਤਨ ਕੋ ਕੋ ਬਿਉਹਾਰੀ ॥ 1989 1A# (heeraRattan).mp3',
+  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/029 Bhai Mohinder Singh Ji SDO ਨਾਮ ਰਤਨ ਕੋ ਕੋ ਬਿਉਹਾਰੀ ॥ 1989 1A (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/030 Bhai Mohinder Singh Ji SDO ਬੁਝੁ ਰੇ ਗਿਆਨੀ ਮੂਆ ਹੈ ਕਉਣੁ ॥ VNC 10.01.1987 (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/031 Bhai Mohinder Singh Ji SDO ਸੇਵੀ ਸਤਿਗੁਰੁ ਆਪਣਾ. Sikh Society Milwaukee 1986 (heeraRattan).mp3',
-  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/032 Bhai Mohinder Singh Ji SDO ਜੋ ਤਉ ਬਚਨੁ ਦੀਓ ਮੇਰੇ ਸਤਿਗੁਰ California 1987 #3 (heeraRattan).mp3',
+  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/032 Bhai Mohinder Singh Ji SDO ਜੋ ਤਉ ਬਚਨੁ ਦੀਓ ਮੇਰੇ ਸਤਿਗੁਰ California 1987 3 (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/033 Bhai Mohinder Singh Ji SDO ਜੋ ਮਨਿ ਚਿਤਿ ਇਕੁ ਅਰਾਧਦੇ 7.1980 Phagwara Punjab spool 46 (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/034 Bhai Mohinder Singh Ji SDO ਸਤਿਗੁਰ ਮੂਰਤਿ ਕਉ ਬਲਿ ਜਾਉ Chicago 1985 (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/035 Bhai Mohinder Singh Ji SDO ਅੰਦਰਹੁ ਜਿਨ ਕਾ ਮੋਹੁ ਤੁਟਾ ਤਿਨ ਕਾ ਸਬਦੁ ਸਚੈ ਸਵਾਰਿਆ ॥ Chicago 1987 (heeraRattan).mp3',
@@ -1510,6 +1510,9 @@ const SDO_TRACK_LINKS = [
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/041 Bhai Mohinder Singh Ji SDO ਤੇਰਾ ਅੰਤੁ ਨ ਜਾਈ ਲਖਿਆ ॥੧॥ 1988 California (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/042 Bhai Mohinder Singh Ji SDO ਗੁਰ ਕੀ ਕਾਰ ਕਮਾਵੈ ॥ Moga 1974 (heeraRattan).mp3',
   'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/043 Bhai Mohinder Singh SDO ਗੁਰ ਕੀ ਬਾਣੀ ਵਿਟਹੁ ਵਾਰਿਆ ਭਾਈ ਗੁਰ ਸਬਦ ਵਿਟਹੁਬਲਿ ਜਾਈ Coventry UK 10.1983 (heeraRattan).mp3',
+  'http://45.41.235.33/~daassto1/audios/keertan/sdo/yt_heeraRattan/044 Bhai Mohinder Singh Ji SDO ਹਮ ਇਹ ਕਾਜ ਜਗਤ ਮੋ ਆਏ Ludhiana 1980 (heeraRattan).mp3',
+
+
 ]
 
 const HPS_TRACK_LINKS = [
