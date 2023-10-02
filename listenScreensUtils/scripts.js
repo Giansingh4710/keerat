@@ -246,7 +246,7 @@ function navigatorStuff() {
   navigator.mediaSession.setActionHandler('previoustrack', playPreviousTrack)
   navigator.mediaSession.setActionHandler('nexttrack', playNextTrack)
 
-  navigator.mediaSession.setActionHandler('seekto', function(event) {
+  navigator.mediaSession.setActionHandler('seekto', function (event) {
     theAudioPlayer.currentTime = event.seekTime
   })
 }
@@ -260,13 +260,13 @@ function local_save_track_modal() {
   let modal = document.getElementById('saveTrackLocalModal')
   let btn = document.getElementById('saveTrackBtn')
   let span = document.getElementById('saveTrackLocalModalClose')
-  btn.onclick = function() {
+  btn.onclick = function () {
     modal.style.display = 'block'
   }
-  span.onclick = function() {
+  span.onclick = function () {
     modal.style.display = 'none'
   }
-  window.onclick = function(event) {
+  window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = 'none'
     }
@@ -336,32 +336,35 @@ function get_last_track_reset_stuff() {
     }
   }
   function choose_track() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlInd = parseInt(urlParams.get('trackIndex'))
-    if (urlInd) {
-      tracksPlayed.push(urlInd)
+    function play_track(link,the_time) {
       currentTrackPointer = 0
-      playTrack(TRACK_LINKS[urlInd])
+      tracksPlayed.push(TRACK_LINKS.indexOf(link))
+      playTrack(link)
+      if (the_time) theAudioPlayer.currentTime = the_time
+    }
 
-      const play_track_from = parseInt(urlParams.get('time'))
-      if (play_track_from) {
-        theAudioPlayer.currentTime = play_track_from
-      }
+    const urlParams = new URLSearchParams(window.location.search)
+    const urlInd = parseInt(urlParams.get('trackIndex'))
+    const urlArtist = urlParams.get('artist')
+
+    if (urlInd && urlArtist) {
+      document.getElementById(urlArtist).checked = true
+      excludeOrIncludeTracks()
+
+      const the_link = ALL_OPTS[urlArtist].trackLinks[urlInd]
+      const the_time = parseInt(urlParams.get('time'))
+      play_track(the_link,the_time)
       return
     }
 
-    const link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`)
-    if (link) {
-      tracksPlayed.push(TRACK_LINKS.indexOf(link))
-      currentTrackPointer = 0
-      playTrack(link)
-      const timeOfAudio = localStorage.getItem(lastTimeStampKey)
-      if (timeOfAudio) {
-        theAudioPlayer.currentTime = timeOfAudio
-      }
-    } else {
-      playRandTrack()
+    const the_link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`)
+    if (the_link) {
+      const the_time = localStorage.getItem(lastTimeStampKey)
+      play_track(the_link,the_time)
+      return
     }
+
+    playRandTrack()
   }
   function put_skip_interval() {
     const skipByOpt = JSON.parse(localStorage.getItem(skipByKey))
@@ -712,8 +715,17 @@ function first_letters_gurmukhi(words) {
 
 function copyLink() {
   const url = new URL(window.location.href.split('?')[0].split('#')[0])
-  url.searchParams.append('trackIndex', tracksPlayed[currentTrackPointer]);
-  url.searchParams.append('time', parseInt(theAudioPlayer.currentTime));
+  function get_ind_from_artist_tracks(the_link) {
+    const allLinks = ALL_OPTS[currentArtist].trackLinks
+    for (let link of allLinks) {
+      if (link === the_link) return allLinks.indexOf(link)
+    }
+    return -1
+  }
+
+  url.searchParams.append('time', parseInt(theAudioPlayer.currentTime))
+  url.searchParams.append('artist', currentArtist)
+  url.searchParams.append('trackIndex', get_ind_from_artist_tracks(currentLink))
   console.log(url.href)
   navigator.clipboard.writeText(url.href)
 }
