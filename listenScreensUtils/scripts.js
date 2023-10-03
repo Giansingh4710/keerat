@@ -726,6 +726,5 @@ function copyLink() {
   url.searchParams.append('time', parseInt(theAudioPlayer.currentTime))
   url.searchParams.append('artist', currentArtist)
   url.searchParams.append('trackIndex', get_ind_from_artist_tracks(currentLink))
-  console.log(url.href)
   navigator.clipboard.writeText(url.href)
 }
