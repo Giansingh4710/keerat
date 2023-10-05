@@ -54,5 +54,5 @@ def upload_blob(local_folder_path, parent_folder_name):
 
 folder = "audios/"  # needs to end with /
 # upload_blob("../Keertan/", "Keertan2/")
-rename_folder(folder, "audios2/")
+# rename_folder(folder, "audios2/")
 # delete_folder(folder)
