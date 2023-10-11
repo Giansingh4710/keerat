@@ -3875,6 +3875,8 @@ const DULLAJI_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/dulla_ji/yt/Tus Dita Pure Satgur Dr. Tejinder Pal Singh Dulla Ji-fHbVo62VTnY.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/dulla_ji/yt/Uthdiya Behndiya Sutiya I Dr. Tejinder Pal Singh Dulla Ji-SrzsWSOOY5U.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/dulla_ji/yt/Viha hoa mere Babla I Dr. Tejinder Pal Singh Dulla Veer Ji-qKE1azj4M-k.m4a',
+
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3',
 ]
 
 const GURINDER_S_LINKS = [

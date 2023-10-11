@@ -70,7 +70,7 @@ def read(folder_path, depth=0):
 
 
 folder = "audios/"  # needs to end with /
-upload_file("/Users/gians/Downloads/08 Bhai Mohinder Singh SDO - Amrit Naam Parmeshar Tera - India 1960s.mp3", "audios/keertan/sdo/sangat_files/bjot/08 Bhai Mohinder Singh SDO - Amrit Naam Parmeshar Tera - India 1960s.mp3")
+upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
 # read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
