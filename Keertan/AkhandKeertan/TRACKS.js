@@ -1511,6 +1511,8 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/042 Bhai Mohinder Singh Ji SDO ਗੁਰ ਕੀ ਕਾਰ ਕਮਾਵੈ ॥ Moga 1974 (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/043 Bhai Mohinder Singh SDO ਗੁਰ ਕੀ ਬਾਣੀ ਵਿਟਹੁ ਵਾਰਿਆ ਭਾਈ ਗੁਰ ਸਬਦ ਵਿਟਹੁਬਲਿ ਜਾਈ Coventry UK 10.1983 (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/044 Bhai Mohinder Singh Ji SDO ਹਮ ਇਹ ਕਾਜ ਜਗਤ ਮੋ ਆਏ Ludhiana 1980 (heeraRattan).mp3',
+
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/sangat_files/bjot/08 Bhai Mohinder Singh SDO - Amrit Naam Parmeshar Tera - India 1960s.mp3',
 ]
 
 const HPS_TRACK_LINKS = [
