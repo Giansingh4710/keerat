@@ -38,7 +38,7 @@ def rename_folder(old_folder_path, new_folder_path):
     print(f"Renamed '{old_folder_path}' to '{new_folder_path}'.")
 
 
-def upload_blob(local_folder_path, parent_folder_name):
+def upload_folder(local_folder_path, parent_folder_name):
     for root, dirs, files in os.walk(local_folder_path):
         for file in files:
             blob_folder = root.replace(local_folder_path, parent_folder_name)
@@ -49,6 +49,11 @@ def upload_blob(local_folder_path, parent_folder_name):
                 blob_client.upload_blob(data, overwrite=True)
             print(f"Uploaded '{blob_name}'")
 
+def upload_file(local_file_path, blob_name):
+    blob_client = container_client.get_blob_client(blob_name)
+    with open(local_file_path, "rb") as data:
+        blob_client.upload_blob(data, overwrite=True)
+    print(f"Uploaded '{blob_name}'")
 
 def read(folder_path, depth=0):
     blobs = container_client.walk_blobs(name_starts_with=folder_path)
@@ -58,14 +63,15 @@ def read(folder_path, depth=0):
         if "/" == name[-1]:
             read(name, depth + 1)
         else:
-            if "application/octet-stream" != blob.content_settings.content_type:
-                print(blob.content_settings.content_type)
+            # if "application/octet-stream" != blob.content_settings.content_type:
+            print(name)
 
 
 
 
 folder = "audios/"  # needs to end with /
-read(folder)
-# upload_blob("../Keertan/", "Keertan2/")
+upload_file("/Users/gians/Downloads/08 Bhai Mohinder Singh SDO - Amrit Naam Parmeshar Tera - India 1960s.mp3", "audios/keertan/sdo/sangat_files/bjot/08 Bhai Mohinder Singh SDO - Amrit Naam Parmeshar Tera - India 1960s.mp3")
+# read(folder)
+# upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
 # delete_folder(folder)
