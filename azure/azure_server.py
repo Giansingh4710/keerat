@@ -16,7 +16,6 @@ def delete_folder(folder_path, depth=0):
         if "/" == name[-1]:
             delete_folder(name, depth + 1)
         else:
-            continue
             container_client.delete_blob(blob.name)
 
 
@@ -51,8 +50,22 @@ def upload_blob(local_folder_path, parent_folder_name):
             print(f"Uploaded '{blob_name}'")
 
 
+def read(folder_path, depth=0):
+    blobs = container_client.walk_blobs(name_starts_with=folder_path)
+    for blob in blobs:
+        name = blob.name
+        # print("  " * depth, name)
+        if "/" == name[-1]:
+            read(name, depth + 1)
+        else:
+            if "application/octet-stream" != blob.content_settings.content_type:
+                print(blob.content_settings.content_type)
+
+
+
 
 folder = "audios/"  # needs to end with /
+read(folder)
 # upload_blob("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
 # delete_folder(folder)
