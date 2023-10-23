@@ -49,11 +49,13 @@ def upload_folder(local_folder_path, parent_folder_name):
                 blob_client.upload_blob(data, overwrite=True)
             print(f"Uploaded '{blob_name}'")
 
+
 def upload_file(local_file_path, blob_name):
     blob_client = container_client.get_blob_client(blob_name)
     with open(local_file_path, "rb") as data:
         blob_client.upload_blob(data, overwrite=True)
     print(f"Uploaded '{blob_name}'")
+
 
 def read(folder_path, depth=0):
     blobs = container_client.walk_blobs(name_starts_with=folder_path)
@@ -67,11 +69,39 @@ def read(folder_path, depth=0):
             print(name)
 
 
+def files_map(folder_path, condition, action, depth=0):
+    blobs = container_client.walk_blobs(name_starts_with=folder_path)
+    for blob in blobs:
+        if "/" == blob.name[-1]:
+            files_map(blob.name, condition, action, depth + 1)
+        else:
+            # if "application/octet-stream" != blob.content_settings.content_type:
+            if condition(blob):
+                action(blob)
+
+
+def delete_file(blob):
+    name = blob.name
+    print("Deleting " + name)
+    container_client.delete_blob(name)
+
+
+def the_condition(blob):
+    return blob.name.endswith(".mp3") or blob.name.endswith(".m4a")
+
+
+def the_action(blob):
+    source_blob_client = container_client.get_blob_client(blob)
+    blob.content_settings.content_type = "audio/mpeg"
+    source_blob_client.set_http_headers(blob.content_settings)
+    print("Set content type for " + blob.name)
 
 
 folder = "audios/"  # needs to end with /
-upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
+files_map(folder, the_condition, the_action)
+
+# upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
 # read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
-# delete_folder(folder)
+# delete_folder(folder)  # very DANGAROUS

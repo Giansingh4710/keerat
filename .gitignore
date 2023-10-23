@@ -3,3 +3,4 @@
 *.zip
 azure/env.py
 *__pycache__/
+geckodriver.log
