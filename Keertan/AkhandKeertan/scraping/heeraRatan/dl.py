@@ -1,8 +1,8 @@
+from azure.storage.blob import BlobServiceClient
 import sys
 import os
 import json
 import subprocess
-from azure.storage.blob import BlobServiceClient
 
 
 def get_json_data(file):
@@ -71,11 +71,11 @@ def compare_and_download_videos(new_lst, old_lst):
                 vid["url"],
             ]
         )
-        remove_bad_url_char(str(i+1).zfill(3))
+        remove_bad_url_char(str(i + 1).zfill(3))
     os.chdir("..")
 
 
-def upload_to_azure():
+def upload_to_azure(prefix, dir):
     f = open("../../../../azure/env.py", "r")
     CONNECTION_STRING = f.read().split()[-1][1:-1]
 
@@ -84,29 +84,33 @@ def upload_to_azure():
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
     container_client = blob_service_client.get_container_client(container_name)
 
-    os.chdir("./vids")
-    prefix = "audios/keertan/sdo/yt_heeraRattan/"
-    for i in os.listdir():
-        if i[0] == ".": continue
-        blob_name = prefix+i
+    for i in os.listdir(dir):
+        if i[0] == ".":
+            continue
+        blob_name = prefix + i
         blob_client = container_client.get_blob_client(blob_name)
         print(f"Uploading '{i}'")
-        with open(i, "rb") as data:
+        with open(os.path.join(dir, i), "rb") as data:
             blob_client.upload_blob(data, overwrite=True)
-    os.chdir("..")
 
-def print_link():
-    os.chdir("./vids")
+        blob_props = blob_client.get_blob_properties()
+        blob_props.content_settings.content_type = "audio/mpeg"
+        blob_client.set_http_headers(blob_props.content_settings)
+
+
+def print_links(prefix, dir_name):
     print("Links:\n\n")
-    for i in os.listdir():
-        if i[0] == ".": continue
-        link = 'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/' + i
-        print(link)
-    os.chdir("..")
+    link_pref = "https://daasstorage13.blob.core.windows.net/ds1/" + prefix
+    for file in os.listdir(dir_name):
+        if file[0] == ".":
+            continue
+        print(f"{link_pref}{file}")
 
 
 new = get_json_data(sys.argv[1])
 old = get_json_data(sys.argv[2])
 compare_and_download_videos(new, old)
-upload_to_azure()
-print_link()
+prefix = "audios/keertan/sdo/yt_heeraRattan/"
+dir_name = "./vids"
+upload_to_azure(prefix, dir_name)
+print_links(prefix, dir_name)

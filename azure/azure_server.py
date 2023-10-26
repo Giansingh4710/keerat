@@ -17,6 +17,7 @@ def delete_folder(folder_path, depth=0):
             delete_folder(name, depth + 1)
         else:
             container_client.delete_blob(blob.name)
+            print(f"Deleted {blob.name}")
 
 
 def rename_folder(old_folder_path, new_folder_path):
@@ -87,7 +88,7 @@ def delete_file(blob):
 
 
 def the_condition(blob):
-    return blob.name.endswith(".mp3") or blob.name.endswith(".m4a")
+    return (blob.name.endswith(".mp3") or blob.name.endswith(".m4a")) and blob.content_settings.content_type != "audio/mpeg"
 
 
 def the_action(blob):
@@ -98,10 +99,10 @@ def the_action(blob):
 
 
 folder = "audios/"  # needs to end with /
-files_map(folder, the_condition, the_action)
+# files_map(folder, the_condition, the_action)
 
 # upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
 # read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
-# delete_folder(folder)  # very DANGAROUS
+delete_folder("audios/keertan/sdo/yt/")  # very DANGAROUS

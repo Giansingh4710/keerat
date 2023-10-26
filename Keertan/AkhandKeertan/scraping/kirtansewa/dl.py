@@ -1,6 +1,7 @@
 import os
 import json
 import subprocess
+import sys
 from azure.storage.blob import BlobServiceClient
 
 f = open("../../../../azure/env.py", "r")
@@ -103,18 +104,18 @@ def print_link(dir, prefix):
     os.chdir("..")
 
 
-# new = filter_data(get_json_data(sys.argv[1]))
-# old = filter_data(get_json_data(sys.argv[2]))
+new = filter_data(get_json_data(sys.argv[1]))
+old = filter_data(get_json_data(sys.argv[2]))
 
 sdo = "SDO"
 gas = "Giani Amolak Singh"
-# compare_and_download_videos(sdo, new["sdo"], old["sdo"])
-# compare_and_download_videos(gas, new["gas"], old["gas"])
+compare_and_download_videos(sdo, new["sdo"], old["sdo"])
+compare_and_download_videos(gas, new["gas"], old["gas"])
 
-upload_to_azure("audios/keertan/sdo/yt_kirtanSewa/", sdo)
+# upload_to_azure("audios/keertan/sdo/yt_kirtanSewa/", sdo)
 print_link(sdo, "audios/keertan/sdo/yt_kirtanSewa/")
 
-upload_to_azure("audios/keertan/giani_amolak_singh/yt_kirtanSewa/", gas)
+# upload_to_azure("audios/keertan/giani_amolak_singh/yt_kirtanSewa/", gas)
 print_link(gas, "audios/keertan/giani_amolak_singh/yt_kirtanSewa/")
 
 """
