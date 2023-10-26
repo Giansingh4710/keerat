@@ -568,7 +568,7 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_lalli_pl/132) ਲਾਲਾ ਗੋਲਾ Bhai Mohinder Singh Jee SDO India Samagam 1966 (AKJ Puratan Keertan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_lalli_pl/133) ਕਰਤਾਰ ਪੁਰ ਆਗਮਾਨ Bhai Mohinder Singh Jee SDO Gurudwara Kartarpur Sahib.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_lalli_pl/134) ਬੇਅੰਤਾ ਬੇਅੰਤ ਗੁਣ ਤੇਰੇ Bhai Mohinder Singh Jee SDO Boston Samagam 1982.mp3',
-  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_lalli_pl/135) Bhai Mohinder Singh Jee SDO - India Samgam 1960's(Spool Conversion).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_lalli_pl/135) Bhai Mohinder Singh Jee SDO - India Samgam 1960\'s(Spool Conversion).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_lalli_pl/136) Bhai Mohinder Singh Jee SDO - California Samagam 1984 (Tape Conversion MS-SDO 15).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_lalli_pl/137) Bhai Mohinder Singh Ji SDO 70s (SoRang Ratey Jass Gavat Hai ).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_lalli_pl/138) Bhai Mohinder Singh Ji S.D.O ( Eio uth bhabhke balbir singh shastar chamkare ).mp3',
