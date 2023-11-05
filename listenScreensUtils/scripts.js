@@ -336,7 +336,7 @@ function get_last_track_reset_stuff() {
     }
   }
   function choose_track() {
-    function play_track(link,the_time) {
+    function play_track(link, the_time) {
       currentTrackPointer = 0
       tracksPlayed.push(TRACK_LINKS.indexOf(link))
       playTrack(link)
@@ -347,20 +347,20 @@ function get_last_track_reset_stuff() {
     const urlInd = parseInt(urlParams.get('trackIndex'))
     const urlArtist = urlParams.get('artist')
 
-    if (urlInd && urlArtist) {
+    if (urlArtist && urlInd > -1) {
       document.getElementById(urlArtist).checked = true
       excludeOrIncludeTracks()
 
       const the_link = ALL_OPTS[urlArtist].trackLinks[urlInd]
       const the_time = parseInt(urlParams.get('time'))
-      play_track(the_link,the_time)
+      play_track(the_link, the_time)
       return
     }
 
     const the_link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`)
     if (the_link) {
       const the_time = localStorage.getItem(lastTimeStampKey)
-      play_track(the_link,the_time)
+      play_track(the_link, the_time)
       return
     }
 
