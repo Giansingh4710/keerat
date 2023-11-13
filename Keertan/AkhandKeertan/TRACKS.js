@@ -1515,6 +1515,16 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/046 Moga 1980 (Spool-16)-2 (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/047 Los Angeles  1981 (31) (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/048 Bhai Mohinder Singh Ji SDO  ਡਿਠਾ ਸਭੁ ਸੰਸਾਰੁ ਸੁਖੁ ਨ ਨਾਮ ਬਿਨੁ ॥ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/049 Bhai Mohinder Singh Ji SDO     ਮੇਰੈ ਮਨਿ  ਪ੍ਰੇਮੁ ਲਗੋ ਹਰਿ ਤੀਰ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/050 Bhai Mohinder Singh Ji SDO  ਅਪਨੇ ਪ੍ਰਭ ਸਿਉ ਹੋਹੁ ਸਾਵਧਾਨੁ ॥ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/051 Bhai Mohinder Singh Ji SDO    ਹਰਿ ਨਾਮੁ ਪਰਾਪਤਿ ਹੋਇ ॥ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/052 Bhai Mohinder Singh Ji SDO  ਤਿਨ ਕੀ ਸੋਭਾ ਕਿਆ ਗਣੀ ਜਿਨੀ ਹਰਿਹਰਿ ਲਧਾ ॥ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/053 Bhai Mohinder Singh Ji SDO   ਸਤਿਗੁਰ ਮੂਰਤਿ ਕਉ ਬਲਿ ਜਾਉ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/054 Bhai Mohinder Singh Ji SDO  ਸਤਿ ਸਤਿ ਸਤਿ ਸਤਿ ਸਤਿ ਗੁਰਦੇਵ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/055 Bhai Mohinder Singh Ji SDO   ਆਨਦ ਰੰਗ ਬਿਨੋਦ ਹਮਾਰੈ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/056 Bhai Mohinder Singh Ji SDO. ਨਗਜ ਤੇਰੇ ਬੰਦੇ ਦੀਦਾਰੁ ਅਪਾਰੁ   2 (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/057 Bhai Mohinder Singh Ji SDO   ਕਿਸੁ ਨਾਲਿ ਕੀਚੈ ਦੋਸਤੀ ਸਭੁ ਜਗੁ ਚਲਣਹਾਰੁ  1 (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/058 Bhai Mohinder Singh Ji SDO.  ਬਲਿ ਬਲਿ ਹਉ ਤਿਨ ਜਾਤੀ (heeraRattan).mp3',
 
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/sangat_files/bjot/08 Bhai Mohinder Singh SDO - Amrit Naam Parmeshar Tera - India 1960s.mp3',
 

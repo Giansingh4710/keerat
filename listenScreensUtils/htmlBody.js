@@ -29,6 +29,7 @@ document.write('\
   <h1 class="border" id="MainTitle"></h1> \
   <div id="forSearch" class="section"> \
     <input placeholder="Search for Track:" id="searchInput" oninput="searchForShabad(this.value)" /> \
+    <button onclick="clearSearch()">Clear Search</button> \
     <div class="sectionDisplay"> \
       <ol id="searchResults"></ol> \
     </div> \

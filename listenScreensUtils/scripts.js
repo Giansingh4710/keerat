@@ -198,8 +198,7 @@ function toggleShowingOpts() {
   }
 }
 
-function searchForShabad(e) {
-  const searchVal = e
+function searchForShabad(searchVal) {
   const ol = document.getElementById('searchResults')
 
   const allLinksWithWordInds = []
@@ -233,6 +232,13 @@ function searchForShabad(e) {
     )}</button>`
     ol.appendChild(li)
   }
+  return allLinksWithWordInds
+}
+
+function clearSearch(){
+  const ol = document.getElementById('searchResults')
+  document.getElementById('searchInput').value = ""
+  ol.innerHTML = ''
 }
 
 function navigatorStuff() {
@@ -346,15 +352,27 @@ function get_last_track_reset_stuff() {
     const urlParams = new URLSearchParams(window.location.search)
     const urlInd = parseInt(urlParams.get('trackIndex'))
     const urlArtist = urlParams.get('artist')
+    const urlTime = parseInt(urlParams.get('time'))
+    const urlSearch = urlParams.get('search')
 
-    if (urlArtist && urlInd > -1) {
+    if (urlArtist) {
       document.getElementById(urlArtist).checked = true
       excludeOrIncludeTracks()
+    }
 
+    if (urlInd > -1) {
       const the_link = ALL_OPTS[urlArtist].trackLinks[urlInd]
-      const the_time = parseInt(urlParams.get('time'))
-      play_track(the_link, the_time)
+      play_track(the_link, urlTime)
       return
+    } else if (urlSearch) {
+      document.getElementById('searchInput').value = urlSearch
+      const tracks = searchForShabad(urlSearch)
+      if (tracks.length === 1) {
+        const the_link = TRACK_LINKS[tracks[0]]
+        play_track(the_link, urlTime)
+        clearSearch()
+        return
+      }
     }
 
     const the_link = localStorage.getItem(`LastPlayed: ${MAIN_TITLE}`)
@@ -623,8 +641,8 @@ function formValidation(e) {
   form.submit()
 }
 
-function findShabadsKey(searchInput) {
-  if (searchInput.length < 3) return {}
+function findShabadsKey(search_input) {
+  if (search_input.length < 3) return {}
   const all_matched_shabad_keys = {}
   for (const key in ALL_SHABADS) {
     const shabadArray = ALL_SHABADS[key]
@@ -635,9 +653,12 @@ function findShabadsKey(searchInput) {
       const first_letters = first_letters_gurmukhi(line)
 
       let line_matched = true
-      for (let i = 0; i < searchInput.length; i++) {
+      for (let i = 0; i < search_input.length; i++) {
         if (!line_matched) break
-        if (first_letters.length === i || first_letters[i] !== searchInput[i]) {
+        if (
+          first_letters.length === i ||
+          first_letters[i] !== search_input[i]
+        ) {
           line_matched = false
         }
       }
@@ -728,3 +749,4 @@ function copyLink() {
   url.searchParams.append('trackIndex', get_ind_from_artist_tracks(currentLink))
   navigator.clipboard.writeText(url.href)
 }
+

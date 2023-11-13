@@ -223,6 +223,14 @@ audio {
   text-align: center;
 }
 
+#searchResults:empty {
+  height: 0;
+}
+#searchResults{
+  height: 50vh;
+  overflow-y:auto;
+  margin: 10px;
+}
 .border{
   text-align: center;
   border: 3px solid #34568b;
