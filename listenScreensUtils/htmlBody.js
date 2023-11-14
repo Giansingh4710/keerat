@@ -30,6 +30,7 @@ document.write('\
   <div id="forSearch" class="section"> \
     <input placeholder="Search for Track:" id="searchInput" oninput="searchForShabad(this.value)" /> \
     <button onclick="clearSearch()">Clear Search</button> \
+    <p id="resultsFound"></p> \
     <div class="sectionDisplay"> \
       <ol id="searchResults"></ol> \
     </div> \
@@ -135,7 +136,7 @@ document.write('\
     <div class="dialog-content"> \
       <p id="formInfo"></p> \
       <form id="modal-content" onsubmit="formValidation(event)" method="post" \
-        action="http://45.76.2.28/trackIndex/addData.php"> \
+        action="http://45.76.2.28/trackIndex/util/addData.php"> \
         <span id="closeModal">&times;</span> \
         <div class="userInputItem"> \
           <label for="userDesc">Description:</label> \

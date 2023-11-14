@@ -200,6 +200,7 @@ function toggleShowingOpts() {
 
 function searchForShabad(searchVal) {
   const ol = document.getElementById('searchResults')
+  const ptag = document.getElementById('resultsFound')
 
   const allLinksWithWordInds = []
 
@@ -219,9 +220,10 @@ function searchForShabad(searchVal) {
     }
   })
 
-  ol.innerHTML = `<p>${allLinksWithWordInds.length} Results Found</p>`
+  ptag.innerText = `${allLinksWithWordInds.length} Results Found`
   if (searchVal === '') {
     ol.innerHTML = ''
+    ptag.innerText = ''
     return
   }
 
@@ -235,9 +237,9 @@ function searchForShabad(searchVal) {
   return allLinksWithWordInds
 }
 
-function clearSearch(){
+function clearSearch() {
   const ol = document.getElementById('searchResults')
-  document.getElementById('searchInput').value = ""
+  document.getElementById('searchInput').value = ''
   ol.innerHTML = ''
 }
 
@@ -252,7 +254,7 @@ function navigatorStuff() {
   navigator.mediaSession.setActionHandler('previoustrack', playPreviousTrack)
   navigator.mediaSession.setActionHandler('nexttrack', playNextTrack)
 
-  navigator.mediaSession.setActionHandler('seekto', function (event) {
+  navigator.mediaSession.setActionHandler('seekto', function(event) {
     theAudioPlayer.currentTime = event.seekTime
   })
 }
@@ -266,13 +268,13 @@ function local_save_track_modal() {
   let modal = document.getElementById('saveTrackLocalModal')
   let btn = document.getElementById('saveTrackBtn')
   let span = document.getElementById('saveTrackLocalModalClose')
-  btn.onclick = function () {
+  btn.onclick = function() {
     modal.style.display = 'block'
   }
-  span.onclick = function () {
+  span.onclick = function() {
     modal.style.display = 'none'
   }
-  window.onclick = function (event) {
+  window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = 'none'
     }
@@ -346,14 +348,29 @@ function get_last_track_reset_stuff() {
       currentTrackPointer = 0
       tracksPlayed.push(TRACK_LINKS.indexOf(link))
       playTrack(link)
-      if (the_time) theAudioPlayer.currentTime = the_time
+
+      if (!the_time) return
+      let seconds = the_time
+
+      if (the_time.includes(':')) {
+        const timeLst = the_time.split(':')
+        let totalSeconds = 0
+        let muliplier = 1
+        for (let i = timeLst.length - 1; i > -1; i--) {
+          totalSeconds += muliplier * parseInt(timeLst[i])
+          muliplier *= 60
+        }
+        seconds = totalSeconds
+      }
+      theAudioPlayer.currentTime = seconds
     }
 
     const urlParams = new URLSearchParams(window.location.search)
     const urlInd = parseInt(urlParams.get('trackIndex'))
     const urlArtist = urlParams.get('artist')
-    const urlTime = parseInt(urlParams.get('time'))
+    const urlTime = urlParams.get('time')
     const urlSearch = urlParams.get('search')
+    // console.log(urlInd, urlArtist, urlTime, urlSearch)
 
     if (urlArtist) {
       document.getElementById(urlArtist).checked = true
@@ -370,7 +387,7 @@ function get_last_track_reset_stuff() {
       if (tracks.length === 1) {
         const the_link = TRACK_LINKS[tracks[0]]
         play_track(the_link, urlTime)
-        clearSearch()
+        // clearSearch()
         return
       }
     }
@@ -749,4 +766,3 @@ function copyLink() {
   url.searchParams.append('trackIndex', get_ind_from_artist_tracks(currentLink))
   navigator.clipboard.writeText(url.href)
 }
-

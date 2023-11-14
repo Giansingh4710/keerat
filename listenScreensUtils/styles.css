@@ -227,7 +227,7 @@ audio {
   height: 0;
 }
 #searchResults{
-  height: 50vh;
+  height: 30vh;
   overflow-y:auto;
   margin: 10px;
 }
