@@ -220,9 +220,9 @@ function searchForShabad(searchVal) {
     }
   })
 
+  ol.innerHTML = ''
   ptag.innerText = `${allLinksWithWordInds.length} Results Found`
   if (searchVal === '') {
-    ol.innerHTML = ''
     ptag.innerText = ''
     return
   }
