@@ -206,13 +206,28 @@ audio {
     margin: 5px;
     border-radius: 5px;
   }
-  #shabad_details_form {
+  #shabadId_list_opts{
+    background-color:#14148F ;
+    height: 20vh;
+    overflow-y:auto;
+  }
+  #sbdDetails div {
     font-size: 0.2em;
     background-color:#14148F ;
     color: white;
+    height: 30vh;
+    overflow-y:auto;
   }
 
 /* -------------------- modal end -------------- */
+
+#headingDiv{
+  margin: 10px;
+}
+#headingDiv *{
+  margin-bottom: 0;
+  margin-top: 0;
+}
 
 #searchInput {
   width: 95%;
@@ -227,6 +242,7 @@ audio {
   height: 0;
 }
 #searchResults{
+  display: none;
   height: 30vh;
   overflow-y:auto;
   margin: 10px;

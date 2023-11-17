@@ -125,8 +125,7 @@ function deleteSavedTrack(link) {
   savedTracks = JSON.parse(savedTracks)
   delete savedTracks[link]
   localStorage.setItem(savedTracksKey, JSON.stringify(savedTracks))
-  toggleSavedTracks()
-  toggleSavedTracks()
+  showSavedTracks()
 }
 
 function putTrackInLocalStorage(link, note) {
@@ -141,19 +140,24 @@ function putTrackInLocalStorage(link, note) {
   localStorage.setItem(savedTracksKey, JSON.stringify(savedItems))
 }
 
-function toggleSavedTracks() {
-  const ol = document.getElementById('savedShabads')
-  ol.style.display = 'block'
-  if (ol.innerHTML !== '') {
-    ol.innerHTML = ''
-    ol.style.display = 'none'
-    ol.style.display = 'none'
+function showSavedTracks() {
+  const searchDiv = document.getElementById('searchResults')
+  const ptag = searchDiv.getElementsByTagName('p')[0]
+  const ol = searchDiv.getElementsByTagName('ol')[0]
+  const button = document.getElementById('showSavedTrksBtn')
+
+  clearSearch()
+  searchDiv.style.display = 'block'
+  /* if (ptag.innerHTML !== '') {
+    clearSearch()
+    button.innerText = 'Show Saved Tracks'
     return
-  }
+  } */
 
   let savedTracks = localStorage.getItem(`SavedTracks: ${MAIN_TITLE}`)
   savedTracks = JSON.parse(savedTracks)
 
+  const numOfTracks = savedTracks ? Object.keys(savedTracks).length : 0
   for (const link in savedTracks) {
     const theNameOfTrack = getNameOfTrack(link)
     const trkMsg = savedTracks[link].replaceAll('\n', ' ')
@@ -161,27 +165,9 @@ function toggleSavedTracks() {
     li.innerHTML = `${trkMsg}<button onclick="playTrack('${link}')" > ${theNameOfTrack}</button><button onclick="deleteSavedTrack('${link}')" >DELETE</button>`
     ol.appendChild(li)
   }
-  if (!savedTracks || Object.keys(savedTracks).length === 0) {
-    ol.innerText = 'No Saved Tracks. Click the Save button to Save tracks'
-  }
-}
 
-function toggleShowingTracks() {
-  const theDiv = document.getElementById('showAllTracks')
-  if (theDiv.innerHTML === '') {
-    theDiv.innerHTML = `<h5>There are ${TRACK_LINKS.length} tracks</h5>`
-    const ol = document.createElement('ol')
-    for (const link of TRACK_LINKS) {
-      const li = document.createElement('li')
-      li.innerHTML += `<button onclick="playTrack('${link}')">${getNameOfTrack(
-        link
-      )}</button>`
-      ol.appendChild(li)
-    }
-    theDiv.appendChild(ol)
-  } else {
-    theDiv.innerHTML = ''
-  }
+  ptag.innerText = `${numOfTracks} Tracks Saved`
+  // button.innerText = 'Hide Saved Tracks'
 }
 
 function toggleShowingOpts() {
@@ -199,9 +185,11 @@ function toggleShowingOpts() {
 }
 
 function searchForShabad(searchVal) {
-  const ol = document.getElementById('searchResults')
+  const searchDiv = document.getElementById('searchResults')
+  const ol = searchDiv.getElementsByTagName('ol')[0]
   const ptag = document.getElementById('resultsFound')
 
+  searchDiv.style.display = 'block'
   const allLinksWithWordInds = []
 
   const searchWordsLst = searchVal.toLowerCase().split(' ')
@@ -220,12 +208,13 @@ function searchForShabad(searchVal) {
     }
   })
 
-  ol.innerHTML = ''
-  ptag.innerText = `${allLinksWithWordInds.length} Results Found`
   if (searchVal === '') {
-    ptag.innerText = ''
+    clearSearch()
     return
   }
+
+  ol.innerHTML = ''
+  ptag.innerText = `${allLinksWithWordInds.length} Results Found`
 
   for (const index of allLinksWithWordInds) {
     li = document.createElement('li')
@@ -238,9 +227,14 @@ function searchForShabad(searchVal) {
 }
 
 function clearSearch() {
-  const ol = document.getElementById('searchResults')
+  const searchDiv = document.getElementById('searchResults')
+  const ol = searchDiv.getElementsByTagName('ol')[0]
+  const ptag = document.getElementById('resultsFound')
+
   document.getElementById('searchInput').value = ''
+  ptag.innerText = ''
   ol.innerHTML = ''
+  searchDiv.style.display = 'none'
 }
 
 function navigatorStuff() {
@@ -495,10 +489,19 @@ function global_modal_initialisation() {
 }
 
 function add_shabad_from_user_input() {
-  const input_tag = document.getElementById('usedShabadId')
+  const sbdId_input_tag = document.getElementById('usedShabadId')
   const decs_input = document.getElementById('userDesc')
-  const user_input = input_tag.value
+  const user_input = sbdId_input_tag.value
   const list_opts = document.getElementById('shabadId_list_opts')
+
+  const sbdDetails = document.getElementById('sbdDetails')
+  const summaryTag = sbdDetails.getElementsByTagName('summary')[0]
+  const fullSbdDiv = sbdDetails.getElementsByTagName('div')[0]
+
+  const gurbaniLineDiv = document.getElementById('gurbani_line')
+  // const show_line_p = gurbaniLineDiv.getElementsByTagName('div')[0]
+  const only_do_line_btn = gurbaniLineDiv.getElementsByTagName('button')[0]
+
   list_opts.innerHTML = ''
   if (user_input === '') return
 
@@ -577,18 +580,18 @@ function add_shabad_from_user_input() {
     Î: '੍ਯ',
     ì: 'ਯ',
     í: '੍ਯ',
-    1: '੧',
-    2: '੨',
-    3: '੩',
-    4: '੪',
-    5: '੫',
-    6: '੬',
-    '^': 'ਖ਼',
-    7: '੭',
-    '&': 'ਫ਼',
-    8: '੮',
-    9: '੯',
-    0: '੦',
+    // 1: '੧',
+    // 2: '੨',
+    // 3: '੩',
+    // 4: '੪',
+    // 5: '੫',
+    // 6: '੬',
+    // '^': 'ਖ਼',
+    // 7: '੭',
+    // '&': 'ਫ਼',
+    // 8: '੮',
+    // 9: '੯',
+    // 0: '੦',
     '\\': 'ਞ',
     '|': 'ਙ',
     '[': '।',
@@ -607,20 +610,30 @@ function add_shabad_from_user_input() {
     .split('')
     .map((char) => mapping[char] || char)
     .join('')
-  input_tag.value = gurmukhi_input
+  sbdId_input_tag.value = gurmukhi_input
+
   const keyObj = findShabadsKey(gurmukhi_input)
   for (let shabad_key in keyObj) {
     const line_ind = keyObj[shabad_key]
     const sbd = ALL_SHABADS[shabad_key]
-    const opt = document.createElement('p')
+    const opt = document.createElement('button')
 
     opt.classList.add('shabad_opt_from_userinput')
-    opt.onclick = () => {
-      list_opts.innerHTML = `<details><summary>${shabad_key}</summary><div id="shabad_details_form">${ALL_SHABADS[shabad_key]}</div></details>`
-      input_tag.value = shabad_key
-      // if (decs_input.value === '') {}
-      decs_input.value = sbd[line_ind + 1]
-      document.getElementById('theShabadSelected').textContent = sbd[line_ind]
+    opt.onclick = (e) => {
+      e.preventDefault() //to not submit form
+      sbdDetails.style.display = 'block'
+      summaryTag.textContent = shabad_key
+      fullSbdDiv.innerHTML = ALL_SHABADS[shabad_key].join('<br>')
+      sbdId_input_tag.value = shabad_key
+      decs_input.value = sbd[line_ind + 1] // the english transliteration
+
+      gurbaniLineDiv.style.display = 'block'
+      only_do_line_btn.textContent = sbd[line_ind]
+      only_do_line_btn.onclick = (ev) => {
+        ev.preventDefault()
+        decs_input.value = sbd[line_ind]
+        sbdId_input_tag.value = ''
+      }
     }
     opt.innerText = sbd[line_ind]
     list_opts.appendChild(opt)
@@ -765,4 +778,45 @@ function copyLink() {
   url.searchParams.append('artist', currentArtist)
   url.searchParams.append('trackIndex', get_ind_from_artist_tracks(currentLink))
   navigator.clipboard.writeText(url.href)
+}
+
+function playLastIndexedTrack() {
+  document.getElementById('play_LastIndexedTrack').disabled = true
+  fetch('http://45.76.2.28/trackIndex/util/getData.php')
+    .then((res) => {
+      if (!res.ok) throw new Error('Something went wrong!')
+      return res.json()
+    })
+    .then((data) => {
+      const last = data[data.length - 1]
+      console.log(last)
+      const link = last.link
+      const keertani = last.keertani
+      const timeStamp = last.timeStamp
+
+      const checkBox = document.getElementById(keertani)
+      if (!checkBox) {
+        alert(`${keertani}: not on this page`)
+        return
+      }
+      checkBox.checked = true
+      excludeOrIncludeTracks()
+
+      const index = TRACK_LINKS.indexOf(link)
+      tracksPlayed.push(index)
+      currentTrackPointer = tracksPlayed.length - 1
+      playTrack(link)
+
+      const timeLst = timeStamp.split(':')
+      let totalSeconds = 0
+      let muliplier = 1
+      for (let i = timeLst.length - 1; i > -1; i--) {
+        totalSeconds += muliplier * parseInt(timeLst[i])
+        muliplier *= 60
+      }
+      theAudioPlayer.currentTime = totalSeconds
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }

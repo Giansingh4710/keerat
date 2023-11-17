@@ -25,16 +25,43 @@
 <script type="text/javascript" src="/assets/allShabads.js"></script>
 
 <body>
-  <h1 class="border" id="MainTitle"></h1>
-  <div id="forSearch" class="section">
+  <div class="border" id="headingDiv">
+    <h1 id="MainTitle"></h1>
+    <p id="tracksData"></p>
+  </div>
+
+  <div>
     <input placeholder="Search for Track:" id="searchInput" oninput="searchForShabad(this.value)" />
-    <button onclick="clearSearch()">Clear Search</button>
-    <p id="resultsFound"></p>
-    <div class="sectionDisplay">
-      <ol id="searchResults"></ol>
+    <button onclick="showSavedTracks()" id="showSavedTrksBtn">
+      Show Saved Tracks
+    </button>
+    <button onclick="clearSearch()">Clear Results</button>
+    <div class="sectionDisplay" id="searchResults">
+      <p id="resultsFound"></p>
+      <ol></ol>
     </div>
   </div>
-  <p class="border" id="tracksData"></p>
+
+  <div id="optionMenu" class="section">
+    <button id="toggleShowingOpts" onclick="toggleShowingOpts()">
+      Hide The Options
+    </button>
+    <div class="sectionDisplay">
+      <div id="tracksOpts">
+        <div id="checkBtnsOpts">
+          <button class="basicBtn" onclick="check_uncheck_opts(false)">
+            Uncheck All Options
+          </button>
+          <button class="basicBtn" onclick="check_uncheck_opts(true)">
+            Check All Options
+          </button>
+        </div>
+        <!-- Options(label/checkbox inputs) will go here -->
+      </div>
+    </div>
+  </div>
+
+
 
   <div id="trackPlaying" style="display: none">
     <div id="trackInfo" class="border">
@@ -63,6 +90,8 @@
         <option value="60">60 Seconds</option>
       </select>
     </div>
+
+    <button id="saveTrackBtn">Save Track Locally</button>
     <div id="trackNavigationBtns">
       <button class="basicBtn trackNavBtn" onclick="playPreviousTrack()">
         &#8592; Back
@@ -78,45 +107,6 @@
   </div>
 
   <hr />
-  <div id="optionMenu" class="section">
-    <button class="basicBtn" id="toggleShowingOpts" onclick="toggleShowingOpts()">
-      Hide The Options
-    </button>
-    <div class="sectionDisplay">
-      <div id="tracksOpts">
-        <div id="checkBtnsOpts">
-          <button class="basicBtn" onclick="check_uncheck_opts(false)">
-            Uncheck All Options
-          </button>
-          <button class="basicBtn" onclick="check_uncheck_opts(true)">
-            Check All Options
-          </button>
-        </div>
-        <!-- Options(label/checkbox inputs) will go here -->
-      </div>
-    </div>
-  </div>
-
-  <hr />
-  <button class="basicBtn" id="saveTrackBtn">Save Track Locally</button>
-  <div id="forSavedTracks" class="section">
-    <button class="basicBtn" onclick="toggleSavedTracks()">
-      Show Saved Tracks (Toggle)
-    </button>
-    <div class="sectionDisplay">
-      <ol id="savedShabads"></ol>
-    </div>
-  </div>
-
-  <hr />
-  <div id="forShowTracks" class="section">
-    <button class="basicBtn" onclick="toggleShowingTracks()">
-      Show Tracks (Toggle)
-    </button>
-    <div class="sectionDisplay">
-      <div id="showAllTracks"></div>
-    </div>
-  </div>
 
   <div id="saveTrackLocalModal" class="modal">
     <div id="saveTrackLocalModal-content">
@@ -142,12 +132,17 @@
           <input id="userDesc" name="description" placeholder="bin ek naam ik chit leen"></input>
         </div>
         <div class="userInputItem">
-          <p id="theShabadSelected"></p>
-          <label for="usedShabadId">Shabad ID:</label>
-          <input list="shabadId_list_opts" id="usedShabadId" name="shabadId" placeholder="687 or ਤਕਮਲ"
-            oninput="add_shabad_from_user_input()"></input>
-          <div id="shabadId_list_opts">
+          <div style="display: none;" id="gurbani_line">
+            <button id="only_this_line"></button>
           </div>
+          <label for="usedShabadId">Shabad ID:</label>
+          <input list="shabadId_list_opts" id="usedShabadId" name="shabadId" placeholder="ਤਕਮਲ"
+            oninput="add_shabad_from_user_input()"></input>
+          <div id="shabadId_list_opts"></div>
+          <details id="sbdDetails" style="display: none">
+            <summary>Shabad ID</summary>
+            <div></div>
+          </details>
         </div>
         <div class="userInputItem">
           <label for="userTimestamp">Timestamp of where Description Happened:</label>
@@ -167,7 +162,8 @@
       </form>
     </div>
   </div>
-  <button id="openModal">Save to Global Database</button>
 
+  <button id="openModal">Save to Global Database</button>
+  <button onclick="playLastIndexedTrack()" id="play_LastIndexedTrack">Play Last Indexed Track</button>
   <!-- <button onclick="localStorage.clear()">Reset Saved/Local Storage</button> -->
 </body>
