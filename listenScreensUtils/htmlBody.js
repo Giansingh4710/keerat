@@ -10,7 +10,7 @@ document.write('\
     <div class="dropdown-content"> \
       <a href="/Keertan/AkhandKeertan/">Akhand Keertan</a> \
       <a href="/Keertan/DarbarSahibPuratanKeertanSGPC">Darbar Sahib Puratan Keertan</a> \
-      <a href="/Keertan/TimeBasedKeertan(RaagKeertan)">Time Based Keertan (Raag Keertan)</a> \
+      <a href="/Keertan/TimeBasedRaagKeertan/">Time Based Raag Keertan</a> \
       <a href="/Keertan/AllKeertan">All Keertan</a> \
     </div> \
   </div> \
@@ -165,7 +165,6 @@ document.write('\
   </div> \
  \
   <button id="openModal">Save to Global Database</button> \
-  <button onclick="playLastIndexedTrack()" id="play_LastIndexedTrack">Play Last Indexed Track</button> \
   <!-- <button onclick="localStorage.clear()">Reset Saved/Local Storage</button> --> \
 </body> \
 ')

@@ -45,13 +45,13 @@ def golden_khajana():
         names = names[1:]
         return names, links
 
-    theLink = "http://sikhsoul.com/golden_khajana/index.php?q=f&f=%2FKeertan%2FBhai+Mohinder+Singh+SDO"
+    # theLink = "http://sikhsoul.com/golden_khajana/index.php?q=f&f=%2FKeertan%2FBhai+Mohinder+Singh+SDO"
     # theLink="http://sikhsoul.com/golden_khajana/index.php?q=f&f=%2FKeertan%2FBhai+Joginder+Singh+Talwara"
     # theLink="http://sikhsoul.com/golden_khajana/index.php?q=f&f=%2FKeertan%2FBhai+Mehar+Singh"
-    # theLink="http://sikhsoul.com/golden_khajana/index.php?q=f&f=%2FKeertan%2FBhai+Tejinderpal+Singh+Dulla"
+    theLink="http://sikhsoul.com/golden_khajana/index.php?q=f&f=%2FKeertan%2FBhai+Tejinderpal+Singh+Dulla"
     names, links = goldenKhajana(theLink)
     # download(links, "SDO")
-    [print(i) for i in names]
+    [print(i) for i in links]
 
 
 def i_kirtan():
@@ -75,7 +75,10 @@ def i_kirtan():
             audio = item.find("img", src="index.php?i=a") or item.find(
                 "img", src="index.php?i=v"
             )
-            new_link = baseLink + item.find("a")["href"]
+            otherHalf = item.find("a")["href"]
+            if otherHalf[0] == "/":
+                otherHalf = otherHalf[1:]
+            new_link = baseLink + otherHalf
             if not audio:
                 # only folders are supposed to be in here
                 print(f"folder: {new_link}")
@@ -86,13 +89,13 @@ def i_kirtan():
         return links
 
     base = "https://www.ikirtan.com/"
-    theLink = "https://www.ikirtan.com/index.php?q=f&f=%2FBhai_Mohinder_Singh_Jee_SDO"
+    # theLink = "https://www.ikirtan.com/index.php?q=f&f=%2FBhai_Mohinder_Singh_Jee_SDO"
     # theLink="http://www.ikirtan.com/index.php?f=%2FBhai_Joginder_Singh_Jee_Talwara&q=f"
     # theLink="https://www.ikirtan.com/index.php?q=f&f=%2FBhai_Mehar_Singh_Jee"
-    # theLink="https://www.ikirtan.com/index.php?q=f&f=%2F_Bhai_Jeevan_Singh_Jee"
+    theLink="https://www.ikirtan.com/index.php?q=f&f=%2F_Bhai_Jeevan_Singh_Jee"
     links = ikirtan(theLink, base)
-    path = "./ikirtanSDO"
     # download(links,path)
+    print("\n")
     [print(i) for i in links]
 
 
@@ -112,7 +115,7 @@ def sikhRoots():
     sikh_roots(theLink)
 
 
-# golden_khajana()
+golden_khajana()
 # i_kirtan()
 # youtube()
-sikhRoots()
+# sikhRoots()

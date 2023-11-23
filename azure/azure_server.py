@@ -88,7 +88,13 @@ def delete_file(blob):
 
 
 def the_condition(blob):
-    return (blob.name.endswith(".mp3") or blob.name.endswith(".m4a")) and blob.content_settings.content_type != "audio/mpeg"
+    return (
+        blob.name.endswith(".mp3")
+        or blob.name.endswith(".MP3")
+        or blob.name.endswith(".m4a")
+        or blob.name.endswith(".M4A")
+        or blob.name.endswith(".wav")
+    ) and blob.content_settings.content_type != "audio/mpeg"
 
 
 def the_action(blob):
@@ -97,12 +103,17 @@ def the_action(blob):
     source_blob_client.set_http_headers(blob.content_settings)
     print("Set content type for " + blob.name)
 
+def is_webm(blob):
+    return blob.name.endswith(".webm")
 
 folder = "audios/"  # needs to end with /
+# folder = "audios/keertan/dulla_ji/yt/"
+
 # files_map(folder, the_condition, the_action)
+files_map(folder, is_webm, delete_file)
 
 # upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
-read(folder)
+# read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
 # delete_folder("audios/keertan/sdo/yt/")  # very DANGAROUS
