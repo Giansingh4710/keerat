@@ -4,8 +4,15 @@ import subprocess
 import json
 
 
-def get_json_data_from_playlist(link,sign):
-    filename = f"{sign}.json"
+def get_json_data_from_file(name):
+    data = []
+    with open(name, "r") as f:
+        for line in f:
+            data.append(json.loads(line))
+    return data
+
+
+def save_links_to_file(link, filename):
     subprocess.run(
         [
             "yt-dlp",
@@ -15,11 +22,32 @@ def get_json_data_from_playlist(link,sign):
         ],
         stdout=open(filename, "w"),
     )
-    data = []
-    with open(filename, "r") as f:
-        for line in f:
-            data.append(json.loads(line))
-    return data
+
+
+def get_json_data_from_playlist(link, name):
+    filename = f"{name}.json"
+    already_downloaded = []
+    if os.path.exists(filename):
+        already_downloaded = get_json_data_from_file(filename)
+
+    save_links_to_file(link, filename)
+    all_data = get_json_data_from_file(filename)
+    return_obj = {"start_from_idx": len(all_data), "data": all_data}
+    if len(already_downloaded) == 0:
+        print("First time downloading!!!")
+        return return_obj
+
+    idx_where_already_dled = -1
+    for i in range(len(all_data)):
+        if all_data[i]["id"] == already_downloaded[0]["id"]:
+            idx_where_already_dled = i
+            break
+
+    if idx_where_already_dled == -1:
+        raise Exception(f"Not Same Files {name}")
+
+    return_obj["data"] = all_data[:idx_where_already_dled]
+    return return_obj
 
 
 def remove_bad_url_char(string):
@@ -31,15 +59,19 @@ def remove_bad_url_char(string):
     return string
 
 
-def download_videos(yt_lst, dir_name, sign=""):
+def download_videos(obj, dir_name, sign=""):
     if not os.path.exists(dir_name):
         os.mkdir(dir_name)
     os.chdir(dir_name)
 
-    # yt_lst = yt_lst[::-1]
+
+    title_num = obj["start_from_idx"]
+    yt_lst = obj["data"]
+    print(f"Downloading {len(yt_lst)} videos")
     for i in range(len(yt_lst)):
         vid = yt_lst[i]
-        title = f"{str(i + 1).zfill(3)} {remove_bad_url_char(vid['title'])}"
+        title = f"{str(title_num).zfill(3)} {remove_bad_url_char(vid['title'])}"
+        title_num -= 1
         if sign != "":
             title = f"{title} ({sign})"
         print(f"Downloading {i+1}/{len(yt_lst)}: {title}")
@@ -83,12 +115,32 @@ def upload_to_azure(prefix, dir):
 def print_links(prefix, dir_name):
     print("\nLinks:\n")
     link_pref = "https://daasstorage13.blob.core.windows.net/ds1/" + prefix
-    for file in os.listdir(dir_name):
+    for file in sorted(os.listdir(dir_name)):
         if file[0] == ".":
             continue
-        print(f"{link_pref}{file}")
+        print(f"'{link_pref}{file}',")
 
 
+def main(key):
+    playlist = playlists[key]
+
+    link = playlist["link"]
+    dir_name = playlist["dir_name"]
+    prefix = playlist["prefix"]
+    sign = playlist["sign"]
+
+    dl_obj = get_json_data_from_playlist(link, key)
+
+    if len(dl_obj['data']) == 0:
+        print(f"No new videos to download for {key}")
+        return
+    download_videos(dl_obj, dir_name, sign)
+
+    upload_to_azure(prefix, dir_name)
+    print_links(prefix, dir_name)
+
+
+# no filtering needed for the links/channels below
 playlists = {
     "lalli": {
         "link": "https://www.youtube.com/playlist?list=PL34jslVRIs1ffryd-uXG3CCk5oVew1bW2",  # 166/154 files
@@ -114,18 +166,14 @@ playlists = {
         "prefix": "audios/keertan/sdo/yt_heeraRattan/",
         "sign": "heeraRattan",
     },
+    "karKeertan": {
+        "link": "https://www.youtube.com/playlist?list=PLnHYMNVRCwh51tSOUjJf5ToO7POmGJtZ9",
+        "dir_name": "karKeertan",
+        "prefix": "audios/keertan/sdo/yt_karKeertan/",
+        "sign": "karKeertan",
+    },
 }
 
-key = "sdo_kirtansewa"
-playlist = playlists[key]
-
-link = playlist["link"]
-dir_name = playlist["dir_name"]
-prefix = playlist["prefix"]
-sign = playlist["sign"]
-
-lst = get_json_data_from_playlist(link,key)
-download_videos(lst, dir_name, sign)
-
-upload_to_azure(prefix, dir_name)
-print_links(prefix, dir_name)
+# key = "karKeertan"
+key = "heeraRatan"
+main(key)

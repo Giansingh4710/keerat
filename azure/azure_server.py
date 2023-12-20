@@ -110,10 +110,10 @@ folder = "audios/"  # needs to end with /
 # folder = "audios/keertan/dulla_ji/yt/"
 
 # files_map(folder, the_condition, the_action)
-files_map(folder, is_webm, delete_file)
+# files_map(folder, is_webm, delete_file)
 
 # upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
 # read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
-# delete_folder("audios/keertan/sdo/yt/")  # very DANGAROUS
+delete_folder("audios/keertan/sdo/yt_karKeertan/")  # very DANGAROUS
