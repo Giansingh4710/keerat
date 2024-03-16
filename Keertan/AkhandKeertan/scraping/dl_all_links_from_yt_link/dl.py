@@ -12,7 +12,7 @@ def get_json_data_from_file(name):
     return data
 
 
-def save_links_to_file(link, filename):
+def save_yt_playlist_links_to_file(link, filename):
     subprocess.run(
         [
             "yt-dlp",
@@ -23,31 +23,42 @@ def save_links_to_file(link, filename):
         stdout=open(filename, "w"),
     )
 
+def saveNewDownloadedVids(dl_obj, filename):
+    newly_downloaded = dl_obj['data']
+    already_downloaded = get_json_data_from_file(filename)
+    newData = newly_downloaded + already_downloaded
+    with open(filename, "w") as f:
+        for i in newData:
+            f.write(json.dumps(i) + "\n")
+    print(f"Saved {len(newly_downloaded)} new videos to {filename}\n")
 
-def get_json_data_from_playlist(link, name):
-    filename = f"{name}.json"
+def get_json_data_from_playlist(link, filename):
     already_downloaded = []
     if os.path.exists(filename):
         already_downloaded = get_json_data_from_file(filename)
 
-    save_links_to_file(link, filename)
-    all_data = get_json_data_from_file(filename)
-    return_obj = {"start_from_idx": len(all_data), "data": all_data}
+    temp_filename = f"_temp.json"
+    save_yt_playlist_links_to_file(link, temp_filename)
+    # if youtuber changes playlist like delete vids or change titles, this data will have that
+    currentPlaylistLinks = get_json_data_from_file(temp_filename)
+    subprocess.run(["rm", temp_filename])
+
+    return_obj = {
+        "start_from_num": 1,
+        "data": currentPlaylistLinks,
+    }
+
     if len(already_downloaded) == 0:
         print("First time downloading!!!")
         return return_obj
 
-    idx_where_already_dled = -1
-    for i in range(len(all_data)):
-        if all_data[i]["id"] == already_downloaded[0]["id"]:
-            idx_where_already_dled = i
-            break
+    for i in range(len(currentPlaylistLinks)):
+        if currentPlaylistLinks[i]["id"] == already_downloaded[0]["id"]:
+            return_obj["start_from_num"] = len(already_downloaded) + 1
+            return_obj["data"] = currentPlaylistLinks[:i] # data is in reverse order
+            return return_obj
 
-    if idx_where_already_dled == -1:
-        raise Exception(f"Not Same Files {name}")
-
-    return_obj["data"] = all_data[:idx_where_already_dled]
-    return return_obj
+    raise Exception(f"Not Same Files {filename}")
 
 
 def remove_bad_url_char(string):
@@ -64,17 +75,20 @@ def download_videos(obj, dir_name, sign=""):
         os.mkdir(dir_name)
     os.chdir(dir_name)
 
-
-    title_num = obj["start_from_idx"]
-    yt_lst = obj["data"]
+    title_num = obj["start_from_num"]
+    yt_lst = obj["data"][::-1]
     print(f"Downloading {len(yt_lst)} videos")
     for i in range(len(yt_lst)):
         vid = yt_lst[i]
         title = f"{str(title_num).zfill(3)} {remove_bad_url_char(vid['title'])}"
-        title_num -= 1
+        title_num += 1
         if sign != "":
             title = f"{title} ({sign})"
         print(f"Downloading {i+1}/{len(yt_lst)}: {title}")
+
+        if os.path.exists(f"{title}.mp3"):
+            print(f"File already exists: {title}.mp3")
+            continue
         subprocess.run(
             [
                 "yt-dlp",
@@ -129,15 +143,19 @@ def main(key):
     prefix = playlist["prefix"]
     sign = playlist["sign"]
 
-    dl_obj = get_json_data_from_playlist(link, key)
-
-    if len(dl_obj['data']) == 0:
+    dl_obj = get_json_data_from_playlist(link, f"{key}.json")
+    if len(dl_obj["data"]) == 0:
         print(f"No new videos to download for {key}")
         return
+
     download_videos(dl_obj, dir_name, sign)
 
     upload_to_azure(prefix, dir_name)
+    saveNewDownloadedVids(dl_obj, f"{key}.json")
+
     print_links(prefix, dir_name)
+
+
 
 
 # no filtering needed for the links/channels below
