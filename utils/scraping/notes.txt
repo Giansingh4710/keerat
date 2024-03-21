@@ -1,0 +1,4 @@
+./dl_all_links_from_yt_link/ is to download all at ones.
+
+other directories are for downloading incrementally. so like if heeraRatan
+posts a new video, you can download it without downloading all the videos again.
