@@ -30,6 +30,23 @@ export default function ListenPage({ title, tracksObj }) {
   })
 
   useEffect(() => {
+    function setAudioTime(the_time) {
+      if (!the_time) return
+
+      let seconds = parseInt(the_time)
+      if (the_time.includes(':')) {
+        const timeLst = the_time.split(':')
+        let totalSeconds = 0
+        let multiplier = 1
+        for (let i = timeLst.length - 1; i > -1; i--) {
+          totalSeconds += multiplier * parseInt(timeLst[i])
+          multiplier *= 60
+        }
+        seconds = totalSeconds
+      }
+      timeToGoTo.current = seconds
+    }
+
     function urlStuff() {
       const urlParams = new URLSearchParams(window.location.search)
       if (urlParams.size === 0) return false
@@ -38,6 +55,7 @@ export default function ListenPage({ title, tracksObj }) {
       const urlArtist = urlParams.get('artist')
       const urlTime = urlParams.get('time')
       const urlSearch = urlParams.get('search')
+      setAudioTime(urlTime)
 
       if (allOpts[urlArtist]?.checked === false) {
         setAllOpts({
@@ -62,7 +80,6 @@ export default function ListenPage({ title, tracksObj }) {
         return false
       }
       playSpecificTrack(the_link)
-      if (urlTime) timeToGoTo.current = parseInt(urlTime)
       return true
     }
 
