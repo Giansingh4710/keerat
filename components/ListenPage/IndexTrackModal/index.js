@@ -3,9 +3,9 @@ import { Button, Modal } from '@mui/material'
 import { useRef, useState } from 'react'
 import { ALL_SHABADS } from './allShabads.js'
 import CancelIcon from '@mui/icons-material/Cancel'
-import {containsOnlyDigits} from '@/utils/helper_funcs.js'
+import { containsOnlyDigits as digOnly } from '@/utils/helper_funcs.js'
 
-export default function IndexTrackBtnAndModal({ artist, link }) {
+export default function IndexTrackBtnAndModal({ artist, link, saveTrackLS }) {
   const [modalOpen, setModal] = useState(false)
   const [description, setDescription] = useState('')
   const [shabadId, setShabadId] = useState('')
@@ -13,7 +13,6 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
   const [lineClicked, setLineClicked] = useState('')
   const [submitFormBtnDisabled, setSubmitFormBtnDisabled] = useState(false)
   const formData = useRef(null)
-  
 
   const [timestamp, setTimestamp] = useState({
     hours: '',
@@ -24,14 +23,15 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
   function formValidation(e) {
     e.preventDefault()
 
-    const canPostDataToTrackIndex = localStorage.getItem('canPostDataToTrackIndex') === 'true' ? true : false
-    if (!canPostDataToTrackIndex){
+    const canPostDataToTrackIndex =
+      localStorage.getItem('canPostDataToTrackIndex') === 'true' ? true : false
+    if (!canPostDataToTrackIndex) {
       alert('You are not allowed to post data to the track index')
       const password = prompt('Enter password if you to save data?')
       if (password === 'gaa') {
         localStorage.setItem('canPostDataToTrackIndex', 'true')
         alert('Correct password!!')
-      }else{
+      } else {
         alert('Wrong password')
       }
       return
@@ -49,7 +49,7 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
       return
     }
 
-    if (containsOnlyDigits(timestamp.hours) && containsOnlyDigits(timestamp.minutes) && containsOnlyDigits(timestamp.seconds)) {
+    if ( digOnly(timestamp.hours) && digOnly(timestamp.minutes) && digOnly(timestamp.seconds)) {
       alert('Timestamp cannot be empty')
       return
     }
@@ -58,8 +58,9 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
     add_to_form_to_send_to_server('keertani', artist)
     add_to_form_to_send_to_server('link', link)
 
-    formData.current.submit()
+    saveTrackLS()
     setSubmitFormBtnDisabled(true)
+    formData.current.submit()
   }
 
   function ShowShabads() {

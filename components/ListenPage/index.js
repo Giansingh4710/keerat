@@ -84,9 +84,7 @@ export default function ListenPage({ title, tracksObj }) {
     }
 
     function getLastPlayedTrackLocalStorage() {
-      const link = localStorage.getItem(`LastPlayed: ${title}`)
-      const time = localStorage.getItem(`LastTime: ${title}`)
-      // localStorage.getItem("LastPlayed: Classic Akhand Keertan")
+      const link = localStorage.getItem(`LastPlayed: ${title}`) // localStorage.getItem("LastPlayed: Classic Akhand Keertan")
       if (typeof link != typeof '') return false
 
       if (link === '[object BeforeUnloadEvent]') {
@@ -99,8 +97,9 @@ export default function ListenPage({ title, tracksObj }) {
         return false
       }
 
+      const localStorageTime = localStorage.getItem(`LastTime: ${title}`)
+      setAudioTime(localStorageTime, timeToGoTo.current)
       playSpecificTrack(link)
-      if (time) timeToGoTo.current = parseInt(time)
       return true
     }
 
@@ -133,7 +132,7 @@ export default function ListenPage({ title, tracksObj }) {
     return longestLink
   }
 
-  function saveTrackInLocalStorage(link, time) {
+  function saveTrackInLocalStorage(link, time = '0') {
     localStorage.setItem(`LastPlayed: ${title}`, link)
     localStorage.setItem(`LastTime: ${title}`, time)
   }
@@ -197,7 +196,12 @@ export default function ListenPage({ title, tracksObj }) {
       curr_artist,
     })
     navigatorStuff(curr_link, curr_artist)
-    saveTrackInLocalStorage(curr_link, '0')
+
+    // fixes error when trying to play time from localStorage
+    const localLink = localStorage.getItem(`LastPlayed: ${title}`) 
+    if (curr_link !== localLink ) {
+      saveTrackInLocalStorage(curr_link, '0') //will be updated localLink
+    }
   }
 
   function randTrack() {
@@ -326,6 +330,12 @@ export default function ListenPage({ title, tracksObj }) {
         <IndexTrackBtnAndModal
           artist={tracksHistory.curr_artist}
           link={tracksHistory.curr_link}
+          saveTrackLS={() => {
+            saveTrackInLocalStorage(
+              tracksHistory.curr_link,
+              audioRef.current.currentTime,
+            )
+          }}
         />
       </Suspense>
       <ChangeColorsModal />
