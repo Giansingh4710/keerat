@@ -104,7 +104,8 @@ def download_videos(obj, dir_name, sign=""):
 
 
 def upload_to_azure(prefix, dir):
-    f = open("../../../../azure/env.py", "r")
+    # f = open("../../../../azure/env.py", "r")
+    f = open("../../../../../utils/azure/env.py", "r")
     CONNECTION_STRING = f.read().split()[-1][1:-1]
 
     connection_string = CONNECTION_STRING

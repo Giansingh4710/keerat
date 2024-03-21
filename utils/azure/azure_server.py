@@ -19,10 +19,17 @@ def delete_folder(folder_path, depth=0):
             container_client.delete_blob(blob.name)
             print(f"Deleted {blob.name}")
 
+def rename_file(current_name, new_name):
+    source_blob_client = container_client.get_blob_client(current_name)
+
+    destination_blob_client = container_client.get_blob_client(new_name)
+    destination_blob_client.start_copy_from_url(source_blob_client.url)
+
+    container_client.delete_blob(current_name)
+
 
 def rename_folder(old_folder_path, new_folder_path):
     blobs_to_rename = container_client.walk_blobs(name_starts_with=old_folder_path)
-
     for blob in blobs_to_rename:
         name = blob.name
         if "/" == name[-1]:
@@ -30,13 +37,50 @@ def rename_folder(old_folder_path, new_folder_path):
             rename_folder(name, new_name)
         else:
             new_name = name.replace(old_folder_path, new_folder_path)
-            source_blob_client = container_client.get_blob_client(name)
-            destination_blob_client = container_client.get_blob_client(new_name)
-            destination_blob_client.start_copy_from_url(source_blob_client.url)
-            container_client.delete_blob(name)
+            rename_file(name, new_name)
             print(f"Renamed '{name}' to '{new_name}'.")
 
     print(f"Renamed '{old_folder_path}' to '{new_folder_path}'.")
+
+
+def get_size_of_folder(folder_path, depth=0, total_bytes=0):
+    blobs = container_client.walk_blobs(name_starts_with=folder_path)
+    for blob in blobs:
+        name = blob.name
+        if "/" == name[-1]:
+            total_bytes += get_size_of_folder(name, depth + 1)
+        else:
+            blob_client = container_client.get_blob_client(name)
+            # blob_url = blob_client.url
+            blob_properties = blob_client.get_blob_properties()
+            blob_size_in_bytes = blob_properties["size"]
+            total_bytes += blob_size_in_bytes
+    mbs = total_bytes / (1024 * 1024)
+    gb = mbs / 1024
+    print(f"Total size of '{folder_path}' is {gb} GB")
+    return total_bytes
+
+
+def download_folder(folder_path, whereToDl=".", depth=0):
+    blobs = container_client.walk_blobs(name_starts_with=folder_path)
+    whereToDl += "/" + folder_path.split("/")[-2]
+    for blob in blobs:
+        name = blob.name
+
+        if "/" == name[-1]:
+            download_folder(name, whereToDl, depth + 1)
+            continue
+
+        blob_client = container_client.get_blob_client(name)
+        blob_url = blob_client.url
+
+        os.makedirs(whereToDl, exist_ok=True)
+        download_file_path = f"{whereToDl}/{name.split('/')[-1]}"
+
+        with open(download_file_path, "wb") as file:
+            blob_data = blob_client.download_blob()
+            file.write(blob_data.readall())
+        print(f"Downloaded: {blob_url} to {download_file_path}")
 
 
 def upload_folder(local_folder_path, parent_folder_name):
@@ -48,6 +92,7 @@ def upload_folder(local_folder_path, parent_folder_name):
             blob_client = container_client.get_blob_client(blob_name)
             with open(local_file_path, "rb") as data:
                 blob_client.upload_blob(data, overwrite=True)
+
             print(f"Uploaded '{blob_name}'")
 
 
@@ -66,8 +111,33 @@ def read(folder_path, depth=0):
         if "/" == name[-1]:
             read(name, depth + 1)
         else:
-            # if "application/octet-stream" != blob.content_settings.content_type:
             print(name)
+
+
+def print_links(folder_path):
+    print(f"Links in '{folder_path}':")
+    blobs = container_client.walk_blobs(name_starts_with=folder_path)
+    for blob in blobs:
+        name = blob.name
+        if "/" == name[-1]:
+            print_links(name)
+        else:
+            blob_client = container_client.get_blob_client(name)
+            url = blob_client.url.replace("%20", " ")
+            print(url)
+
+
+def count(folder_path, depth=0):
+    blobs = container_client.walk_blobs(name_starts_with=folder_path)
+    count = 0
+    for blob in blobs:
+        name = blob.name
+        # print("  " * depth, name)
+        if "/" == name[-1]:
+            read(name, depth + 1)
+        else:
+            count = count + 1
+    print(count)
 
 
 def files_map(folder_path, condition, action, depth=0):
@@ -97,23 +167,65 @@ def the_condition(blob):
     ) and blob.content_settings.content_type != "audio/mpeg"
 
 
-def the_action(blob):
+def make_link_play_in_browser_and_now_download(blob):
     source_blob_client = container_client.get_blob_client(blob)
     blob.content_settings.content_type = "audio/mpeg"
     source_blob_client.set_http_headers(blob.content_settings)
     print("Set content type for " + blob.name)
 
+
+def the_action(blob):
+    make_link_play_in_browser_and_now_download(blob)
+
+
 def is_webm(blob):
     return blob.name.endswith(".webm")
 
+
+def random_stuff():
+    # folder = "audios/keertan/sdo/aisa_keertan/"
+    folder = "audios/keertan/giani_amolak_singh/aisa_keertan/"
+
+    def number_files():
+        num = 1
+        input(f"Are you sure you want to rename {folder}?")
+        blobs_to_rename = container_client.walk_blobs(name_starts_with=folder)
+        for blob in blobs_to_rename:
+            name = blob.name
+            name_lst = name.split("/")
+
+            base_name = str(num).rjust(3, "0") + " " + name_lst[-1]
+            new_name = "/".join(name_lst[:-1]) + "/" + base_name
+            num += 1
+            rename_file(name, new_name)
+
+            print(f"Renamed to {new_name}")
+
+    def a():
+        blobs_to_rename = container_client.walk_blobs(name_starts_with=folder)
+        for blob in blobs_to_rename:
+            name = blob.name
+            if (
+                "audios/keertan/giani_amolak_singh/aisa_keertan/Asa Di Vaar 1970"
+                in name
+            ):
+                print(name)
+                b = "audios/keertan/giani_amolak_singh/aisa_keertan/Asa Di Vaar 1970s.mp3"
+                rename_file(name, b)
+                print(f"Renamed to {b}")
+
+    # a()
+
+
 folder = "audios/"  # needs to end with /
-# folder = "audios/keertan/dulla_ji/yt/"
+folder = "audios/keertan/bh_jasbir_s/aisa_keertan/"
 
 # files_map(folder, the_condition, the_action)
 # files_map(folder, is_webm, delete_file)
 
 # upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
+print_links(folder)
 # read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
-delete_folder("audios/keertan/sdo/yt_karKeertan/")  # very DANGAROUS
+# delete_folder("audios/keertan/sdo/yt_karKeertan/")  # very DANGAROUS
