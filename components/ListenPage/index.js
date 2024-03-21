@@ -20,6 +20,7 @@ export default function ListenPage({ title, tracksObj }) {
   const timeToGoTo = useRef(0)
   const audioRef = useRef(null)
   const skipTime = useRef(10)
+  const [searchInput, setSearchInput] = useState('')
 
   const [tracksHistory, setTracksHistory] = useState({
     curr_ind: -1, //index in links_lst
@@ -31,7 +32,7 @@ export default function ListenPage({ title, tracksObj }) {
   useEffect(() => {
     function urlStuff() {
       const urlParams = new URLSearchParams(window.location.search)
-      if(urlParams.size === 0) return false
+      if (urlParams.size === 0) return false
 
       const urlInd = parseInt(urlParams.get('trackIndex'))
       const urlArtist = urlParams.get('artist')
@@ -48,9 +49,16 @@ export default function ListenPage({ title, tracksObj }) {
         })
       }
 
+      if (urlSearch) {
+        setSearchInput(urlSearch)
+        return true
+      }
+
       const the_link = allOpts[urlArtist]?.trackLinks[urlInd]
       if (!the_link) {
-        toast.error(`TrackIndex: '${urlInd}' or Artist: '${urlArtist}' from URL is not valid`)
+        toast.error(
+          `TrackIndex: '${urlInd}' or Artist: '${urlArtist}' from URL is not valid`,
+        )
         return false
       }
       playSpecificTrack(the_link)
@@ -64,12 +72,12 @@ export default function ListenPage({ title, tracksObj }) {
       // localStorage.getItem("LastPlayed: Classic Akhand Keertan")
       if (typeof link != typeof '') return false
 
-      if (link === "[object BeforeUnloadEvent]"){
+      if (link === '[object BeforeUnloadEvent]') {
         toast.error('object BeforeUnloadEvent error')
         return false
       }
 
-      if (!TRACK_LINKS.includes(link)){
+      if (!TRACK_LINKS.includes(link)) {
         toast.error('Link in LocalStorage not in Track_LINKS')
         return false
       }
@@ -266,8 +274,10 @@ export default function ListenPage({ title, tracksObj }) {
       <Toaster position='top-left' reverseOrder={true} />
       <NavBar title={title} />
       <SearchTracks
-        tracks={TRACK_LINKS}
+        track_links={TRACK_LINKS}
         playSpecificTrack={playSpecificTrack}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
       />
       <SaveTrackModal
         localStorageKey={`SavedTracks: ${title}`}

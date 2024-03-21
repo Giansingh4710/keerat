@@ -5,17 +5,22 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { IconButton } from '@mui/material'
 import { getNameOfTrack } from '@/utils/helper_funcs'
 
-export default function SearchTracks({ tracks, playSpecificTrack }) {
-  const [searchInput, setSearchInput] = useState('')
+export default function SearchTracks({
+  track_links,
+  playSpecificTrack,
+  searchInput,
+  setSearchInput,
+}) {
+  const urlParams = new URLSearchParams(window.location.search)
+  const urlSearch = urlParams.get('search')
 
   function ShowingOfTracks() {
     if (searchInput === '') {
       return <></>
     }
     const searchWordsLst = searchInput.toLowerCase().split(' ')
-    const allLinksWithWordInds = []
-    tracks.forEach((link, index) => {
-      /* const trackName = getNameOfTrack(link) */
+    const allLinksWithWord = []
+    track_links.forEach((link, index) => {
       const trackName = link.toLowerCase()
       let allWordsInTrackName = true
       for (const word of searchWordsLst) {
@@ -25,16 +30,19 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
         }
       }
       if (allWordsInTrackName) {
-        // allLinksWithWordInds.push(index)
-        allLinksWithWordInds.push(link)
+        allLinksWithWord.push(link)
       }
     })
 
+    if (allLinksWithWord.length === 1 && urlSearch === searchInput) {
+      playSpecificTrack(allLinksWithWord[0])
+    }
+
     return (
       <div style={styles.results}>
-        <p>{allLinksWithWordInds.length} Results Found</p>
+        <p>{allLinksWithWord.length} Results Found</p>
         <ol style={styles.ol}>
-          {allLinksWithWordInds.map((link, index) => {
+          {allLinksWithWord.map((link, index) => {
             return (
               <li key={index}>
                 <button
