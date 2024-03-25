@@ -1402,6 +1402,10 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/090 Bhai Mohinder Singh Ji SDO Montreal QC Canada 29,11,1984 (Part Recording - no7) (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/091 Bhai Mohinder Singh Ji SDO 23,08,1982 (2) @ Bhai Preetam Singhs ji,s Home Smagam (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/092 Bhai Mohinder Singh Ji SDO Milwaukee Smagam 23,08,1981 (2) (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/093 Bhai Mohinder Singh Ji SDO Milwaukee 13,11,1981 - 2 (Shaheed Baba Deep Singh Ji Smagam) (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/094 Bhai Mohinder Singh Ji SDO Milwaukee 06,1983 (1) (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/095 Bhai Mohinder Singh Ji SDO Ludhiana 1980-(1) (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/096 Bhai Mohinder Singh Ji SDO Milwaukee 06,1983 (2) (heeraRattan).mp3',
 
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/001 Bh. Mohinder Singh SDO (karKeertan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/002 Bhai Mohinder Singh SDO 1976 Ludhiana (karKeertan).mp3',
