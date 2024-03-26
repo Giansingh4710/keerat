@@ -150,35 +150,35 @@ const _9pm_12am = [
 
 const ALL_OPTS = {
   '12am to 3am': {
-    checked: true,
+    checked: false,
     trackLinks: _12am_3am,
   },
   '3am to 6am': {
-    checked: true,
+    checked: false,
     trackLinks: _3am_6am,
   },
   '6am to 9am': {
-    checked: true,
+    checked: false,
     trackLinks: _6am_9am,
   },
   '9am to 12pm': {
-    checked: true,
+    checked: false,
     trackLinks: _9am_12pm,
   },
   '12pm to 3pm': {
-    checked: true,
+    checked: false,
     trackLinks: _12pm_3pm,
   },
   '3pm to 6pm': {
-    checked: true,
+    checked: false,
     trackLinks: _3pm_6pm,
   },
   '6pm to 9pm': {
-    checked: true,
+    checked: false,
     trackLinks: _6pm_9pm,
   },
   '9pm to 12am': {
-    checked: true,
+    checked: false,
     trackLinks: _9pm_12am,
   },
 }

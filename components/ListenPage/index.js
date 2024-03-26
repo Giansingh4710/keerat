@@ -330,6 +330,7 @@ export default function ListenPage({ title, tracksObj }) {
         <IndexTrackBtnAndModal
           artist={tracksHistory.curr_artist}
           link={tracksHistory.curr_link}
+          audioRef={audioRef}
           saveTrackLS={() => {
             saveTrackInLocalStorage(
               tracksHistory.curr_link,

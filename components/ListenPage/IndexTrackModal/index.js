@@ -1,5 +1,5 @@
 import ALL_THEMES from '@/utils/themes.js'
-import { Button, Modal } from '@mui/material'
+import { Modal } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { ALL_SHABADS } from './allShabads.js'
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -246,7 +246,7 @@ const styles = {
     justifyContent: 'center',
     borderRadius: '10px',
     marginBottom: '5px',
-    padding: '10px',
+    padding: '5px',
     backgroundColor: '#0077be',
   },
   label: {
@@ -257,14 +257,21 @@ const styles = {
   },
   userDesc: {
     flex: 1,
+    display: 'flex',
   },
   timeInput: {
-    width: '3em',
+    flex: 0.5,
+    // width: '2em',
     color: ALL_THEMES.theme1.text1,
   },
 }
 
-export default function IndexTrackBtnAndModal({ artist, link, saveTrackLS }) {
+export default function IndexTrackBtnAndModal({
+  artist,
+  link,
+  saveTrackLS,
+  audioRef,
+}) {
   const [modalOpen, setModal] = useState(false)
   const [description, setDescription] = useState('')
   const [shabadId, setShabadId] = useState('')
@@ -373,7 +380,7 @@ export default function IndexTrackBtnAndModal({ artist, link, saveTrackLS }) {
       }
       return (
         <div>
-          <Button
+          <button
             variant='contained'
             onClick={() => {
               setDescription(lineClicked)
@@ -381,7 +388,7 @@ export default function IndexTrackBtnAndModal({ artist, link, saveTrackLS }) {
             }}
           >
             {lineClicked}
-          </Button>
+          </button>
           <details>
             <summary>{shabadId}</summary>
             {ALL_SHABADS[shabadId].map((line, ind) => {
@@ -523,6 +530,22 @@ export default function IndexTrackBtnAndModal({ artist, link, saveTrackLS }) {
                   }
                 ></input>
               </div>
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  const currTime = audioRef.current.currentTime
+                  const hours = Math.floor(currTime / 3600)
+                  const minutes = Math.floor((currTime % 3600) / 60)
+                  const seconds = Math.floor(currTime % 60)
+                  setTimestamp({
+                    hours: hours.toString(),
+                    minutes: minutes.toString(),
+                    seconds: seconds.toString(),
+                  })
+                }}
+              >
+                now
+              </button>
 
               <CancelIcon
                 onClick={() =>
@@ -550,6 +573,8 @@ export default function IndexTrackBtnAndModal({ artist, link, saveTrackLS }) {
               >
                 <option value='random'>random</option>
                 <option value='SDO_MGA_1'>SDO_MGA_1</option>
+                <option value='HeeraRattan'>Heera Rattan</option>
+                <option value='GianiSherS'>Giani Sher Singh Katha</option>
               </select>
             </div>
             <button onClick={() => setModal(false)}>Close</button>
