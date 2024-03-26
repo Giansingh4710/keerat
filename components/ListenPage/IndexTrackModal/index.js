@@ -277,7 +277,6 @@ export default function IndexTrackBtnAndModal({
   const [shabadId, setShabadId] = useState('')
   const [shabads, setShabads] = useState([])
   const [lineClicked, setLineClicked] = useState('')
-  const [submitFormBtnDisabled, setSubmitFormBtnDisabled] = useState(false)
   const [theTrackType, setTrackType] = useState('')
   const formData = useRef(null)
 
@@ -328,21 +327,11 @@ export default function IndexTrackBtnAndModal({
       return
     }
 
-    if (
-      digOnly(timestamp.hours) &&
-      digOnly(timestamp.minutes) &&
-      digOnly(timestamp.seconds)
-    ) {
-      alert('Timestamp cannot be empty')
-      return
-    }
-
     add_to_form_to_send_to_server('linkToGoTo', window.location.href) //come back to this page
     add_to_form_to_send_to_server('artist', artist)
     add_to_form_to_send_to_server('link', link)
 
     saveTrackLS()
-    setSubmitFormBtnDisabled(true)
     formData.current.submit()
   }
 
@@ -578,7 +567,7 @@ export default function IndexTrackBtnAndModal({
               </select>
             </div>
             <button onClick={() => setModal(false)}>Close</button>
-            <button type='submit' disabled={submitFormBtnDisabled}>
+            <button type='submit'>
               Add
             </button>
           </form>
