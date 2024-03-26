@@ -12,9 +12,12 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { getNameOfTrack, getTrackLinks } from '@/utils/helper_funcs.js'
 import toast, { Toaster } from 'react-hot-toast'
 
-export default function ListenPage({ title, tracksObj }) {
-  const [TRACK_LINKS, setTrackLinks] = useState(getTrackLinks(tracksObj))
-  const [allOpts, setAllOpts] = useState(tracksObj)
+export default function ListenPage({ title, tracksObj, changesOpts }) {
+  const [allOpts, setAllOpts] = useState(() => {
+    if (changesOpts) changesOpts()
+    return tracksObj
+  })
+  const [TRACK_LINKS, setTrackLinks] = useState(getTrackLinks(allOpts))
 
   const [shuffle, setShuffle] = useState(false) // audio track stuff
   const timeToGoTo = useRef(0)
@@ -198,8 +201,8 @@ export default function ListenPage({ title, tracksObj }) {
     navigatorStuff(curr_link, curr_artist)
 
     // fixes error when trying to play time from localStorage
-    const localLink = localStorage.getItem(`LastPlayed: ${title}`) 
-    if (curr_link !== localLink ) {
+    const localLink = localStorage.getItem(`LastPlayed: ${title}`)
+    if (curr_link !== localLink) {
       saveTrackInLocalStorage(curr_link, '0') //will be updated localLink
     }
   }

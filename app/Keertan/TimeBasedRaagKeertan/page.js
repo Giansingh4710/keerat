@@ -4,12 +4,6 @@ import { ALL_OPTS } from './TRACKS.js'
 import ListenPage from '@/components/ListenPage/index.js'
 
 export default function timeBased() {
-  const isMounted = useRef(false)
-  if (!isMounted.current) {
-    // your code here, executes before render
-    checkTracksOfTimeRn()
-  }
-
   function checkTracksOfTimeRn() {
     const today = new Date()
     const time = today.getHours() * 60 + today.getMinutes()
@@ -36,9 +30,5 @@ export default function timeBased() {
     }
   }
 
-  useEffect(() => {
-    isMounted.current = true
-  }, [])
-
-  return <ListenPage title='Time Based Keertan' tracksObj={ALL_OPTS} />
+  return <ListenPage title='Time Based Keertan' tracksObj={ALL_OPTS} changesOpts={checkTracksOfTimeRn}/>
 }
