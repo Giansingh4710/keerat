@@ -1,6 +1,11 @@
 {
   "name": "Keerat Sikh Audio",
   "short_name": "Keerat",
+  "theme_color": "#001f3f",
+  "background_color": "#001f3f",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "icons/android/android-launchericon-512-512.png",
@@ -130,10 +135,5 @@
       "src": "icons/ios/1024.png",
       "sizes": "1024x1024"
     }
-  ],
-  "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }

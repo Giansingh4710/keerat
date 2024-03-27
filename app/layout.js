@@ -11,10 +11,10 @@ export default function RootLayout({ children }) {
   )
 }
 
-const APP_NAME = "Keerat";
-const APP_DEFAULT_TITLE = "Keerat";
-const APP_TITLE_TEMPLATE = "%s - PWA App";
-const APP_DESCRIPTION = "Audio Player for Sikh Stuff";
+const APP_NAME = 'Keerat'
+const APP_DEFAULT_TITLE = 'Keerat'
+const APP_TITLE_TEMPLATE = '%s - PWA App'
+const APP_DESCRIPTION = 'Audio Player for Sikh Stuff'
 
 export const metadata = {
   applicationName: APP_NAME,
@@ -23,18 +23,18 @@ export const metadata = {
     template: APP_TITLE_TEMPLATE,
   },
   description: APP_DESCRIPTION,
-  manifest: "/manifest.json",
+  manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: 'default',
     title: APP_DEFAULT_TITLE,
     // startUpImage: [],
   },
   formatDetection: {
     telephone: false,
   },
-};
+}
 
 export const viewport = {
-  themeColor: "#FFFFFF",
-};
+  themeColor: '#001f3f',
+}
