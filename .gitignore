@@ -44,3 +44,9 @@ utils/local.js
 utils/azure/env.py
 *__pycache__/
 geckodriver.log
+
+# PWA files
+**/public/sw.js
+**/public/sw.js.map
+**/public/workbox-*.js
+**/public/workbox-*.js.map
