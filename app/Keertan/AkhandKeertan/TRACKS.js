@@ -1406,6 +1406,9 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/094 Bhai Mohinder Singh Ji SDO Milwaukee 06,1983 (1) (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/095 Bhai Mohinder Singh Ji SDO Ludhiana 1980-(1) (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/096 Bhai Mohinder Singh Ji SDO Milwaukee 06,1983 (2) (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/097 Bhai Mohinder Singh Ji SDO Milwaukee 12,06,1981 (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/098 Bhai Mohinder Singh Ji SDO Detroit local Smagam 1982 (part Recording) (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/099 Bhai Mohinder Singh Ji SDO 09,1988 Southbend (heeraRattan).mp3',
 
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/001 Bh. Mohinder Singh SDO (karKeertan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/002 Bhai Mohinder Singh SDO 1976 Ludhiana (karKeertan).mp3',
@@ -1826,6 +1829,8 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/aisa_keertan/Vaho Khasam Thoo Vaho.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/aisa_keertan/Valo Niki Akhiya.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/aisa_keertan/Virle Hee Sanmukh.mp3',
+
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/rand/Har ke naam 60s.m4a',
 ]
 
 const GIANI_AMOLAK_TRACK_LINKS = [
