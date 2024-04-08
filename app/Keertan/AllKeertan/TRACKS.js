@@ -1401,6 +1401,17 @@ const ALL_OPTS = {
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/090 Bhai Mohinder Singh Ji SDO Montreal QC Canada 29,11,1984 (Part Recording - no7) (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/091 Bhai Mohinder Singh Ji SDO 23,08,1982 (2) @ Bhai Preetam Singhs ji,s Home Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/092 Bhai Mohinder Singh Ji SDO Milwaukee Smagam 23,08,1981 (2) (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/093 Bhai Mohinder Singh Ji SDO Milwaukee 13,11,1981 - 2 (Shaheed Baba Deep Singh Ji Smagam) (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/094 Bhai Mohinder Singh Ji SDO Milwaukee 06,1983 (1) (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/095 Bhai Mohinder Singh Ji SDO Ludhiana 1980-(1) (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/096 Bhai Mohinder Singh Ji SDO Milwaukee 06,1983 (2) (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/097 Bhai Mohinder Singh Ji SDO Milwaukee 12,06,1981 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/098 Bhai Mohinder Singh Ji SDO Detroit local Smagam 1982 (part Recording) (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/099 Bhai Mohinder Singh Ji SDO 09,1988 Southbend (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/100 Bhai Mohinder Singh Ji SDO - Bhai Tajindpal Singh ji. Moga, 03 1979 Khalsa School Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/101 Bhai Mohinder Singh Ji SDO - Bhai Joginder Singh ji - Bhai Tajinder Singh ji, Phagwara Smagam 1980 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/102 Bhai Mohinder Singh Ji SDO ਵਾਹਿਗੁਰੂ ਵਾਹਿਗੁਰੂ ਵਾਹਿਗੁਰੂ ਵਾਹਿਗੁਰੂ ਵਾਹਿਗੁਰੂ ਵਾਹਿਗੁਰੂ (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/103 Bhai Mohinder Singh Ji SDO Patiala Smagam 1974 (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/001 Bh. Mohinder Singh SDO (karKeertan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/002 Bhai Mohinder Singh SDO 1976 Ludhiana (karKeertan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/003 Bhai Mohinder Singh SDO 1976 Ludhiana (karKeertan).mp3",
@@ -1815,7 +1826,8 @@ const ALL_OPTS = {
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/aisa_keertan/Vah Vah Gobind Singh Aape Gur Chelaa.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/aisa_keertan/Vaho Khasam Thoo Vaho.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/aisa_keertan/Valo Niki Akhiya.mp3",
-      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/aisa_keertan/Virle Hee Sanmukh.mp3"
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/aisa_keertan/Virle Hee Sanmukh.mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/rand/Har ke naam 60s.m4a"
     ]
   },
   "Bhai Tejinderpal Singh Ji Dulla": {
@@ -6878,7 +6890,7 @@ const ALL_OPTS = {
     ]
   },
   "12am to 3am": {
-    "checked": true,
+    "checked": false,
     "trackLinks": [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/1)12amto3am/Beet Je Hai Beet Je Hai Janam, Raag Jaijaiwanti (Bhai Balbir Singh Ji Shiromani Ragi).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/1)12amto3am/Deho Daras Man Chao - Raag Bhairavi - Savari Chaar Taal.mp3",
@@ -6893,7 +6905,7 @@ const ALL_OPTS = {
     ]
   },
   "3am to 6am": {
-    "checked": true,
+    "checked": false,
     "trackLinks": [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/2)3amto6am/Aavho Sikh Satguru (Ramkali) - Bibi Ashupreet Kaur.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/2)3amto6am/Asa Di Vaar—Hazoori Ragi Gurpartap Singh Ji (Sachkhand Sri Hazur Sahib).mp3",
@@ -6915,7 +6927,7 @@ const ALL_OPTS = {
     ]
   },
   "6am to 9am": {
-    "checked": true,
+    "checked": false,
     "trackLinks": [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/3)6amto9am/06 AMRITA PRI BACHAN TUMHARE, Raag Dev Gandhari Mahalla - 5.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/3)6amto9am/Abh Hum Chali Thakur, Raag Devgandhari (Bhai Nirmal Singh Khalsa Ji).mp3",
@@ -6929,7 +6941,7 @@ const ALL_OPTS = {
     ]
   },
   "9am to 12pm": {
-    "checked": true,
+    "checked": false,
     "trackLinks": [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/4)9amto12pm/03 RAAG TODI SATGUR AYO SARAN TUHARI.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/4)9amto12pm/Aisa Gur Vadbhagi Paiya - Raag Desi Todi.mp3",
@@ -6949,7 +6961,7 @@ const ALL_OPTS = {
     ]
   },
   "12pm to 3pm": {
-    "checked": true,
+    "checked": false,
     "trackLinks": [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/5)12pmto3pm/010 Dhanasari Tu Kun Re Main Ji Nama.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/5)12pmto3pm/02 - Tih Jogi Ku Jugat Na Jaanu - Raag Dhanasari Bhimpalaas - Bhai Kirit Singh Ji.mp3",
@@ -6980,7 +6992,7 @@ const ALL_OPTS = {
     ]
   },
   "3pm to 6pm": {
-    "checked": true,
+    "checked": false,
     "trackLinks": [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/6)3pmto6pm/Bhai Harsimran Singh - ho gholee jeeo ghol ghumaaee - Manchester Smagam 2016 Fri Eve.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/6)3pmto6pm/Ghol Ghumai Laalna - Raag Tukhari.mp3",
@@ -6993,7 +7005,7 @@ const ALL_OPTS = {
     ]
   },
   "6pm to 9pm": {
-    "checked": true,
+    "checked": false,
     "trackLinks": [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/7)6pmto9pm/03 Raag Kalyan - Keetaa Lorreeai Kam Su Har Pehi Aakheeai - Bhai Resham Singh & Bhai Jivanpal Singh.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/7)6pmto9pm/04 Raag Kalyan - Sae Sanjog Karho Mere Pyare - Bhai Resham Singh & Bhai Jivanpal Singh.mp3",
@@ -7020,7 +7032,7 @@ const ALL_OPTS = {
     ]
   },
   "9pm to 12am": {
-    "checked": true,
+    "checked": false,
     "trackLinks": [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/8)9pmto12am/01 RAAG SORATH MADHVE - Bibi Ashupreet Sisters.mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/timeBased/8)9pmto12am/068 Toronto July2018 ThuE AK BhaiNarinderSinghJeeBanaras.mp3",

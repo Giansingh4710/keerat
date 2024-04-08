@@ -1,15 +1,3 @@
-export function getPrefixForProd() {
-  try {
-    const isLocal = require('./local.js').default
-    if (isLocal) return ''
-    return ''
-    return '/keerat_test'
-  } catch (e) {
-    return ''
-    return '/keerat_test'
-  }
-}
-
 export function getNameOfTrack(link) {
   const title = link.split('/').slice(-1)[0]
   return decodeURIComponent(decodeURIComponent(title))

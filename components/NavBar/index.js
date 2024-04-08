@@ -1,13 +1,7 @@
-import React, { Children, useEffect, useState } from 'react'
-import { getPrefixForProd } from '@/utils/helper_funcs'
+import React, { Children, useState } from 'react'
 
 function LinkTag({ href, absLink }) {
-  const [prefix, setPrefix] = useState('')
-  useEffect(() => {
-    setPrefix(getPrefixForProd())
-  }, [])
-
-  const hrefToLink = href ? prefix + href : absLink
+  const hrefToLink = href ? href : absLink
 
   const linksLst = hrefToLink.split('/')
   const lastPart = linksLst[linksLst.length - 1]
@@ -28,15 +22,10 @@ function LinkTag({ href, absLink }) {
 }
 
 function LeftHome({ main }) {
-  const [prefix, setPrefix] = useState('')
-  useEffect(() => {
-    setPrefix(getPrefixForProd())
-  }, [])
-
   if (main) {
     return (
       <h1 style={styles.home}>
-        <a href={`${prefix}/`} className='active'>
+        <a href={'/'} className='active'>
           Home
         </a>
       </h1>

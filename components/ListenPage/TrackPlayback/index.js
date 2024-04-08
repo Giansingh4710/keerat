@@ -1,6 +1,5 @@
 import React from 'react'
 import ALL_THEMES from '@/utils/themes'
-import { getPrefixForProd } from '@/utils/helper_funcs'
 import { IconButton, Typography } from '@mui/material'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { formatTime, getNameOfTrack } from '@/utils/helper_funcs'
@@ -27,11 +26,6 @@ export default function TrackPlayback({
   const [paused, setPaused] = useState(audioRef.current?.paused)
   const playbackSpeed = useRef(1)
 
-  const [prefix, setPrefix] = useState('')
-  useEffect(() => {
-    setPrefix(getPrefixForProd())
-  }, [])
-
   function copyLink() {
     const url = new URL(window.location.href.split('?')[0].split('#')[0])
 
@@ -56,16 +50,14 @@ export default function TrackPlayback({
     // || audioRef... is for initial load. Browser blocks autoplay
     if (paused || audioRef.current?.paused) {
       audioRef.current?.play() // setPaused is done on the audio tag
-      console.log('playing')
     } else {
       audioRef.current?.pause()
-      console.log('paused')
     }
   }
 
   function PlayPauseBtn() {
     const imgSrc =
-      `${prefix}/playbackImgs/` + (paused ? 'play' : 'pause') + '.svg'
+      '/playbackImgs/' + (paused ? 'play' : 'pause') + '.svg'
 
     return (
       <button style={styles.playbackIcon} onClick={togglePlayPause}>
@@ -83,9 +75,9 @@ export default function TrackPlayback({
   const playPauseBtn = useMemo(() => <PlayPauseBtn />, [paused])
 
   const shuffleImg = useMemo(() => {
-    let imgSrc = `${prefix}/playbackImgs/inorder.svg`
+    let imgSrc = '/playbackImgs/inorder.svg'
     if (shuffle) {
-      imgSrc = `${prefix}/playbackImgs/shuffle.svg`
+      imgSrc = '/playbackImgs/shuffle.svg'
     }
     return (
       <Image
@@ -126,16 +118,6 @@ export default function TrackPlayback({
         </div>
       </div>
 
-      <AudioPlayer
-        link={link}
-        audioRef={audioRef}
-        setPaused={setPaused}
-        nextTrack={nextTrack}
-        timeToGoTo={timeToGoTo}
-        playbackSpeed={playbackSpeed}
-        toast={toast}
-      />
-
       <div style={styles.randomRow}>
         <button
           onClick={() => {
@@ -149,7 +131,7 @@ export default function TrackPlayback({
         </button>
 
         <div style={styles.middleDropDowns}>
-          <label htmlFor='pickPlaybackSpeed'>Speed:</label>
+          <label style={styles.randRowTxt} htmlFor='pickPlaybackSpeed'>Playback Speed:</label>
           <select
             style={styles.seekTimeSelect}
             id='pickPlaybackSpeed'
@@ -169,7 +151,7 @@ export default function TrackPlayback({
         </div>
 
         <div style={styles.middleDropDowns}>
-          <label htmlFor='pickSkipInterval'>Skip Interval:</label>
+          <label style={styles.randRowTxt} htmlFor='pickSkipInterval'>Skip Interval:</label>
           <select
             style={styles.seekTimeSelect}
             id='pickSkipInterval'
@@ -186,15 +168,26 @@ export default function TrackPlayback({
         </div>
         <button style={styles.randomRowBtn} onClick={copyLink}>
           <img
-            src={`${prefix}/playbackImgs/copy.svg`}
+            src={'/playbackImgs/copy.svg'}
             style={styles.randomRowBtnImgs}
           />
         </button>
       </div>
+
+      <AudioPlayer
+        link={link}
+        audioRef={audioRef}
+        setPaused={setPaused}
+        nextTrack={nextTrack}
+        timeToGoTo={timeToGoTo}
+        playbackSpeed={playbackSpeed}
+        toast={toast}
+      />
+
       <div style={styles.playBackOptions}>
         <button onClick={prevTrack} style={styles.playbackIcon}>
           <img
-            src={`${prefix}/playbackImgs/left.svg`}
+            src={'/playbackImgs/left.svg'}
             style={styles.playbackImg}
           />
         </button>
@@ -203,7 +196,7 @@ export default function TrackPlayback({
           style={styles.playbackIcon}
         >
           <img
-            src={`${prefix}/playbackImgs/skip-back.svg`}
+            src={'/playbackImgs/skip-back.svg'}
             style={styles.playbackImg}
           />
         </button>
@@ -215,13 +208,13 @@ export default function TrackPlayback({
           style={styles.playbackIcon}
         >
           <img
-            src={`${prefix}/playbackImgs/skip-forward.svg`}
+            src={'/playbackImgs/skip-forward.svg'}
             style={styles.playbackImg}
           />
         </button>
         <button onClick={nextTrack} style={styles.playbackIcon}>
           <img
-            src={`${prefix}/playbackImgs/right.svg`}
+            src={'/playbackImgs/right.svg'}
             style={styles.playbackImg}
           />
         </button>
@@ -242,7 +235,7 @@ const styles = {
     color: ALL_THEMES.theme1.text2,
 
     border: '3px solid #34568b',
-    borderRadius: '1.5em',
+    borderRadius: '0.5em',
   },
   trackInfo: {
     flex: 4,
@@ -257,10 +250,10 @@ const styles = {
   },
   trackNameAtag: {
     // all: "unset",
+    fontSize: '1rem',
     wordBreak: 'break-all',
     fontWeight: 500,
     letterSpacing: 0.2,
-    fontSize: '1.2rem',
     paddingTop: '0.5em',
   },
   seekTimeSelect: {
@@ -284,6 +277,21 @@ const styles = {
     width: '100%',
     height: '100%',
   },
+  randomRowBtn: {
+    // border: 'none',
+    flex: 1,
+    padding: '0.5rem',
+    height: '4vh',
+    margin: '0.5em',
+
+    fontSize: '0.8em',
+    display: 'flex',
+    borderRadius: '0.5em',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: ALL_THEMES.theme1.text2,
+    backgroundColor: ALL_THEMES.theme1.third,
+  },
   randomRow: {
     flex: 2,
     display: 'flex',
@@ -294,7 +302,7 @@ const styles = {
     backgroundColor: ALL_THEMES.theme1.primary,
   },
   middleDropDowns: {
-    flex: 1,
+    flex: 2,
     display: 'flex',
     flexDirection: 'column',
     alignSelf: 'center',
@@ -302,30 +310,18 @@ const styles = {
     padding: '0.5em',
     color: ALL_THEMES.theme1.text2,
   },
+  randRowTxt: {
+    fontSize: '0.6rem',
+    fontWeight: 500,
+  },
   randomRowBtnImgs: {
     width: '100%',
-    height: '2.5em',
-  },
-  randomRowBtn: {
-    // border: 'none',
-    padding: '0.5rem',
-    height: '4vh',
-    margin: '0.5em',
-
-    fontSize: '0.8em',
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '0.5em',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    color: ALL_THEMES.theme1.text2,
-    backgroundColor: ALL_THEMES.theme1.third,
+    height: '2em',
   },
 }
 
 const TinyText = styled(Typography)({
-  fontSize: '1.2rem',
+  fontSize: '1rem',
   opacity: 0.7,
   fontWeight: 500,
   letterSpacing: 0.2,
