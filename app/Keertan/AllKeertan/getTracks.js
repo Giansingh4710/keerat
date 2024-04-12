@@ -34,6 +34,7 @@ function readAllOptsInFolders(currentPath) {
 }
 
 const rootDirectory = __dirname
+// console.log('${rootDirectory}') // = /Users/gians/Desktop/dev/webdev/keerat/app/Keertan/AllKeertan
 const mergedOpts = readAllOptsInFolders(path.join(rootDirectory, '..'))
 
 const outputFile = path.join(rootDirectory, 'TRACKS.js')

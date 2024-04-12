@@ -314,21 +314,22 @@ export default function ListenPage({ title, tracksObj, changesOpts }) {
         setTrackLinks={setTrackLinks}
         numOfTracks={TRACK_LINKS.length}
       />
-      <Suspense fallback={<div>Getting Track...</div>}>
-        <TrackPlayback
-          artist={tracksHistory.curr_artist}
-          link={tracksHistory.curr_link}
-          allOpts={allOpts}
-          shuffle={shuffle}
-          setShuffle={setShuffle}
-          nextTrack={nextTrack}
-          prevTrack={prevTrack}
-          timeToGoTo={timeToGoTo}
-          audioRef={audioRef}
-          skipTime={skipTime}
-          toast={toast}
-        />
-      </Suspense>
+      <TrackPlayback
+        artist={tracksHistory.curr_artist}
+        link={tracksHistory.curr_link}
+        allOpts={allOpts}
+        shuffle={shuffle}
+        setShuffle={setShuffle}
+        nextTrack={nextTrack}
+        prevTrack={prevTrack}
+        timeToGoTo={timeToGoTo}
+        audioRef={audioRef}
+        skipTime={skipTime}
+        toast={toast}
+      />
+      {/*
+        <ChangeColorsModal />
+      */}
       <Suspense fallback={<div>Loading...</div>}>
         <IndexTrackBtnAndModal
           artist={tracksHistory.curr_artist}
@@ -342,7 +343,6 @@ export default function ListenPage({ title, tracksObj, changesOpts }) {
           }}
         />
       </Suspense>
-      <ChangeColorsModal />
     </body>
   )
 }

@@ -56,10 +56,9 @@ total_size(){
       echo "New Line Break"
       break
     fi
+
 		lineNum=$((lineNum + 1))
-		if [ $lineNum -lt 2 ]; then
-			continue
-		fi
+		# if [ $lineNum -lt 2 ]; then continue; fi
 
     totalBytes=$((totalBytes + bytes))
 		echo "$bytes Bytes : $lineNum"

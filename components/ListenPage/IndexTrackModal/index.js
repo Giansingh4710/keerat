@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ALL_SHABADS } from './allShabads.js'
 import CancelIcon from '@mui/icons-material/Cancel'
 import { containsOnlyDigits as digOnly } from '@/utils/helper_funcs.js'
+import { Photoshop } from 'react-color/lib/components/photoshop/Photoshop.js'
 
 function convertToGurmukhi(input) {
   const mapping = {
@@ -424,6 +425,42 @@ export default function IndexTrackBtnAndModal({
     )
   }
 
+  function TrackOptions() {
+    const trackTypes = [
+      'random',
+      'SDO_MGA_1',
+      'HeeraRattan',
+      'ikirtan_SDO',
+      'GianiSherS',
+    ]
+
+    return (
+      <div>
+        <label style={styles.label} htmlFor='trackType'>
+          Type of Track:
+        </label>
+        <select
+          name='trackType'
+          id='trackType'
+          value={theTrackType}
+          defaultValue={theTrackType}
+          onChange={(e) => {
+            localStorage.setItem('IndexTrack trackType', e.target.value)
+            setTrackType(e.target.value)
+          }}
+        >
+          {trackTypes.map((trackType) => {
+            return (
+              <option key={trackType} value={trackType}>
+                {trackType}
+              </option>
+            )
+          })}
+        </select>
+      </div>
+    )
+  }
+
   return (
     <div>
       <button style={styles.main_btn} onClick={() => setModal(true)}>
@@ -546,30 +583,9 @@ export default function IndexTrackBtnAndModal({
                 }
               />
             </div>
-            <div>
-              <label style={styles.label} htmlFor='trackType'>
-                Type of Track:
-              </label>
-              <select
-                name='trackType'
-                id='trackType'
-                value={theTrackType}
-                defaultValue={theTrackType}
-                onChange={(e) => {
-                  localStorage.setItem('IndexTrack trackType', e.target.value)
-                  setTrackType(e.target.value)
-                }}
-              >
-                <option value='random'>random</option>
-                <option value='SDO_MGA_1'>SDO_MGA_1</option>
-                <option value='HeeraRattan'>Heera Rattan</option>
-                <option value='GianiSherS'>Giani Sher Singh Katha</option>
-              </select>
-            </div>
+            <TrackOptions />
             <button onClick={() => setModal(false)}>Close</button>
-            <button type='submit'>
-              Add
-            </button>
+            <button type='submit'>Add</button>
           </form>
         </div>
       </Modal>

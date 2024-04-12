@@ -13,9 +13,9 @@ export default function OptsPage({ opts }) {
   return (
     <body style={styles.body}>
       <div style={styles.header}>
-        ਸੁਣਿਐਦੂਖਪਾਪਕਾਨਾਸੁ॥੮॥
+        ਕੀਰਤਿਕਰਹਿਸਗਲਜਨਤੇਰੀਤੂਅਬਿਨਾਸੀਪੁਰਖੁਮੁਰਾਰੇ॥
         <div id='GurbaniLine'></div>
-        <div id='GurbaniTrans'>Listening, pain and sin are erased</div>
+        <div id='GurbaniTrans'>All beings sing Your Praises; You are the imperishable Primal Being, the Destroyer of ego.</div>
       </div>
       <div style={styles.optsParent}>{atags}</div>
     </body>
@@ -23,7 +23,7 @@ export default function OptsPage({ opts }) {
 }
 
 const styles = {
-  body:{
+  body: {
     backgroundColor: ALL_THEMES.theme1.primary,
   },
   header: {

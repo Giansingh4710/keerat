@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # prefix="../Keertan"
-prefix="../Keertan/AkhandKeertan"
+prefix="/Users/gians/Desktop/dev/webdev/keerat/app/Keertan/"
 files=$(find "$prefix" -type f -name "TRACKS.js")
 
 function getSecondLastPart {

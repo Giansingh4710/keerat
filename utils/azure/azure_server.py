@@ -218,14 +218,21 @@ def random_stuff():
 
 
 folder = "audios/"  # needs to end with /
-folder = "audios/keertan/bh_jasbir_s/aisa_keertan/"
+folder = "audios/keertan/bhai_randhir_singh/"
+
+# curr = "audios/keertan/timeBased/3)6amto9am/Raag devgandhari - Att Sundar man Mohan piyare - Canada2019.mp3.mp3"
+# new = "audios/keertan/timeBased/3)6amto9am/Raag devgandhari - Att Sundar man Mohan piyare - Canada2019.mp3"
+# rename_file(curr, new)
+
+get_size_of_folder(folder)
 
 # files_map(folder, the_condition, the_action)
 # files_map(folder, is_webm, delete_file)
 
 # upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
-print_links(folder)
+# print_links(folder)
 # read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
-# delete_folder("audios/keertan/sdo/yt_karKeertan/")  # very DANGAROUS
+# delete_folder(folder)  # very DANGAROUS
+
