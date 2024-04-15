@@ -1,8 +1,12 @@
-import ALL_THEMES from "@/utils/themes"
+import ALL_THEMES from '@/utils/themes'
 
 export default function OptsPage({ opts }) {
   const atags = opts.map((str) => {
-    const href = str.replaceAll(' ', '')
+    let href = str.replaceAll(' ', '')
+    if (str === 'Tracks Index') {
+      href = 'http://45.76.2.28/trackIndex'
+    }
+
     return (
       <a href={href} key={href} style={styles.opt}>
         {str}
@@ -15,7 +19,10 @@ export default function OptsPage({ opts }) {
       <div style={styles.header}>
         ਕੀਰਤਿਕਰਹਿਸਗਲਜਨਤੇਰੀਤੂਅਬਿਨਾਸੀਪੁਰਖੁਮੁਰਾਰੇ॥
         <div id='GurbaniLine'></div>
-        <div id='GurbaniTrans'>All beings sing Your Praises; You are the imperishable Primal Being, the Destroyer of ego.</div>
+        <div id='GurbaniTrans'>
+          All beings sing Your Praises; You are the imperishable Primal Being,
+          the Destroyer of ego.
+        </div>
       </div>
       <div style={styles.optsParent}>{atags}</div>
     </body>
