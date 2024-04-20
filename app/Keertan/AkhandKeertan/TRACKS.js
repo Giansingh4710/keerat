@@ -1416,6 +1416,11 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/104 Bhai Mohinder Singh Ji SDO Amritsar 1979 GURDWARA BABA BAKALA SAHIB PATSHAHI 9. (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/105 Bhai Mohinder Singh Ji SDO April 1980 Ludhiana Smagam (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/106 Bhai Mohinder Singh Ji SDO Gurpurab Guru Gobind Singh Ji,Ldh 12,1980 7 Poh Gurdwara Singh Sabha. (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/107 Bhai Mohinder Singh Ji SDO Ludhiana 06,1980 ਜਿਨਾ ਗੁਰਸਿਖਾ ਕਉ ਹਰਿ ਸੰਤੁਸਟੁ ਹੈ ਤਿਨੀ ਸਤਿਗੁਰ ਕੀ ਗਲ ਮੰਨੀ (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/108 Bhai Mohinder Singh Ji SDO April 1984 Dayton OH USA Smagam (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/109 Bhai Mohinder Singh Ji SDO 1979 Moga BS (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/110 Bhai Mohinder Singh Ji SDO Anandpur Sahib Smagam 1973 KS (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/111 Bhai Mohinder Singh Ji SDO 20,11,1972 Jalhandar Smagam (heeraRattan).mp3',
 
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/001 Bh. Mohinder Singh SDO (karKeertan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/002 Bhai Mohinder Singh SDO 1976 Ludhiana (karKeertan).mp3',
