@@ -96,7 +96,7 @@ export default function TrackPlayback({
         <div style={styles.contLine}>
           <IconButton
             onClick={async () => {
-              await navigator.clipboard.writeText(link)
+              await navigator.clipboard.writeText(link.replaceAll(' ','%20'))
               toast.success('Copied Raw Link to Clipboard!')
             }}
           >
