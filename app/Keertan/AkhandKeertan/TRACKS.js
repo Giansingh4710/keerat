@@ -1422,6 +1422,7 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/110 Bhai Mohinder Singh Ji SDO Anandpur Sahib Smagam 1973 KS (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/111 Bhai Mohinder Singh Ji SDO 20,11,1972 Jalhandar Smagam (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/112 Bhai Mohinder Singh Ji SDO 11,1980 Amritsar, (In Memory of Bhai Fauja Singh Ji Smagam,Part 1,2,3) (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/113 Bhai Mohinder Singh Ji SDO Milwaukee 1984 Smagam (heeraRattan).mp3',
 
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/001 Bh. Mohinder Singh SDO (karKeertan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/002 Bhai Mohinder Singh SDO 1976 Ludhiana (karKeertan).mp3',
