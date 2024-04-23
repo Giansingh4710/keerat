@@ -4019,6 +4019,8 @@ const GURINDER_S_LINKS = [
   'https://akj.media/Media/Keertan/Bakersfield/2006/015_Bakersfield_Oct2006_SatM_ADV_BhaiGurinderSinghJeeCA.mp3',
   'https://akj.media/Media/Keertan/Bakersfield/2006/026_Bakersfield_Oct2006_SatE_RSK_BhaiGurinderSinghJeeCA.mp3',
   'https://akj.media/Media/Keertan/Chicago/2006/001_Chicago_Mar2006_SatE_RSK_BhaiGurinderSinghJeeCA.mp3',
+
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/other_tracks/bjot/Bh Gurinder S Seattle July 2017 Annual Akhand Keertan Samagam - Saturday Rainsabayee Keertan.m4a'
 ]
 
 const HPS_TRACK_LINKS = [
