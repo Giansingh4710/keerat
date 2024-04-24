@@ -1,10 +1,11 @@
-from azure.storage.blob import BlobServiceClient, BlobPrefix
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import os
 from env import CONNECTION_STRING
 
 connection_string = CONNECTION_STRING
 container_name = "ds1"
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+# blob_service_client = get_blob_service_client_token_credential()
 container_client = blob_service_client.get_container_client(container_name)
 
 
@@ -218,18 +219,18 @@ def random_stuff():
 
 
 folder = "audios/"  # needs to end with /
-folder = "audios/keertan/bhai_randhir_singh/"
+# folder = "audios/keertan/bhai_randhir_singh/"
 
 # curr = "audios/keertan/timeBased/3)6amto9am/Raag devgandhari - Att Sundar man Mohan piyare - Canada2019.mp3.mp3"
 # new = "audios/keertan/timeBased/3)6amto9am/Raag devgandhari - Att Sundar man Mohan piyare - Canada2019.mp3"
 # rename_file(curr, new)
 
-get_size_of_folder(folder)
+# get_size_of_folder(folder)
 
 # files_map(folder, the_condition, the_action)
 # files_map(folder, is_webm, delete_file)
 
-# upload_file("/Users/gians/Downloads/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3", "audios/keertan/dulla_ji/sangat_files/bjot/Bhai Tejinderpal Singh (Dulla Ji) - Harmandir Sahib.mp3")
+upload_file("/Users/gians/Desktop/dev/webdev/keerat/app/Keertan/AkhandKeertan/scraping/dl_all_links_from_yt_link/HeeraRatan/114 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-1 Bombay (heeraRattan).mp3", "audios/keertan/114 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-1 Bombay (heeraRattan).mp3")
 # print_links(folder)
 # read(folder)
 # upload_folder("../Keertan/", "Keertan2/")

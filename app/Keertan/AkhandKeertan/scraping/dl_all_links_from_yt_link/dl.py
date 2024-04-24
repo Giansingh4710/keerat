@@ -2,6 +2,7 @@ from azure.storage.blob import BlobServiceClient
 import os
 import subprocess
 import json
+import pyperclip
 
 
 def get_json_data_from_file(name):
@@ -127,13 +128,16 @@ def upload_to_azure(prefix, dir):
         blob_client.set_http_headers(blob_props.content_settings)
 
 
-def print_links(prefix, dir_name):
-    print("\nLinks:\n")
+def print_links_n_copy(prefix, dir_name):
+    copyTxt = ""
     link_pref = "https://daasstorage13.blob.core.windows.net/ds1/" + prefix
     for file in sorted(os.listdir(dir_name)):
         if file[0] == ".":
             continue
-        print(f"'{link_pref}{file}',")
+        copyTxt+=f"'{link_pref}{file}',\n"
+
+    pyperclip.copy(copyTxt)
+    print("\nLinks:\n"+copyTxt)
 
 
 def main(key):
@@ -151,10 +155,10 @@ def main(key):
 
     download_videos(dl_obj, dir_name, sign)
 
-    upload_to_azure(prefix, dir_name)
+    # upload_to_azure(prefix, dir_name)
     saveNewDownloadedVids(dl_obj, f"{key}.json")
 
-    print_links(prefix, dir_name)
+    print_links_n_copy(prefix, dir_name)
 
 
 

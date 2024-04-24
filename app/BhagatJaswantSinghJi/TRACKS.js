@@ -1918,6 +1918,7 @@ export const SehajPaat = [
 ]
 
 export const CharacterPothi = [
+  "https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/Full Char Pothi 2x.mp3",
   "https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/001. Vaheguroo. Pothi Likhan Da Kaaran. Guroo Sahib Da Mahaa Vismaad Partaap.mp3",
   "https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/002. Satiguru Granth Sahib Jee Ne Mahaa Vismaad Kripa Karnee.mp3",
   "https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/003. Vaheguroo. Gurmukhi Ikhlaak Ate Rakhiaa Lee Ih Ardaas Karnee Jee.mp3",
