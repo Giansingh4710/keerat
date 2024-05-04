@@ -148,15 +148,15 @@ def main(key):
     prefix = playlist["prefix"]
     sign = playlist["sign"]
 
-    dl_obj = get_json_data_from_playlist(link, f"{key}.json")
-    if len(dl_obj["data"]) == 0:
-        print(f"No new videos to download for {key}")
-        return
+    # dl_obj = get_json_data_from_playlist(link, f"{key}.json")
+    # if len(dl_obj["data"]) == 0:
+    #     print(f"No new videos to download for {key}")
+    #     return
+    #
+    # download_videos(dl_obj, dir_name, sign)
 
-    download_videos(dl_obj, dir_name, sign)
-
-    # upload_to_azure(prefix, dir_name)
-    saveNewDownloadedVids(dl_obj, f"{key}.json")
+    upload_to_azure(prefix, dir_name)
+    # saveNewDownloadedVids(dl_obj, f"{key}.json")
 
     print_links_n_copy(prefix, dir_name)
 
