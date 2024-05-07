@@ -1424,7 +1424,6 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/112 Bhai Mohinder Singh Ji SDO 11,1980 Amritsar, (In Memory of Bhai Fauja Singh Ji Smagam,Part 1,2,3) (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/113 Bhai Mohinder Singh Ji SDO Milwaukee 1984 Smagam (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/114 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-1 Bombay (heeraRattan).mp3',
-
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/115 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-2 Bombay (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/116 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-3 Bombay (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/117 Bhai Mohinder Singh Ji SDO  ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-4  Bombay (heeraRattan).mp3',
@@ -1433,6 +1432,7 @@ const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/120 Bhai Mohinder Singh Ji SDO Punjab 1979 (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/121 Bhai Mohinder Singh Ji SDO Chicago 1984 Smagam (heeraRattan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/122 Bhai Mohinder Singh Ji SDO Patiala 1974 Smagam (heeraRattan).mp3',
+  'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/123 Bhai Mohinder Singh Ji SDO Patiala 1972 smagam (old Spool-part recording) (heeraRattan).mp3',
 
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/001 Bh. Mohinder Singh SDO (karKeertan).mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/002 Bhai Mohinder Singh SDO 1976 Ludhiana (karKeertan).mp3',
