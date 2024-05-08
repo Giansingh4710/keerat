@@ -1,7 +1,8 @@
 import { ALL_OPTS } from './TRACKS.js'
-
 import ListenPage from '@/components/ListenPage/index.js'
+import { addCheckedKey } from '@/utils/helper_funcs.js'
 
 export default function akj() {
-  return <ListenPage title='Darbar Sahib Keertan' tracksObj={ALL_OPTS} />
+  const allTheOptions = addCheckedKey(ALL_OPTS)
+  return <ListenPage title='Darbar Sahib Keertan' allTheOpts={allTheOptions} />
 }

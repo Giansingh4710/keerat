@@ -5,24 +5,26 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { formatTime, getNameOfTrack } from '@/utils/helper_funcs'
 import { styled } from '@mui/material/styles'
 import AudiotrackIcon from '@mui/icons-material/Audiotrack'
+import AlbumIcon from '@mui/icons-material/Album'
 import PersonIcon from '@mui/icons-material/Person'
 import AudioPlayer from './AudioPlayer'
 import Image from 'next/image'
+import { useStore } from '@/utils/store.js'
 
 export default function TrackPlayback({
-  shuffle,
-  setShuffle,
-  nextTrack,
-  prevTrack,
-
-  link,
-  artist,
-  allOpts,
   timeToGoTo,
   audioRef,
   skipTime,
   toast,
 }) {
+  const nextTrack = useStore((state) => state.nextTrack)
+  const prevTrack = useStore((state) => state.prevTrack)
+  const shuffle = useStore((state) => state.shuffle)
+  const setShuffle = useStore((state) => state.setShuffle)
+  const hstIdx = useStore((state) => state.hstIdx)
+  const history = useStore((state) => state.history)
+  const { artist, link, typeIdx, linkIdx, type } = history[hstIdx]
+
   const [paused, setPaused] = useState(audioRef.current?.paused)
   const playbackSpeed = useRef(1)
 
@@ -30,10 +32,11 @@ export default function TrackPlayback({
     const url = new URL(window.location.href.split('?')[0].split('#')[0])
 
     function get_ind_from_artist_tracks(the_link) {
-      const allLinks = allOpts[artist].trackLinks
-      for (let link of allLinks) {
-        if (link === the_link) return allLinks.indexOf(link)
-      }
+      // TODO
+      // const allLinks = allOpts[artist].trackLinks
+      // for (let link of allLinks) {
+      //   if (link === the_link) return allLinks.indexOf(link)
+      // }
       return -1
     }
 
@@ -56,8 +59,7 @@ export default function TrackPlayback({
   }
 
   function PlayPauseBtn() {
-    const imgSrc =
-      '/playbackImgs/' + (paused ? 'play' : 'pause') + '.svg'
+    const imgSrc = '/playbackImgs/' + (paused ? 'play' : 'pause') + '.svg'
 
     return (
       <button style={styles.playbackIcon} onClick={togglePlayPause}>
@@ -96,7 +98,7 @@ export default function TrackPlayback({
         <div style={styles.contLine}>
           <IconButton
             onClick={async () => {
-              await navigator.clipboard.writeText(link.replaceAll(' ','%20'))
+              await navigator.clipboard.writeText(link.replaceAll(' ', '%20'))
               toast.success('Copied Raw Link to Clipboard!')
             }}
           >
@@ -116,6 +118,12 @@ export default function TrackPlayback({
           </IconButton>
           <TinyText>{artist}</TinyText>
         </div>
+        <div style={styles.contLine}>
+          <IconButton onClick={() => toast.success(`${type} is best!!!`)}>
+            <AlbumIcon style={styles.musicIcon} />
+          </IconButton>
+          <TinyText>{type}</TinyText>
+        </div>
       </div>
 
       <div style={styles.randomRow}>
@@ -131,7 +139,9 @@ export default function TrackPlayback({
         </button>
 
         <div style={styles.middleDropDowns}>
-          <label style={styles.randRowTxt} htmlFor='pickPlaybackSpeed'>Playback Speed:</label>
+          <label style={styles.randRowTxt} htmlFor='pickPlaybackSpeed'>
+            Playback Speed:
+          </label>
           <select
             style={styles.seekTimeSelect}
             id='pickPlaybackSpeed'
@@ -151,7 +161,9 @@ export default function TrackPlayback({
         </div>
 
         <div style={styles.middleDropDowns}>
-          <label style={styles.randRowTxt} htmlFor='pickSkipInterval'>Skip Interval:</label>
+          <label style={styles.randRowTxt} htmlFor='pickSkipInterval'>
+            Skip Interval:
+          </label>
           <select
             style={styles.seekTimeSelect}
             id='pickSkipInterval'
@@ -167,10 +179,7 @@ export default function TrackPlayback({
           </select>
         </div>
         <button style={styles.randomRowBtn} onClick={copyLink}>
-          <img
-            src={'/playbackImgs/copy.svg'}
-            style={styles.randomRowBtnImgs}
-          />
+          <img src={'/playbackImgs/copy.svg'} style={styles.randomRowBtnImgs} />
         </button>
       </div>
 
@@ -178,7 +187,6 @@ export default function TrackPlayback({
         link={link}
         audioRef={audioRef}
         setPaused={setPaused}
-        nextTrack={nextTrack}
         timeToGoTo={timeToGoTo}
         playbackSpeed={playbackSpeed}
         toast={toast}
@@ -186,19 +194,13 @@ export default function TrackPlayback({
 
       <div style={styles.playBackOptions}>
         <button onClick={prevTrack} style={styles.playbackIcon}>
-          <img
-            src={'/playbackImgs/left.svg'}
-            style={styles.playbackImg}
-          />
+          <img src={'/playbackImgs/left.svg'} style={styles.playbackImg} />
         </button>
         <button
           onClick={() => (audioRef.current.currentTime -= skipTime.current)}
           style={styles.playbackIcon}
         >
-          <img
-            src={'/playbackImgs/skip-back.svg'}
-            style={styles.playbackImg}
-          />
+          <img src={'/playbackImgs/skip-back.svg'} style={styles.playbackImg} />
         </button>
 
         {playPauseBtn}
@@ -213,10 +215,7 @@ export default function TrackPlayback({
           />
         </button>
         <button onClick={nextTrack} style={styles.playbackIcon}>
-          <img
-            src={'/playbackImgs/right.svg'}
-            style={styles.playbackImg}
-          />
+          <img src={'/playbackImgs/right.svg'} style={styles.playbackImg} />
         </button>
       </div>
     </div>

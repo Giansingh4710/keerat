@@ -1,12 +1,8 @@
-import {allKathas} from './TRACKS.js'
+import { ALL_OPTS } from './TRACKS.js'
 import ListenPage from '@/components/ListenPage/index.js'
+import { addCheckedKey } from '@/utils/helper_funcs.js'
 
-export default function PaathPage() {
-  const ALL_OPTS = {
-    'Sri Guru Granth Sahib Ji Kathas': {
-      checked: true,
-      trackLinks: allKathas,
-    },
-  }
-  return <ListenPage title='Vadde Mahapurk SGGS Katha' tracksObj={ALL_OPTS} />
+export default function SGGS() {
+  const allTheOptions = addCheckedKey(ALL_OPTS)
+  return <ListenPage title='Vadde Mahapurk SGGS Katha' allTheOpts={allTheOptions} />
 }

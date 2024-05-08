@@ -5,10 +5,9 @@ import { Modal } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import CancelIcon from '@mui/icons-material/Cancel'
 import SearchIcon from '@mui/icons-material/Search'
+import { useStore } from '@/utils/store.js'
 
 export default function IndexTrackBtnAndModal({
-  artist,
-  link,
   saveTrackLS,
   audioRef,
 }) {
@@ -20,6 +19,10 @@ export default function IndexTrackBtnAndModal({
   const [lineClicked, setLineClicked] = useState('')
   const [theTrackType, setTrackType] = useState('')
   const formData = useRef(null)
+
+  const history = useStore((state) => state.history)
+  const artist = history[history.length - 1].artist
+  const link = history[history.length - 1].link
 
   const [timestamp, setTimestamp] = useState({
     hours: '',

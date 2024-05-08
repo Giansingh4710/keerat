@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { formatTime } from '@/utils/helper_funcs'
+import { useStore } from '@/utils/store.js'
 
 export default function AudioPlayer({
   link,
@@ -7,9 +8,9 @@ export default function AudioPlayer({
   setPaused,
   timeToGoTo,
   playbackSpeed,
-  nextTrack,
   toast,
 }) {
+  const nextTrack = useStore((state) => state.nextTrack)
   const [buffered, setBuffered] = React.useState(0)
   const [currentTime, setCurrentTime] = React.useState(0)
 

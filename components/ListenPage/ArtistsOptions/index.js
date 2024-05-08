@@ -1,19 +1,19 @@
 import ALL_THEMES from '@/utils/themes'
 
-import { getTrackLinks } from '@/utils/helper_funcs'
+import { getTrackLinks, trackCount } from '@/utils/helper_funcs'
 import { useEffect, useRef, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { IconButton } from '@mui/material'
+import { Switch } from '@mui/base/Switch'
+import { useStore } from '@/utils/store.js'
 
-export default function ArtistsOptions({
-  allOpts,
-  setAllOpts,
-  setTrackLinks,
-  numOfTracks,
-}) {
-  const [showOpts, setShowOpts] = useState(false)
+export default function ArtistsOptions({ setAllOpts }) {
+  const allOpts = useStore((state) => state.allOptsTracks)
+  const setTrackLinks = useStore((state) => state.setTrackLinks)
+  const numOfTracks = trackCount(allOpts)
+  const [showOpts, setShowOpts] = useState(true)
 
   const optionsDivRef = useRef(null)
   const scrollTo = useRef(0)
@@ -26,7 +26,7 @@ export default function ArtistsOptions({
     toast(`Total Tracks in Queue: ${numOfTracks}`, {
       duration: 1000,
     })
-  }, [allOpts, numOfTracks])
+  }, [allOpts])
 
   function TheOptions() {
     const artist_options = Object.keys(allOpts).map((artist) => {
@@ -55,6 +55,7 @@ export default function ArtistsOptions({
           <label style={styles.label} htmlFor={artist}>
             {artist}
           </label>
+          <p>1/203</p>
         </div>
       )
     })
