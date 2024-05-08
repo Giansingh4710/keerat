@@ -18,12 +18,11 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     if (changesOpts) changesOpts()
     return allTheOpts
   })
-  const setTracks = useStore((state) => state.setTracks)
-  const tracks = useStore((state) => state.tracks)
   const prevTrack = useStore((state) => state.prevTrack)
   const nextTrack = useStore((state) => state.nextTrack)
   const setShuffle = useStore((state) => state.setShuffle)
   const history = useStore((state) => state.history)
+  const setTracks = useStore((state) => state.setTracks)
 
   const timeToGoTo = useRef(0)
   const audioRef = useRef(null)

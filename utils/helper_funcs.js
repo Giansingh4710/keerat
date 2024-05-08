@@ -10,6 +10,29 @@ export function randIdx(arr) {
   return Math.floor(Math.random() * arr.length)
 }
 
+export function getRandType(aristTracks) {
+  const checkedTypesIdx = []
+  for (let idx = 0; idx < aristTracks.length; idx++) {
+    const obj = aristTracks[idx]
+    if (obj.checked) checkedTypesIdx.push(idx)
+  }
+  console.log
+  return randItemFromArr(checkedTypesIdx)
+}
+
+export function getNextCheckedType(aristTracks, currentTypeIdx) {
+  for (let idx = currentTypeIdx + 1; idx < aristTracks.length; idx++) {
+    const obj = aristTracks[idx]
+    if (obj.checked) return idx
+  }
+
+  for (let idx = 0; idx < currentTypeIdx; idx++) {
+    const obj = aristTracks[idx]
+    if (obj.checked) return idx
+  }
+  return -1
+}
+
 export function getRandomKey(obj) {
   return Object.keys(obj)[(Math.random() * Object.keys(obj).length) | 0]
 }
@@ -76,4 +99,11 @@ export function trackCount(allOpts) {
     }
   }
   return count
+}
+
+export function isChecked(allOpts, artist) {
+  for (const obj of allOpts[artist]) {
+    if (obj.checked) return true
+  }
+  return false
 }

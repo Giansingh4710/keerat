@@ -1,10 +1,15 @@
 import { create } from 'zustand'
 import {
-  getRandomKey,
+  getNextCheckedType,
+  getRandType,
   loopIncrement,
   randIdx,
   randItemFromArr,
 } from './helper_funcs'
+
+function log(args) {
+  console.log('BOB: ', args.join(','))
+}
 
 export const useStore = create((set) => ({
   hstIdx: -1,
@@ -14,13 +19,23 @@ export const useStore = create((set) => ({
   allOptsTracks: {},
   setTracks: (value) => set({ allOptsTracks: value }),
 
-  setCheckedArtist: (artist,checked) =>
+  setCheckedForAllArtists: (checked) =>
     set((state) => {
-      const allOpts = state.allOptsTracks
-      for(const typeInd in allOpts[artist]){
+      const allOpts = { ...state.allOptsTracks }
+      for (const artist in allOpts) {
+        for (const typeInd in allOpts[artist]) {
+          allOpts[artist][typeInd].checked = checked
+        }
+      }
+      return { allOptsTracks: allOpts }
+    }),
+  setCheckedArtist: (artist, checked) =>
+    set((state) => {
+      const allOpts = { ...state.allOptsTracks } // to change address and make new obj so it can rerender
+      for (const typeInd in allOpts[artist]) {
         allOpts[artist][typeInd].checked = checked
       }
-      set({ allOptsTracks: allOpts })
+      return { allOptsTracks: allOpts }
     }),
 
   prevTrack: () =>
@@ -69,7 +84,11 @@ export const useStore = create((set) => ({
 
       let value = {}
       const allOpts = state.allOptsTracks
-      const artists = Object.keys(allOpts)
+      const artists = Object.keys(allOpts).filter((artist) => {
+        return allOpts[artist].some((type) => type.checked)
+      })
+
+      if (artists.length === 0) return {}
 
       if (state.hstIdx === -1) {
         const firstArtist = artists[0]
@@ -84,8 +103,8 @@ export const useStore = create((set) => ({
           link: allOpts[firstArtist][typeIdx].links[linkIdx],
         }
       } else if (state.shuffle) {
-        const randArtist = getRandomKey(allOpts)
-        const randTypeIdx = randIdx(allOpts[randArtist])
+        const randArtist = randItemFromArr(artists)
+        const randTypeIdx = getRandType(allOpts[randArtist])
         const randType = allOpts[randArtist][randTypeIdx].type
         const randLinkIdx = randIdx(allOpts[randArtist][randTypeIdx].links)
         value = {
@@ -100,16 +119,30 @@ export const useStore = create((set) => ({
         const hist = state.history
         let artist = hist[state.hstIdx].artist
         let typeIdx = hist[state.hstIdx].typeIdx
-        let linkIdx = loopIncrement(
-          allOpts[artist][typeIdx].links,
-          hist[state.hstIdx].linkIdx,
-        )
+        let linkIdx = hist[state.hstIdx].linkIdx
 
-        if (linkIdx === 0) {
-          typeIdx = loopIncrement(allOpts[artist], typeIdx)
-          if (typeIdx === 0) {
-            const artInd = loopIncrement(artists, artists.indexOf(artist))
+        if (allOpts[artist][typeIdx].checked) {
+          linkIdx = loopIncrement(allOpts[artist][typeIdx].links, linkIdx)
+
+          if (linkIdx === 0) {
+            typeIdx = loopIncrement(allOpts[artist], typeIdx)
+            if (typeIdx === 0) {
+              const artInd = loopIncrement(artists, artists.indexOf(artist))
+              artist = artists[artInd]
+            }
+          }
+        } else {
+          linkIdx = 0
+          typeIdx = getNextCheckedType(allOpts[artist], typeIdx)
+          if (typeIdx === -1) {
+            // will happend when listening to artist and uncheck that artist
+            const artInd = loopIncrement(
+              artists,
+              artists.indexOf(artist),
+              allOpts,
+            )
             artist = artists[artInd]
+            typeIdx = 0
           }
         }
         value = {
