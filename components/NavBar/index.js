@@ -153,6 +153,7 @@ export default function NavBar({ title }) {
         <LinkTag href='/BhagatJaswantSinghJi/' />
         <LinkTag href='/GianiSherSinghJi/' />
         <LinkTag href='/MiscellaneousTopics' />
+        <LinkTag href='/RimmyRadio' />
         <LinkTag absLink='http://45.76.2.28/trackIndex' />
       </BarRow>
     </nav>
