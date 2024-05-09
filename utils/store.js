@@ -14,7 +14,7 @@ function log(args) {
 export const useStore = create((set) => ({
   hstIdx: -1,
   history: [],
-  setHistory: (value) => set({ history: value }),
+  setHistory: (lst) => set({ history: lst, hstIdx: lst.length - 1 }),
 
   allOptsTracks: {},
   setTracks: (value) => set({ allOptsTracks: value }),

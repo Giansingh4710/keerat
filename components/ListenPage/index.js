@@ -7,21 +7,24 @@ import TrackPlayback from './TrackPlayback/index.js'
 import SaveTrackModal from './SaveTrackModal/index.js'
 import SearchTracks from './SearchTracks/index.js'
 import IndexTrackBtnAndModal from './IndexTrackModal/index.js'
-import { useEffect, useRef, useState } from 'react'
-import { getNameOfTrack } from '@/utils/helper_funcs.js'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  getLinkFromOldUrlDate,
+  getNameOfTrack,
+  getObjFromUrl,
+  getSecondsFromTimeStamp,
+  validTrackObj,
+} from '@/utils/helper_funcs.js'
 import toast, { Toaster } from 'react-hot-toast'
 import { useStore } from '@/utils/store.js'
 
 export default function ListenPage({ title, allTheOpts, changesOpts }) {
-  const [allOpts, setAllOpts] = useState(() => {
-    return {}
-    if (changesOpts) changesOpts()
-    return allTheOpts
-  })
   const prevTrack = useStore((state) => state.prevTrack)
   const nextTrack = useStore((state) => state.nextTrack)
   const setShuffle = useStore((state) => state.setShuffle)
+  const setHistory = useStore((state) => state.setHistory)
   const history = useStore((state) => state.history)
+  const hstIdx = useStore((state) => state.hstIdx)
   const setTracks = useStore((state) => state.setTracks)
 
   const timeToGoTo = useRef(0)
@@ -29,77 +32,63 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   const skipTime = useRef(10)
   const [searchInput, setSearchInput] = useState('')
 
+  useMemo(() => setTracks(allTheOpts), [])
+
   useEffect(() => {
-    function setAudioTime(the_time) {
-      if (!the_time) return
-
-      let seconds = parseInt(the_time)
-      if (the_time.includes(':')) {
-        const timeLst = the_time.split(':')
-        let totalSeconds = 0
-        let multiplier = 1
-        for (let i = timeLst.length - 1; i > -1; i--) {
-          totalSeconds += multiplier * parseInt(timeLst[i])
-          multiplier *= 60
-        }
-        seconds = totalSeconds
-      }
-      timeToGoTo.current = seconds
+    const currTrackData = history[hstIdx]
+    if (validTrackObj(currTrackData)) {
+      localStorage.setItem(
+        `LastPlayed: ${title}`,
+        JSON.stringify(currTrackData),
+      )
     }
+    navigatorStuff()
+  }, [hstIdx])
 
+  useEffect(() => {
     function urlStuff() {
       const urlParams = new URLSearchParams(window.location.search)
       if (urlParams.size === 0) return false
 
-      const urlInd = parseInt(urlParams.get('trackIndex'))
-      const urlArtist = urlParams.get('artist')
-      const urlTime = urlParams.get('time')
       const urlSearch = urlParams.get('search')
-      setAudioTime(urlTime)
-
-      if (allOpts[urlArtist]?.checked === false) {
-        setAllOpts({
-          ...allOpts,
-          [urlArtist]: {
-            ...allOpts[urlArtist],
-            checked: true,
-          },
-        })
-      }
-
       if (urlSearch) {
         setSearchInput(urlSearch)
         return true
       }
+      timeToGoTo.current = getSecondsFromTimeStamp(urlParams.get('time'))
 
-      const the_link = allOpts[urlArtist]?.trackLinks[urlInd]
-      if (!the_link) {
-        toast.error(
-          `TrackIndex: '${urlInd}' or Artist: '${urlArtist}' from URL is not valid`,
-        )
-        return false
+      const theUrl = urlParams.get('url')
+      const trkObj = getObjFromUrl(theUrl, allTheOpts)
+      if (validTrackObj(trkObj)) {
+        setHistory([trkObj])
+        return true
+      } else {
+        // for old links that have 'artist','trackIndex'
+        const artist = urlParams.get('artist')
+        const trackIndex = urlParams.get('trackIndex')
+        const url = getLinkFromOldUrlDate(artist, trackIndex, allTheOpts)
+        const trkObj = getObjFromUrl(url, allTheOpts)
+        if (validTrackObj(trkObj)) {
+          toast("Old copied link")
+          setHistory([trkObj])
+          return true
+        }
       }
-      playSpecificTrack(the_link)
-      return true
+      // toast.error(`${theUrl}: Not from this page`, { duration: 10000 })
+      return false
     }
 
     function getLastPlayedTrackLocalStorage() {
-      const link = localStorage.getItem(`LastPlayed: ${title}`) // localStorage.getItem("LastPlayed: Classic Akhand Keertan")
-      if (typeof link != typeof '') return false
-
-      if (link === '[object BeforeUnloadEvent]') {
-        toast.error('object BeforeUnloadEvent error')
+      const strData = localStorage.getItem(`LastPlayed: ${title}`)
+      if (!strData || strData === 'undefined') return false
+      const trkObj = JSON.parse(strData)
+      if (!validTrackObj(trkObj)) {
         return false
       }
-
-      if (!TRACK_LINKS.includes(link)) {
-        toast.error('Link in LocalStorage not in Track_LINKS')
-        return false
-      }
+      setHistory([trkObj])
 
       const localStorageTime = localStorage.getItem(`LastTime: ${title}`)
-      setAudioTime(localStorageTime, timeToGoTo.current)
-      playSpecificTrack(link)
+      timeToGoTo.current = getSecondsFromTimeStamp(localStorageTime)
       return true
     }
 
@@ -107,14 +96,12 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       if (localStorage.getItem('shuffle') === 'true') setShuffle(true)
     }
 
-    // getShuffle()
-    // if (!urlStuff()) {
-    //   if (!getLastPlayedTrackLocalStorage()) {
-    //     nextTrack()
-    //   }
-    // }
-    setTracks(allTheOpts)
-    nextTrack()
+    getShuffle()
+    if (!urlStuff()) {
+      if (!getLastPlayedTrackLocalStorage()) {
+        // nextTrack()
+      }
+    }
   }, [])
 
   //to get rid of next.js Hydration error
@@ -124,12 +111,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   }, [])
   if (!showChild) return <body />
 
-  function saveTrackInLocalStorage(link, time = '0') {
-    localStorage.setItem(`LastPlayed: ${title}`, link)
-    localStorage.setItem(`LastTime: ${title}`, time)
-  }
-
-  function navigatorStuff(link, artist) {
+  function navigatorStuff() {
     navigator.mediaSession.setActionHandler('play', () =>
       audioRef.current.play(),
     )
@@ -153,10 +135,10 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
 
     if ('mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
-        // title: getNameOfTrack(link),
-        title: 'bob',
-        artist: artist,
-        album: title,
+        title: getNameOfTrack(history[hstIdx].link),
+        artist: history[hstIdx].artist,
+        album: history[hstIdx].type,
+        // album: title,
       })
     }
   }
@@ -172,7 +154,6 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       <Toaster position='top-left' reverseOrder={true} />
       <NavBar title={title} />
       <SearchTracks
-        // track_links={TRACK_LINKS}
         // playSpecificTrack={playSpecificTrack}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
@@ -193,8 +174,11 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       */}
       <IndexTrackBtnAndModal
         audioRef={audioRef}
-        saveTrackLS={() => {
-          saveTrackInLocalStorage(history.link, audioRef.current.currentTime)
+        saveTimeLocalStorage={() => {
+          localStorage.setItem(
+            `LastTime: ${title}`,
+            audioRef.current.currentTime,
+          )
         }}
       />
     </body>

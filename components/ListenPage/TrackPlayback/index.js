@@ -1,7 +1,7 @@
 import React from 'react'
 import ALL_THEMES from '@/utils/themes'
 import { IconButton, Typography } from '@mui/material'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { formatTime, getNameOfTrack } from '@/utils/helper_funcs'
 import { styled } from '@mui/material/styles'
 import AudiotrackIcon from '@mui/icons-material/Audiotrack'
@@ -10,12 +10,13 @@ import PersonIcon from '@mui/icons-material/Person'
 import AudioPlayer from './AudioPlayer'
 import Image from 'next/image'
 import { useStore } from '@/utils/store.js'
+import { Label, Select } from 'flowbite-react'
+import toast from 'react-hot-toast'
 
 export default function TrackPlayback({
   timeToGoTo,
   audioRef,
   skipTime,
-  toast,
 }) {
   const nextTrack = useStore((state) => state.nextTrack)
   const prevTrack = useStore((state) => state.prevTrack)
@@ -23,26 +24,19 @@ export default function TrackPlayback({
   const setShuffle = useStore((state) => state.setShuffle)
   const hstIdx = useStore((state) => state.hstIdx)
   const history = useStore((state) => state.history)
-  const { artist, link, typeIdx, linkIdx, type } = history[hstIdx]
+  const artist = history[hstIdx]?.artist
+  const link = history[hstIdx]?.link
+  const type = history[hstIdx]?.type
+
+  // const { artist, link, typeIdx, linkIdx, type } = history[hstIdx]
 
   const [paused, setPaused] = useState(audioRef.current?.paused)
   const playbackSpeed = useRef(1)
 
   function copyLink() {
     const url = new URL(window.location.href.split('?')[0].split('#')[0])
-
-    function get_ind_from_artist_tracks(the_link) {
-      // TODO
-      // const allLinks = allOpts[artist].trackLinks
-      // for (let link of allLinks) {
-      //   if (link === the_link) return allLinks.indexOf(link)
-      // }
-      return -1
-    }
-
     url.searchParams.append('time', parseInt(audioRef.current.currentTime))
-    url.searchParams.append('artist', artist)
-    url.searchParams.append('trackIndex', get_ind_from_artist_tracks(link))
+    url.searchParams.append('url', link)
     navigator.clipboard.writeText(url.href)
     toast.success(
       `Link with timestamp: ${formatTime(audioRef.current.currentTime)} Copied`,
@@ -105,7 +99,7 @@ export default function TrackPlayback({
             <AudiotrackIcon style={styles.musicIcon} />
           </IconButton>
           <a style={styles.trackNameAtag} target='_blank' href={link}>
-            {getNameOfTrack(link)}
+            {link && getNameOfTrack(link)}
           </a>
         </div>
         <div style={styles.contLine}>
@@ -139,11 +133,11 @@ export default function TrackPlayback({
         </button>
 
         <div style={styles.middleDropDowns}>
-          <label style={styles.randRowTxt} htmlFor='pickPlaybackSpeed'>
-            Playback Speed:
-          </label>
-          <select
-            style={styles.seekTimeSelect}
+          <label style={styles.randRowTxt} htmlFor='pickPlaybackSpeed'></label>
+          <div className='mb-0'>
+            <Label className='text-white text-sm '>Playback Speed:</Label>
+          </div>
+          <Select
             id='pickPlaybackSpeed'
             onChange={(e) => {
               playbackSpeed.current = parseFloat(e.target.value)
@@ -157,15 +151,14 @@ export default function TrackPlayback({
             <option value='2'>2x</option>
             <option value='2.5'>2.5x</option>
             <option value='3'>3x</option>
-          </select>
+          </Select>
         </div>
 
         <div style={styles.middleDropDowns}>
-          <label style={styles.randRowTxt} htmlFor='pickSkipInterval'>
-            Skip Interval:
-          </label>
-          <select
-            style={styles.seekTimeSelect}
+          <div className='mb-0'>
+            <Label className='text-white text-sm '>Skip Interval:</Label>
+          </div>
+          <Select
             id='pickSkipInterval'
             onChange={(e) => {
               skipTime.current = parseInt(e.target.value)
@@ -176,7 +169,7 @@ export default function TrackPlayback({
             <option value='10'>10 Seconds</option>
             <option value='30'>30 Seconds</option>
             <option value='60'>60 Seconds</option>
-          </select>
+          </Select>
         </div>
         <button style={styles.randomRowBtn} onClick={copyLink}>
           <img src={'/playbackImgs/copy.svg'} style={styles.randomRowBtnImgs} />
@@ -189,7 +182,6 @@ export default function TrackPlayback({
         setPaused={setPaused}
         timeToGoTo={timeToGoTo}
         playbackSpeed={playbackSpeed}
-        toast={toast}
       />
 
       <div style={styles.playBackOptions}>
@@ -254,10 +246,6 @@ const styles = {
     fontWeight: 500,
     letterSpacing: 0.2,
     paddingTop: '0.5em',
-  },
-  seekTimeSelect: {
-    marginLeft: '0.5em',
-    color: ALL_THEMES.theme1.text1,
   },
   playBackOptions: {
     display: 'flex',

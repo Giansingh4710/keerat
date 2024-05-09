@@ -7,10 +7,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import SearchIcon from '@mui/icons-material/Search'
 import { useStore } from '@/utils/store.js'
 
-export default function IndexTrackBtnAndModal({
-  saveTrackLS,
-  audioRef,
-}) {
+export default function IndexTrackBtnAndModal({ audioRef, saveTimeLocalStorage}) {
   const [modalOpen, setModal] = useState(false)
   const [description, setDescription] = useState('')
   const [shabadId, setShabadId] = useState('')
@@ -21,8 +18,9 @@ export default function IndexTrackBtnAndModal({
   const formData = useRef(null)
 
   const history = useStore((state) => state.history)
-  const artist = history[history.length - 1].artist
-  const link = history[history.length - 1].link
+  const hstIdx = useStore((state) => state.hstIdx)
+  const artist = history[hstIdx]?.artist
+  const link = history[hstIdx]?.link
 
   const [timestamp, setTimestamp] = useState({
     hours: '',
@@ -75,7 +73,7 @@ export default function IndexTrackBtnAndModal({
     add_to_form_to_send_to_server('artist', artist)
     add_to_form_to_send_to_server('link', link)
 
-    saveTrackLS()
+    saveTimeLocalStorage()
     formData.current.submit()
   }
 

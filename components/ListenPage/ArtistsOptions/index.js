@@ -15,7 +15,6 @@ import { ArtistOptBar } from './artistOptBar'
 export default function ArtistsOptions() {
   const allOpts = useStore((state) => state.allOptsTracks)
   const setCheckedArtist = useStore((state) => state.setCheckedArtist)
-  const setTrackLinks = useStore((state) => state.setTrackLinks)
   const setCheckedForAllArtists = useStore(
     (state) => state.setCheckedForAllArtists,
   )
@@ -31,9 +30,9 @@ export default function ArtistsOptions() {
       optionsDivRef.current.scrollTop = scrollTo.current
     }
 
-    // toast(`Total Tracks in Queue: ${numOfTracks}`, {
-    //   duration: 1000,
-    // })
+    toast.success(`Total Tracks in Queue: ${numOfTracks}`, {
+      duration: 1000,
+    })
   }, [allOpts])
 
   function TheButon({ text, onClick }) {
@@ -56,8 +55,6 @@ export default function ArtistsOptions() {
     <>
       <TheButon text='Close Track Options' onClick={() => setShowOpts(false)} />
       <div style={styles.container}>
-        <Toaster position='top-left' reverseOrder={true} />
-
         <div className='flex-1 flex gap-1'>
           <p className='flex-1 align-baseline text-lg'>
             Total Tracks in Queue: {numOfTracks}

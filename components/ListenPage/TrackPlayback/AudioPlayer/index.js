@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { formatTime } from '@/utils/helper_funcs'
 import { useStore } from '@/utils/store.js'
+import toast from 'react-hot-toast'
 
 export default function AudioPlayer({
   link,
@@ -8,7 +9,6 @@ export default function AudioPlayer({
   setPaused,
   timeToGoTo,
   playbackSpeed,
-  toast,
 }) {
   const nextTrack = useStore((state) => state.nextTrack)
   const [buffered, setBuffered] = React.useState(0)
@@ -45,7 +45,7 @@ export default function AudioPlayer({
         onTimeUpdate={handleBufferProgress}
         onProgress={handleBufferProgress}
         onEnded={() => nextTrack()}
-        onError={() => alert('Error loading audio')}
+        onError={() => toast.error('Error loading audio')}
         onLoadedData={() => {
           audioRef.current.currentTime = timeToGoTo.current
           timeToGoTo.current = 0
