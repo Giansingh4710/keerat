@@ -5,13 +5,10 @@ import { Modal } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import CancelIcon from '@mui/icons-material/Cancel'
 import SearchIcon from '@mui/icons-material/Search'
+import { useStore } from '@/utils/store.js'
 
-export default function IndexTrackBtnAndModal({
-  artist,
-  link,
-  saveTrackLS,
-  audioRef,
-}) {
+export default function IndexTrackBtnAndModal() {
+  const audioRef = useStore((state) => state.audioRef);
   const [modalOpen, setModal] = useState(false)
   const [description, setDescription] = useState('')
   const [shabadId, setShabadId] = useState('')
@@ -20,6 +17,12 @@ export default function IndexTrackBtnAndModal({
   const [lineClicked, setLineClicked] = useState('')
   const [theTrackType, setTrackType] = useState('')
   const formData = useRef(null)
+
+  const history = useStore((state) => state.history)
+  const hstIdx = useStore((state) => state.hstIdx)
+  const title = useStore((state) => state.title)
+  const artist = history[hstIdx]?.artist
+  const link = history[hstIdx]?.link
 
   const [timestamp, setTimestamp] = useState({
     hours: '',
@@ -72,7 +75,9 @@ export default function IndexTrackBtnAndModal({
     add_to_form_to_send_to_server('artist', artist)
     add_to_form_to_send_to_server('link', link)
 
-    saveTrackLS()
+    if(audioRef !== null) {
+      localStorage.setItem(`LastTime: ${title}`, audioRef.current.currentTime)
+    }
     formData.current.submit()
   }
 
@@ -178,7 +183,7 @@ export default function IndexTrackBtnAndModal({
 
   return (
     <div>
-      <button style={styles.main_btn} onClick={() => setModal(true)}>
+      <button className='m-2 p-2 rounded-lg bg-btn  ' onClick={() => setModal(true)}>
         Index Track
       </button>
       <Modal open={modalOpen} onClose={() => setModal(false)}>
@@ -279,6 +284,7 @@ export default function IndexTrackBtnAndModal({
               <button
                 onClick={(e) => {
                   e.preventDefault()
+                  if(audioRef === null) return
                   const currTime = audioRef.current.currentTime
                   const hours = Math.floor(currTime / 3600)
                   const minutes = Math.floor((currTime % 3600) / 60)
@@ -471,12 +477,6 @@ function convertToGurmukhi(input) {
 }
 
 const styles = {
-  main_btn: {
-    margin: '2em',
-    borderRadius: '10px',
-    color: ALL_THEMES.theme1.text2,
-    backgroundColor: ALL_THEMES.theme1.third,
-  },
   cont: {
     padding: '2em',
     borderRadius: '1em',

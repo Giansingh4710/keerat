@@ -1,201 +1,120 @@
-import ALL_THEMES from '@/utils/themes'
-import { Modal } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { Modal } from "@mui/material";
+import { useEffect, useMemo } from "react";
+import { useStore, useSavedTracksStore } from "@/utils/store";
 
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered'
-import DeleteIcon from '@mui/icons-material/Delete'
-import { getNameOfTrack } from '@/utils/helper_funcs'
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { getNameOfTrack, validTrackObj } from "@/utils/helper_funcs";
+import toast from "react-hot-toast";
 
-function putTrackInLocalStorage(link, note, localStorageKey) {
-  let savedItems = localStorage.getItem(localStorageKey)
-  if (!savedItems) {
-    savedItems = {}
-  } else {
-    savedItems = JSON.parse(savedItems)
-  }
+function DisplayTracks() {
+  const showTracks = useSavedTracksStore((state) => state.showTracks);
+  const savedTracks = useSavedTracksStore((state) => state.savedTracks);
+  const appendHistory = useStore((state) => state.appendHistory);
+  const deleteFromSavedTracks = useSavedTracksStore(
+    (state) => state.deleteFromSavedTracks,
+  );
 
-  savedItems[link] = note
-  localStorage.setItem(localStorageKey, JSON.stringify(savedItems))
-}
-
-const styles = {
-  main_buttons: {
-    paddingBottom: '2em',
-    display: 'flex',
-    justifyContent: 'space-evenly',
-  },
-  btn: {
-    // fontWeight: 'bold',
-    borderRadius: '15px',
-    color: ALL_THEMES.theme1.text2,
-    backgroundColor: ALL_THEMES.theme1.third,
-
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '0.5em',
-  },
-  btnTxt: {
-    fontSize: '0.6rem',
-    flex: 6,
-  },
-  icon: {
-    fontSize: '1rem',
-    flex: 1,
-  },
-}
-
-const modalStyles = {
-  modalDiv: {
-    position: 'absolute',
-    top: '40%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: '10px',
-    // padding: '20px',
-    backgroundColor: ALL_THEMES.theme1.primary,
-
-    border: `2px solid ${ALL_THEMES.theme1.text2}`,
-  },
-  topRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  modalDivClose: {
-    // fontSize: '28px',
-    fontWeight: 'bold',
-    fontSize: '1.5rem',
-    flex: 1,
-    height: '1.5em',
-    color: ALL_THEMES.theme1.text1,
-  },
-  heading: {
-    flex: 10,
-    fontWeight: 'bold',
-    color: ALL_THEMES.theme1.text2,
-  },
-  textArea: {
-    color: ALL_THEMES.theme1.text1,
-  },
-}
-
-function DisplayTracks({
-  showTracks,
-  playSpecificTrack,
-  localStorageKey,
-  modalOpen,
-}) {
-  const [savedTracks, setSavedTracks] = useState({})
-
-  useEffect(() => {
-    setSavedTracks(JSON.parse(localStorage.getItem(localStorageKey)))
-  }, [showTracks, modalOpen])
-
-  if (!showTracks) return <></>
-
-  const listStyles = {
-    cont: {
-      color: ALL_THEMES.theme1.text2,
-      overflow: 'auto',
-    },
-    ol: {
-      height: '10em',
-      border: '1px solid white',
-      borderRadius: '5px',
-      overflow: 'scroll',
-      paddingBottom: '1em',
-    },
-    li: {
-      // display: 'flex',
-      // justifyContent: 'space-between',
-      // padding: '0.5em',
-      // borderBottom: '1px solid white',
-    },
-    p: {
-      display: 'inline-block',
-      paddingRight: '1em',
-    },
-    btn: {},
-  }
-
-  const listItems = []
-  for (const link in savedTracks) {
-    const trkMsg = savedTracks[link].replaceAll('\n', ' ')
-    const trackName = getNameOfTrack(link)
-    listItems.push(
-      <li key={link} style={listStyles.li}>
-        <p style={listStyles.p}>{trkMsg}</p>
-        <button style={listStyles.btn} onClick={() => playSpecificTrack(link)}>
-          {trackName}
-        </button>
-        <button
-          style={listStyles.btn}
-          onClick={() => {
-            setSavedTracks((prevSaved) => {
-              delete prevSaved[link]
-              localStorage.setItem(localStorageKey, JSON.stringify(prevSaved))
-              return { ...prevSaved }
-            })
-          }}
-        >
-          <DeleteIcon style={styles.icon} />
-        </button>
-      </li>,
-    )
-  }
+  if (!showTracks) return <></>;
 
   return (
-    <div style={listStyles.cont}>
-      <p>{listItems.length}: Saved Tracks</p>
-      <ol style={listStyles.ol}>{listItems}</ol>
+    <div className="w-full border border-gray-200 rounded-lg text-white">
+      <p>{savedTracks.length}: Saved Tracks</p>
+      <div className=" overflow-x-clip overflow-y-auto h-48">
+        {savedTracks.map((trkObj, index) => {
+          return (
+            <div className="flex w-full border-b border-gray-200" key={index}>
+              <button
+                onClick={() => appendHistory(trkObj)}
+                className="flex-1 rounded-md hover:bg-blue-100 text-xl p-2"
+              >
+                <div className="flex-1 flex ">
+                  <span className="pl-2 pr-2">{index + 1}.</span>
+                  <span className="flex-1 text-left">
+                    {getNameOfTrack(trkObj.link)}
+                  </span>
+                </div>
+              </button>
+              <div className="flex-3 text-right pr-2">
+                <DeleteIcon
+                  onClick={() => {
+                    deleteFromSavedTracks(index);
+                    toast.success("Removed from Saved Tracks");
+                  }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
-  )
+  );
 }
 
-export default function SaveTrackModal({
-  localStorageKey,
-  link,
-  playSpecificTrack,
-}) {
-  const [note, setNote] = useState('')
-  const [modalOpen, setModal] = useState(false)
-  const [showTracks, setShowing] = useState(false)
+export default function SaveTrackModal() {
+  const title = useStore((state) => state.title);
+  const getCurrentTrack = useStore((state) => state.getCurrentTrack);
+  const setSavedTracks = useSavedTracksStore((state) => state.setSavedTracks);
+  const note = useSavedTracksStore((state) => state.note);
+  const setNote = useSavedTracksStore((state) => state.setNote);
+  const modalOpen = useSavedTracksStore((state) => state.modalOpened);
+  const setModal = useSavedTracksStore((state) => state.setModalOpened);
+  const setShowing = useSavedTracksStore((state) => state.setShowing);
+  const showTracks = useSavedTracksStore((state) => state.showTracks);
+  const setLocalStorageKey = useSavedTracksStore(
+    (state) => state.setLocalStorageKey,
+  );
+  const appendSavedTrack = useSavedTracksStore(
+    (state) => state.appendSavedTrack,
+  );
+
+  useMemo(() => {
+    const localStorageKey = `SavedTracks: ${title}`;
+    setLocalStorageKey(localStorageKey);
+
+    if (typeof localStorage === "undefined") return;
+
+    const localSavedTracks = JSON.parse(localStorage.getItem(localStorageKey));
+    if (localSavedTracks instanceof Array) {
+      setSavedTracks(localSavedTracks);
+    } else if (localStorage instanceof Object) {
+      // old data
+      // setSavedTracks(Object.values(localSavedTracks));
+    }
+  }, []);
 
   return (
     <div>
-      <div style={styles.main_buttons}>
-        <button style={styles.btn} onClick={() => setShowing(!showTracks)}>
-          <FormatListNumberedIcon style={styles.icon} />
-          <p style={styles.btnTxt}>
-            {showTracks ? 'Hide Saved Tracks' : 'Show Saved Tracks'}
+      <div className="pb-4 flex justify-evenly">
+        <button
+          className="bg-btn p-1 rounded flex items-center"
+          onClick={() => setShowing(!showTracks)}
+        >
+          <FormatListNumberedIcon className="text-xs flex-1" />
+          <p className="text-xs flex-2">
+            {showTracks ? "Hide" : "Show"} Saved Tracks
           </p>
         </button>
-        <button style={styles.btn} onClick={() => setModal(true)}>
-          <BookmarkAddedIcon style={styles.icon} />
-          <p style={styles.btnTxt}>Save Current Track</p>
+        <button
+          className="bg-btn p-2 rounded flex items-center"
+          onClick={() => setModal(true)}
+        >
+          <BookmarkAddedIcon className="text-xs flex-1" />
+          <p className="text-xs flex-2">Save Current Track</p>
         </button>
       </div>
 
-      <DisplayTracks
-        showTracks={showTracks}
-        localStorageKey={localStorageKey}
-        playSpecificTrack={playSpecificTrack}
-        modalOpen={modalOpen}
-      />
+      <DisplayTracks />
 
       <Modal open={modalOpen} onClose={() => setModal(false)}>
-        <div style={modalStyles.modalDiv}>
-          <div style={modalStyles.topRow}>
-            <p style={modalStyles.heading}>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 border-black shadow-lg p-4 rounded-lg bg-primary-100 w-full p">
+          <div className="flex">
+            <p className="flex-1 text-white">
               Enter a note if you would like (Optional):
             </p>
             <button
-              style={modalStyles.modalDivClose}
+              className="flex-2 text-white"
               onClick={() => setModal(false)}
             >
               &times;
@@ -203,19 +122,25 @@ export default function SaveTrackModal({
           </div>
           <div>
             <textarea
-              placeholder='ex: Amazing Bani at 10:00'
-              style={modalStyles.textArea}
+              placeholder="ex: Amazing Bani at 10:00"
+              className="w-full h-20 rounded-lg p-2 text-black"
               value={note}
               onChange={(e) => setNote(e.target.value)}
             ></textarea>
           </div>
           <div>
             <button
-              style={modalStyles.btn}
+              className="bg-secondary-100 p-2 rounded"
               onClick={() => {
-                putTrackInLocalStorage(link, note, localStorageKey)
-                setModal(false)
-                setNote('')
+                const trkObj = getCurrentTrack();
+                if (validTrackObj(trkObj)) {
+                  trkObj.note = note;
+                  appendSavedTrack(trkObj);
+                  setModal(false);
+                  setNote("");
+                } else {
+                  toast.error("Track is invalid");
+                }
               }}
             >
               Save
@@ -224,5 +149,5 @@ export default function SaveTrackModal({
         </div>
       </Modal>
     </div>
-  )
+  );
 }

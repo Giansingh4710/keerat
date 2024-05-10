@@ -1,22 +1,23 @@
-import * as React from 'react'
-import { formatTime } from '@/utils/helper_funcs'
+import * as React from "react";
+import { formatTime } from "@/utils/helper_funcs";
+import { useStore } from "@/utils/store.js";
+import toast from "react-hot-toast";
 
-export default function AudioPlayer({
-  link,
-  audioRef,
-  setPaused,
-  timeToGoTo,
-  playbackSpeed,
-  nextTrack,
-  toast,
-}) {
-  const [buffered, setBuffered] = React.useState(0)
-  const [currentTime, setCurrentTime] = React.useState(0)
+export default function AudioPlayer({ link }) {
+  const nextTrack = useStore((state) => state.nextTrack);
+  const timeToGoTo = useStore((state) => state.timeToGoTo);
+  const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
+  const playbackSpeed = useStore((state) => state.playBackSpeed);
+  const setPaused = useStore((state) => state.setPaused);
+  const setAudioRef = useStore((state) => state.setAudioRef);
+
+  const [buffered, setBuffered] = React.useState(0);
+  const [currentTime, setCurrentTime] = React.useState(0);
 
   const handleBufferProgress = (e) => {
-    const audio = e.currentTarget
-    const dur = audio.duration
-    setCurrentTime(audio.currentTime)
+    const audio = e.currentTarget;
+    const dur = audio.duration;
+    setCurrentTime(audio.currentTime);
     if (dur > 0) {
       for (let i = 0; i < audio.buffered.length; i++) {
         if (
@@ -25,108 +26,92 @@ export default function AudioPlayer({
         ) {
           const bufferedLength = audio.buffered.end(
             audio.buffered.length - 1 - i,
-          )
-          setBuffered(bufferedLength)
-          break
+          );
+          setBuffered(bufferedLength);
+          break;
         }
       }
     }
-  }
+  };
 
+  const theAudioRef = React.useRef(null);
   const audioComponent = React.useMemo(() => {
     return (
       <audio
-        ref={audioRef}
-        key={link}
+        ref={theAudioRef}
+        key={link} // to force re-render when link changes
         autoPlay={true}
         onPlay={() => setPaused(false)}
         onPause={() => setPaused(true)}
         onTimeUpdate={handleBufferProgress}
         onProgress={handleBufferProgress}
         onEnded={() => nextTrack()}
-        onError={() => alert('Error loading audio')}
+        onError={() => toast.error("Error loading audio")}
         onLoadedData={() => {
-          audioRef.current.currentTime = timeToGoTo.current
-          timeToGoTo.current = 0
-          audioRef.current.playbackRate = playbackSpeed.current
-          setPaused(audioRef.current.paused) // for initial load. Browser blocks autoplay
-          toast.success('Audio Loaded')
+          theAudioRef.current.currentTime = timeToGoTo;
+          theAudioRef.current.playbackRate = playbackSpeed;
+          setTimeToGoTo(0);
+          setPaused(theAudioRef.current.paused); // for initial load. Browser blocks autoplay
+          setAudioRef(theAudioRef);
+          toast.success("Audio Loaded");
         }}
         onSeeking={() => {}}
       >
-        <source type='audio/mpeg' src={link} />
+        <source type="audio/mpeg" src={link} />
       </audio>
-    )
-  }, [link, audioRef])
+    );
+  }, [link]);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        paddingTop: '1em',
-        paddingBottom: '1em',
-      }}
-    >
+    <div className="w-full py-4">
       {audioComponent}
-      <AudioProgressBar
-        audioRef={audioRef}
-        buffered={buffered}
-        currentTime={currentTime}
-      />
+      <AudioProgressBar buffered={buffered} currentTime={currentTime} />
     </div>
-  )
+  );
 }
 
-function AudioProgressBar({ audioRef, buffered, currentTime }) {
-  // const currentTime = audioRef?.current?.currentTime || 0
-  const duration = audioRef?.current?.duration || 0
+function AudioProgressBar({ buffered, currentTime }) {
+  const audioRef = useStore((state) => state.audioRef);
+  if (!audioRef) return null;
+  const duration = audioRef?.current?.duration || 0;
   const bufferedWidth = isNaN(buffered / duration)
     ? 0
-    : (buffered / duration) * 100
+    : (buffered / duration) * 100;
 
   const handleChange = (event) => {
-    const newValue = event.target.value
-    audioRef.current.currentTime = newValue
-  }
+    const newValue = event.target.value;
+    audioRef.current.currentTime = newValue;
+  };
 
   return (
-    <div
-      style={{
-        width: '100%',
-        backgroundColor: 'black',
-        padding: '5px',
-        borderRadius: '5px',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <span>{formatTime(currentTime)}</span>
+    <div className="w-full bg-primary-100 pt-2 rounded-lg">
+      <div className="flex flex-col w-full justify-between ">
+        <div className="flex-1 flex flex-row px-3">
+          <span className="flex-1 text-left">{formatTime(currentTime)}</span>
+          <span className="flex-1 text-right">{formatTime(duration)}</span>
+        </div>
         <input
-          type='range'
-          className='slider'
+          type="range"
+          className="slider"
           style={{
-            width: '100%',
+            width: "100%",
+            padding: "0.5em",
             background: `linear-gradient(to right, grey ${bufferedWidth}%, #f0f0f0 ${bufferedWidth}% 100%)`,
+            height: "1em",
+            borderRadius: "5px",
+            marginBottom: "0.5em",
+            outline: "none",
+            transition: "opacity 0.2s",
             // opacity: 0.7,
 
-            WebkitAppearance: 'none',
-            WebkitTransition: '0.2s',
-
-            height: '15px',
-            borderRadius: '5px',
-            outline: 'none',
-            transition: 'opacity 0.2s',
+            WebkitAppearance: "none",
+            WebkitTransition: "0.2s",
           }}
           min={0}
           max={duration}
           value={currentTime}
           onChange={handleChange}
         />
-        <span>{formatTime(duration)}</span>
       </div>
       <style jsx>
         {`
@@ -150,5 +135,5 @@ function AudioProgressBar({ audioRef, buffered, currentTime }) {
         `}
       </style>
     </div>
-  )
+  );
 }

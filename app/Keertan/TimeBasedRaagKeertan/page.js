@@ -1,9 +1,12 @@
 'use client'
-import { useEffect, useRef } from 'react'
 import { ALL_OPTS } from './TRACKS.js'
 import ListenPage from '@/components/ListenPage/index.js'
+import { addCheckedKey } from '@/utils/helper_funcs.js'
 
 export default function timeBased() {
+
+  const allTheOptions = addCheckedKey(ALL_OPTS)
+
   function checkTracksOfTimeRn() {
     const today = new Date()
     const time = today.getHours() * 60 + today.getMinutes()
@@ -30,5 +33,5 @@ export default function timeBased() {
     }
   }
 
-  return <ListenPage title='Time Based Keertan' tracksObj={ALL_OPTS} changesOpts={checkTracksOfTimeRn}/>
+  return <ListenPage title='Time Based Keertan' allTheOpts={allTheOptions} changesOpts={checkTracksOfTimeRn}/>
 }
