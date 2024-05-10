@@ -6,7 +6,6 @@ import {
   randIdx,
   randItemFromArr,
 } from "./helper_funcs";
-import { useRef } from "react";
 
 export const useStore = create((set) => ({
   title: "",
@@ -18,7 +17,7 @@ export const useStore = create((set) => ({
   appendHistory: (trackObj) =>
     set((state) => {
       const currTrack = state.history[state.hstIdx];
-      if (currTrack.link === trackObj.link) return {};
+      if (currTrack && currTrack.link === trackObj.link) return {};
       return {
         history: [...state.history, trackObj],
         hstIdx: state.hstIdx + 1,
@@ -192,6 +191,14 @@ export const useStore = create((set) => ({
 
   audioRef: null,
   setAudioRef: (value) => set({ audioRef: value }),
+
+  optsShown: false,
+  setOptsShown: (value) =>
+    set(() => {
+      // if (typeof localStorage === "undefined") return {};
+      // localStorage.setItem("Keerat.xyz: ShowOptions", value);
+      return { optsShown: value };
+    }),
 }));
 
 export const useSearchStore = create((set) => ({
@@ -208,7 +215,8 @@ export const useSavedTracksStore = create((set) => ({
   appendSavedTrack: (trackObj) =>
     set((state) => {
       const newLst = [...state.savedTracks, trackObj];
-      localStorage.setItem(state.localStorageKey, JSON.stringify(newLst));
+      if (typeof localStorage !== "undefined")
+        localStorage.setItem(state.localStorageKey, JSON.stringify(newLst));
       return { savedTracks: newLst };
     }),
   deleteFromSavedTracks: (index) =>

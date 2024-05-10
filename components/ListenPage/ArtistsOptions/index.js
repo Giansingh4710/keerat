@@ -10,12 +10,12 @@ import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 export default function ArtistsOptions() {
   const allOpts = useStore((state) => state.allOptsTracks);
   const setCheckedArtist = useStore((state) => state.setCheckedArtist);
+  const optsShown = useStore((state) => state.optsShown);
+  const setOptsShown = useStore((state) => state.setOptsShown);
   const setCheckedForAllArtists = useStore(
     (state) => state.setCheckedForAllArtists,
   );
-
   const numOfTracks = trackCount(allOpts);
-  const [optsShown, setShowOpts] = useState(true);
 
   const optionsDivRef = useRef(null);
   const scrollTo = useRef(0);
@@ -35,9 +35,9 @@ export default function ArtistsOptions() {
       <div className="">
         <button
           onClick={onClick}
-          className="bg-third text-white max-w-48 p-2 m-1 place-content-center font-bold rounded"
+          className="bg-btn max-w-48 p-2 m-1 place-content-center font-bold rounded"
         >
-          <p className="text-white text-xs">{text}</p>
+          <p className="text-black text-xs">{text}</p>
         </button>
       </div>
     );
@@ -47,17 +47,17 @@ export default function ArtistsOptions() {
     <>
       <TheButon
         text={`${optsShown ? "Close" : "Open"} Track Options`}
-        onClick={() => setShowOpts(!optsShown)}
+        onClick={() => setOptsShown(!optsShown)}
       />
       <div
-        className={`${optsShown ? "" : "hidden"} bg-secondary-100 mx-2 rounded-lg`}
+        className={`${optsShown ? "" : "hidden"} bg-primary-200 mx-2 rounded-lg`}
       >
         <div className="flex-1 flex gap-1">
           <p className="flex-1 align-baseline text-lg">
             Total Tracks in Queue: {numOfTracks}
           </p>
           <div className="flex-5">
-            <IconButton onClick={() => setShowOpts(false)}>
+            <IconButton onClick={() => setOptsShown(false)}>
               <HighlightOffIcon />
             </IconButton>
           </div>
@@ -65,12 +65,13 @@ export default function ArtistsOptions() {
 
         <div
           ref={optionsDivRef}
-          className="bg-secondary-200 h-40 overflow-auto"
+          className="bg-secondary-200 h-40 overflow-auto text-white"
         >
           {Object.keys(allOpts).map((artist) => {
             const checked = isChecked(allOpts, artist);
             return (
               <ArtistOptBar
+                key={artist}
                 artist={artist}
                 checked={checked}
                 onClick={() => {
@@ -83,7 +84,7 @@ export default function ArtistsOptions() {
 
         <div className="flex">
           <button
-            className=".button bg-third"
+            className=".button bg-btn"
             onClick={() => setCheckedForAllArtists(true)}
           >
             <MdCheckBox className="text-lg" />
@@ -91,7 +92,7 @@ export default function ArtistsOptions() {
           </button>
           <button
             // className="max-w-48 p-2 m-1 place-content-center font-bold rounded bg-third"
-            className=".button bg-third"
+            className=".button bg-btn"
             onClick={() => setCheckedForAllArtists(false)}
           >
             <MdCheckBoxOutlineBlank className=" text-lg" />
@@ -104,7 +105,7 @@ export default function ArtistsOptions() {
             font-weight: bold;
             padding: 0.5rem;
             border-radius: 5px;
-            color: white;
+            color: black;
             display: flex;
             align-items: center;
             gap: 0.5em;

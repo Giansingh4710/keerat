@@ -53,15 +53,16 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.size === 0) return false;
 
+      const timeInS = getSecondsFromTimeStamp(urlParams.get("time"));
+      setTimeToGoTo(timeInS)
+      toast.success(`Time in Seconds from URL: ${timeInS}`);
+
+
       const urlSearch = urlParams.get("search");
       if (urlSearch) {
         setSearchInput(urlSearch);
         return true;
       }
-      const timeInS = getSecondsFromTimeStamp(urlParams.get("time"));
-      setTimeToGoTo(timeInS)
-      toast.success(`Time in Seconds from URL: ${timeInS}`);
-
       const theUrl = urlParams.get("url");
       const trkObj = getObjFromUrl(theUrl, allTheOpts);
       if (validTrackObj(trkObj)) {
@@ -113,12 +114,12 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     }
   }, []);
 
-  // //to get rid of next.js Hydration error
-  // const [showChild, setShowChild] = useState(false);
-  // useEffect(() => {
-  //   setShowChild(true);
-  // }, []);
-  // if (!showChild) return <body />;
+  //to get rid of next.js Hydration error
+  const [showChild, setShowChild] = useState(false);
+  useEffect(() => {
+    setShowChild(true);
+  }, []);
+  if (!showChild) return <body />;
 
   function navigatorStuff() {
     navigator.mediaSession.setActionHandler("play", () =>

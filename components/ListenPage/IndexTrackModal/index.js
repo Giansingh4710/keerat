@@ -183,7 +183,7 @@ export default function IndexTrackBtnAndModal() {
 
   return (
     <div>
-      <button style={styles.main_btn} onClick={() => setModal(true)}>
+      <button className='m-2 p-2 rounded-lg bg-btn  ' onClick={() => setModal(true)}>
         Index Track
       </button>
       <Modal open={modalOpen} onClose={() => setModal(false)}>
@@ -477,12 +477,6 @@ function convertToGurmukhi(input) {
 }
 
 const styles = {
-  main_btn: {
-    margin: '2em',
-    borderRadius: '10px',
-    color: ALL_THEMES.theme1.text2,
-    backgroundColor: ALL_THEMES.theme1.third,
-  },
   cont: {
     padding: '2em',
     borderRadius: '1em',

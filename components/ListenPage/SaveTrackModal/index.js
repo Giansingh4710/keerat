@@ -24,9 +24,8 @@ function DisplayTracks() {
       <div className=" overflow-x-clip overflow-y-auto h-48">
         {savedTracks.map((trkObj, index) => {
           return (
-            <div className="flex w-full border-b border-gray-200">
+            <div className="flex w-full border-b border-gray-200" key={index}>
               <button
-                key={index}
                 onClick={() => appendHistory(trkObj)}
                 className="flex-1 rounded-md hover:bg-blue-100 text-xl p-2"
               >
@@ -74,10 +73,13 @@ export default function SaveTrackModal() {
     const localStorageKey = `SavedTracks: ${title}`;
     setLocalStorageKey(localStorageKey);
 
+    if (typeof localStorage === "undefined") return;
+
     const localSavedTracks = JSON.parse(localStorage.getItem(localStorageKey));
     if (localSavedTracks instanceof Array) {
       setSavedTracks(localSavedTracks);
-    }else if(localStorage instanceof Object){ // old data
+    } else if (localStorage instanceof Object) {
+      // old data
       // setSavedTracks(Object.values(localSavedTracks));
     }
   }, []);
@@ -86,7 +88,7 @@ export default function SaveTrackModal() {
     <div>
       <div className="pb-4 flex justify-evenly">
         <button
-          className="bg-secondary-100 p-1 rounded flex items-center"
+          className="bg-btn p-1 rounded flex items-center"
           onClick={() => setShowing(!showTracks)}
         >
           <FormatListNumberedIcon className="text-xs flex-1" />
@@ -95,7 +97,7 @@ export default function SaveTrackModal() {
           </p>
         </button>
         <button
-          className="bg-secondary-100 p-2 rounded flex items-center"
+          className="bg-btn p-2 rounded flex items-center"
           onClick={() => setModal(true)}
         >
           <BookmarkAddedIcon className="text-xs flex-1" />

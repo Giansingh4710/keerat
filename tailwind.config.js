@@ -12,17 +12,17 @@ module.exports = {
       colors: {
         primary: {
           100: "#001f3f",
-          200: "#0074D9",
+          200: "#F58F29",
           300: "#5a0e0e",
         },
         secondary: {
-          100: '#F58F29',
-          200: "#FFA500",
+          100: "#0074D9",
+          200: "#466995",
         },
-        // third: '',
-        third: '#1D4ED8',
-        fourth: '#466995',
-        five: '#7D4600',
+        btn: "#FFA500",
+        third: "#1D4ED8",
+        fourth: "#466995",
+        five: "#7D4600",
       },
     },
   },
@@ -31,3 +31,8 @@ module.exports = {
     // flowbite.plugin()
   ],
 };
+    // primary: '#001f3f',
+    // secondary: '#F58F29',
+    // third: "#FFA500",
+    // fourth: '#466995',
+    // five: '#7D4600',
