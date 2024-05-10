@@ -7,7 +7,8 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import SearchIcon from '@mui/icons-material/Search'
 import { useStore } from '@/utils/store.js'
 
-export default function IndexTrackBtnAndModal({ audioRef, saveTimeLocalStorage}) {
+export default function IndexTrackBtnAndModal() {
+  const audioRef = useStore((state) => state.audioRef);
   const [modalOpen, setModal] = useState(false)
   const [description, setDescription] = useState('')
   const [shabadId, setShabadId] = useState('')
@@ -19,6 +20,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeLocalStorage})
 
   const history = useStore((state) => state.history)
   const hstIdx = useStore((state) => state.hstIdx)
+  const title = useStore((state) => state.title)
   const artist = history[hstIdx]?.artist
   const link = history[hstIdx]?.link
 
@@ -73,7 +75,9 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeLocalStorage})
     add_to_form_to_send_to_server('artist', artist)
     add_to_form_to_send_to_server('link', link)
 
-    saveTimeLocalStorage()
+    if(audioRef !== null) {
+      localStorage.setItem(`LastTime: ${title}`, audioRef.current.currentTime)
+    }
     formData.current.submit()
   }
 
@@ -280,6 +284,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeLocalStorage})
               <button
                 onClick={(e) => {
                   e.preventDefault()
+                  if(audioRef === null) return
                   const currTime = audioRef.current.currentTime
                   const hours = Math.floor(currTime / 3600)
                   const minutes = Math.floor((currTime % 3600) / 60)

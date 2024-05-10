@@ -6,6 +6,7 @@
 - [ ] add share button
 - [ ] add photos
 - [ ] better favorite system
+- [ ] can see the note
 
 - [ ] Add Bhai Jasbir S
 - [ ] Add Puran Ji nitnem and other banis (akal ustat), Deedar mama sukhamnai sahib

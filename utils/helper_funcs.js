@@ -170,3 +170,28 @@ export function getLinkFromOldUrlDate(artist, trackIndex, allOpts) {
   }
   return allLinks[trackIndex]
 }
+
+export function searchTracks(searchTerm, allOpts) {
+  const term = searchTerm.toLowerCase()
+  const results = []
+  for (const artist in allOpts) {
+    for (let typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
+      if (!allOpts[artist][typeIdx].checked) continue
+      const links = allOpts[artist][typeIdx].links
+
+      for (let linkIdx = 0; linkIdx < links.length; linkIdx++) {
+        const link = links[linkIdx]
+        if (link.toLowerCase().includes(term)) {
+          results.push({
+            artist,
+            typeIdx,
+            linkIdx,
+            type: allOpts[artist][typeIdx].type,
+            link: link,
+          })
+        }
+      }
+    }
+  }
+  return results
+}

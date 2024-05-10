@@ -1,119 +1,67 @@
-import ALL_THEMES from '@/utils/themes'
-import { useMemo, useState } from 'react'
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import { useMemo } from "react";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-import { IconButton } from '@mui/material'
-import { getNameOfTrack } from '@/utils/helper_funcs'
+import { getNameOfTrack, searchTracks } from "@/utils/helper_funcs";
+import { useSearchStore, useStore } from "@/utils/store.js";
 
-export default function SearchTracks({
-  track_links,
-  playSpecificTrack,
-  searchInput,
-  setSearchInput,
-}) {
-  const urlParams = new URLSearchParams(window.location.search)
-  const urlSearch = urlParams.get('search')
+export default function SearchTracks() {
+  const searchInput = useSearchStore((state) => state.searchInput);
+  const setSearchInput = useSearchStore((state) => state.setSearchInput);
 
-  function ShowingOfTracks() {
-    if (searchInput === '') {
-      return <></>
-    }
-    const searchWordsLst = searchInput.toLowerCase().split(' ')
-    const allLinksWithWord = []
-    track_links.forEach((link, index) => {
-      const trackName = link.toLowerCase()
-      let allWordsInTrackName = true
-      for (const word of searchWordsLst) {
-        if (!trackName.includes(word)) {
-          allWordsInTrackName = false
-          break
-        }
-      }
-      if (allWordsInTrackName) {
-        allLinksWithWord.push(link)
-      }
-    })
-
-    if (allLinksWithWord.length === 1 && urlSearch === searchInput) {
-      playSpecificTrack(allLinksWithWord[0])
-    }
-
-    return (
-      <div style={styles.results}>
-        <p>{allLinksWithWord.length} Results Found</p>
-        <ol style={styles.ol}>
-          {allLinksWithWord.map((link, index) => {
-            return (
-              <li key={index}>
-                <button
-                  style={styles.btn}
-                  onClick={() => {
-                    playSpecificTrack(link)
-                  }}
-                >
-                  {getNameOfTrack(link)}
-                </button>
-              </li>
-            )
-          })}
-        </ol>
-      </div>
-    )
-  }
-
-  const showTracks = useMemo(() => <ShowingOfTracks />, [searchInput])
+  const showTracks = useMemo(() => <DisplayTracks />, [searchInput]);
 
   return (
-    <div style={styles.cont}>
-      <div style={styles.topRow}>
+    <div className="pt-10 ">
+      <div className="pb-2 flex align-middle">
         <input
-          placeholder='Search for Track:'
-          style={styles.searchInput}
+          placeholder="Search for Track:"
+          className="flex-1 ml-4 h-10 rounded-md text-black p-2 bg-white align-middle"
           value={searchInput}
           onInput={(e) => setSearchInput(e.target.value)}
         />
-        <IconButton style={styles.xIcon} onClick={() => setSearchInput('')}>
-          <HighlightOffIcon />
-        </IconButton>
+        <HighlightOffIcon
+          className="text-white m-2"
+          onClick={() => setSearchInput("")}
+        />
       </div>
       {showTracks}
     </div>
-  )
+  );
 }
 
-const styles = {
-  cont: {
-    padding: '1em',
-  },
-  topRow: {
-    paddingBottom: '0.5em',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  searchInput: {
-    width: '26.5rem',
-    borderRadius: '0.5em',
-    fontSize: '1.5em',
-    color: ALL_THEMES.theme1.text2,
-    paddingLeft: '1em',
-    // background: 'url("https://static.thenounproject.com/png/101791-200.png") no-repeat left',
-    // backgroundSize: '20px',
-    backgroundColor: ALL_THEMES.theme1.text1,
-  },
-  xIcon: {
-    color: ALL_THEMES.theme1.text2,
-  },
-  ol: {
-    color: ALL_THEMES.theme1.text2,
-  },
-  results: {
-    color: ALL_THEMES.theme1.text2,
-    height: '200px',
-    overflow: 'scroll',
-    border: '1px solid white',
-    borderRadius: '5px',
-  },
-  btn: {
-    fontSize: '0.5em',
-  },
+function DisplayTracks() {
+  const allOpts = useStore((state) => state.allOptsTracks);
+  const appendHistory = useStore((state) => state.appendHistory);
+  const searchInput = useSearchStore((state) => state.searchInput);
+  if (searchInput === "") return <></>;
+  const results = searchTracks(searchInput, allOpts);
+  return (
+    <div className="border-2 border-sky-500 rounded text-white">
+      <p>{results.length} Results Found</p>
+      <div className="overflow-auto h-48">
+        {results.map((trkObj, index) => {
+          return (
+            <button
+              key={index}
+              onClick={() => appendHistory(trkObj)}
+              className="flex flex-row rounded-md w-full border-b border-gray-200 hover:bg-blue-100  text-xl p-2 "
+            >
+              <span className="pl-2 pr-2">{index + 1}.</span>
+              <span className="flex-1 text-left truncate hover:text-clip">
+                {getNameOfTrack(trkObj.link)}
+              </span>
+              <div className="flex-2 flex flex-col truncate hover:text-clip">
+                <span className="flex-1 text-xs text-left  ">
+                  {trkObj.artist}
+                </span>
+                <span className="flex-1 text-xs text-left  ">
+                  {trkObj.type}
+                </span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
 }

@@ -1,150 +1,116 @@
-import ALL_THEMES from '@/utils/themes'
-
-import { getTrackLinks, isChecked, trackCount } from '@/utils/helper_funcs'
-import { useEffect, useRef, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
-
-import { Button } from 'flowbite-react'
-
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'
-import { IconButton } from '@mui/material'
-import { useStore } from '@/utils/store.js'
-import { List } from 'flowbite-react'
-import { ArtistOptBar } from './artistOptBar'
+import { isChecked, trackCount } from "@/utils/helper_funcs";
+import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { IconButton } from "@mui/material";
+import { useStore } from "@/utils/store.js";
+import { ArtistOptBar } from "./artistOptBar";
+import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 
 export default function ArtistsOptions() {
-  const allOpts = useStore((state) => state.allOptsTracks)
-  const setCheckedArtist = useStore((state) => state.setCheckedArtist)
+  const allOpts = useStore((state) => state.allOptsTracks);
+  const setCheckedArtist = useStore((state) => state.setCheckedArtist);
   const setCheckedForAllArtists = useStore(
     (state) => state.setCheckedForAllArtists,
-  )
+  );
 
-  const numOfTracks = trackCount(allOpts)
-  const [showOpts, setShowOpts] = useState(true)
+  const numOfTracks = trackCount(allOpts);
+  const [optsShown, setShowOpts] = useState(true);
 
-  const optionsDivRef = useRef(null)
-  const scrollTo = useRef(0)
+  const optionsDivRef = useRef(null);
+  const scrollTo = useRef(0);
 
   useEffect(() => {
     if (scrollTo.current !== 0 && optionsDivRef.current) {
-      optionsDivRef.current.scrollTop = scrollTo.current
+      optionsDivRef.current.scrollTop = scrollTo.current;
     }
 
     toast.success(`Total Tracks in Queue: ${numOfTracks}`, {
       duration: 1000,
-    })
-  }, [allOpts])
+    });
+  }, [allOpts]);
 
   function TheButon({ text, onClick }) {
     return (
-      <div className='flex place-content-center'>
-        <Button className='max-w-48 p-0' onClick={onClick}>
-          <p className='text-white text-xs'>{text}</p>
-        </Button>
+      <div className="">
+        <button
+          onClick={onClick}
+          className="bg-third text-white max-w-48 p-2 m-1 place-content-center font-bold rounded"
+        >
+          <p className="text-white text-xs">{text}</p>
+        </button>
       </div>
-    )
-  }
-
-  if (!showOpts) {
-    return (
-      <TheButon text='Show Track Options' onClick={() => setShowOpts(true)} />
-    )
+    );
   }
 
   return (
     <>
-      <TheButon text='Close Track Options' onClick={() => setShowOpts(false)} />
-      <div style={styles.container}>
-        <div className='flex-1 flex gap-1'>
-          <p className='flex-1 align-baseline text-lg'>
+      <TheButon
+        text={`${optsShown ? "Close" : "Open"} Track Options`}
+        onClick={() => setShowOpts(!optsShown)}
+      />
+      <div
+        className={`${optsShown ? "" : "hidden"} bg-secondary-100 mx-2 rounded-lg`}
+      >
+        <div className="flex-1 flex gap-1">
+          <p className="flex-1 align-baseline text-lg">
             Total Tracks in Queue: {numOfTracks}
           </p>
-          <div className='flex-5'>
+          <div className="flex-5">
             <IconButton onClick={() => setShowOpts(false)}>
               <HighlightOffIcon />
             </IconButton>
           </div>
         </div>
 
-        <List ref={optionsDivRef}>
+        <div
+          ref={optionsDivRef}
+          className="bg-secondary-200 h-40 overflow-auto"
+        >
           {Object.keys(allOpts).map((artist) => {
-            const checked = isChecked(allOpts, artist)
+            const checked = isChecked(allOpts, artist);
             return (
               <ArtistOptBar
                 artist={artist}
                 checked={checked}
                 onClick={() => {
-                  setCheckedArtist(artist, !checked)
+                  setCheckedArtist(artist, !checked);
                 }}
               />
-            )
+            );
           })}
-        </List>
+        </div>
 
-        <div style={styles.checkBtnsRow}>
+        <div className="flex">
           <button
-            style={styles.checkOptsBtns}
+            className=".button bg-third"
             onClick={() => setCheckedForAllArtists(true)}
           >
+            <MdCheckBox className="text-lg" />
             Select All
           </button>
           <button
-            style={styles.checkOptsBtns}
+            // className="max-w-48 p-2 m-1 place-content-center font-bold rounded bg-third"
+            className=".button bg-third"
             onClick={() => setCheckedForAllArtists(false)}
           >
+            <MdCheckBoxOutlineBlank className=" text-lg" />
             Unselect All
           </button>
-          <button
-            style={styles.checkOptsBtns}
-            onClick={() => setShowOpts(false)}
-          >
-            Close
-          </button>
         </div>
+        <style jsx>{`
+          button {
+            margin: 0.5em;
+            font-weight: bold;
+            padding: 0.5rem;
+            border-radius: 5px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+          }
+        `}</style>
       </div>
     </>
-  )
-}
-
-const styles = {
-  container: {
-    margin: '2em',
-    borderRadius: '1em',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '0.5em',
-    padding: '0.5em',
-    color: ALL_THEMES.theme1.text1,
-    backgroundColor: ALL_THEMES.theme1.third,
-  },
-  mainBtn: {
-    fontSize: '0.5em',
-    borderRadius: '1em',
-    height: '2em',
-  },
-  checkBtnsRow: {
-    display: 'flex',
-    marginTop: '0.5em',
-  },
-  checkOptsBtns: {
-    // fontSize: '0.8em',
-    // fontWeight: 'bold',
-    // margin: '0rem',
-    margin: '0.5em',
-    marginLeft: '0.5em',
-    fontSize: '1.5em',
-    borderRadius: '5px',
-    // border: 'none',
-    cursor: 'pointer',
-  },
-  optionsDiv: {
-    fontSize: '0.5em',
-    fontWeight: 500,
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '1em',
-    overflow: 'scroll',
-    border: '1px solid black',
-    height: '20em',
-  },
+  );
 }
