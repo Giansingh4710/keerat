@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useStore } from "@/utils/store.js";
 import toast from "react-hot-toast";
 
-export default function TrackPlayback() {
+export default function TrackPlayback({audioRef}) {
   const nextTrack = useStore((state) => state.nextTrack);
   const prevTrack = useStore((state) => state.prevTrack);
   const shuffle = useStore((state) => state.shuffle);
@@ -20,7 +20,6 @@ export default function TrackPlayback() {
   const skipTime = useStore((state) => state.skipTime);
   const setSkipTime = useStore((state) => state.setSkipTime);
   const setPlayBackSpeed = useStore((state) => state.setPlayBackSpeed);
-  const audioRef = useStore((state) => state.audioRef);
   // const { artist, link, typeIdx, linkIdx, type } = history[hstIdx]
   const artist = history[hstIdx]?.artist;
   const link = history[hstIdx]?.link;
@@ -169,7 +168,7 @@ export default function TrackPlayback() {
         </div>
       </div>
 
-      <AudioPlayer link={link} />
+      <AudioPlayer link={link} audioRef={audioRef}/>
 
       <div className="w-full flex">
         <button onClick={prevTrack} className="h-16 p-2 flex-1">
@@ -185,7 +184,7 @@ export default function TrackPlayback() {
           <img src={"/playbackImgs/skip-back.svg"} className="w-full h-full" />
         </button>
 
-        <PlayPauseBtn />
+        <PlayPauseBtn audioRef={audioRef}/>
 
         <button
           className="h-16 p-2 flex-1"
@@ -207,8 +206,7 @@ export default function TrackPlayback() {
   );
 }
 
-function PlayPauseBtn() {
-  const audioRef = useStore((state) => state.audioRef);
+function PlayPauseBtn({audioRef}) {
   const paused = useStore((state) => state.paused);
   function togglePlayPause() {
     if (audioRef === null) return;

@@ -3,13 +3,12 @@ import { formatTime } from "@/utils/helper_funcs";
 import { useStore } from "@/utils/store.js";
 import toast from "react-hot-toast";
 
-export default function AudioPlayer({ link }) {
+export default function AudioPlayer({ link, audioRef }) {
   const nextTrack = useStore((state) => state.nextTrack);
   const timeToGoTo = useStore((state) => state.timeToGoTo);
   const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
   const playbackSpeed = useStore((state) => state.playBackSpeed);
   const setPaused = useStore((state) => state.setPaused);
-  const setAudioRef = useStore((state) => state.setAudioRef);
 
   const [buffered, setBuffered] = React.useState(0);
   const [currentTime, setCurrentTime] = React.useState(0);
@@ -34,11 +33,10 @@ export default function AudioPlayer({ link }) {
     }
   };
 
-  const theAudioRef = React.useRef(null);
   const audioComponent = React.useMemo(() => {
     return (
       <audio
-        ref={theAudioRef}
+        ref={audioRef}
         key={link} // to force re-render when link changes
         autoPlay={true}
         onPlay={() => setPaused(false)}
@@ -48,11 +46,10 @@ export default function AudioPlayer({ link }) {
         onEnded={() => nextTrack()}
         onError={() => toast.error("Error loading audio")}
         onLoadedData={() => {
-          theAudioRef.current.currentTime = timeToGoTo;
-          theAudioRef.current.playbackRate = playbackSpeed;
+          audioRef.current.currentTime = timeToGoTo;
+          audioRef.current.playbackRate = playbackSpeed;
           setTimeToGoTo(0);
-          setPaused(theAudioRef.current.paused); // for initial load. Browser blocks autoplay
-          setAudioRef(theAudioRef);
+          setPaused(audioRef.current.paused); // for initial load. Browser blocks autoplay
           toast.success("Audio Loaded");
         }}
         onSeeking={() => {}}
@@ -60,18 +57,21 @@ export default function AudioPlayer({ link }) {
         <source type="audio/mpeg" src={link} />
       </audio>
     );
-  }, [link]);
+  }, [link,audioRef]);
 
   return (
     <div className="w-full py-4">
       {audioComponent}
-      <AudioProgressBar buffered={buffered} currentTime={currentTime} />
+      <AudioProgressBar
+        buffered={buffered}
+        currentTime={currentTime}
+        audioRef={audioRef}
+      />
     </div>
   );
 }
 
-function AudioProgressBar({ buffered, currentTime }) {
-  const audioRef = useStore((state) => state.audioRef);
+function AudioProgressBar({ buffered, currentTime, audioRef }) {
   if (!audioRef) return null;
   const duration = audioRef?.current?.duration || 0;
   const bufferedWidth = isNaN(buffered / duration)

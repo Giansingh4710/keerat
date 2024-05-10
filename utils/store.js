@@ -189,9 +189,6 @@ export const useStore = create((set) => ({
   paused: true,
   setPaused: (value) => set({ paused: value }),
 
-  audioRef: null,
-  setAudioRef: (value) => set({ audioRef: value }),
-
   optsShown: false,
   setOptsShown: (value) =>
     set(() => {

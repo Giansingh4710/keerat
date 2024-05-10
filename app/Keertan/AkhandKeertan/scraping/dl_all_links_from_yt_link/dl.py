@@ -121,7 +121,7 @@ def upload_to_azure(prefix, dir):
         blob_client = container_client.get_blob_client(blob_name)
         print(f"Uploading '{i}'")
         with open(os.path.join(dir, i), "rb") as data:
-            blob_client.upload_blob(data, overwrite=True)
+            blob_client.upload_blob(data, overwrite=True,connection_timeout=1000)
 
         blob_props = blob_client.get_blob_properties()
         blob_props.content_settings.content_type = "audio/mpeg"

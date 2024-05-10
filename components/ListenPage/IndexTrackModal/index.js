@@ -7,8 +7,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import SearchIcon from '@mui/icons-material/Search'
 import { useStore } from '@/utils/store.js'
 
-export default function IndexTrackBtnAndModal() {
-  const audioRef = useStore((state) => state.audioRef);
+export default function IndexTrackBtnAndModal({audioRef}) {
   const [modalOpen, setModal] = useState(false)
   const [description, setDescription] = useState('')
   const [shabadId, setShabadId] = useState('')

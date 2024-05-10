@@ -6,7 +6,7 @@ import TrackPlayback from "./TrackPlayback/index.js";
 import SaveTrackModal from "./SaveTrackModal/index.js";
 import SearchTracks from "./SearchTracks/index.js";
 import IndexTrackBtnAndModal from "./IndexTrackModal/index.js";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   getLinkFromOldUrlDate,
   getNameOfTrack,
@@ -29,8 +29,8 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   const setTitle = useStore((state) => state.setTitle);
 
   const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
-  const audioRef = useStore((state) => state.audioRef);
   const skipTime = useStore((state) => state.skipTime);
+  const audioRef = useRef(null)
 
   useMemo(() => {
     setTitle(title);
@@ -97,7 +97,8 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         setTimeToGoTo(timeInS)
         return true;
       } catch (e) {
-        toast.error(e.message, { duration: 1000 });
+        // toast.error(e.message, { duration: 1000 });
+        console.log(e.message);
         return false;
       }
     }
@@ -163,11 +164,11 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       <SearchTracks />
       <SaveTrackModal />
       <ArtistsOptions />
-      <TrackPlayback />
+      <TrackPlayback audioRef={audioRef}/>
       {/*
         <ChangeColorsModal />
       */}
-      <IndexTrackBtnAndModal />
+      <IndexTrackBtnAndModal audioRef={audioRef}/>
     </body>
   );
 }

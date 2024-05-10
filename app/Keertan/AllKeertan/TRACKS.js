@@ -1453,7 +1453,9 @@ const ALL_OPTS = {
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/121 Bhai Mohinder Singh Ji SDO Chicago 1984 Smagam (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/122 Bhai Mohinder Singh Ji SDO Patiala 1974 Smagam (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/123 Bhai Mohinder Singh Ji SDO Patiala 1972 smagam (old Spool-part recording) (heeraRattan).mp3",
-        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/124 Bhai Mohinder Singh Ji SDO Moga 1979 (heeraRattan).mp3"
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/124 Bhai Mohinder Singh Ji SDO Moga 1979 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/125 Bhai Mohinder Singh Ji SDO 1974 Moga (old spool 10-Sk) (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/126 Bhai Mohinder Singh Ji SDO Ambala 02,1980 Smagam (heeraRattan).mp3"
       ]
     },
     {
