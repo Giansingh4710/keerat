@@ -172,7 +172,7 @@ export function getLinkFromOldUrlDate(artist, trackIndex, allOpts) {
 }
 
 export function searchTracks(searchTerm, allOpts) {
-  const term = searchTerm.toLowerCase()
+  const words = searchTerm.toLowerCase().split(' ')
   const results = []
   for (const artist in allOpts) {
     for (let typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
@@ -180,14 +180,21 @@ export function searchTracks(searchTerm, allOpts) {
       const links = allOpts[artist][typeIdx].links
 
       for (let linkIdx = 0; linkIdx < links.length; linkIdx++) {
-        const link = links[linkIdx]
-        if (link.toLowerCase().includes(term)) {
+        const link = links[linkIdx].toLowerCase()
+        let allWordsFound = true
+        for(const word of words){
+          if(!link.includes(word)){
+            allWordsFound = false
+            break
+          }
+        }
+        if (allWordsFound) {
           results.push({
             artist,
             typeIdx,
             linkIdx,
             type: allOpts[artist][typeIdx].type,
-            link: link,
+            link: links[linkIdx], // to get unlowered case
           })
         }
       }

@@ -50,6 +50,11 @@ export const useStore = create((set) => ({
       }
       return { allOptsTracks: allOpts };
     }),
+  setCheckedType: (artist, typeIdx, checked) => set((state) => {
+    const allOpts = { ...state.allOptsTracks };
+    allOpts[artist][typeIdx].checked = checked;
+    return { allOptsTracks: allOpts };
+  }),
 
   prevTrack: () =>
     set((state) => {

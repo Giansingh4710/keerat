@@ -1,5 +1,7 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import AlbumIcon from "@mui/icons-material/Album";
+import PersonIcon from "@mui/icons-material/Person";
 
 import { getNameOfTrack, searchTracks } from "@/utils/helper_funcs";
 import { useSearchStore, useStore } from "@/utils/store.js";
@@ -7,8 +9,6 @@ import { useSearchStore, useStore } from "@/utils/store.js";
 export default function SearchTracks() {
   const searchInput = useSearchStore((state) => state.searchInput);
   const setSearchInput = useSearchStore((state) => state.setSearchInput);
-
-  const showTracks = useMemo(() => <DisplayTracks />, [searchInput]);
 
   return (
     <div className="pt-10 ">
@@ -24,17 +24,25 @@ export default function SearchTracks() {
           onClick={() => setSearchInput("")}
         />
       </div>
-      {showTracks}
+      <DisplayTracks searchInput={searchInput} />
     </div>
   );
 }
 
-function DisplayTracks() {
+function DisplayTracks({ searchInput }) {
   const allOpts = useStore((state) => state.allOptsTracks);
   const appendHistory = useStore((state) => state.appendHistory);
-  const searchInput = useSearchStore((state) => state.searchInput);
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    if (searchInput !== "") {
+      searchTracksAsync(searchInput, allOpts).then((results) => {
+        setResults(results); // the async func makes input function lag less
+      });
+    }
+  }, [searchInput, allOpts]);
+
   if (searchInput === "") return <></>;
-  const results = searchTracks(searchInput, allOpts);
   return (
     <div className="border-2 border-sky-500 rounded text-white">
       <p>{results.length} Results Found</p>
@@ -44,19 +52,23 @@ function DisplayTracks() {
             <button
               key={index}
               onClick={() => appendHistory(trkObj)}
-              className="flex flex-row rounded-md w-full border-b border-gray-200 hover:bg-blue-100  text-xl p-2 "
+              className="flex flex-col rounded-md w-full border-b border-gray-200 hover:bg-blue-100  text-xl p-2 "
             >
-              <span className="pl-2 pr-2">{index + 1}.</span>
-              <span className="flex-1 text-left truncate hover:text-clip">
-                {getNameOfTrack(trkObj.link)}
-              </span>
-              <div className="flex-2 flex flex-col truncate hover:text-clip">
-                <span className="flex-1 text-xs text-left  ">
+              <div>
+                <span className="pl-2 pr-2">{index + 1}.</span>
+                <span className="flex-1 text-left w-full break-words">
+                  {getNameOfTrack(trkObj.link)}
+                </span>
+              </div>
+              <div className="flex-2 flex flex-row w-full text-xs">
+                <div className="flex-1 text-xs text-left  ">
+                  <PersonIcon className="p-1" />
                   {trkObj.artist}
-                </span>
-                <span className="flex-1 text-xs text-left  ">
+                </div>
+                <div className="flex-1 text-xs text-right  ">
+                  <AlbumIcon className="p-1"/>
                   {trkObj.type}
-                </span>
+                </div>
               </div>
             </button>
           );
@@ -64,4 +76,13 @@ function DisplayTracks() {
       </div>
     </div>
   );
+}
+
+async function searchTracksAsync(input, allOpts) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const results = searchTracks(input, allOpts);
+      resolve(results);
+    }, 300); // The bigger the number, the less laggy the input function but the slower the results
+  });
 }

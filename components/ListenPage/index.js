@@ -55,17 +55,17 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
 
       const timeInS = getSecondsFromTimeStamp(urlParams.get("time"));
       setTimeToGoTo(timeInS)
-      toast.success(`Time in Seconds from URL: ${timeInS}`);
-
 
       const urlSearch = urlParams.get("search");
       if (urlSearch) {
         setSearchInput(urlSearch);
+        toast.success("Search from URL");
         return true;
       }
       const theUrl = urlParams.get("url");
       const trkObj = getObjFromUrl(theUrl, allTheOpts);
       if (validTrackObj(trkObj)) {
+        toast.success("Track Playing from URL");
         setHistory([trkObj]);
         return true;
       } else {
@@ -95,6 +95,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         const localStorageTime = localStorage.getItem(`LastTime: ${title}`);
         const timeInS = getSecondsFromTimeStamp(localStorageTime);
         setTimeToGoTo(timeInS)
+        toast.success("Found Track From History", { duration: 1000 });
         return true;
       } catch (e) {
         // toast.error(e.message, { duration: 1000 });
@@ -110,7 +111,8 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     getShuffle();
     if (!urlStuff()) {
       if (!getLastPlayedTrackLocalStorage()) {
-        // nextTrack()
+        toast.success("No URL or History, so Playing Next Track", { duration: 1000 });
+        nextTrack()
       }
     }
   }, []);

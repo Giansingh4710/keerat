@@ -52,9 +52,9 @@ export default function TrackPlayback({audioRef}) {
               toast.success("Copied Raw Link to Clipboard!");
             }}
           />
-          <a className="underline" target="_blank" href={link}>
+          <a className="underline w-full break-words text-left" target="_blank" href={link}>
             <Typography
-              className="pl-2 text-sm opacity-70 font-medium text-pretty"
+              className="pl-2 text-sm opacity-70 "
             >
               {link && getNameOfTrack(link)}
             </Typography>

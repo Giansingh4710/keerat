@@ -44,7 +44,10 @@ export default function AudioPlayer({ link, audioRef }) {
         onTimeUpdate={handleBufferProgress}
         onProgress={handleBufferProgress}
         onEnded={() => nextTrack()}
-        onError={() => toast.error("Error loading audio")}
+        onError={() => {
+          if (!link) return;
+          toast.error("Error loading audio");
+        }}
         onLoadedData={() => {
           audioRef.current.currentTime = timeToGoTo;
           audioRef.current.playbackRate = playbackSpeed;
@@ -57,7 +60,7 @@ export default function AudioPlayer({ link, audioRef }) {
         <source type="audio/mpeg" src={link} />
       </audio>
     );
-  }, [link,audioRef]);
+  }, [link, audioRef]);
 
   return (
     <div className="w-full py-4">

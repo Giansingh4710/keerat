@@ -134,7 +134,7 @@ def print_links_n_copy(prefix, dir_name):
     for file in sorted(os.listdir(dir_name)):
         if file[0] == ".":
             continue
-        copyTxt+=f"'{link_pref}{file}',\n"
+        copyTxt+=f'"{link_pref}{file}",\n'
 
     pyperclip.copy(copyTxt)
     print("\nLinks:\n"+copyTxt)
