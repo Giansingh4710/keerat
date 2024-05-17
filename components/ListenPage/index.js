@@ -65,7 +65,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       const theUrl = urlParams.get("url");
       const trkObj = getObjFromUrl(theUrl, allTheOpts);
       if (validTrackObj(trkObj)) {
-        toast.success("Track Playing from URL");
+        toast.success("Track Playing from URL", { duration: 3000 });
         setHistory([trkObj]);
         return true;
       } else {
@@ -75,7 +75,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         const url = getLinkFromOldUrlDate(artist, trackIndex, allTheOpts);
         const trkObj = getObjFromUrl(url, allTheOpts);
         if (validTrackObj(trkObj)) {
-          toast("Old copied link");
+          toast("Old copied link", { duration: 3000 });
           setHistory([trkObj]);
           return true;
         }
@@ -95,7 +95,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         const localStorageTime = localStorage.getItem(`LastTime: ${title}`);
         const timeInS = getSecondsFromTimeStamp(localStorageTime);
         setTimeToGoTo(timeInS)
-        toast.success("Found Track From History", { duration: 1000 });
+        toast.success("Found Track From History", { duration: 3000 });
         return true;
       } catch (e) {
         // toast.error(e.message, { duration: 1000 });
@@ -111,7 +111,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     getShuffle();
     if (!urlStuff()) {
       if (!getLastPlayedTrackLocalStorage()) {
-        toast.success("No URL or History, so Playing Next Track", { duration: 1000 });
+        toast.success("No URL or History, so Playing Next Track", { duration: 5000 });
         nextTrack()
       }
     }
