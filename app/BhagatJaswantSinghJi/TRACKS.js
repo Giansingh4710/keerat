@@ -1981,7 +1981,7 @@ const CharacterPothi = [
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/007. Chaar Bajjar Kurehitaa Ate Chauthee Bajjar Kurehit.mp3',
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/008. Jaise Bikh Tanak He Khaat Mari Jati, Taat Gati Murjhaat Pratipaalee Barkhan Kee..mp3',
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/009. Je Koee Vikaaree Naastak Aap Jee Nu Kusang Karan Nu Kahe, Taa Iou Us Nu Updesh Dena Hai.mp3',
-      'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/010. Sri Guroo Gobind Singh Saahib Khalsaa Jee Shubh Sache Ikhlaak Data Updesh Bakhsh Rahe Han.mp3',
+      'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/010. Sri Guroo Gobind Singh Saahib Khalsaa Jee Shubh Sache Ikhlaak Daa Updesh Bakhsh Rahe Han.mp3',
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/011. Jatu Paahaaraa, Dheeraju Suniaaru.mp3',
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/012. Gurprasaadi, Bikhiaa Parharai. Man Kee Baasnaa, Man Te Tarai.mp3',
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/9. Character Pothi/013. Saakhee Nek Saaoo Gurmukhi Beebee Ne Gurbaanee Data Prataap Janaaounaa.mp3',
