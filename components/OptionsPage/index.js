@@ -1,62 +1,36 @@
-import ALL_THEMES from '@/utils/themes'
+import { IconButton } from "@mui/material";
 
 export default function OptsPage({ opts }) {
   const atags = opts.map((str) => {
-    let href = str.replaceAll(' ', '')
-    if (str === 'Tracks Index') {
-      href = 'http://45.76.2.28/trackIndex'
+    let href = str.replaceAll(" ", "");
+    if (str === "Tracks Index") {
+      href = "http://45.76.2.28/trackIndex";
     }
 
     return (
-      <a href={href} key={href} style={styles.opt}>
-        {str}
-      </a>
-    )
-  })
+      <IconButton key={href}>
+        <a
+          className="w-64 p-4 rounded-2xl text-sm bg-btn text-white text-center w-full"
+          href={href}
+        >
+          {str}
+        </a>
+      </IconButton>
+    );
+  });
 
   return (
-    <body style={styles.body}>
-      <div style={styles.header}>
-        ਕੀਰਤਿਕਰਹਿਸਗਲਜਨਤੇਰੀਤੂਅਬਿਨਾਸੀਪੁਰਖੁਮੁਰਾਰੇ॥
-        <div id='GurbaniLine'></div>
-        <div id='GurbaniTrans'>
+    <body className="bg-primary-100 flex flex-col gap-4">
+      <div className="font-bold text-center p-1 bg-primary-200 w-full">
+        <div>ਕੀਰਤਿਕਰਹਿਸਗਲਜਨਤੇਰੀਤੂਅਬਿਨਾਸੀਪੁਰਖੁਮੁਰਾਰੇ॥</div>
+        <div>
           All beings sing Your Praises; You are the imperishable Primal Being,
           the Destroyer of ego.
         </div>
       </div>
-      <div style={styles.optsParent}>{atags}</div>
+      <div className="w-svw flex flex-col gap-5 justify-center items-center">
+        {atags}
+      </div>
     </body>
-  )
-}
-
-const styles = {
-  body: {
-    backgroundColor: ALL_THEMES.theme1.primary,
-  },
-  header: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    padding: '20px',
-    fontSize: '1em',
-    borderRadius: '1em',
-    backgroundColor: ALL_THEMES.theme1.secondary,
-    color: ALL_THEMES.theme1.text1,
-  },
-  optsParent: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  opt: {
-    flex: 1,
-    width: '20em',
-    padding: '1em',
-    margin: '1em',
-    height: '7em',
-    textAlign: 'center',
-    borderRadius: '1em',
-    backgroundColor: ALL_THEMES.theme1.third,
-    color: ALL_THEMES.theme1.text2,
-  },
+  );
 }

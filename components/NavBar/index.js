@@ -1,3 +1,4 @@
+import { IconButton } from "@mui/material";
 import React, { Children, useState } from "react";
 
 function titleFromLink(link) {
@@ -17,7 +18,7 @@ function titleFromLink(link) {
   for (let i = 0; i < idxWhereNewWord.length; i++) {
     const theIdx = idxWhereNewWord[i];
     let nextIdx = idxWhereNewWord[i + 1];
-    if (i === idxWhereNewWord.length - 1){
+    if (i === idxWhereNewWord.length - 1) {
       nextIdx = lastPart.length;
     }
     const theWord = lastPart.slice(theIdx, nextIdx) + " ";
@@ -32,24 +33,23 @@ function LinkTag({ href, absLink }) {
   const displayText = titleFromLink(hrefToLink);
 
   return (
-    <a
-      href={hrefToLink}
-      style={{
-        color: "white",
-        textDecoration: "underline",
-      }}
-    >
-      {displayText}
-    </a>
+    <IconButton>
+      <a
+        href={hrefToLink}
+        className=" text-white text-xs underline "
+      >
+        {displayText}
+      </a>
+    </IconButton>
   );
 }
 
 function LeftHome({ main }) {
   if (main) {
     return (
-      <h1 className="flex-2 p-2 place-content-center bg-primary-200 rounded underline">
-        <a href={"/"}>Home</a>
-      </h1>
+      <a href={"/"} className="p-2 rounded-l  bg-primary-200  underline ">
+        Home
+      </a>
     );
   }
   return <></>;
@@ -69,7 +69,6 @@ function BarRow({ name, main, children }) {
           display: "flex",
           flexDirection: "column",
           backgroundColor: "#333",
-          gap: "10px",
           alignItems: "flex-start",
         }}
       >
@@ -95,12 +94,12 @@ function BarRow({ name, main, children }) {
     <div className="w-full border border-gray-200 rounded">
       <div className="flex h-10 bg-gray-800">
         <LeftHome main={main} />
-        <h1 className="flex-1 place-content-center text-white">{name}</h1>
+        <h1 className="flex-1 flex items-center justify-center text-white">{name}</h1>
         <button
-          className="bg-primary-200 rounded flex-1 max-w-10"
+          className="flex-1 bg-primary-200 rounded  max-w-10"
           onClick={() => setShowChildren(!showChildren)}
         >
-          <p className="text-lg"> ☰ </p>
+          <p className="text-3xl"> ☰ </p>
         </button>
       </div>
       <TheChildern />

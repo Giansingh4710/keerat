@@ -164,10 +164,10 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       <Toaster position="top-left" reverseOrder={true} />
       <NavBar title={title} />
       <SearchTracks />
-      <SaveTrackModal />
       <ArtistsOptions />
       <TrackPlayback audioRef={audioRef}/>
       {/*
+      <SaveTrackModal />
         <ChangeColorsModal />
       */}
       <IndexTrackBtnAndModal audioRef={audioRef}/>

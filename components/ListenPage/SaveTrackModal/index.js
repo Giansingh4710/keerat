@@ -3,6 +3,7 @@ import { useEffect, useMemo } from "react";
 import { useStore, useSavedTracksStore } from "@/utils/store";
 
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import { IconButton } from "@mui/material";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getNameOfTrack, validTrackObj } from "@/utils/helper_funcs";
@@ -87,22 +88,20 @@ export default function SaveTrackModal() {
   return (
     <div>
       <div className="pb-4 flex justify-evenly">
-        <button
-          className="bg-btn p-1 rounded flex items-center"
-          onClick={() => setShowing(!showTracks)}
-        >
-          <FormatListNumberedIcon className="text-xs flex-1" />
-          <p className="text-xs flex-2">
-            {showTracks ? "Hide" : "Show"} Saved Tracks
-          </p>
-        </button>
-        <button
-          className="bg-btn p-2 rounded flex items-center"
-          onClick={() => setModal(true)}
-        >
-          <BookmarkAddedIcon className="text-xs flex-1" />
-          <p className="text-xs flex-2">Save Current Track</p>
-        </button>
+        <IconButton onClick={() => setShowing(!showTracks)}>
+          <div className="bg-btn p-1 rounded flex items-center text-black">
+            <FormatListNumberedIcon className="text-xs flex-1" />
+            <p className="text-xs flex-2">
+              {showTracks ? "Hide" : "Show"} Saved Tracks
+            </p>
+          </div>
+        </IconButton>
+        <IconButton onClick={() => setModal(true)}>
+          <div className="bg-btn p-2 rounded flex items-center text-black">
+            <BookmarkAddedIcon className="text-xs flex-1" />
+            <p className="text-xs flex-2">Save Current Track</p>
+          </div>
+        </IconButton>
       </div>
 
       <DisplayTracks />

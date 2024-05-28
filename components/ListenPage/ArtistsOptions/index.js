@@ -86,34 +86,19 @@ export default function ArtistsOptions() {
         </div>
 
         <div className="flex">
-          <button
-            // className="max-w-48 p-2 m-1 place-content-center font-bold rounded bg-third"
-            className=".button bg-btn"
-            onClick={() => setCheckedForAllArtists(false)}
-          >
-            <MdCheckBoxOutlineBlank className=" text-lg" />
-            Unselect All
-          </button>
-          <button
-            className=".button bg-btn"
-            onClick={() => setCheckedForAllArtists(true)}
-          >
-            <MdCheckBox className="text-lg" />
-            Select All
-          </button>
+          <IconButton onClick={() => setCheckedForAllArtists(!false)}>
+            <div className="flex bg-btn text-black p-1 items-center justify-center gap-1 font-bold text-sm rounded-lg">
+              <MdCheckBox className="" />
+              <p className="flex-1">Select All</p>
+            </div>
+          </IconButton>
+          <IconButton onClick={() => setCheckedForAllArtists(false)}>
+            <div className="flex bg-btn text-black p-1 items-center justify-center gap-1 font-bold text-sm rounded-lg">
+              <MdCheckBoxOutlineBlank className="" />
+              <p className="flex-1">Unselect All</p>
+            </div>
+          </IconButton>
         </div>
-        <style jsx>{`
-          button {
-            margin: 0.5em;
-            font-weight: bold;
-            padding: 0.5rem;
-            border-radius: 5px;
-            color: black;
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-          }
-        `}</style>
       </div>
     </>
   );
@@ -121,14 +106,11 @@ export default function ArtistsOptions() {
 
 function TheButon({ text, onClick }) {
   return (
-    <div className="">
-      <button
-        onClick={onClick}
-        className="bg-btn max-w-48 p-2 m-1 place-content-center font-bold rounded"
-      >
+    <IconButton onClick={onClick}>
+      <div className="bg-btn max-w-48 p-2 m-1 place-content-center font-bold rounded">
         <p className="text-black text-xs">{text}</p>
-      </button>
-    </div>
+      </div>
+    </IconButton>
   );
 }
 
@@ -143,7 +125,7 @@ function TheModal({ modalOpen, setModal, allOpts, artist }) {
     <Modal open={modalOpen} onClose={() => setModal(false)}>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="relative w-auto my-6 mx-auto max-w-3xl">
-          <div className="max-h-96 border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          <div className="bg-secondary-200 max-h-96 border-0 rounded-lg shadow-lg relative flex flex-col w-full  outline-none focus:outline-none">
             <div className="flex items-start justify-between p-2 border-b border-solid border-blueGray-200 rounded-t">
               <h3 className="text-2xl  font-semibold">{artist}</h3>
               <div>

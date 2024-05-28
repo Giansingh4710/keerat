@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import AlbumIcon from "@mui/icons-material/Album";
 import PersonIcon from "@mui/icons-material/Person";
+import { IconButton } from "@mui/material";
 
 import { getNameOfTrack, searchTracks } from "@/utils/helper_funcs";
 import { useSearchStore, useStore } from "@/utils/store.js";
@@ -11,18 +12,20 @@ export default function SearchTracks() {
   const setSearchInput = useSearchStore((state) => state.setSearchInput);
 
   return (
-    <div className="pt-10 ">
-      <div className="pb-2 flex align-middle">
+    <div className="pt-10 flex flex-col">
+      <div className="pb-2 flex  align-middle">
         <input
           placeholder="Search for Track:"
           className="flex-1 ml-4 h-10 rounded-md text-black p-2 bg-white align-middle"
           value={searchInput}
           onInput={(e) => setSearchInput(e.target.value)}
         />
-        <HighlightOffIcon
-          className="text-white m-2"
+        <IconButton
+          className="flex-1 flex items-center justify-center"
           onClick={() => setSearchInput("")}
-        />
+        >
+          <HighlightOffIcon className="text-white" />
+        </IconButton>
       </div>
       <DisplayTracks searchInput={searchInput} />
     </div>
@@ -66,7 +69,7 @@ function DisplayTracks({ searchInput }) {
                   {trkObj.artist}
                 </div>
                 <div className="flex-1 text-xs text-right  ">
-                  <AlbumIcon className="p-1"/>
+                  <AlbumIcon className="p-1" />
                   {trkObj.type}
                 </div>
               </div>
