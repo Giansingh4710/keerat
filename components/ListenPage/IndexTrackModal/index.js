@@ -7,9 +7,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
 import { useStore } from "@/utils/store.js";
 import { IconButton } from "@mui/material";
-import { IconBase } from "react-icons";
 
-export default function IndexTrackBtnAndModal({ audioRef }) {
+export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
   const [modalOpen, setModal] = useState(false);
   const [description, setDescription] = useState("");
   const [shabadId, setShabadId] = useState("");
@@ -21,7 +20,6 @@ export default function IndexTrackBtnAndModal({ audioRef }) {
 
   const history = useStore((state) => state.history);
   const hstIdx = useStore((state) => state.hstIdx);
-  const title = useStore((state) => state.title);
   const artist = history[hstIdx]?.artist;
   const link = history[hstIdx]?.link;
 
@@ -76,31 +74,17 @@ export default function IndexTrackBtnAndModal({ audioRef }) {
     add_to_form_to_send_to_server("artist", artist);
     add_to_form_to_send_to_server("link", link);
 
-    if (audioRef !== null) {
-      localStorage.setItem(`LastTime: ${title}`, audioRef.current.currentTime);
-    }
+    saveTimeFunc();
     formData.current.submit();
   }
 
   function ShowShabads() {
-    const listStyles = {
-      container: {
-        display: "flex",
-        flexDirection: "column",
-        height: "20vh",
-        overflowY: "auto",
-      },
-      btn: {
-        color: "black",
-      },
-    };
-
+    if (shabads.length === 0) return <></>;
     function SbdDetails() {
-      if (shabads.length === 0) return <></>;
       return (
         <div>
           <button
-            variant="contained"
+            className="bg-blue-600 p-1 m-1 rounded-lg"
             onClick={(e) => {
               e.preventDefault();
               console.log(currShabad);
@@ -119,15 +103,16 @@ export default function IndexTrackBtnAndModal({ audioRef }) {
     }
 
     return (
-      <div style={listStyles.container}>
+      <div className="text-white h-20 overflow-auto">
         <SbdDetails />
+        <h1>{shabads.length} Results</h1>
         {shabads.map((sbd, ind) => {
           const { shabadId, lineInd, shabadArray } = sbd;
           const line = shabadArray[lineInd];
 
           return (
             <button
-              style={listStyles.btn}
+              className="bg-blue-600 p-1 m-1 rounded-lg"
               key={shabadId}
               onClick={(e) => {
                 e.preventDefault();
@@ -157,10 +142,9 @@ export default function IndexTrackBtnAndModal({ audioRef }) {
 
     return (
       <div>
-        <label style={styles.label} htmlFor="trackType">
-          Type of Track:
-        </label>
+        <label>Type of Track:</label>
         <select
+          className="m-1 p-1 bg-blue-600 rounded-lg"
           name="trackType"
           id="trackType"
           value={theTrackType}
@@ -185,134 +169,179 @@ export default function IndexTrackBtnAndModal({ audioRef }) {
   return (
     <div>
       <IconButton onClick={() => setModal(true)}>
-        <div className="m-2 p-2 rounded-lg bg-btn">Index Track</div>
+        <div className="m-1 p-2 text-xs rounded bg-btn">Index Track</div>
       </IconButton>
       <Modal open={modalOpen} onClose={() => setModal(false)}>
-        <div>
+        <div className="bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
           <form
             ref={formData}
-            style={styles.cont}
+            className="flex flex-col gap-4"
             onSubmit={(event) => formValidation(event)}
             method="post"
             action="http://45.76.2.28/trackIndex/util/addData.php"
           >
-            <div style={styles.userInputItem}>
-              <label style={styles.label} htmlFor="userDesc">
-                Description:
-              </label>
-              <input
-                style={styles.userDesc}
-                name="description"
-                placeholder="bin ek naam ik chit leen"
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}
-              ></input>
-              <CancelIcon onClick={() => setDescription("")} />
-            </div>
-            <div style={styles.userInputItem}>
-              <label style={styles.label} htmlFor="usedShabadId">
-                Shabad ID:
-              </label>
-              <input
-                style={styles.userDesc}
-                name="shabadId"
-                placeholder="ਤਕਮਲ"
-                value={shabadId}
-                onChange={async (event) => {
-                  const newInput = convertToGurmukhi(event.target.value);
-                  setShabadId(newInput);
-                }}
-              ></input>
-              <SearchIcon
-                onClick={async () => {
-                  const sbds = await getTheShabads(shabadId);
-                  if (sbds.length === 0) {
-                    alert("0 Shabads found");
-                  }
-                  setShabads(sbds);
-                }}
-              />
-              <CancelIcon onClick={() => setShabadId("")} />
-            </div>
-            <ShowShabads />
-            <div style={styles.userInputItem}>
-              <label style={styles.label} htmlFor="userTimestamp">
-                Timestamp:
-              </label>
-              <div style={styles.userDesc}>
-                <input
-                  name="hours"
-                  type="number"
-                  min="0"
-                  max="59"
-                  inputMode="numeric"
-                  placeholder="00"
-                  style={styles.timeInput}
-                  value={timestamp.hours}
-                  onChange={(event) =>
-                    setTimestamp({ ...timestamp, hours: event.target.value })
-                  }
-                ></input>
-                :
-                <input
-                  name="mins"
-                  type="number"
-                  min="0"
-                  max="59"
-                  inputMode="numeric"
-                  placeholder="00"
-                  style={styles.timeInput}
-                  value={timestamp.minutes}
-                  onChange={(event) =>
-                    setTimestamp({ ...timestamp, minutes: event.target.value })
-                  }
-                ></input>
-                :
-                <input
-                  name="secs"
-                  type="number"
-                  min="0"
-                  max="59"
-                  inputMode="numeric"
-                  placeholder="00"
-                  style={styles.timeInput}
-                  value={timestamp.seconds}
-                  onChange={(event) =>
-                    setTimestamp({ ...timestamp, seconds: event.target.value })
-                  }
-                ></input>
+            <div className="flex flex-col items-center justify-center rounded-lg mb-2 p-2 bg-blue-600 ">
+              <div className="flex-1 flex text-xs w-full text-left ">
+                <label> Description: </label>
               </div>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (audioRef === null) return;
-                  const currTime = audioRef.current.currentTime;
-                  const hours = Math.floor(currTime / 3600);
-                  const minutes = Math.floor((currTime % 3600) / 60);
-                  const seconds = Math.floor(currTime % 60);
-                  setTimestamp({
-                    hours: hours.toString(),
-                    minutes: minutes.toString(),
-                    seconds: seconds.toString(),
-                  });
-                }}
-              >
-                now
-              </button>
+              <div className="flex flex-row gap-1">
+                <input
+                  className="flex-1 rounded-md text-black"
+                  name="description"
+                  placeholder="bin ek naam ik chit leen"
+                  value={description}
+                  onChange={(event) => setDescription(event.target.value)}
+                />
+                <CancelIcon
+                  className="flex-1"
+                  onClick={() => setDescription("")}
+                />
+              </div>
+            </div>
 
-              <CancelIcon
-                onClick={() =>
-                  setTimestamp({
-                    hours: "",
-                    minutes: "",
-                    seconds: "",
-                  })
-                }
-              />
+            <div className="flex flex-col items-center justify-center rounded-lg mb-2 p-2 bg-blue-600 ">
+              <div className="flex-1 flex text-xs w-full text-left ">
+                <label>Shabad ID:</label>
+              </div>
+              <div className="flex flex-row gap-1">
+                <input
+                  className="flex-1 rounded-md text-black"
+                  name="shabadId"
+                  placeholder="ਤਕਮਲ"
+                  value={shabadId}
+                  onChange={async (event) => {
+                    const newInput = await convertToGurmukhi(
+                      event.target.value,
+                    );
+                    setShabadId(newInput);
+                  }}
+                />
+                <SearchIcon
+                  className="flex-1"
+                  onClick={async () => {
+                    const sbds = await getTheShabads(shabadId);
+                    if (sbds.length === 0) {
+                      alert("0 Shabads found");
+                    } else if (sbds.length === 1) {
+                      const sbd = sbds[0];
+                      const lineInd = sbd.lineInd;
+                      const shabadArray = sbd.shabadArray;
+                      console.log(sbd);
+                      setCurrShabad(sbd);
+
+                      setLineClicked(shabadArray[lineInd]);
+                      setShabadId(sbd.shabadId);
+                      setDescription(shabadArray[lineInd + 1]);
+                    }
+                    setShabads(sbds);
+                  }}
+                />
+              </div>
+            </div>
+
+            <ShowShabads />
+
+            <div className="flex flex-col items-center justify-center rounded-lg mb-2 p-2 bg-blue-600 ">
+              <div className="flex-1 flex text-xs w-full text-left ">
+                <label>Timestamp:</label>
+              </div>
+              <div className="flex-1 flex w-full text-black">
+                <div className="flex-1 flex">
+                  <input
+                    className="flex-1 w-10 rounded-md "
+                    name="hours"
+                    type="number"
+                    min="0"
+                    max="59"
+                    inputMode="numeric"
+                    placeholder="00"
+                    value={timestamp.hours}
+                    onChange={(event) =>
+                      setTimestamp({ ...timestamp, hours: event.target.value })
+                    }
+                  />
+                  :
+                  <input
+                    className="flex-1 w-10 rounded-md "
+                    name="mins"
+                    type="number"
+                    min="0"
+                    max="59"
+                    inputMode="numeric"
+                    placeholder="00"
+                    value={timestamp.minutes}
+                    onChange={(event) =>
+                      setTimestamp({
+                        ...timestamp,
+                        minutes: event.target.value,
+                      })
+                    }
+                  />
+                  :
+                  <input
+                    className="flex-1 w-10 rounded-md "
+                    name="secs"
+                    type="number"
+                    min="0"
+                    max="59"
+                    inputMode="numeric"
+                    placeholder="00"
+                    value={timestamp.seconds}
+                    onChange={(event) =>
+                      setTimestamp({
+                        ...timestamp,
+                        seconds: event.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <button
+                    className="ml-2 p-2 bg-gray-200 rounded-md"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (audioRef === null) return;
+                      const currTime = audioRef.current.currentTime;
+                      const hours = Math.floor(currTime / 3600);
+                      const minutes = Math.floor((currTime % 3600) / 60);
+                      const seconds = Math.floor(currTime % 60);
+                      setTimestamp({
+                        hours: hours.toString(),
+                        minutes: minutes.toString(),
+                        seconds: seconds.toString(),
+                      });
+                    }}
+                  >
+                    now
+                  </button>
+                  <CancelIcon
+                    className="ml-2"
+                    onClick={() =>
+                      setTimestamp({
+                        hours: "",
+                        minutes: "",
+                        seconds: "",
+                      })
+                    }
+                  />
+                </div>
+              </div>
             </div>
             <TrackOptions />
-            <button onClick={() => setModal(false)}>Close</button>
-            <button type="submit">Add</button>
+            <div className="flex justify-center gap-3">
+              <button
+                className="mt-2 p-2 bg-red-500 text-white rounded-lg"
+                onClick={() => setModal(false)}
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                className="mt-2 p-2 bg-green-500 text-white rounded-lg"
+              >
+                Add
+              </button>
+            </div>
           </form>
         </div>
       </Modal>
@@ -476,50 +505,3 @@ function convertToGurmukhi(input) {
     .join("");
   return gurmukhi_input;
 }
-
-const styles = {
-  cont: {
-    padding: "2em",
-    borderRadius: "1em",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "70vw",
-    backgroundColor: "#ff7f50",
-    color: ALL_THEMES.theme1.text1,
-  },
-  closeModalBtn: {
-    display: "flex",
-    justifyContent: "flex-end",
-    fontSize: "31px",
-    fontWeight: "bold",
-    margin: "-1em",
-    color: ALL_THEMES.theme1.text2,
-  },
-  userInputItem: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "10px",
-    marginBottom: "5px",
-    padding: "5px",
-    backgroundColor: "#0077be",
-  },
-  label: {
-    flex: 0.5,
-    fontWeight: 500,
-    letterSpacing: 0.2,
-    fontSize: "0.75rem",
-  },
-  userDesc: {
-    flex: 1,
-    display: "flex",
-  },
-  timeInput: {
-    flex: 0.5,
-    // width: '2em',
-    color: ALL_THEMES.theme1.text1,
-  },
-};

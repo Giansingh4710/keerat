@@ -6,6 +6,7 @@ import TrackPlayback from "./TrackPlayback/index.js";
 import SaveTrackModal from "./SaveTrackModal/index.js";
 import SearchTracks from "./SearchTracks/index.js";
 import IndexTrackBtnAndModal from "./IndexTrackModal/index.js";
+import { IconButton } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   getLinkFromOldUrlDate,
@@ -30,7 +31,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
 
   const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
   const skipTime = useStore((state) => state.skipTime);
-  const audioRef = useRef(null)
+  const audioRef = useRef(null);
 
   useMemo(() => {
     setTitle(title);
@@ -54,7 +55,8 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       if (urlParams.size === 0) return false;
 
       const timeInS = getSecondsFromTimeStamp(urlParams.get("time"));
-      setTimeToGoTo(timeInS)
+      toast.success(`Time: ${timeInS}`, { duration: 5000 });
+      setTimeToGoTo(timeInS);
 
       const urlSearch = urlParams.get("search");
       if (urlSearch) {
@@ -94,7 +96,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         setHistory([trkObj]);
         const localStorageTime = localStorage.getItem(`LastTime: ${title}`);
         const timeInS = getSecondsFromTimeStamp(localStorageTime);
-        setTimeToGoTo(timeInS)
+        setTimeToGoTo(timeInS);
         toast.success("Found Track From History", { duration: 3000 });
         return true;
       } catch (e) {
@@ -111,8 +113,10 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     getShuffle();
     if (!urlStuff()) {
       if (!getLastPlayedTrackLocalStorage()) {
-        toast.success("No URL or History, so Playing Next Track", { duration: 5000 });
-        nextTrack()
+        toast.success("No URL or History, so Playing Next Track", {
+          duration: 5000,
+        });
+        nextTrack();
       }
     }
   }, []);
@@ -157,20 +161,29 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     }
   }
 
+  function saveTime() {
+    toast.success(`Saved Time: ${audioRef.current.currentTime}`);
+    localStorage.setItem(`LastTime: ${title}`, audioRef.current.currentTime);
+  }
   // here
 
   return (
-    <body className="w-full h-full bg-primary-100" >
+    <body className="w-full h-full bg-primary-100">
       <Toaster position="top-left" reverseOrder={true} />
       <NavBar title={title} />
       <SearchTracks />
       <ArtistsOptions />
-      <TrackPlayback audioRef={audioRef}/>
+      <TrackPlayback audioRef={audioRef} />
       {/*
       <SaveTrackModal />
         <ChangeColorsModal />
       */}
-      <IndexTrackBtnAndModal audioRef={audioRef}/>
+      <div className="flex flex-row justify-center">
+        <IndexTrackBtnAndModal audioRef={audioRef} saveTimeFunc={saveTime}/>
+        <IconButton onClick={saveTime}>
+          <div className="m-1 p-2 text-xs rounded bg-btn">Save Time</div>
+        </IconButton>
+      </div>
     </body>
   );
 }
