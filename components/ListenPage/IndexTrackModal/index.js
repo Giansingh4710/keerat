@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useStore } from "@/utils/store.js";
 import { IconButton } from "@mui/material";
 import axios from "axios";
+import getUrls from "@/utils/get_urls";
 
 export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
   const [modalOpen, setModal] = useState(false);
@@ -18,6 +19,8 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
   const [lineClicked, setLineClicked] = useState("");
   const [theTrackType, setTrackType] = useState("");
   const formData = useRef(null);
+
+  const { ADD_INDEX_URL, GET_SHABADS_URL } = getUrls();
 
   const history = useStore((state) => state.history);
   const hstIdx = useStore((state) => state.hstIdx);
@@ -67,8 +70,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
     // saveTimeFunc();
     const theTimeStamp = getTimestampString(timestamp);
     axios({
-      // url:"http://localhost:3001/addIndex",
-      url: "https://www.getshabads.xyz/addIndex",
+      url: ADD_INDEX_URL,
       method: "POST",
       data: {
         description,
@@ -147,8 +149,10 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
       "random",
       "SDO_MGA_1",
       "HeeraRattan",
+      "sikhsoul_SDO",
       "ikirtan_SDO",
-      "GianiSherS",
+      "aisakirtan_SDO",
+      // "GianiSherS",
     ];
 
     return (
@@ -195,18 +199,17 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
               <div className="flex-1 flex text-xs w-full text-left ">
                 <label> Description: </label>
               </div>
-              <div className="flex flex-row gap-1">
+              <div className="flex flex-row gap-1 w-full">
                 <input
-                  className="flex-1 rounded-md text-black"
+                  className="flex-1 rounded-md text-black w-48"
                   name="description"
                   placeholder="bin ek naam ik chit leen"
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
                 />
-                <CancelIcon
-                  className="flex-1"
-                  onClick={() => setDescription("")}
-                />
+                <div className="flex-1">
+                  <CancelIcon onClick={() => setDescription("")} />
+                </div>
               </div>
             </div>
 
@@ -214,9 +217,9 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
               <div className="flex-1 flex text-xs w-full text-left ">
                 <label>Shabad ID:</label>
               </div>
-              <div className="flex flex-row gap-1">
+              <div className="flex flex-row gap-1 w-full items-center ">
                 <input
-                  className="flex-1 rounded-md text-black"
+                  className="flex-1 rounded-md text-black w-40 h-full"
                   name="shabadId"
                   placeholder="ਤਕਮਲ"
                   value={shabadId}
@@ -227,10 +230,14 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
                     setShabadId(newInput);
                   }}
                 />
-                <SearchIcon
-                  className="flex-1"
+                <IconButton
                   onClick={async () => {
-                    const sbds = await getTheShabads(shabadId);
+                    if (shabadId.length < 3) {
+                      alert("Input should be at least 3 characters long");
+                      return
+                    }
+
+                    const sbds = await getTheShabads(shabadId, GET_SHABADS_URL);
                     if (sbds.length === 0) {
                       alert("0 Shabads found");
                     } else if (sbds.length === 1) {
@@ -246,7 +253,11 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
                     }
                     setShabads(sbds);
                   }}
-                />
+                >
+                  <div className="text-sm flex-1 h-5 text-white">
+                    <SearchIcon />
+                  </div>
+                </IconButton>
               </div>
             </div>
 
@@ -257,9 +268,9 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
                 <label>Timestamp:</label>
               </div>
               <div className="flex-1 flex w-full text-black">
-                <div className="flex-1 flex">
+                <div className="w-full flex h-6 ">
                   <input
-                    className="flex-1 w-10 rounded-md "
+                    className="flex-1 w-10 rounded-md  "
                     name="hours"
                     type="number"
                     min="0"
@@ -306,9 +317,8 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
                     }
                   />
                 </div>
-                <div>
-                  <button
-                    className="ml-2 p-2 bg-gray-200 rounded-md"
+                <div className="flex items-center justify-center h-6">
+                  <IconButton
                     onClick={(e) => {
                       e.preventDefault();
                       if (audioRef === null) return;
@@ -323,10 +333,11 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
                       });
                     }}
                   >
-                    now
-                  </button>
-                  <CancelIcon
-                    className="ml-2"
+                    <p className="flex-1 text-xs p-1  bg-gray-200 rounded-md">
+                      now
+                    </p>
+                  </IconButton>
+                  <IconButton
                     onClick={() =>
                       setTimestamp({
                         hours: "",
@@ -334,24 +345,26 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
                         seconds: "",
                       })
                     }
-                  />
+                  >
+                    <div className="flex-1 flex">
+                      <CancelIcon className="flex-1  text-white" />
+                    </div>
+                  </IconButton>
                 </div>
               </div>
             </div>
             <TrackOptions />
             <div className="flex justify-center gap-3">
-              <button
-                className="mt-2 p-2 bg-red-500 text-white rounded-lg"
-                onClick={() => setModal(false)}
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                className="mt-2 p-2 bg-green-500 text-white rounded-lg"
-              >
-                Add
-              </button>
+              <IconButton onClick={() => setModal(false)}>
+                <p className="text-sm p-1 bg-red-500 text-white rounded-lg">
+                  Close
+                </p>
+              </IconButton>
+              <IconButton type="submit">
+                <p className="text-sm  p-1 bg-green-500 text-white rounded-lg">
+                  Add
+                </p>
+              </IconButton>
             </div>
           </form>
         </div>
@@ -413,15 +426,8 @@ function ShabadDetails({ shabadArray }) {
   });
 }
 
-async function getTheShabads(input) {
-  if (input.length < 3) {
-    alert("Input should be at least 3 characters long");
-    return [];
-  }
-  const res = await fetch(
-    "https://www.getshabads.xyz/getShabads?input=" + input,
-    // "http://localhost:3001/getShabads?input=" + input,
-  );
+async function getTheShabads(input, GET_SHABADS_URL) {
+  const res = await fetch(GET_SHABADS_URL + input);
   const { results } = await res.json();
   return results;
 }

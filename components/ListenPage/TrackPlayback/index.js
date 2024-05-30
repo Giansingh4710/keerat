@@ -5,10 +5,10 @@ import { formatTime, getNameOfTrack } from "@/utils/helper_funcs";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import AlbumIcon from "@mui/icons-material/Album";
 import PersonIcon from "@mui/icons-material/Person";
-import AudioPlayer from "./AudioPlayer";
-import Image from "next/image";
 import { useStore } from "@/utils/store.js";
 import toast from "react-hot-toast";
+import AudioPlayer from "@/components/AudioPlayer";
+import { PlayPauseBtn, PlayBackButtons } from "@/components/commonComps";
 
 export default function TrackPlayback({ audioRef }) {
   const nextTrack = useStore((state) => state.nextTrack);
@@ -68,7 +68,7 @@ export default function TrackPlayback({ audioRef }) {
           <IconButton onClick={() => toast.success(`Dhan ${artist}!!!`)}>
             <PersonIcon />
           </IconButton>
-          <Typography className="pl-3 text-sm opacity-70 font-medium tracking-tight">
+          <Typography className="pl-3 text-sm text-left opacity-70 font-medium tracking-tight">
             {artist}
           </Typography>
         </div>
@@ -197,33 +197,5 @@ export default function TrackPlayback({ audioRef }) {
         />
       </div>
     </div>
-  );
-}
-
-function PlayBackButtons({ onClick, imgSrc }) {
-  return (
-    <IconButton onClick={onClick}>
-      <div className="h-16 w-16 p-4 flex-1">
-        <img src={imgSrc} className="w-full h-full" />
-      </div>
-    </IconButton>
-  );
-}
-
-function PlayPauseBtn({ audioRef }) {
-  const paused = useStore((state) => state.paused);
-  function togglePlayPause() {
-    if (audioRef === null) return;
-    // || audioRef... is for initial load. Browser blocks autoplay
-    if (paused || audioRef.current?.paused) {
-      audioRef.current?.play(); // setPaused is done on the audio tag
-    } else {
-      audioRef.current?.pause();
-    }
-  }
-
-  const imgSrc = "/playbackImgs/" + (paused ? "play" : "pause") + ".svg";
-  return (
-    <PlayBackButtons imgSrc={imgSrc} onClick={togglePlayPause}/>
   );
 }
