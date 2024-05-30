@@ -1467,7 +1467,7 @@ const SDO_TRACK_LINKS = [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/136 Bhai Mohinder Singh Ji SDO Moga 1974 Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/137 Bhai Mohinder Singh Ji SDO Bhai Parmjit Singh Ludhiana wale, Moga 1980 Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/138 Bhai Mohinder Singh Ji SDO Milwaukee 1980 Smagam -2 (heeraRattan).mp3",
-
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/139 Bhai Mohinder Singh Ji SDO Bhai Joginder Singh Ji Talwara playing 2nd Vajja. Mohali 1973 Smagam (heeraRattan).mp3",
     ],
   },
   {

@@ -3,9 +3,7 @@ import { IconButton } from "@mui/material";
 export default function OptsPage({ opts }) {
   const atags = opts.map((str) => {
     let href = str.replaceAll(" ", "");
-    if (str === "Tracks Index") {
-      href = "http://45.76.2.28/trackIndex";
-    }
+    // if (str === "Tracks Index") { href = "http://45.76.2.28/trackIndex"; }
 
     return (
       <IconButton key={href}>

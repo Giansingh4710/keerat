@@ -7,6 +7,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
 import { useStore } from "@/utils/store.js";
 import { IconButton } from "@mui/material";
+import axios from "axios";
 
 export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
   const [modalOpen, setModal] = useState(false);
@@ -49,7 +50,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
     if (!canPostDataToTrackIndex) {
       alert("You are not allowed to post data to the track index");
       const password = prompt("Enter password if you to save data?");
-      if (password === "gaa") {
+      if (password.toLowerCase() === "dgn") {
         localStorage.setItem("canPostDataToTrackIndex", "true");
         alert("Correct password!!");
       } else {
@@ -58,24 +59,34 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
       return;
     }
 
-    function add_to_form_to_send_to_server(name, value) {
-      const additionalField = document.createElement("input");
-      additionalField.name = name;
-      additionalField.value = value;
-      formData.current.appendChild(additionalField);
-    }
-
     if (description === "") {
       alert("Description cannot be empty");
       return;
     }
 
-    add_to_form_to_send_to_server("linkToGoTo", window.location.href); //come back to this page
-    add_to_form_to_send_to_server("artist", artist);
-    add_to_form_to_send_to_server("link", link);
-
-    saveTimeFunc();
-    formData.current.submit();
+    // saveTimeFunc();
+    const theTimeStamp = getTimestampString(timestamp);
+    axios({
+      // url:"http://localhost:3001/addIndex",
+      url: "https://www.getshabads.xyz/addIndex",
+      method: "POST",
+      data: {
+        description,
+        shabadId,
+        timestamp: theTimeStamp,
+        trackType: theTrackType, // fix artist and type
+        artist,
+        link,
+      },
+    })
+      .then((res) => {
+        alert(res.data.message);
+        console.log(res);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+    setModal(false);
   }
 
   function ShowShabads() {
@@ -178,7 +189,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
             className="flex flex-col gap-4"
             onSubmit={(event) => formValidation(event)}
             method="post"
-            action="http://45.76.2.28/trackIndex/util/addData.php"
+            // action="http://45.76.2.28/trackIndex/util/addData.php"
           >
             <div className="flex flex-col items-center justify-center rounded-lg mb-2 p-2 bg-blue-600 ">
               <div className="flex-1 flex text-xs w-full text-left ">
@@ -349,6 +360,21 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
   );
 }
 
+function getTimestampString(obj) {
+  let hours = obj.hours.toString();
+  let minutes = obj.minutes.toString();
+  let seconds = obj.seconds.toString();
+  if (hours === "") hours = "00";
+  if (minutes === "") minutes = "00";
+  if (seconds === "") seconds = "00";
+
+  hours = hours.padStart(2, "0");
+  minutes = minutes.padStart(2, "0");
+  seconds = seconds.padStart(2, "0");
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
 function ShabadDetails({ shabadArray }) {
   const gurbaniStyle = {
     gurmukhi: {
@@ -394,6 +420,7 @@ async function getTheShabads(input) {
   }
   const res = await fetch(
     "https://www.getshabads.xyz/getShabads?input=" + input,
+    // "http://localhost:3001/getShabads?input=" + input,
   );
   const { results } = await res.json();
   return results;

@@ -8,7 +8,7 @@ export default function Home() {
     'Bhagat Jaswant Singh Ji',
     'Giani Sher Singh Ji',
     // 'Miscellaneous Topics',
-    'Tracks Index',
+    'Track Index',
   ]
   return <OptsPage opts={allOpts} />
 }
