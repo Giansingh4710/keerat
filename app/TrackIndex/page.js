@@ -58,7 +58,7 @@ export default function SGGS() {
       <NavBar title="Track Index" />
       <SearchBar
         setCurrTrkLst={setCurrTrkLst}
-        resetAllTracks={() => setCurrTrkLst(allTracks)}
+        allTracks={allTracks}
       />
 
       <SelectInputs
@@ -117,7 +117,7 @@ function TopButtons({ setCurrTrkLst }) {
   );
 }
 
-function SearchBar({ setCurrTrkLst, resetAllTracks }) {
+function SearchBar({ setCurrTrkLst, allTracks }) {
   const [searchStr, setSearchStr] = useState("");
   return (
     <div className="flex flex-row gap-2 p-3 items-center ">
@@ -131,7 +131,7 @@ function SearchBar({ setCurrTrkLst, resetAllTracks }) {
       <IconButton
         onClick={() => {
           if (searchStr === "") {
-            resetAllTracks();
+            setCurrTrkLst(allTracks);
             return;
           }
           const wordsEntered = searchStr.toLowerCase().split(" ");
@@ -157,7 +157,6 @@ function SearchBar({ setCurrTrkLst, resetAllTracks }) {
             }
             return false;
           });
-          console.log(filterdTracks);
           setCurrTrkLst(filterdTracks);
         }}
       >
@@ -167,7 +166,12 @@ function SearchBar({ setCurrTrkLst, resetAllTracks }) {
           </p>
         </div>
       </IconButton>
-      <IconButton onClick={resetAllTracks}>
+      <IconButton
+        onClick={() => {
+          setSearchStr("");
+          setCurrTrkLst(allTracks);
+        }}
+      >
         <div className="flex">
           <p className="flex-1 text-xs p-1 h-7 rounded bg-btn text-white">
             <CancelIcon />
@@ -363,7 +367,7 @@ function TrackPlayer({ currTrk, closePlayer }) {
           <PlayBackButtons
             onClick={() => {
               if (audioRef === null) return;
-              audioRef.current.currentTime -= skipTime;
+              audioRef.current.currentTime -= 10;
             }}
             imgSrc={"/playbackImgs/skip-back.svg"}
           />
@@ -371,7 +375,7 @@ function TrackPlayer({ currTrk, closePlayer }) {
           <PlayBackButtons
             onClick={() => {
               if (audioRef === null) return;
-              audioRef.current.currentTime += skipTime;
+              audioRef.current.currentTime += 10;
             }}
             imgSrc={"/playbackImgs/skip-forward.svg"}
           />

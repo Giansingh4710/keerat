@@ -13,8 +13,8 @@ import getUrls from "@/utils/get_urls";
 export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
   const [modalOpen, setModal] = useState(false);
   const [description, setDescription] = useState("");
-  const [shabadId, setShabadId] = useState("");
-  const [shabads, setShabads] = useState([]);
+  const [formShabadID, setFromShabadID] = useState("");
+  const [shabadsReturnedFromSearch, setShabads] = useState([]);
   const [currShabad, setCurrShabad] = useState({});
   const [lineClicked, setLineClicked] = useState("");
   const [theTrackType, setTrackType] = useState("");
@@ -51,7 +51,6 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
     const canPostDataToTrackIndex =
       localStorage.getItem("canPostDataToTrackIndex") === "true" ? true : false;
     if (!canPostDataToTrackIndex) {
-      alert("You are not allowed to post data to the track index");
       const password = prompt("Enter password if you to save data?");
       if (password.toLowerCase() === "dgn") {
         localStorage.setItem("canPostDataToTrackIndex", "true");
@@ -69,12 +68,22 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
 
     // saveTimeFunc();
     const theTimeStamp = getTimestampString(timestamp);
+    const info = `
+        Type: ${theTrackType}
+
+        Description: ${description}
+        Shabad ID: ${formShabadID}
+        Timestamp: ${theTimeStamp}
+        `;
+
+    const confirmed = confirm( "Are you sure you want to index this track?" + info);
+    if (!confirmed) return;
     axios({
       url: ADD_INDEX_URL,
       method: "POST",
       data: {
         description,
-        shabadId,
+        shabadID: formShabadID,
         timestamp: theTimeStamp,
         trackType: theTrackType, // fix artist and type
         artist,
@@ -82,6 +91,14 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
       },
     })
       .then((res) => {
+        setTimestamp({ hours: "", minutes: "", seconds: "" });
+
+        setShabads([]);
+        setCurrShabad({});
+        setLineClicked("");
+        setFromShabadID("");
+        setDescription("");
+
         alert(res.data.message);
         console.log(res);
       })
@@ -92,7 +109,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
   }
 
   function ShowShabads() {
-    if (shabads.length === 0) return <></>;
+    if (shabadsReturnedFromSearch.length === 0) return <></>;
     function SbdDetails() {
       return (
         <div>
@@ -102,13 +119,13 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
               e.preventDefault();
               console.log(currShabad);
               setDescription(lineClicked);
-              setShabadId("");
+              setFromShabadID("");
             }}
           >
             {lineClicked}
           </button>
           <details>
-            <summary>{shabadId}</summary>
+            <summary>{formShabadID}</summary>
             <ShabadDetails shabadArray={currShabad.shabadArray} />
           </details>
         </div>
@@ -118,21 +135,21 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
     return (
       <div className="text-white h-20 overflow-auto">
         <SbdDetails />
-        <h1>{shabads.length} Results</h1>
-        {shabads.map((sbd, ind) => {
-          const { shabadId, lineInd, shabadArray } = sbd;
+        <h1>{shabadsReturnedFromSearch.length} Results</h1>
+        {shabadsReturnedFromSearch.map((sbd, ind) => {
+          const { shabadID, lineInd, shabadArray } = sbd;
           const line = shabadArray[lineInd];
 
           return (
             <button
               className="bg-blue-600 p-1 m-1 rounded-lg"
-              key={shabadId}
+              key={shabadID}
               onClick={(e) => {
                 e.preventDefault();
                 setCurrShabad(sbd);
 
                 setLineClicked(line);
-                setShabadId(shabadId);
+                setFromShabadID(shabadID);
                 setDescription(shabadArray[lineInd + 1]);
               }}
             >
@@ -220,24 +237,26 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
               <div className="flex flex-row gap-1 w-full items-center ">
                 <input
                   className="flex-1 rounded-md text-black w-40 h-full"
-                  name="shabadId"
                   placeholder="ਤਕਮਲ"
-                  value={shabadId}
+                  value={formShabadID}
                   onChange={async (event) => {
                     const newInput = await convertToGurmukhi(
                       event.target.value,
                     );
-                    setShabadId(newInput);
+                    setFromShabadID(newInput);
                   }}
                 />
                 <IconButton
                   onClick={async () => {
-                    if (shabadId.length < 3) {
+                    if (formShabadID.length < 3) {
                       alert("Input should be at least 3 characters long");
-                      return
+                      return;
                     }
 
-                    const sbds = await getTheShabads(shabadId, GET_SHABADS_URL);
+                    const sbds = await getTheShabads(
+                      formShabadID,
+                      GET_SHABADS_URL,
+                    );
                     if (sbds.length === 0) {
                       alert("0 Shabads found");
                     } else if (sbds.length === 1) {
@@ -248,7 +267,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
                       setCurrShabad(sbd);
 
                       setLineClicked(shabadArray[lineInd]);
-                      setShabadId(sbd.shabadId);
+                      setFromShabadID(sbd.shabadID);
                       setDescription(shabadArray[lineInd + 1]);
                     }
                     setShabads(sbds);
