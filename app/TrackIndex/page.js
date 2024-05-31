@@ -23,7 +23,7 @@ export default function SGGS() {
 
   useEffect(() => {
     const { GET_INDEXED_TRACKS_URL } = getUrls();
-    console.log(GET_INDEXED_TRACKS_URL);
+    console.log("LINK: ", GET_INDEXED_TRACKS_URL);
     axios({
       url: GET_INDEXED_TRACKS_URL,
       method: "GET",
@@ -71,7 +71,11 @@ export default function SGGS() {
       <TrackPlayer currTrk={currTrk} closePlayer={() => setCurrTrk(null)} />
       <Suspense fallback={<p>Loading...</p>}>
         <p>{currTrkLst.length}: Tracks</p>
-        <ShowTracks currTrkLst={currTrkLst} setCurrTrk={setCurrTrk} />
+        <div className="flex flex-col gap-1 p-10">
+          {currTrkLst.map((trkObj, idx) => (
+            <BarRow trkObj={trkObj} key={idx} setCurrTrk={setCurrTrk} />
+          ))}
+        </div>
       </Suspense>
     </body>
   );
@@ -203,7 +207,11 @@ function SelectInputs({ setCurrTrkLst, allTracks, allTypes, allArtists }) {
           }}
         >
           {allArtists.map((keertani) => {
-            return <option value={keertani}>{keertani}</option>;
+            return (
+              <option key={keertani} value={keertani}>
+                {keertani}
+              </option>
+            );
           })}
         </select>
       </div>
@@ -232,20 +240,14 @@ function SelectInputs({ setCurrTrkLst, allTracks, allTypes, allArtists }) {
           }}
         >
           {allTypes.map((type) => {
-            return <option value={type}>{type}</option>;
+            return (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            );
           })}
         </select>
       </div>
-    </div>
-  );
-}
-
-function ShowTracks({ currTrkLst, setCurrTrk }) {
-  return (
-    <div className="flex flex-col gap-1 p-10">
-      {currTrkLst.map((trkObj, idx) => (
-        <BarRow trkObj={trkObj} key={idx} setCurrTrk={setCurrTrk} />
-      ))}
     </div>
   );
 }
@@ -297,9 +299,10 @@ function BarRow({ trkObj, setCurrTrk }) {
 }
 
 function TrackPlayer({ currTrk, closePlayer }) {
-  if (currTrk === null) {
-    return null;
-  }
+  const audioRef = useRef(null);
+  const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
+  if (currTrk === null) return null;
+
   const {
     ID,
     created,
@@ -311,8 +314,7 @@ function TrackPlayer({ currTrk, closePlayer }) {
     description,
     link,
   } = currTrk;
-  const audioRef = useRef(null);
-  const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
+
   const timestampInSecs = getSecondsFromTimeStamp(timestamp);
   setTimeToGoTo(timestampInSecs);
   return (
