@@ -17,8 +17,8 @@ function getUrls() {
     : "https://www.getshabads.xyz/addIndex";
 
   const GET_SHABADS_URL = isDev
-    ? "https://www.getshabads.xyz/getShabads?input="
-    : "http://localhost:3000/getShabads?input=";
+    ? "http://localhost:3000/getShabads?input="
+    : "https://www.getshabads.xyz/getShabads?input=";
 
   return { GET_INDEXED_TRACKS_URL, ADD_INDEX_URL, GET_SHABADS_URL };
 }
