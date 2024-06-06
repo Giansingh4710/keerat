@@ -3,6 +3,7 @@ import {
   getNextCheckedType,
   getRandType,
   loopIncrement,
+  loopDecrement,
   randIdx,
   randItemFromArr,
 } from "./helper_funcs.js";
@@ -66,16 +67,32 @@ export const useStore = create((set) => ({
         let artist = hist[state.hstIdx].artist;
         let typeIdx = hist[state.hstIdx].typeIdx;
         let linkIdx = hist[state.hstIdx].linkIdx - 1;
-        const artists = Object.keys(allOpts);
 
-        if (linkIdx === -1) {
-          typeIdx -= 1;
-          if (typeIdx === -1) {
-            let artInd = artists.indexOf(artist) - 1;
-            artInd = artInd === -1 ? artists.length - 1 : artInd;
-            artist = artists[artInd];
-            typeIdx = allOpts[artist].length - 1;
+        if (linkIdx === -1 || !allOpts[artist][typeIdx].checked) {
+          const allArtists = Object.keys(allOpts);
+          const validOpts = [];
+          let chosenOptFromValidOpts = 0;
+          for (let i = 0; i < allArtists.length; i++) {
+            const artist = allArtists[i];
+            const types = allOpts[artist];
+            for (let j = 0; j < types.length; j++) {
+              if (types[j].checked) {
+                validOpts.push({ typeInd: j, artistInd: i });
+                if (artist === artist && j === typeIdx) {
+                  // if we never get to this, default is 0
+                  chosenOptFromValidOpts = validOpts.length - 1;
+                }
+              }
+            }
           }
+
+          if (validOpts.length === 0) return {};
+
+          const newOpt =
+            validOpts[loopDecrement(validOpts, chosenOptFromValidOpts)];
+          typeIdx = newOpt.typeInd;
+          const artInd = newOpt.artistInd;
+          artist = allArtists[artInd];
           linkIdx = allOpts[artist][typeIdx].links.length - 1;
         }
         const trackObj = {

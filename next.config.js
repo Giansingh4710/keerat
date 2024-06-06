@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
+const withPWA = require("@ducanh2912/next-pwa").default({
+  dest: "public",
+});
 const nextConfig = {
-  output: 'export',
+  output: "export",
 
   // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
   trailingSlash: true, //this helped it work. /Paath to work instead of me having to manually /Paath.html
@@ -12,6 +15,6 @@ const nextConfig = {
   // distDir: 'dist',
 
   images: { unoptimized: true },
-}
+};
 
-module.exports = nextConfig
+module.exports = withPWA(nextConfig);

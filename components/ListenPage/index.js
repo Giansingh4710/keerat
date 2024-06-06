@@ -23,6 +23,10 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   const nextTrack = useStore((state) => state.nextTrack);
   const setShuffle = useStore((state) => state.setShuffle);
   const setHistory = useStore((state) => state.setHistory);
+  const setCheckedType = useStore((state) => state.setCheckedType);
+  const setCheckedForAllArtists = useStore(
+    (state) => state.setCheckedForAllArtists,
+  );
   const history = useStore((state) => state.history);
   const hstIdx = useStore((state) => state.hstIdx);
   const setTracks = useStore((state) => state.setTracks);
@@ -106,11 +110,28 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       }
     }
 
-    function getShuffle() {
+    function getLocalStorage() {
       if (localStorage.getItem("shuffle") === "true") setShuffle(true);
+
+      let checkedTracks = localStorage.getItem(`Checked: ${title}`);
+      if (checkedTracks) {
+        toast.success("Got Checked Tracks From Storage", { duration: 1000 });
+        checkedTracks = JSON.parse(checkedTracks);
+        setCheckedForAllArtists(false);
+
+        Object.keys(allTheOpts).forEach((artist) => {
+          const validTypes = checkedTracks[artist];
+          if (!validTypes) return;
+          allTheOpts[artist].forEach((linksType, idx) => {
+            if (validTypes.includes(linksType.type)) {
+              setCheckedType(artist, idx, true);
+            }
+          });
+        });
+      }
     }
 
-    getShuffle();
+    getLocalStorage();
     if (!urlStuff()) {
       if (!getLastPlayedTrackLocalStorage()) {
         toast.success("No URL or History, so Playing Next Track", {
@@ -179,7 +200,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         <ChangeColorsModal />
       */}
       <div className="flex flex-row justify-center">
-        <IndexTrackBtnAndModal audioRef={audioRef} saveTimeFunc={saveTime}/>
+        <IndexTrackBtnAndModal audioRef={audioRef} saveTimeFunc={saveTime} />
         <IconButton onClick={saveTime}>
           <div className="m-1 p-2 text-xs rounded bg-btn">Save Time</div>
         </IconButton>

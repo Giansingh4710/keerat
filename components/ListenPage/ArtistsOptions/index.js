@@ -12,6 +12,7 @@ export default function ArtistsOptions() {
   const allOpts = useStore((state) => state.allOptsTracks);
   const setCheckedArtist = useStore((state) => state.setCheckedArtist);
   const optsShown = useStore((state) => state.optsShown);
+  const title = useStore((state) => state.title);
   const setOptsShown = useStore((state) => state.setOptsShown);
   const setCheckedForAllArtists = useStore(
     (state) => state.setCheckedForAllArtists,
@@ -31,6 +32,19 @@ export default function ArtistsOptions() {
     toast.success(`Total Tracks in Queue: ${numOfTracks}`, {
       duration: 1000,
     });
+
+    const checkedTypes = {};
+    Object.keys(allOpts).forEach((artist) => {
+      const lstOftypes = [];
+      allOpts[artist].forEach((linksType) => {
+        if (linksType.checked) {
+          lstOftypes.push(linksType.type);
+        }
+      });
+      if (lstOftypes.length > 0) checkedTypes[artist] = lstOftypes;
+    });
+
+    localStorage.setItem(`Checked: ${title}`, JSON.stringify(checkedTypes));
   }, [allOpts]);
   return (
     <>
