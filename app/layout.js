@@ -9,10 +9,11 @@ export default function RootLayout({ children }) {
         <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </body>
       <Script
+        id="google-analytics"
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-77S9XD0W9T"
       ></Script>
-      <Script>
+      <Script id="google-analytics-config">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
