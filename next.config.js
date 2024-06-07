@@ -1,7 +1,4 @@
 /** @type {import('next').NextConfig} */
-const withPWA = require("@ducanh2912/next-pwa").default({
-  dest: "public",
-});
 const nextConfig = {
   output: "export",
 
@@ -17,4 +14,8 @@ const nextConfig = {
   images: { unoptimized: true },
 };
 
+const withPWA = require("@ducanh2912/next-pwa").default({
+  dest: "public",
+});
 module.exports = withPWA(nextConfig);
+// module.exports = nextConfig

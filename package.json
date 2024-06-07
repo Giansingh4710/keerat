@@ -2,6 +2,9 @@
   "name": "keerat_test",
   "version": "0.1.0",
   "private": true,
+  "pre-commit": [
+    "build"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -21,6 +24,7 @@
     "classnames": "^2.5.1",
     "flowbite-react": "^0.9.0",
     "next": "^14.1.0",
+    "pre-commit": "^1.2.2",
     "react": "^18",
     "react-color": "^2.19.3",
     "react-dom": "^18",

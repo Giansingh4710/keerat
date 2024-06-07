@@ -150,6 +150,11 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   if (!showChild) return <body />;
 
   function navigatorStuff() {
+    if (!("mediaSession" in navigator)) {
+      toast.error("Media Session API not supported", { duration: 5000 });
+      return;
+    }
+
     navigator.mediaSession.setActionHandler("play", () =>
       audioRef.current.play(),
     );
@@ -173,13 +178,14 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
 
     let album = history[hstIdx].type;
     album = album === "main" || album === "other" ? title : album;
-    if ("mediaSession" in navigator) {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: getNameOfTrack(history[hstIdx].link),
-        artist: history[hstIdx].artist,
-        album: album,
-      });
-    }
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: getNameOfTrack(history[hstIdx].link),
+      artist: history[hstIdx].artist,
+      album: album,
+      artwork: [
+        { src: "/logos/ios/1024.png", sizes: "1024x1024", type: "image/png" },
+      ],
+    });
   }
 
   function saveTime() {
