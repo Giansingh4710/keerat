@@ -52,7 +52,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
       localStorage.getItem("canPostDataToTrackIndex") === "true" ? true : false;
     if (!canPostDataToTrackIndex) {
       const password = prompt("Enter password if you to save data?");
-      if (password.toLowerCase() === "dgn") {
+      if (password && password.toLowerCase() === "dgn") {
         localStorage.setItem("canPostDataToTrackIndex", "true");
         alert("Correct password!!");
       } else {
@@ -76,7 +76,9 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
         Timestamp: ${theTimeStamp}
         `;
 
-    const confirmed = confirm( "Are you sure you want to index this track?" + info);
+    const confirmed = confirm(
+      "Are you sure you want to index this track?" + info,
+    );
     if (!confirmed) return;
     axios({
       url: ADD_INDEX_URL,
@@ -110,53 +112,89 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
 
   function ShowShabads() {
     if (shabadsReturnedFromSearch.length === 0) return <></>;
-    function SbdDetails() {
+
+    function LineIndex() {
       return (
-        <div>
-          <button
-            className="bg-blue-600 p-1 m-1 rounded-lg"
-            onClick={(e) => {
-              e.preventDefault();
-              console.log(currShabad);
-              setDescription(lineClicked);
-              setFromShabadID("");
-            }}
+        <IconButton
+          onClick={(e) => {
+            e.preventDefault();
+            console.log(currShabad);
+            setDescription(lineClicked);
+            setFromShabadID("");
+          }}
+        >
+          <div className="flex flex-col p-0.5 text-xs items-center justify-center rounded-lg bg-blue-600 text-white">
+            <div className="w-full flex-1 flex-col text-left">
+              <label className="basis-1/2">
+                Click to index only this line:
+              </label>
+            </div>
+            <div className="w-full flex-1 flex-col text-left">
+              <p className="w-52 truncate">{lineClicked}</p>
+            </div>
+          </div>
+        </IconButton>
+      );
+    }
+
+    function ViewFullShabad() {
+      const [shabadViewModal, setShabadViewModal] = useState(false);
+      return (
+        <>
+          <IconButton onClick={() => setShabadViewModal(true)}>
+            <div className="w-full p-0.5 text-xs items-center justify-center rounded-lg bg-blue-600 text-white">
+              View Full Shabad: {formShabadID}
+            </div>
+          </IconButton>
+          <Modal
+            open={shabadViewModal}
+            onClose={() => setShabadViewModal(false)}
           >
-            {lineClicked}
-          </button>
-          <details>
-            <summary>{formShabadID}</summary>
-            <ShabadDetails shabadArray={currShabad.shabadArray} />
-          </details>
-        </div>
+            <div className="h-full w-full p-1 bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
+              <div className="h-5/6 overflow-auto border-2 border-sky-500 rounded">
+                <ShabadDetails shabadArray={currShabad.shabadArray} />
+              </div>
+
+              <IconButton onClick={() => setShabadViewModal(false)}>
+                <p className="text-sm p-1 bg-red-500 text-white rounded-lg">
+                  Close
+                </p>
+              </IconButton>
+            </div>
+          </Modal>
+        </>
       );
     }
 
     return (
-      <div className="text-white h-20 overflow-auto">
-        <SbdDetails />
+      <div className="flex flex-col gap-1">
         <h1>{shabadsReturnedFromSearch.length} Results</h1>
-        {shabadsReturnedFromSearch.map((sbd, ind) => {
-          const { shabadID, lineInd, shabadArray } = sbd;
-          const line = shabadArray[lineInd];
+        <div className="overflow-auto h-24 border-2 border-sky-500 rounded">
+          {shabadsReturnedFromSearch.map((sbd, ind) => {
+            const { shabadID, lineInd, shabadArray } = sbd;
+            const line = shabadArray[lineInd];
 
-          return (
-            <button
-              className="bg-blue-600 p-1 m-1 rounded-lg"
-              key={shabadID}
-              onClick={(e) => {
-                e.preventDefault();
-                setCurrShabad(sbd);
+            return (
+              <IconButton
+                key={shabadID}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurrShabad(sbd);
 
-                setLineClicked(line);
-                setFromShabadID(shabadID);
-                setDescription(shabadArray[lineInd + 1]);
-              }}
-            >
-              {line}
-            </button>
-          );
-        })}
+                  setLineClicked(line);
+                  setFromShabadID(shabadID);
+                  setDescription(shabadArray[lineInd + 1]);
+                }}
+              >
+                <div className="text-white text-xs bg-blue-600 px-1  rounded-lg">{line}</div>
+              </IconButton>
+            );
+          })}
+        </div>
+        <div className="flex flex-col w-full text-white  border-2 border-sky-500 rounded">
+          <LineIndex />
+          <ViewFullShabad />
+        </div>
       </div>
     );
   }
@@ -173,10 +211,10 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
     ];
 
     return (
-      <div>
-        <label>Type of Track:</label>
+      <div className="flex justify-evenly h-10">
+        <label className="text-sm">Type of Track:</label>
         <select
-          className="m-1 p-1 bg-blue-600 rounded-lg"
+          className=" bg-blue-600 rounded-lg"
           name="trackType"
           id="trackType"
           value={theTrackType}
@@ -204,7 +242,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
         <div className="m-1 p-2 text-xs rounded bg-btn">Index Track</div>
       </IconButton>
       <Modal open={modalOpen} onClose={() => setModal(false)}>
-        <div className="bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
+        <div className="flex items-center h-[90%] overflow-y-auto bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
           <form
             ref={formData}
             className="flex flex-col gap-4"
@@ -212,13 +250,13 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
             method="post"
             // action="http://45.76.2.28/trackIndex/util/addData.php"
           >
-            <div className="flex flex-col items-center justify-center rounded-lg mb-2 p-2 bg-blue-600 ">
+            <div className="flex flex-col items-center justify-center rounded-lg  p-2 bg-blue-600 ">
               <div className="flex-1 flex text-xs w-full text-left ">
-                <label> Description: </label>
+                <label>Description:</label>
               </div>
-              <div className="flex flex-row gap-1 w-full">
+              <div className="flex flex-row gap-1 w-full items-center ">
                 <input
-                  className="flex-1 rounded-md text-black w-48"
+                  className="flex-1 rounded-md text-black w-48 h-full"
                   name="description"
                   placeholder="bin ek naam ik chit leen"
                   value={description}
@@ -230,7 +268,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center rounded-lg mb-2 p-2 bg-blue-600 ">
+            <div className="flex flex-col items-center justify-center rounded-lg p-2 bg-blue-600 ">
               <div className="flex-1 flex text-xs w-full text-left ">
                 <label>Shabad ID:</label>
               </div>
@@ -282,7 +320,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
 
             <ShowShabads />
 
-            <div className="flex flex-col items-center justify-center rounded-lg mb-2 p-2 bg-blue-600 ">
+            <div className="flex flex-col items-center justify-center rounded-lg p-2 bg-blue-600 ">
               <div className="flex-1 flex text-xs w-full text-left ">
                 <label>Timestamp:</label>
               </div>

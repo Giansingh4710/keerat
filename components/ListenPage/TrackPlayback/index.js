@@ -41,8 +41,8 @@ export default function TrackPlayback({ audioRef }) {
 
   return (
     <div className="flex flex-col align-top m-2 rounded-lg bg-primary-200 text-white">
-      <div className="flex-4 p-2">
-        <div className="flex pt-2 items-center">
+      <div className="p-1">
+        <div className="flex  items-center">
           <IconButton
             onClick={async () => {
               if (navigator.clipboard === undefined || link === undefined) {
@@ -55,7 +55,7 @@ export default function TrackPlayback({ audioRef }) {
             <AudiotrackIcon />
           </IconButton>
           <a
-            className="underline w-full break-words text-left"
+            className="underline w-5/6 break-words text-left"
             target="_blank"
             href={link}
           >
@@ -166,9 +166,11 @@ export default function TrackPlayback({ audioRef }) {
         </div>
       </div>
 
-      <AudioPlayer link={link} audioRef={audioRef} />
+      <div className="mx-2">
+        <AudioPlayer link={link} audioRef={audioRef} />
+      </div>
 
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-evenly  ">
         <PlayBackButtons
           imgSrc={"/playbackImgs/left.svg"}
           onClick={prevTrack}

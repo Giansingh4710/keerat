@@ -12,8 +12,8 @@ export default function SearchTracks() {
   const setSearchInput = useSearchStore((state) => state.setSearchInput);
 
   return (
-    <div className="pt-10 flex flex-col">
-      <div className="pb-2 flex  align-middle">
+    <div className=" py-5 flex flex-col">
+      <div className="flex  align-middle">
         <input
           placeholder="Search for Track:"
           className="flex-1 ml-4 h-10 rounded-md text-black p-2 bg-white align-middle"
@@ -49,7 +49,7 @@ function DisplayTracks({ searchInput }) {
   return (
     <div className="border-2 border-sky-500 rounded text-white">
       <p>{results.length} Results Found</p>
-      <div className="overflow-auto h-48">
+      <div className="overflow-y-auto h-48">
         {results.map((trkObj, index) => {
           return (
             <button
@@ -57,18 +57,18 @@ function DisplayTracks({ searchInput }) {
               onClick={() => appendHistory(trkObj)}
               className="flex flex-col rounded-md w-full border-b border-gray-200 hover:bg-blue-100  text-xl p-2 "
             >
-              <div>
-                <span className="pl-2 pr-2">{index + 1}.</span>
-                <span className="flex-1 text-left w-full break-words">
+              <div className="flex w-full text-sm">
+                <p className="pl-2 pr-2">{index + 1}.</p>
+                <p className="flex-1 text-left w-5/6 truncate break-words">
                   {getNameOfTrack(trkObj.link)}
-                </span>
+                </p>
               </div>
-              <div className="flex-2 flex flex-row w-full text-xs">
-                <div className="flex-1 text-xs text-left  ">
+              <div className="flex flex-row w-full text-xs">
+                <div className="basis-3/4 text-xs text-left w-full">
                   <PersonIcon className="p-1" />
                   {trkObj.artist}
                 </div>
-                <div className="flex-1 text-xs text-right  ">
+                <div className="basis-1/4 text-xs text-right truncate break-words">
                   <AlbumIcon className="p-1" />
                   {trkObj.type}
                 </div>

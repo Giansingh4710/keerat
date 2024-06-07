@@ -9,12 +9,10 @@ export function ArtistOptBar({
   onRightTextClick,
 }) {
   return (
-    <div className="flex border-b border-gray-200 text-xs py-1 px-2  w-full gap-10">
+    <div className="flex justify-start items-center border-b border-gray-200">
+      <Checkbox checked={checked} />
       <IconButton onClick={toggleCheckbox}>
-        <div className="flex-1 flex flex-row w-48 text-xs text-white">
-          <Checkbox checked={checked} />
-          <p>{title}</p>
-        </div>
+        <p className="flex-1 text-xs text-white">{title}</p>
       </IconButton>
       <IconButton
         onClick={() => {
@@ -23,7 +21,7 @@ export function ArtistOptBar({
           }
         }}
       >
-        <div className="flex-1  ">
+        <div className="">
           <p className="bg-btn text-sm p-1 rounded-lg ">{rightText}</p>
         </div>
       </IconButton>

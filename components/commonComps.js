@@ -20,7 +20,7 @@ export function PlayPauseBtn({ audioRef }) {
 export function PlayBackButtons({ onClick, imgSrc }) {
   return (
     <IconButton onClick={onClick}>
-      <div className="h-16 w-16 p-4 flex-1">
+      <div className="h-10 w-10 flex-1">
         <img src={imgSrc} className="w-full h-full" />
       </div>
     </IconButton>

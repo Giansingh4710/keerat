@@ -199,7 +199,6 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       <Toaster position="top-left" reverseOrder={true} />
       <NavBar title={title} />
       <SearchTracks />
-      <ArtistsOptions />
       <TrackPlayback audioRef={audioRef} />
       {/*
       <SaveTrackModal />
@@ -207,6 +206,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       */}
       <div className="flex flex-row justify-center">
         <IndexTrackBtnAndModal audioRef={audioRef} saveTimeFunc={saveTime} />
+        <ArtistsOptions />
         <IconButton onClick={saveTime}>
           <div className="m-1 p-2 text-xs rounded bg-btn">Save Time</div>
         </IconButton>
