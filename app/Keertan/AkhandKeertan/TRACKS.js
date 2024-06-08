@@ -1471,6 +1471,7 @@ const SDO_TRACK_LINKS = [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/140 Bhai Mohinder Singh Ji SDO Parmjit Singh Ludhiana wale 1977 SiS Ganj Delhi Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/141 Bhai Mohinder Singh Ji SDO Milwaukee 1980 House Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/142 Bhai Mohinder Singh Ji SDO Ropar India 1976 old spool BS (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/143 Bhai Mohinder Singh Ji SDO Canada BC 1980 (heeraRattan).mp3",
 
     ],
   },

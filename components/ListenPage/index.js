@@ -49,6 +49,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         `LastPlayed: ${title}`,
         JSON.stringify(currTrackData),
       );
+      saveTime();
       navigatorStuff();
     }
   }, [hstIdx]);
@@ -189,7 +190,9 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   }
 
   function saveTime() {
-    toast.success(`Saved Time: ${audioRef.current.currentTime}`);
+    let timeToSave = audioRef.current.currentTime 
+    timeToSave = timeToSave ? timeToSave : 0;
+    toast.success(`Saved Time: ${timeToSave}`);
     localStorage.setItem(`LastTime: ${title}`, audioRef.current.currentTime);
   }
   // here

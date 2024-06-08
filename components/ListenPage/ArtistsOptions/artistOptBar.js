@@ -1,5 +1,6 @@
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { IconButton } from "@mui/material";
+import Button from "../../commonComps.js";
 
 export function ArtistOptBar({
   checked,
@@ -9,11 +10,16 @@ export function ArtistOptBar({
   onRightTextClick,
 }) {
   return (
-    <div className="flex justify-start items-center border-b border-gray-200">
-      <Checkbox checked={checked} />
-      <IconButton onClick={toggleCheckbox}>
-        <p className="flex-1 text-xs text-white">{title}</p>
-      </IconButton>
+    <div className="flex p-1 w-full justify-start items-start border-b border-gray-200">
+      <Button
+        additionalClasses="basis-3/4 "
+        onClick={toggleCheckbox}
+      >
+        <Checkbox checked={checked} />
+        <p className="w-10 text-left truncate flex-1 text-md text-white">
+          {title}
+        </p>
+      </Button>
       <IconButton
         onClick={() => {
           if (onRightTextClick) {
@@ -21,9 +27,7 @@ export function ArtistOptBar({
           }
         }}
       >
-        <div className="">
-          <p className="bg-btn text-sm p-1 rounded-lg ">{rightText}</p>
-        </div>
+        <p className="basis-1/4 bg-btn text-sm p-1 rounded-lg ">{rightText}</p>
       </IconButton>
     </div>
   );

@@ -87,6 +87,7 @@ export default function ArtistsOptions() {
                     checked={checked}
                     title={artist}
                     toggleCheckbox={() => {
+                      toast.success(`${checked ? "Un" : ""}selected: ${artist}`)
                       setCheckedArtist(artist, !checked);
                     }}
                     rightText={ratio}
