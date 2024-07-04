@@ -1478,7 +1478,16 @@ const ALL_OPTS = {
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/146 bhai Mohinder Singh Ji SDO BC Canada Smagam 1980 (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/147 Bhai Mohinder Singh Ji SDO BC Canada Smagam 1980 (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/148 Bhai Mohinder Singh Ji SDO California 1987 smagam -capsule 1 (heeraRattan).mp3",
-        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/149 Bhai Mohinder Singh Ji SDO ASR 1979 Smagam (heeraRattan).mp3"
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/149 Bhai Mohinder Singh Ji SDO ASR 1979 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/150 Bhai Mohinder Singh Ji SDO Leamington spa 1983 Last Of Uk Smagam (ਸੋ ਦਰੁ) ਤੇਰਾ ਅੰਤੁ ਨ ਜਾਈ ਲਖਿਆ (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/151 Bhai Mohinder Singh Ji SDO California 1987 Smagam-capsule 2 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/152 Bhai Mohinder Singh Ji SDO Chicago 1985 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/153 Bhai Mohinder Singh Ji SDO Prince George 1987 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/154 Bhai Mohinder Singh Ji SDO Bibi Kirpal Kaur Ji, Phagwara 1974 Smagam - Spool 29 sk (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/155 Bhai Mohinder Singh Ji SDO Bhai Tajinder Pal Singh ji, Moga 1979 Smagam old spool BK (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/156 Bhai Mohinder Singh Ji SDO Milwaukee 1983 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/157 Bhai Mohinder Singh Ji SDO Los Angeles Ca 1981 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/158 Bhai Mohinder Singh Ji SDO Punjab 1980 Smagam (heeraRattan).mp3"
       ]
     },
     {
