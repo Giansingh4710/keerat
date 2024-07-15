@@ -1550,7 +1550,9 @@ const ALL_OPTS = {
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/053 ਇਕੁਤਿਲੁਨਹੀਵਿਸਰੈਪ੍ਰਾਨਆਧਾਰਾਜਪਿਜਪਿਨਾਨਕਜੀਵਤੇ (karKeertan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/054 Bhai Mohinder Singh SDO Bhai Joginder Singh Ji Talwara 70s ਹਰਿਕੀਪ੍ਰੇਮਭਗਤਿਮਨੁਲੀਨਾ॥ਨਿਤਬਾਜੇਅਨਹਤਬੀਨਾ॥ (karKeertan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/055 70s Ludhiana Samagam (karKeertan).mp3",
-        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/056 Bhai Mohinder Singh SDO Early 60s ਅਲਹ ਰਾਮ ਜੀਵਉ ਤੇਰੇ ਨਾਈ ਅਲਹ ਰਾਮ ਜੀਵਉ ਤੇਰੇ ਨਾਈ (karKeertan).mp3"
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/056 Bhai Mohinder Singh SDO Early 60s ਅਲਹ ਰਾਮ ਜੀਵਉ ਤੇਰੇ ਨਾਈ ਅਲਹ ਰਾਮ ਜੀਵਉ ਤੇਰੇ ਨਾਈ (karKeertan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/057 Bhai Mohinder Singh SDO and Bibi Kirpal Kaur Ji 70s Samagam (karKeertan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/058 Bhai Mohinder Singh SDO Late 70s ਮਾਧੋਸਾਧੂਜਨਦੇਹੁਮਿਲਾਇ ॥ (karKeertan).mp3"
       ]
     },
     {
