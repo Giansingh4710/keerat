@@ -1490,6 +1490,12 @@ const SDO_TRACK_LINKS = [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/159 Bhai Mohinder Singh Ji SDO Boston usa 1982 Smagam -2 (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/160 Bhai Mohinder Singh Ji SDO Milwaukee 1981 Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/161 Bhai Mohinder Singh Ji SDO Detroit 1983 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/162 Bhai Mohinder Singh Ji SDO - Bhai Tajindpal Singh -Joginder Singh - Santok Singh LDH 1977 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/163 Bhai Mohinder Singh Ji SDO Dulla ji playing Tabla, Amritsar 1980 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/164 Bhai Mohinder Singh Ji SDO Prince George 1990 Smagam T-10 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/165 Bhai Mohinder Singh Ji SDO ASR 1980 Smagam -2 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/166 Bhai Mohinder Singh Ji SDO Milwaukee December 1983 Smagam-2 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/167 Bhai Mohinder Singh Ji SDO ASR Smagam 1979 T-4 (heeraRattan).mp3",
 
     ],
   },
