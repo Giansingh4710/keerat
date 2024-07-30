@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ALL_THEMES from "@/utils/themes";
 import { Typography, IconButton } from "@mui/material";
 import { formatTime, getNameOfTrack } from "@/utils/helper_funcs";
@@ -8,7 +8,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useStore } from "@/utils/store.js";
 import toast from "react-hot-toast";
 import AudioPlayer from "@/components/AudioPlayer";
+import { Modal } from "@mui/material";
 import { PlayPauseBtn, PlayBackButtons } from "@/components/commonComps";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import FlipCameraAndroidIcon from "@mui/icons-material/FlipCameraAndroid";
 
 export default function TrackPlayback({ audioRef }) {
   const nextTrack = useStore((state) => state.nextTrack);
@@ -20,10 +23,13 @@ export default function TrackPlayback({ audioRef }) {
   const skipTime = useStore((state) => state.skipTime);
   const setSkipTime = useStore((state) => state.setSkipTime);
   const setPlayBackSpeed = useStore((state) => state.setPlayBackSpeed);
+  const setOptsShown = useStore((state) => state.setOptsShown);
   // const { artist, link, typeIdx, linkIdx, type } = history[hstIdx]
   const artist = history[hstIdx]?.artist;
   const link = history[hstIdx]?.link;
   const type = history[hstIdx]?.type;
+
+  const [tracksModalOpen, setTracksModal] = useState(false);
 
   function copyLink() {
     const url = new URL(window.location.href.split("?")[0].split("#")[0]);
@@ -41,6 +47,12 @@ export default function TrackPlayback({ audioRef }) {
 
   return (
     <div className="flex flex-col align-top m-2 rounded-lg bg-primary-200 text-white">
+      <TracksModal
+        setModal={setTracksModal}
+        modalOpen={tracksModalOpen}
+        artist={artist}
+        type={type}
+      />
       <div className="p-1">
         <div className="flex  items-center">
           <IconButton
@@ -54,21 +66,25 @@ export default function TrackPlayback({ audioRef }) {
           >
             <AudiotrackIcon />
           </IconButton>
-          <a
-            className="underline w-5/6 break-words text-left"
-            target="_blank"
-            href={link}
+          <Typography
+            className="shadow-xl pl-2 text-sm opacity-70 "
+            onClick={() => {
+              setTracksModal(true);
+            }}
           >
-            <Typography className="pl-2 text-sm opacity-70 ">
-              {link && getNameOfTrack(link)}
-            </Typography>
-          </a>
+            {getNameOfTrack(link)}
+          </Typography>
         </div>
         <div className="flex pt-2 items-center">
           <IconButton onClick={() => toast.success(`Dhan ${artist}!!!`)}>
             <PersonIcon />
           </IconButton>
-          <Typography className="pl-3 text-sm text-left opacity-70 font-medium tracking-tight">
+          <Typography
+            className="shadow-xl pl-3 text-sm text-left opacity-70 font-medium tracking-tight"
+            onClick={() => {
+              setOptsShown("all");
+            }}
+          >
             {artist}
           </Typography>
         </div>
@@ -76,7 +92,12 @@ export default function TrackPlayback({ audioRef }) {
           <IconButton onClick={() => toast.success(`${type} is best!!!`)}>
             <AlbumIcon />
           </IconButton>
-          <Typography className="pl-3 text-sm opacity-70 font-medium tracking-tight">
+          <Typography
+            className="shadow-xl pl-3 text-sm opacity-70 font-medium tracking-tight"
+            onClick={() => {
+              setOptsShown(artist);
+            }}
+          >
             {type}
           </Typography>
         </div>
@@ -199,5 +220,67 @@ export default function TrackPlayback({ audioRef }) {
         />
       </div>
     </div>
+  );
+}
+
+function TracksModal({ setModal, modalOpen, artist, type }) {
+  const allOpts = useStore((state) => state.allOptsTracks);
+  const appendHistory = useStore((state) => state.appendHistory);
+  const [tracksObj, setTracksObj] = useState();
+
+  useEffect(() => {
+    if (type === undefined || artist === undefined) return;
+    setTracksObj(allOpts[artist].find((obj) => obj.type === type).links);
+  }, [artist, type]);
+
+  if (type === undefined) {
+    return null;
+  }
+
+  return (
+    <Modal open={modalOpen} onClose={() => setModal(false)}>
+      <div className=" w-screen flex items-center overflow-y-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="m-10 flex-1 bg-primary-100  rounded-lg border border-solid border-white ">
+          <div className=" text-white flex p-2 border-b border-solid border-white  ">
+            <p className="flex-1 text-left text-2xl font-bold">
+              {artist}: {type}
+            </p>
+            <div>
+              <IconButton
+                className="h-10 w-10 "
+                onClick={() => {
+                  const newRes = [...tracksObj.reverse()];
+                  setTracksObj(newRes);
+                }}
+              >
+                <FlipCameraAndroidIcon className="text-white" />
+              </IconButton>
+              <IconButton onClick={() => setModal(false)}>
+                <div className="text-white flex-1 flex">
+                  <HighlightOffIcon />
+                </div>
+              </IconButton>
+            </div>
+          </div>
+          <div className="flex flex-col p-2 flex-auto max-h-48 overflow-auto text-white">
+            {tracksObj?.map((link, idx) => {
+              const trkObj = { link, artist, linkIdx: idx, type, link };
+              return (
+                <button
+                  className="text-left border-b border-solid border-white"
+                  key={idx}
+                  onClick={() => {
+                    setModal(false);
+                    appendHistory(trkObj);
+                  }}
+                >
+                  {getNameOfTrack(link)}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </Modal>
   );
 }

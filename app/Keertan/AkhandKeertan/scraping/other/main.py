@@ -57,7 +57,7 @@ def golden_khajana():
 def i_kirtan():
     def ikirtan(link, baseLink):
         res = requests.get(link)
-        soup = bs(res.text, "lxml")
+        soup = bs(res.text, "html.parser")
         if link[-1] != "/":
             link += "/"
 
@@ -92,7 +92,8 @@ def i_kirtan():
     # theLink = "https://www.ikirtan.com/index.php?q=f&f=%2FBhai_Mohinder_Singh_Jee_SDO"
     # theLink="http://www.ikirtan.com/index.php?f=%2FBhai_Joginder_Singh_Jee_Talwara&q=f"
     # theLink="https://www.ikirtan.com/index.php?q=f&f=%2FBhai_Mehar_Singh_Jee"
-    theLink="https://www.ikirtan.com/index.php?q=f&f=%2F_Bhai_Jeevan_Singh_Jee"
+    # theLink="https://www.ikirtan.com/index.php?q=f&f=%2F_Bhai_Jeevan_Singh_Jee"
+    theLink="https://www.ikirtan.com/index.php?q=f&f=%2FBhai_Harpreet_Singh_Jee"
     links = ikirtan(theLink, base)
     # download(links,path)
     print("\n")
@@ -115,7 +116,7 @@ def sikhRoots():
     sikh_roots(theLink)
 
 
-golden_khajana()
-# i_kirtan()
+# golden_khajana()
+i_kirtan()
 # youtube()
 # sikhRoots()

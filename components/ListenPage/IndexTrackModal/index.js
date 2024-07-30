@@ -186,7 +186,9 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
                   setDescription(shabadArray[lineInd + 1]);
                 }}
               >
-                <div className="text-white text-xs bg-blue-600 px-1  rounded-lg">{line}</div>
+                <div className="text-white text-xs bg-blue-600 px-1  rounded-lg">
+                  {line}
+                </div>
               </IconButton>
             );
           })}
@@ -242,7 +244,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
         <div className="m-1 p-2 text-xs rounded bg-btn">Index Track</div>
       </IconButton>
       <Modal open={modalOpen} onClose={() => setModal(false)}>
-        <div className="flex items-center h-[90%] overflow-y-auto bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
+        <div className="flex justify-center items-center h-[90%] overflow-y-auto bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
           <form
             ref={formData}
             className="flex flex-col gap-4"
@@ -250,73 +252,47 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
             method="post"
             // action="http://45.76.2.28/trackIndex/util/addData.php"
           >
-            <div className="flex flex-col items-center justify-center rounded-lg  p-2 bg-blue-600 ">
-              <div className="flex-1 flex text-xs w-full text-left ">
-                <label>Description:</label>
-              </div>
-              <div className="flex flex-row gap-1 w-full items-center ">
-                <input
-                  className="flex-1 rounded-md text-black w-48 h-full"
-                  name="description"
-                  placeholder="bin ek naam ik chit leen"
-                  value={description}
-                  onChange={(event) => setDescription(event.target.value)}
-                />
-                <div className="flex-1">
-                  <CancelIcon onClick={() => setDescription("")} />
-                </div>
-              </div>
-            </div>
+            <InputBar
+              label="Description:"
+              placeholder="bin ek naam ik chit leen"
+              text={description}
+              onTextChange={(event) => setDescription(event.target.value)}
+              Icon={CancelIcon}
+              iconOnClick={() => setDescription("")} 
+            />
 
-            <div className="flex flex-col items-center justify-center rounded-lg p-2 bg-blue-600 ">
-              <div className="flex-1 flex text-xs w-full text-left ">
-                <label>Shabad ID:</label>
-              </div>
-              <div className="flex flex-row gap-1 w-full items-center ">
-                <input
-                  className="flex-1 rounded-md text-black w-40 h-full"
-                  placeholder="ਤਕਮਲ"
-                  value={formShabadID}
-                  onChange={async (event) => {
-                    const newInput = await convertToGurmukhi(
-                      event.target.value,
-                    );
-                    setFromShabadID(newInput);
-                  }}
-                />
-                <IconButton
-                  onClick={async () => {
-                    if (formShabadID.length < 3) {
-                      alert("Input should be at least 3 characters long");
-                      return;
-                    }
+            <InputBar
+              label="Shabad ID:"
+              placeholder="ਤਕਮਲ"
+              text={formShabadID}
+              onTextChange={async (event) => {
+                const newInput = await convertToGurmukhi(event.target.value);
+                setFromShabadID(newInput);
+              }}
+              Icon={SearchIcon}
+              iconOnClick={async () => {
+                if (formShabadID.length < 3) {
+                  alert("Input should be at least 3 characters long");
+                  return;
+                }
 
-                    const sbds = await getTheShabads(
-                      formShabadID,
-                      GET_SHABADS_URL,
-                    );
-                    if (sbds.length === 0) {
-                      alert("0 Shabads found");
-                    } else if (sbds.length === 1) {
-                      const sbd = sbds[0];
-                      const lineInd = sbd.lineInd;
-                      const shabadArray = sbd.shabadArray;
-                      console.log(sbd);
-                      setCurrShabad(sbd);
+                const sbds = await getTheShabads(formShabadID, GET_SHABADS_URL);
+                if (sbds.length === 0) {
+                  alert("0 Shabads found");
+                } else if (sbds.length === 1) {
+                  const sbd = sbds[0];
+                  const lineInd = sbd.lineInd;
+                  const shabadArray = sbd.shabadArray;
+                  console.log(sbd);
+                  setCurrShabad(sbd);
 
-                      setLineClicked(shabadArray[lineInd]);
-                      setFromShabadID(sbd.shabadID);
-                      setDescription(shabadArray[lineInd + 1]);
-                    }
-                    setShabads(sbds);
-                  }}
-                >
-                  <div className="text-sm flex-1 h-5 text-white">
-                    <SearchIcon />
-                  </div>
-                </IconButton>
-              </div>
-            </div>
+                  setLineClicked(shabadArray[lineInd]);
+                  setFromShabadID(sbd.shabadID);
+                  setDescription(shabadArray[lineInd + 1]);
+                }
+                setShabads(sbds);
+              }}
+            />
 
             <ShowShabads />
 
@@ -426,6 +402,38 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
           </form>
         </div>
       </Modal>
+    </div>
+  );
+}
+
+function InputBar({
+  label,
+  placeholder,
+  text,
+  onTextChange,
+  Icon,
+  iconOnClick,
+}) {
+  return (
+    <div className="flex flex-col items-center justify-center rounded-lg p-2 bg-blue-600 ">
+      <div className="flex-1 flex text-xs w-full text-left ">
+        <label>{label}</label>
+      </div>
+      <div className="flex flex-row gap-1 w-full items-center ">
+        <input
+          className="flex-1 rounded-md text-black w-40 h-full"
+          placeholder={placeholder}
+          value={text}
+          onChange={(event) => {
+            if (onTextChange) onTextChange(event);
+          }}
+        />
+        <IconButton onClick={() => iconOnClick()}>
+          <div className="text-sm flex-1 h-5 text-white">
+            <Icon />
+          </div>
+        </IconButton>
+      </div>
     </div>
   );
 }

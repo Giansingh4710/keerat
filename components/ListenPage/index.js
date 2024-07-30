@@ -66,7 +66,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       const urlSearch = urlParams.get("search");
       if (urlSearch) {
         setSearchInput(urlSearch);
-        toast.success("Search from URL");
+        // toast.success("Search from URL");
         return true;
       }
       const theUrl = urlParams.get("url");
@@ -102,7 +102,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         const localStorageTime = localStorage.getItem(`LastTime: ${title}`);
         const timeInS = getSecondsFromTimeStamp(localStorageTime);
         setTimeToGoTo(timeInS);
-        toast.success("Found Track From History", { duration: 3000 });
+        // toast.success("Found Track From History", { duration: 3000 });
         return true;
       } catch (e) {
         // toast.error(e.message, { duration: 1000 });
@@ -116,7 +116,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
 
       let checkedTracks = localStorage.getItem(`Checked: ${title}`);
       if (checkedTracks) {
-        toast.success("Got Checked Tracks From Storage", { duration: 1000 });
+        // toast.success("Got Checked Tracks From Storage", { duration: 1000 });
         checkedTracks = JSON.parse(checkedTracks);
         setCheckedForAllArtists(false);
 
@@ -135,9 +135,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     getLocalStorage();
     if (!urlStuff()) {
       if (!getLastPlayedTrackLocalStorage()) {
-        toast.success("No URL or History, so Playing Next Track", {
-          duration: 5000,
-        });
+        // toast.success("No URL or History, so Playing Next Track", { duration: 5000, });
         nextTrack();
       }
     }
@@ -192,7 +190,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   function saveTime() {
     let timeToSave = audioRef.current.currentTime 
     timeToSave = timeToSave ? timeToSave : 0;
-    toast.success(`Saved Time: ${timeToSave}`);
+    // toast.success(`Saved Time: ${timeToSave}`);
     localStorage.setItem(`LastTime: ${title}`, audioRef.current.currentTime);
   }
   // here
@@ -210,9 +208,6 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       <div className="flex flex-row justify-center">
         <IndexTrackBtnAndModal audioRef={audioRef} saveTimeFunc={saveTime} />
         <ArtistsOptions />
-        <IconButton onClick={saveTime}>
-          <div className="m-1 p-2 text-xs rounded bg-btn">Save Time</div>
-        </IconButton>
       </div>
     </body>
   );

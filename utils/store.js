@@ -19,6 +19,8 @@ export const useStore = create((set) => ({
     set((state) => {
       const currTrack = state.history[state.hstIdx];
       if (currTrack && currTrack.link === trackObj.link) return {};
+      // trackObj = {artist, typeIdx, linkIdx, type, link}
+
       return {
         history: [...state.history, trackObj],
         hstIdx: state.hstIdx + 1,
@@ -212,11 +214,9 @@ export const useStore = create((set) => ({
   paused: true,
   setPaused: (value) => set({ paused: value }),
 
-  optsShown: false,
+  optsShown: 'none', // all, none, [artist]
   setOptsShown: (value) =>
     set(() => {
-      // if (typeof localStorage === "undefined") return {};
-      // localStorage.setItem("Keerat.xyz: ShowOptions", value);
       return { optsShown: value };
     }),
 }));

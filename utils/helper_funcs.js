@@ -44,7 +44,7 @@ export function getRandomKey(obj) {
 }
 
 export function getNameOfTrack(link) {
-  // console.log('BOB:', link)
+  if (!link) return "";
   const title = link.split("/").slice(-1)[0];
   return decodeURIComponent(decodeURIComponent(title));
 }
