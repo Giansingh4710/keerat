@@ -1496,6 +1496,9 @@ const SDO_TRACK_LINKS = [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/165 Bhai Mohinder Singh Ji SDO ASR 1980 Smagam -2 (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/166 Bhai Mohinder Singh Ji SDO Milwaukee December 1983 Smagam-2 (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/167 Bhai Mohinder Singh Ji SDO ASR Smagam 1979 T-4 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/168 Bhai Mohinder Singh Ji SDO Milwaukee 20,05,1983 Smagam-1 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/169 Bhai Mohinder Singh Ji SDO Bhai Jaspal Singh ji Milwaukee 1981 (English Translation) (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/170 Bhai Mohinder Singh Ji SDO Milwaukee 11 1983 Smagam - 2 (heeraRattan).mp3",
 
     ],
   },

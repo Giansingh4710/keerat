@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import FlipCameraAndroidIcon from '@mui/icons-material/FlipCameraAndroid';
 import AlbumIcon from "@mui/icons-material/Album";
 import PersonIcon from "@mui/icons-material/Person";
 import { IconButton } from "@mui/material";
@@ -48,7 +49,19 @@ function DisplayTracks({ searchInput }) {
   if (searchInput === "") return <></>;
   return (
     <div className="border-2 border-sky-500 rounded text-white">
-      <p>{results.length} Results Found</p>
+      <div className="flex flex-row justify-normal">
+        <p className="flex-1">{results.length} Results Found</p>
+        <IconButton
+          className="h-10 w-10 "
+          onClick={() => {
+            const newRes = [...results.reverse()]
+            console.log(newRes[0]);
+            setResults(newRes);
+          }}
+        >
+          <FlipCameraAndroidIcon className="text-white" />
+        </IconButton>
+      </div>
       <div className="overflow-y-auto h-48">
         {results.map((trkObj, index) => {
           return (
