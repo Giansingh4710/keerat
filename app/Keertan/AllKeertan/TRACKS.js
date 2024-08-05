@@ -7276,4 +7276,3 @@ const ALL_OPTS = {
   ]
 }
 
-module.exports = { ALL_OPTS };
