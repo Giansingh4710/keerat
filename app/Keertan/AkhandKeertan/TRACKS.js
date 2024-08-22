@@ -1501,7 +1501,15 @@ const SDO_TRACK_LINKS = [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/170 Bhai Mohinder Singh Ji SDO Milwaukee 11 1983 Smagam - 2 (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/171 Bhai Mohinder Singh Ji SDO California Smagam 1982 (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/172 Bhai Mohinder Singh Ji SDO ASR 1979 Smagam (heeraRattan).mp3",
-
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/173 Bhai Mohinder Singh Ji SDO Southend 23,09,1990 Darshan Singh ji house Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/174 Bhai Mohinder Singh Ji SDO punjab1968 smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/175 Bhai Mohinder Singh Ji SDO Milwaukee 1984 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/176 Bhai Mohinder Singh Ji SDO NYK 1981 Smagam - T-2-3-4 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/177 Bhai Mohinder Singh Ji SDO Punjab 1979 Smagam T-1 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/178 Bhai Mohinder Singh Ji SDO Panchkhula CHD 1976 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/179 bhai Mohinder Singh Ji SDO Michigan 1980 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/180 Bhai Mohinder Singh Ji SDO Moga 1979 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/181 Bhai Mohinder Singh Ji SDO Punjab Smagam 1974 (heeraRattan).mp3",
 
     ],
   },

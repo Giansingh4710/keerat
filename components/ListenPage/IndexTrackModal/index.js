@@ -209,6 +209,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
       "sikhsoul_SDO",
       "ikirtan_SDO",
       "aisakirtan_SDO",
+      "ikirtan_HPS"
       // "GianiSherS",
     ];
 
