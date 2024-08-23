@@ -34,6 +34,7 @@ export default function AudioPlayer({ link, audioRef }) {
   };
 
   const audioComponent = React.useMemo(() => {
+    audioRef?.current?.pause()
     return (
       <audio
         ref={audioRef}
