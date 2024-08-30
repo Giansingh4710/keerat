@@ -1,6 +1,7 @@
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import os
 from env import CONNECTION_STRING
+from urllib.parse import unquote
 
 connection_string = CONNECTION_STRING
 container_name = "ds1"
@@ -116,7 +117,7 @@ def read(folder_path, depth=0):
 
 
 def print_links(folder_path):
-    print(f"Links in '{folder_path}':")
+    print(f"Links in '{folder_path}':\n")
     blobs = container_client.walk_blobs(name_starts_with=folder_path)
     for blob in blobs:
         name = blob.name
@@ -124,8 +125,8 @@ def print_links(folder_path):
             print_links(name)
         else:
             blob_client = container_client.get_blob_client(name)
-            url = blob_client.url.replace("%20", " ")
-            print(url)
+            url = unquote(blob_client.url)
+            print(f'"{url}",')
 
 
 def count(folder_path, depth=0):
@@ -219,6 +220,7 @@ def random_stuff():
 
 
 folder = "audios/"  # needs to end with /
+folder = "audios/keertan/dr_pritam_singh_anjaan/"
 # folder = "audios/keertan/bhai_randhir_singh/"
 
 # curr = "audios/keertan/timeBased/3)6amto9am/Raag devgandhari - Att Sundar man Mohan piyare - Canada2019.mp3.mp3"
@@ -231,8 +233,8 @@ folder = "audios/"  # needs to end with /
 # files_map(folder, is_webm, delete_file)
 
 # upload_file("/Users/gians/Desktop/dev/webdev/keerat/app/Keertan/AkhandKeertan/scraping/dl_all_links_from_yt_link/HeeraRatan/114 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-1 Bombay (heeraRattan).mp3", "audios/keertan/114 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-1 Bombay (heeraRattan).mp3")
-# print_links(folder)
-read(folder)
+print_links(folder)
+# read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
 # rename_folder(folder, "audios2/")
 # delete_folder(folder)  # very DANGAROUS
