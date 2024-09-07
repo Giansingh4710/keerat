@@ -209,3 +209,22 @@ export function searchTracks(searchTerm, allOpts) {
   }
   return results;
 }
+
+export function secondsToHMS(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  if (hours > 0) {
+    return [
+      hours.toString().padStart(2, "0"),
+      minutes.toString().padStart(2, "0"),
+      secs.toString().padStart(2, "0"),
+    ].join(":");
+  } else {
+    return [
+      minutes.toString().padStart(2, "0"),
+      secs.toString().padStart(2, "0"),
+    ].join(":");
+  }
+}

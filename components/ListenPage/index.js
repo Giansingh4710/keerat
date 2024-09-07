@@ -14,6 +14,7 @@ import {
   getObjFromUrl,
   getSecondsFromTimeStamp,
   validTrackObj,
+  secondsToHMS,
 } from "@/utils/helper_funcs.js";
 import toast, { Toaster } from "react-hot-toast";
 import { useSearchStore, useStore } from "@/utils/store.js";
@@ -60,7 +61,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       if (urlParams.size === 0) return false;
 
       const timeInS = getSecondsFromTimeStamp(urlParams.get("time"));
-      toast.success(`Time: ${timeInS}`, { duration: 5000 });
+      toast.success(`Starting From: ${secondsToHMS(timeInS)}`, { duration: 5000 });
       setTimeToGoTo(timeInS);
 
       const urlSearch = urlParams.get("search");
