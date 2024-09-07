@@ -7,6 +7,7 @@ export default function Home() {
     'Sant Giani Gurbachan Singh Ji SGGS Katha',
     'Bhagat Jaswant Singh Ji',
     'Giani Sher Singh Ji',
+    'Sant Waryam Singh Ji',
     // 'Miscellaneous Topics',
     'Track Index',
   ]

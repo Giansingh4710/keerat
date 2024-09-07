@@ -121,6 +121,7 @@ export default function NavBar({ title }) {
         <LinkTag href="/SantGianiGurbachanSinghJiSGGSKatha/" />
         <LinkTag href="/BhagatJaswantSinghJi/" />
         <LinkTag href="/GianiSherSinghJi/" />
+        <LinkTag href="/SantWaryamSinghJi/" />
         <LinkTag href="/MiscellaneousTopics" />
         <LinkTag href="/RimmyRadio" />
         <LinkTag href="/TrackIndex" />
