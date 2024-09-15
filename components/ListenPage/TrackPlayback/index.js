@@ -104,8 +104,10 @@ export default function TrackPlayback({ audioRef }) {
       </div>
 
       <div className="flex gap-1 mx-1 rounded-lg bg-primary-100">
-        <div className="flex flex-col rounded-lg ">
-          <label className="flex-1">Shuffle: {shuffle ? "On" : "Off"}</label>
+        <div className="flex-1 flex flex-col">
+          <div className="flex-1">
+            <label className="text-white text-sm ">Shuffle: {shuffle ? "On" : "Off"}</label>
+          </div>
           <div className="flex-1">
             <IconButton
               onClick={() => {
@@ -128,7 +130,7 @@ export default function TrackPlayback({ audioRef }) {
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex-1 flex flex-col">
           <div className="flex-1">
             <label className="text-white text-sm ">Playback Speed:</label>
           </div>
@@ -157,7 +159,7 @@ export default function TrackPlayback({ audioRef }) {
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex-1 flex flex-col">
           <div className="flex-1">
             <label className="text-white text-sm ">Skiping Interval:</label>
           </div>
@@ -178,8 +180,10 @@ export default function TrackPlayback({ audioRef }) {
           </div>
         </div>
 
-        <div className="rounded-lg">
-          <label className="flex-1">Copy Link</label>
+        <div className="flex-1 flex flex-col">
+          <div className="flex-1">
+            <label className="text-white text-sm ">Copy Link</label>
+          </div>
           <div className="flex-1">
             <IconButton onClick={copyLink}>
               <div className="flex bg-btn rounded mx-1 h-6 w-12">
