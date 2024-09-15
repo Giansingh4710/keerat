@@ -12,6 +12,8 @@ import { useStore } from "@/utils/store.js";
 import { PlayPauseBtn, PlayBackButtons } from "@/components/commonComps";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
+import toast, { Toaster } from "react-hot-toast";
+import { getLinkToKeerat } from "./copyFunc.js";
 
 export default function SGGS() {
   const [allTracks, setAllTracks] = useState([]);
@@ -23,14 +25,12 @@ export default function SGGS() {
 
   useEffect(() => {
     const { GET_INDEXED_TRACKS_URL } = getUrls();
-    console.log("LINK: ", GET_INDEXED_TRACKS_URL);
     axios({
       url: GET_INDEXED_TRACKS_URL,
       method: "GET",
     })
       .then((res) => {
         const lst = res.data.reverse();
-        console.log(lst);
         setAllTracks(lst);
         setCurrTrkLst(lst);
 
@@ -55,11 +55,9 @@ export default function SGGS() {
 
   return (
     <body className="w-full h-full bg-primary-100 text-white">
+      <Toaster position="top-left" reverseOrder={true} />
       <NavBar title="Track Index" />
-      <SearchBar
-        setCurrTrkLst={setCurrTrkLst}
-        allTracks={allTracks}
-      />
+      <SearchBar setCurrTrkLst={setCurrTrkLst} allTracks={allTracks} />
 
       <SelectInputs
         setCurrTrkLst={setCurrTrkLst}
@@ -281,6 +279,16 @@ function BarRow({ trkObj, setCurrTrk }) {
           Added: {getDateFromUnixTime(created)}
         </p>
         <p className="flex-1 text-left">Time Stamp: {timestamp}</p>
+
+        <IconButton
+          onClick={() =>
+            copyLocalLink(link, getSecondsFromTimeStamp(timestamp))
+          }
+        >
+          <p className="flex-1 text-sm rounded bg-btn break-all text-white">
+            Copy Link
+          </p>
+        </IconButton>
         <IconButton
           onClick={() => {
             setCurrTrk(trkObj);
@@ -337,7 +345,9 @@ function TrackPlayer({ currTrk, closePlayer }) {
         <p className="w-full text-left max-h-20 overflow-auto">{description}</p>
       </div>
       <div className="flex flex-col m-1 p-1 bg-secondary-200 rounded">
-        <p className="w-full text-left">Track: {getNameOfTrack(link)}</p>
+        <a className="w-full text-left underline" href={link} target="_blank">
+          Track: {getNameOfTrack(link)}
+        </a>
         <p className="w-full text-left">Type: {type}</p>
         <div className="w-full text-left flex">
           <p>Time Stamp:</p>
@@ -360,6 +370,12 @@ function TrackPlayer({ currTrk, closePlayer }) {
             ))}
           </div>
         </details>
+
+        <div className="w-full text-left flex">
+          <IconButton onClick={() => copyLocalLink(link, timestampInSecs)}>
+            <p className="text-xs bg-btn rounded p-1">Copy Link</p>
+          </IconButton>
+        </div>
       </div>
       <div>
         <AudioPlayer link={link} audioRef={audioRef} />
@@ -388,4 +404,18 @@ function TrackPlayer({ currTrk, closePlayer }) {
 function getDateFromUnixTime(unixTimeStamp) {
   const the_date = new Date(unixTimeStamp * 1000);
   return the_date.toLocaleString();
+}
+
+function copyLocalLink(link, timestampInSecs) {
+  if (navigator.clipboard && "writeText" in navigator.clipboard) {
+    const localLink = getLinkToKeerat(link, timestampInSecs);
+    if (!localLink) {
+      toast.error("Link not found!!!");
+      return;
+    }
+    navigator.clipboard.writeText(localLink);
+    toast.success("Link copied to clipboard");
+  } else {
+    toast.error("Navigator API not supported!!!");
+  }
 }

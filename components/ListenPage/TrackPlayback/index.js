@@ -67,7 +67,7 @@ export default function TrackPlayback({ audioRef }) {
             <AudiotrackIcon />
           </IconButton>
           <Typography
-            className="shadow-xl pl-2 text-sm opacity-70 "
+            className="shadow-xl pl-2 text-sm opacity-70 break-all"
             onClick={() => {
               setTracksModal(true);
             }}
@@ -103,13 +103,36 @@ export default function TrackPlayback({ audioRef }) {
         </div>
       </div>
 
-      <div className="flex flex-col flex-2 mx-1 rounded-lg bg-primary-100">
-        <div className="flex-1 flex gap-4 m-2 p-1 border-b border-gray-200">
-          <div className="flex-1 flex flex-col">
-            <label htmlFor="pickPlaybackSpeed"></label>
-            <div className="mb-0">
-              <label className="text-white text-sm ">Playback Speed:</label>
-            </div>
+      <div className="flex gap-1 mx-1 rounded-lg bg-primary-100">
+        <div className="flex flex-col rounded-lg ">
+          <label className="flex-1">Shuffle: {shuffle ? "On" : "Off"}</label>
+          <div className="flex-1">
+            <IconButton
+              onClick={() => {
+                setShuffle(!shuffle);
+                localStorage.setItem("shuffle", !shuffle);
+                toast.success("Shuffle " + (!shuffle ? "Enabled" : "Disabled"));
+              }}
+            >
+              <div className="bg-btn rounded mx-1 h-6 w-12 flex-1">
+                <img
+                  src={
+                    shuffle
+                      ? "/playbackImgs/shuffle.svg"
+                      : "/playbackImgs/inorder.svg"
+                  }
+                  className="w-full h-full"
+                />
+              </div>
+            </IconButton>
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          <div className="flex-1">
+            <label className="text-white text-sm ">Playback Speed:</label>
+          </div>
+          <div className="flex-1">
             <select
               id="pickPlaybackSpeed"
               className="text-black text-sm rounded text-center"
@@ -132,54 +155,34 @@ export default function TrackPlayback({ audioRef }) {
               <option value="3">3x</option>
             </select>
           </div>
+        </div>
 
-          <div className="flex-1 flex flex-col">
-            <div className="mb-0">
-              <label className="text-white text-sm ">Skip Interval:</label>
-            </div>
+        <div className="flex flex-col">
+          <div className="flex-1">
+            <label className="text-white text-sm ">Skiping Interval:</label>
+          </div>
+          <div className="flex-1">
             <select
               id="pickSkipInterval"
-              className="text-black text-sm rounded text-center"
+              className="text-black text-sm rounded text-center align-top"
               onChange={(e) => {
                 setSkipTime(parseInt(e.target.value));
               }}
               defaultValue={skipTime}
             >
-              <option value="5">5 Seconds</option>
-              <option value="10">10 Seconds</option>
-              <option value="30">30 Seconds</option>
-              <option value="60">60 Seconds</option>
+              <option value="5">5 seconds</option>
+              <option value="10">10 seconds</option>
+              <option value="30">30 seconds</option>
+              <option value="60">60 seconds</option>
             </select>
           </div>
         </div>
 
-        <div className="flex-1 flex gap-4 py-1">
-          <div className="flex-1 flex flex-col rounded-lg">
-            <label className="flex-1">Shuffle: {shuffle ? "On" : "Off"}</label>
-            <IconButton
-              onClick={() => {
-                setShuffle(!shuffle);
-                localStorage.setItem("shuffle", !shuffle);
-                toast.success("Shuffle " + (!shuffle ? "Enabled" : "Disabled"));
-              }}
-            >
-              <div className="flex-1 flex bg-btn rounded mx-16 h-6 w-12">
-                <img
-                  src={
-                    shuffle
-                      ? "/playbackImgs/shuffle.svg"
-                      : "/playbackImgs/inorder.svg"
-                  }
-                  className="w-full h-full"
-                />
-              </div>
-            </IconButton>
-          </div>
-
-          <div className="flex-1 flex flex-col rounded-lg">
-            <label className="flex-1">Copy Link</label>
+        <div className="rounded-lg">
+          <label className="flex-1">Copy Link</label>
+          <div className="flex-1">
             <IconButton onClick={copyLink}>
-              <div className="flex-1 flex bg-btn rounded mx-16 h-6 w-12">
+              <div className="flex bg-btn rounded mx-1 h-6 w-12">
                 <img src={"/playbackImgs/copy.svg"} className="w-full h-full" />
               </div>
             </IconButton>

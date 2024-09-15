@@ -34,7 +34,12 @@ export default function AudioPlayer({ link, audioRef }) {
   };
 
   const audioComponent = React.useMemo(() => {
-    audioRef?.current?.pause()
+    if (audioRef?.current) {
+      // Stop and unload the previous audio buffer before changing the source
+      audioRef.current.pause(); // Stop the current audio
+      audioRef.current.src = ""; // Unload the current audio source
+      audioRef.current.load(); // Clear the audio buffer
+    }
     return (
       <audio
         ref={audioRef}

@@ -209,6 +209,9 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       <div className="flex flex-row justify-center">
         <IndexTrackBtnAndModal audioRef={audioRef} saveTimeFunc={saveTime} />
         <ArtistsOptions />
+        <IconButton onClick={saveTime}>
+          <div className="m-1 p-2 text-xs rounded bg-btn">Save Time</div>
+        </IconButton>
       </div>
     </body>
   );

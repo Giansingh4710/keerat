@@ -1516,7 +1516,12 @@ const ALL_OPTS = {
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/184 Bhai Mohinder Singh Ji SDO NYK 1981 Smagam - T-3 (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/185 Bhai Mohinder Singh Ji SDO Milwaukee 1981-T1 (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/186 Bhai Mohinder Singh Ji SDO Bombay 1979 Smagam (heeraRattan).mp3",
-        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/187 Bhai Mohinder Singh Ji SDO Hoshiapur 1977 Smagam (heeraRattan).mp3"
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/187 Bhai Mohinder Singh Ji SDO Hoshiapur 1977 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/188 Bhai Mohinder Singh Ji SDO Jatha Moga 1977 Rainsbai Smagam Duration 8 hours 25 minutes (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/189 Bhai Mohinder Singh Ji SDO New Jersey 1983 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/190 Bhai Mohinder Singh Ji SDO Bhai Manjit Singh ji, Bradford UK, October 1983 Smagam T-2 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/191 Bhai Mohinder Singh Ji SDO NJ 1983 Smagam - T2 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/192 Bhai Mohinder Singh Ji SDO Punjab 1979 Smagam (heeraRattan).mp3"
       ]
     },
     {
