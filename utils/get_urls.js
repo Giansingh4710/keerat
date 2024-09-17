@@ -6,21 +6,20 @@ function getUrls() {
   let isDev = false;
 
   if (window.location.href.includes("localhost")) isDev = true;
-  // console.log("isDev: ", isDev);
+  // isDev = false;
+  const SERVER_URL = isDev ? "http://localhost:3000" : "https://getshabads.xyz";
 
-  const GET_INDEXED_TRACKS_URL = isDev
-    ? "http://localhost:3000/getIndexedTracks"
-    : "https://getshabads.xyz/getIndexedTracks";
+  const GET_INDEXED_TRACKS_URL = SERVER_URL + "/getIndexedTracks";
+  const GET_INDEXED_TRACKS_BY_ARTISTS_URL = SERVER_URL + "/getIndexedTracksByArtists?artists=";
+  const ADD_INDEX_URL = SERVER_URL + "/addIndex";
+  const GET_SHABADS_URL = SERVER_URL + "/getShabads?input=";
 
-  const ADD_INDEX_URL = isDev
-    ? "http://localhost:3000/addIndex"
-    : "https://www.getshabads.xyz/addIndex";
-
-  const GET_SHABADS_URL = isDev
-    ? "http://localhost:3000/getShabads?input="
-    : "https://www.getshabads.xyz/getShabads?input=";
-
-  return { GET_INDEXED_TRACKS_URL, ADD_INDEX_URL, GET_SHABADS_URL };
+  return {
+    GET_INDEXED_TRACKS_URL,
+    GET_INDEXED_TRACKS_BY_ARTISTS_URL,
+    ADD_INDEX_URL,
+    GET_SHABADS_URL,
+  };
 }
 
 export default getUrls;

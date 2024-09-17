@@ -48,8 +48,8 @@ export default function SGGS() {
         setAllKeertanis(keertanis);
       })
       .catch((err) => {
-        alert(err.response.data.message);
-        alert("URL: " + GET_INDEXED_TRACKS_URL);
+        console.log(err.response.data.message);
+        // alert("URL: " + GET_INDEXED_TRACKS_URL);
       });
   }, []);
 

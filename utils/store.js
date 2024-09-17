@@ -6,6 +6,7 @@ import {
   loopDecrement,
   randIdx,
   randItemFromArr,
+  getTypeNLinkIdx,
 } from "./helper_funcs.js";
 
 export const useStore = create((set) => ({
@@ -15,6 +16,7 @@ export const useStore = create((set) => ({
   hstIdx: -1,
   history: [],
   setHistory: (lst) => set({ history: lst, hstIdx: lst.length - 1 }),
+  setHstIdx: (value) => set({ hstIdx: value }),
   appendHistory: (trackObj) =>
     set((state) => {
       const currTrack = state.history[state.hstIdx];
@@ -23,7 +25,7 @@ export const useStore = create((set) => ({
 
       return {
         history: [...state.history, trackObj],
-        hstIdx: state.hstIdx + 1,
+        hstIdx: state.history.length,
       };
     }),
   getCurrentTrack: () => {
@@ -156,8 +158,7 @@ export const useStore = create((set) => ({
       } else {
         const hist = state.history;
         let artist = hist[state.hstIdx].artist;
-        let typeIdx = hist[state.hstIdx].typeIdx;
-        let linkIdx = hist[state.hstIdx].linkIdx;
+        let {typeIdx,linkIdx} = getTypeNLinkIdx(allOpts, hist[state.hstIdx]);
 
         if (allOpts[artist][typeIdx].checked) {
           linkIdx = loopIncrement(allOpts[artist][typeIdx].links, linkIdx);
@@ -219,6 +220,9 @@ export const useStore = create((set) => ({
     set(() => {
       return { optsShown: value };
     }),
+
+  indexTracks: {},
+  setIndexTracks: (value) => set({ indexTracks: value }),
 }));
 
 export const useSearchStore = create((set) => ({

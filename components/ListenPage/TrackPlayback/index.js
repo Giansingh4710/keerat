@@ -130,9 +130,9 @@ export default function TrackPlayback({ audioRef }) {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col gap-1">
           <div className="flex-1">
-            <label className="text-white text-sm ">Playback Speed:</label>
+            <label className="text-white text-xs">Playback Speed:</label>
           </div>
           <div className="flex-1">
             <select
@@ -151,7 +151,9 @@ export default function TrackPlayback({ audioRef }) {
             >
               <option value="0.5">0.5x</option>
               <option value="1">1x</option>
+              <option value="1.25">1.25x</option>
               <option value="1.5">1.5x</option>
+              <option value="1.75">1.75x</option>
               <option value="2">2x</option>
               <option value="2.5">2.5x</option>
               <option value="3">3x</option>
@@ -159,14 +161,14 @@ export default function TrackPlayback({ audioRef }) {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col gap-1">
           <div className="flex-1">
-            <label className="text-white text-sm ">Skiping Interval:</label>
+            <label className="text-white text-xs">Skip Interval:</label>
           </div>
           <div className="flex-1">
             <select
               id="pickSkipInterval"
-              className="text-black text-sm rounded text-center align-top"
+              className="text-black text-sm rounded -top"
               onChange={(e) => {
                 setSkipTime(parseInt(e.target.value));
               }}

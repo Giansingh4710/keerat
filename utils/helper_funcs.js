@@ -140,7 +140,7 @@ export function hasKeys(obj, keys) {
 }
 
 export function validTrackObj(trkObj) {
-  const keys = ["artist", "typeIdx", "linkIdx", "type", "link"];
+  const keys = ["artist", "type", "link"];
   if (typeof trkObj !== "object") {
     return false;
   }
@@ -227,4 +227,26 @@ export function secondsToHMS(seconds) {
       secs.toString().padStart(2, "0"),
     ].join(":");
   }
+}
+
+export function getTypeNLinkIdx(allOpts, trkObj) {
+  let typeIdx = trkObj.typeIdx;
+  let linkIdx = trkObj.linkIdx;
+  if (typeIdx !== undefined && linkIdx !== undefined)
+    return { typeIdx, linkIdx };
+
+  const artist = trkObj.artist;
+  const type = trkObj.type;
+  const link = trkObj.link;
+  for (typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
+    if (allOpts[artist][typeIdx].type === type) {
+      for (linkIdx = 0; linkIdx < allOpts[artist][typeIdx].links.length; linkIdx++) {
+        if (allOpts[artist][typeIdx].links[linkIdx] === link) {
+          console.log("Found typeIdx from zustand");
+          return { typeIdx, linkIdx };
+        }
+      }
+    }
+  }
+  return { typeIdx: 0, linkIdx: 0 };
 }

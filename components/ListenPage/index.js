@@ -3,9 +3,9 @@
 import NavBar from "../NavBar/index.js";
 import ArtistsOptions from "./ArtistsOptions/index.js";
 import TrackPlayback from "./TrackPlayback/index.js";
-import SaveTrackModal from "./SaveTrackModal/index.js";
 import SearchTracks from "./SearchTracks/index.js";
 import IndexTrackBtnAndModal from "./IndexTrackModal/index.js";
+import ShabadsForTrack from "./ShabadsForTrack/index.js";
 import { IconButton } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -18,6 +18,11 @@ import {
 } from "@/utils/helper_funcs.js";
 import toast, { Toaster } from "react-hot-toast";
 import { useSearchStore, useStore } from "@/utils/store.js";
+import getUrls from "@/utils/get_urls";
+import axios from "axios";
+import { Modal } from "@mui/material";
+import FlipCameraAndroidIcon from "@mui/icons-material/FlipCameraAndroid";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 export default function ListenPage({ title, allTheOpts, changesOpts }) {
   const prevTrack = useStore((state) => state.prevTrack);
@@ -35,6 +40,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   const setTitle = useStore((state) => state.setTitle);
 
   const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
+  const setIndexTracks = useStore((state) => state.setIndexTracks);
   const skipTime = useStore((state) => state.skipTime);
   const audioRef = useRef(null);
 
@@ -61,7 +67,9 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       if (urlParams.size === 0) return false;
 
       const timeInS = getSecondsFromTimeStamp(urlParams.get("time"));
-      toast.success(`Starting From: ${secondsToHMS(timeInS)}`, { duration: 5000 });
+      toast.success(`Starting From: ${secondsToHMS(timeInS)}`, {
+        duration: 5000,
+      });
       setTimeToGoTo(timeInS);
 
       const urlSearch = urlParams.get("search");
@@ -142,6 +150,22 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     }
   }, []);
 
+  useEffect(() => {
+    const { GET_INDEXED_TRACKS_BY_ARTISTS_URL } = getUrls();
+    const artists = JSON.stringify(Object.keys(allTheOpts));
+    axios({
+      url: GET_INDEXED_TRACKS_BY_ARTISTS_URL + artists,
+      method: "GET",
+    })
+      .then((res) => {
+        setIndexTracks(res.data);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log("URL: " + GET_INDEXED_TRACKS_BY_ARTISTS_URL);
+      });
+  }, []);
+
   //to get rid of next.js Hydration error
   const [showChild, setShowChild] = useState(false);
   useEffect(() => {
@@ -189,12 +213,11 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
   }
 
   function saveTime() {
-    let timeToSave = audioRef.current.currentTime 
+    let timeToSave = audioRef.current.currentTime;
     timeToSave = timeToSave ? timeToSave : 0;
     // toast.success(`Saved Time: ${timeToSave}`);
     localStorage.setItem(`LastTime: ${title}`, audioRef.current.currentTime);
   }
-  // here
 
   return (
     <body className="w-full h-full bg-primary-100">
@@ -209,10 +232,65 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       <div className="flex flex-row justify-center">
         <IndexTrackBtnAndModal audioRef={audioRef} saveTimeFunc={saveTime} />
         <ArtistsOptions />
-        <IconButton onClick={saveTime}>
-          <div className="m-1 p-2 text-xs rounded bg-btn">Save Time</div>
-        </IconButton>
+        <ViewHistory />
+        {/* <IconButton onClick={saveTime}> */}
+        {/*   <div className="m-1 p-2 text-xs rounded bg-btn">Save Time</div> */}
+        {/* </IconButton> */}
       </div>
+      <ShabadsForTrack audioRef={audioRef}/>
     </body>
+  );
+}
+
+function ViewHistory() {
+  const history = useStore((state) => state.history);
+  const setHstIdx = useStore((state) => state.setHstIdx);
+  const [modalOpen, setModal] = useState(false);
+
+  function TheLst() {
+    const lst = [];
+    for (let i = history.length - 1; i > -1; i--) {
+      const link = history[i].link;
+      lst.push(
+        <button
+          className="text-left border-b border-solid border-white"
+          key={i}
+          onClick={() => {
+            setModal(false);
+            setHstIdx(i)
+          }}
+        >
+          {getNameOfTrack(link)}
+        </button>,
+      );
+    }
+    return lst;
+  }
+
+  return (
+    <>
+      <IconButton onClick={() => setModal(true)}>
+        <div className="m-1 p-2 text-xs rounded bg-btn">View History</div>
+      </IconButton>
+      <Modal open={modalOpen} onClose={() => setModal(false)}>
+        <div className=" w-screen flex items-center overflow-y-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="m-10 flex-1 bg-primary-100  rounded-lg border border-solid border-white ">
+            <div className=" text-white flex p-2 border-b border-solid border-white  ">
+              <p className="flex-1 text-left text-2xl font-bold">History</p>
+              <div>
+                <IconButton onClick={() => setModal(false)}>
+                  <div className="text-white flex-1 flex">
+                    <HighlightOffIcon />
+                  </div>
+                </IconButton>
+              </div>
+            </div>
+            <div className="flex flex-col p-2 flex-auto max-h-48 overflow-auto text-white">
+              <TheLst />
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 }
