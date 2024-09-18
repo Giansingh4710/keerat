@@ -67,7 +67,7 @@ export default function TrackPlayback({ audioRef }) {
             <AudiotrackIcon />
           </IconButton>
           <Typography
-            className="shadow-xl pl-2 text-sm opacity-70 break-all"
+            className="shadow-xl pl-1 text-sm opacity-70 break-all"
             onClick={() => {
               setTracksModal(true);
             }}
@@ -75,12 +75,12 @@ export default function TrackPlayback({ audioRef }) {
             {getNameOfTrack(link)}
           </Typography>
         </div>
-        <div className="flex pt-2 items-center">
+        <div className="flex items-center">
           <IconButton onClick={() => toast.success(`Dhan ${artist}!!!`)}>
             <PersonIcon />
           </IconButton>
           <Typography
-            className="shadow-xl pl-3 text-sm text-left opacity-70 font-medium tracking-tight"
+            className="shadow-xl pl-1 text-sm text-left opacity-70 font-medium tracking-tight"
             onClick={() => {
               setOptsShown("all");
             }}
@@ -88,12 +88,12 @@ export default function TrackPlayback({ audioRef }) {
             {artist}
           </Typography>
         </div>
-        <div className="flex pt-2 items-center">
+        <div className="flex  items-center">
           <IconButton onClick={() => toast.success(`${type} is best!!!`)}>
             <AlbumIcon />
           </IconButton>
           <Typography
-            className="shadow-xl pl-3 text-sm opacity-70 font-medium tracking-tight"
+            className="shadow-xl pl-1 text-sm opacity-70 font-medium tracking-tight"
             onClick={() => {
               setOptsShown(artist);
             }}
@@ -106,7 +106,9 @@ export default function TrackPlayback({ audioRef }) {
       <div className="flex gap-1 mx-1 rounded-lg bg-primary-100">
         <div className="flex-1 flex flex-col">
           <div className="flex-1">
-            <label className="text-white text-sm ">Shuffle: {shuffle ? "On" : "Off"}</label>
+            <label className="text-white text-sm ">
+              Shuffle: {shuffle ? "On" : "Off"}
+            </label>
           </div>
           <div className="flex-1">
             <IconButton
@@ -130,11 +132,11 @@ export default function TrackPlayback({ audioRef }) {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col gap-1">
-          <div className="flex-1">
-            <label className="text-white text-xs">Playback Speed:</label>
+        <div className="flex-1 flex flex-col gap-1 ">
+          <div className="basis-1/2">
+            <p className="text-white text-xs">Playback Speed:</p>
           </div>
-          <div className="flex-1">
+          <div className="basis-1/2">
             <select
               id="pickPlaybackSpeed"
               className="text-black text-sm rounded text-center"
@@ -161,11 +163,11 @@ export default function TrackPlayback({ audioRef }) {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col gap-1">
-          <div className="flex-1">
-            <label className="text-white text-xs">Skip Interval:</label>
+        <div className="flex-1 flex flex-col gap-1 ">
+          <div className="basis-1/2">
+            <p className="text-white text-xs">Skip Interval:</p>
           </div>
-          <div className="flex-1">
+          <div className="basis-1/2 ">
             <select
               id="pickSkipInterval"
               className="text-black text-sm rounded -top"
@@ -236,10 +238,11 @@ function TracksModal({ setModal, modalOpen, artist, type }) {
   const allOpts = useStore((state) => state.allOptsTracks);
   const appendHistory = useStore((state) => state.appendHistory);
   const [tracksObj, setTracksObj] = useState();
+  const typeIdx = allOpts[artist].findIndex((obj) => obj.type === type);
 
   useEffect(() => {
     if (type === undefined || artist === undefined) return;
-    setTracksObj(allOpts[artist].find((obj) => obj.type === type).links);
+    setTracksObj(allOpts[artist][typeIdx].links);
   }, [artist, type]);
 
   if (type === undefined) {
@@ -273,7 +276,7 @@ function TracksModal({ setModal, modalOpen, artist, type }) {
           </div>
           <div className="flex flex-col p-2 flex-auto max-h-48 overflow-auto text-white">
             {tracksObj?.map((link, idx) => {
-              const trkObj = { link, artist, linkIdx: idx, type, link };
+              const trkObj = { link, artist, type, typeIdx, linkIdx: idx };
               return (
                 <button
                   className="text-left border-b border-solid border-white"

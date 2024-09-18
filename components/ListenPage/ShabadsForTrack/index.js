@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useStore } from "@/utils/store.js";
 import { IconButton, Modal } from "@mui/material";
-import { getSecondsFromTimeStamp } from "../../../utils/helper_funcs.js";
+import { getSecondsFromTimeStamp } from "@/utils/helper_funcs";
+import { getDateFromUnixTime, getNameOfTrack } from "@/utils/helper_funcs";
 
 export default function ShabadsDisplay({ audioRef }) {
   const indexTracks = useStore((state) => state.indexTracks);
@@ -23,25 +24,81 @@ export default function ShabadsDisplay({ audioRef }) {
 }
 
 function DisplayShabads({ indexLst, audioRef }) {
+  const [modalOpen, setModal] = useState(false);
+  const [indexedObj, setIndexedObj] = useState({});
+
   if (!indexLst) {
     return <></>;
     return <h1>No Shabads For This Track</h1>;
   }
   return (
     <div>
-      <h1 className="border-b">Indexed Shabads</h1>
+      <h1 className="border-b">{indexLst.length}: Indexed Shabads</h1>
       <div className="overflow-y-auto h-48">
         {indexLst.map((indexData, i) => {
           return (
-            <ShabadBox key={i} indexData={indexData} audioRef={audioRef} />
+            <ShabadBox
+              key={i}
+              index={i}
+              indexData={indexData}
+              audioRef={audioRef}
+              onClick={() => {
+                setIndexedObj(indexData);
+                setModal(true);
+              }}
+            />
           );
         })}
       </div>
+      <DetailsModal
+        modalOpen={modalOpen}
+        setModal={setModal}
+        indexedObj={indexedObj}
+      />
     </div>
   );
 }
 
-function ShabadBox({ indexData, audioRef }) {
+function DetailsModal({ modalOpen, setModal, indexedObj }) {
+  const {
+    created,
+    type,
+    artist,
+    timestamp,
+    shabadID,
+    shabadArr,
+    description,
+    link,
+  } = indexedObj;
+  return (
+    <Modal open={modalOpen} onClose={() => setModal(false)}>
+      <div className="w-[90vw] p-1 bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
+        <div className="flex flex-col">
+          <p className="flex">Created: {getDateFromUnixTime(created)}</p>
+          <p className="flex">Type: {type}</p>
+          <p className="flex">Artist: {artist}</p>
+          <p className="flex">Timestamp: {timestamp}</p>
+          <div className="flex flex-col">
+            <p className="flex">Description: </p>
+            <div className="flex h-2/6 overflow-auto border-2 border-sky-500 rounded ">
+              {description ? description : "N/A"}
+            </div>
+          </div>
+        </div>
+        <div className="h-[20vh] my-5 p-2  overflow-auto border-2 border-sky-500 rounded">
+          <p className="flex">Shabad ID: {shabadID ? shabadID : "N/A"}</p>
+          <ShabadDetails shabadArray={shabadArr} />
+        </div>
+
+        <IconButton onClick={() => setModal(false)}>
+          <p className="text-sm p-1 bg-red-500 text-white rounded-lg">Close</p>
+        </IconButton>
+      </div>
+    </Modal>
+  );
+}
+
+function ShabadBox({ indexData, audioRef, onClick, index }) {
   const {
     created,
     type,
@@ -54,53 +111,27 @@ function ShabadBox({ indexData, audioRef }) {
   } = indexData;
 
   return (
-    <div className="flex flex-row justify-normal border-b">
-      {/* <p className="flex-1">{created}</p> */}
-      {/* <p className="flex-1">{type}</p> */}
-      {/* <p className="flex-1">{artist}</p> */}
-      <IconButton
-        onClick={() => {
-          audioRef.current.currentTime = getSecondsFromTimeStamp(timestamp);
-        }}
-      >
-        <p className="flex-1 underline text-white text-sm m-0 p-1">
-          {timestamp}
+    <div className="flex flex-col rounded-md w-full border-b border-gray-200  text-xl p-2 ">
+      <div className="flex w-full text-sm">
+        <p className="pr-2">{index + 1}.</p>
+        <p
+          className="underline flex-1 text-left w-5/6 truncate break-words"
+          onClick={onClick}
+        >
+          {description}
         </p>
-      </IconButton>
-      <p className="flex-1">{description}</p>
-      <ViewFullShabad shabadArray={shabadArr} shabadID={shabadID} />
+      </div>
+      <div className="text-left flex flex-row w-full text-xs">
+        <div
+          className="underline text-xs text-right truncate break-words"
+          onClick={() => {
+            audioRef.current.currentTime = getSecondsFromTimeStamp(timestamp);
+          }}
+        >
+          {timestamp}
+        </div>
+      </div>
     </div>
-  );
-}
-
-function ViewFullShabad({ shabadArray, shabadID }) {
-  const [shabadViewModal, setShabadViewModal] = useState(false);
-  if (!shabadArray) {
-    return <></>;
-  }
-  return (
-    <>
-      <IconButton onClick={() => setShabadViewModal(true)}>
-        <div className="flex-1 underline text-white text-sm m-0 p-1">
-          {/* View Full Shabad: {shabadID} */}
-          View Full Shabad
-        </div>
-      </IconButton>
-      <Modal open={shabadViewModal} onClose={() => setShabadViewModal(false)}>
-        <div className=" h-[70vh] w-[90vw] p-1 bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
-          <h1>Shabad ID: {shabadID}</h1>
-          <div className="h-5/6 overflow-auto border-2 border-sky-500 rounded">
-            <ShabadDetails shabadArray={shabadArray} />
-          </div>
-
-          <IconButton onClick={() => setShabadViewModal(false)}>
-            <p className="text-sm p-1 bg-red-500 text-white rounded-lg">
-              Close
-            </p>
-          </IconButton>
-        </div>
-      </Modal>
-    </>
   );
 }
 

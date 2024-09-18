@@ -240,7 +240,11 @@ export function getTypeNLinkIdx(allOpts, trkObj) {
   const link = trkObj.link;
   for (typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
     if (allOpts[artist][typeIdx].type === type) {
-      for (linkIdx = 0; linkIdx < allOpts[artist][typeIdx].links.length; linkIdx++) {
+      for (
+        linkIdx = 0;
+        linkIdx < allOpts[artist][typeIdx].links.length;
+        linkIdx++
+      ) {
         if (allOpts[artist][typeIdx].links[linkIdx] === link) {
           console.log("Found typeIdx from zustand");
           return { typeIdx, linkIdx };
@@ -249,4 +253,28 @@ export function getTypeNLinkIdx(allOpts, trkObj) {
     }
   }
   return { typeIdx: 0, linkIdx: 0 };
+}
+
+export function getAllLinkObjs(allOpts) {
+  const tracksLst = [];
+  for (const artist in allOpts) {
+    for (const typeInd in allOpts[artist]) {
+      if (!allOpts[artist][typeInd].checked) continue;
+      for (const linkInd in allOpts[artist][typeInd].links) {
+        tracksLst.push({
+          artist: artist,
+          typeIdx: typeInd,
+          linkIdx: linkInd,
+          type: allOpts[artist][typeInd].type,
+          link: allOpts[artist][typeInd].links[linkInd],
+        });
+      }
+    }
+  }
+  return tracksLst;
+}
+
+export function getDateFromUnixTime(unixTimeStamp) {
+  const the_date = new Date(unixTimeStamp * 1000);
+  return the_date.toLocaleString();
 }

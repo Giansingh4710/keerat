@@ -23,6 +23,10 @@ import axios from "axios";
 import { Modal } from "@mui/material";
 import FlipCameraAndroidIcon from "@mui/icons-material/FlipCameraAndroid";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import PersonIcon from "@mui/icons-material/Person";
+import AlbumIcon from "@mui/icons-material/Album";
+import Tooltip from "@mui/material/Tooltip";
+import { Info } from "@mui/icons-material";
 
 export default function ListenPage({ title, allTheOpts, changesOpts }) {
   const prevTrack = useStore((state) => state.prevTrack);
@@ -229,15 +233,16 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       <SaveTrackModal />
         <ChangeColorsModal />
       */}
-      <div className="flex flex-row justify-center">
+      <ShabadsForTrack audioRef={audioRef} />
+      <div className="flex flex-row justify-center flex-wrap">
         <IndexTrackBtnAndModal audioRef={audioRef} saveTimeFunc={saveTime} />
         <ArtistsOptions />
         <ViewHistory />
+        <ViewTracksInQueue />
         {/* <IconButton onClick={saveTime}> */}
         {/*   <div className="m-1 p-2 text-xs rounded bg-btn">Save Time</div> */}
         {/* </IconButton> */}
       </div>
-      <ShabadsForTrack audioRef={audioRef}/>
     </body>
   );
 }
@@ -253,11 +258,11 @@ function ViewHistory() {
       const link = history[i].link;
       lst.push(
         <button
-          className="text-left border-b border-solid border-white"
+          className="text-left border-b border-solid border-white break-all"
           key={i}
           onClick={() => {
             setModal(false);
-            setHstIdx(i)
+            setHstIdx(i);
           }}
         >
           {getNameOfTrack(link)}
@@ -276,8 +281,90 @@ function ViewHistory() {
         <div className=" w-screen flex items-center overflow-y-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className="m-10 flex-1 bg-primary-100  rounded-lg border border-solid border-white ">
             <div className=" text-white flex p-2 border-b border-solid border-white  ">
-              <p className="flex-1 text-left text-2xl font-bold">History</p>
+              <p className="flex-1 text-left text-2xl font-bold">History: {history.length} Tracks</p>
               <div>
+                <IconButton onClick={() => setModal(false)}>
+                  <div className="text-white flex-1 flex">
+                    <HighlightOffIcon />
+                  </div>
+                </IconButton>
+              </div>
+            </div>
+            <div className="flex flex-col p-2 flex-auto max-h-48 overflow-auto text-white">
+              <TheLst />
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+}
+
+function ViewTracksInQueue() {
+  const tracksInQueue = useStore((state) => state.tracksInQueue);
+  const appendHistory = useStore((state) => state.appendHistory);
+  const [modalOpen, setModal] = useState(false);
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    setResults(tracksInQueue);
+  }, [tracksInQueue]);
+
+  function TheLst() {
+    return results.map((trkObj, index) => {
+      return (
+        <button
+          key={index}
+          onClick={() => appendHistory(trkObj)}
+          className="flex flex-col w-full rounded-md w-full border-b border-gray-200 hover:bg-blue-100  text-xl p-2 "
+        >
+          <div className="flex  text-sm">
+            <p className="pl-2 pr-2">{index + 1}.</p>
+            <p className="flex-1 text-left w-5/6 truncate break-words">
+              {getNameOfTrack(trkObj.link)}
+            </p>
+          </div>
+          <div className="flex flex-row w-full text-xs">
+            <div className="basis-3/4 text-xs text-left w-full">
+              <PersonIcon className="p-1" />
+              {trkObj.artist}
+            </div>
+            <div className="basis-1/4 text-xs text-right truncate break-words">
+              <AlbumIcon className="p-1" />
+              {trkObj.type}
+            </div>
+          </div>
+        </button>
+      );
+    });
+  }
+
+  return (
+    <>
+      <IconButton onClick={() => setModal(true)}>
+        <div className="m-1 p-2 text-xs rounded bg-btn">All Tracks</div>
+      </IconButton>
+      <Modal open={modalOpen} onClose={() => setModal(false)}>
+        <div className=" w-screen flex items-center overflow-y-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="w-[80%] m-10 flex-1 bg-primary-100  rounded-lg border border-solid border-white ">
+            <div className=" text-white flex border-b border-solid border-white  ">
+              <div className="flex-1 flex flex-row gap-2 justify-center p-1 ">
+                <Tooltip title="These are all the tracks from the Checked Options. Tracks that aren't checked won't be here. You can check and uncheck the type of tracks in Track Options">
+                  <Info className="text-xs" />
+                </Tooltip>
+                <p className="">{results.length} Results Found</p>
+              </div>
+              <div className="">
+                <IconButton
+                  className="h-10 w-10 "
+                  onClick={() => {
+                    const newRes = [...results.reverse()];
+                    console.log(newRes[0]);
+                    setResults(newRes);
+                  }}
+                >
+                  <FlipCameraAndroidIcon className="text-white" />
+                </IconButton>
                 <IconButton onClick={() => setModal(false)}>
                   <div className="text-white flex-1 flex">
                     <HighlightOffIcon />

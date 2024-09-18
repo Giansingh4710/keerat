@@ -22,6 +22,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
 
   const { ADD_INDEX_URL, GET_SHABADS_URL } = getUrls();
 
+  const appendIndexObj = useStore((state) => state.appendIndexObj);
   const history = useStore((state) => state.history);
   const hstIdx = useStore((state) => state.hstIdx);
   const artist = history[hstIdx]?.artist;
@@ -93,6 +94,17 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
       },
     })
       .then((res) => {
+        appendIndexObj({
+          created: Date.now(),
+          type: theTrackType,
+          artist,
+          timestamp: theTimeStamp,
+          shabadID: formShabadID,
+          shabadArr: currShabad.shabadArray,
+          description,
+          link,
+        });
+
         setTimestamp({ hours: "", minutes: "", seconds: "" });
 
         setShabads([]);
@@ -150,7 +162,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
             open={shabadViewModal}
             onClose={() => setShabadViewModal(false)}
           >
-            <div className="h-full w-full p-1 bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
+            <div className=" h-[70vh] w-[90vw] p-1 bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
               <div className="h-5/6 overflow-auto border-2 border-sky-500 rounded">
                 <ShabadDetails shabadArray={currShabad.shabadArray} />
               </div>
@@ -209,7 +221,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
       "sikhsoul_SDO",
       "ikirtan_SDO",
       "aisakirtan_SDO",
-      "ikirtan_HPS"
+      "ikirtan_HPS",
       // "GianiSherS",
     ];
 
@@ -259,7 +271,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
               text={description}
               onTextChange={(event) => setDescription(event.target.value)}
               Icon={CancelIcon}
-              iconOnClick={() => setDescription("")} 
+              iconOnClick={() => setDescription("")}
             />
 
             <InputBar
