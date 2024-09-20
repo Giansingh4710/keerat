@@ -165,8 +165,8 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
         setIndexTracks(res.data);
       })
       .catch((err) => {
-        alert(err.response.data.message);
         console.log("URL: " + GET_INDEXED_TRACKS_BY_ARTISTS_URL);
+        console.log(err.response.data.message);
       });
   }, []);
 
@@ -318,11 +318,11 @@ function ViewTracksInQueue() {
           onClick={() => appendHistory(trkObj)}
           className="flex flex-col w-full rounded-md w-full border-b border-gray-200 hover:bg-blue-100  text-xl p-2 "
         >
-          <div className="flex  text-sm">
-            <p className="pl-2 pr-2">{index + 1}.</p>
-            <p className="flex-1 text-left w-5/6 truncate break-words">
+          <div className="flex text-sm w-full">
+            <p className="pr-2">{index + 1}.</p>
+            <div className="basis-5/6 text-xs text-left truncate break-words ">
               {getNameOfTrack(trkObj.link)}
-            </p>
+            </div>
           </div>
           <div className="flex flex-row w-full text-xs">
             <div className="basis-3/4 text-xs text-left w-full">
@@ -372,7 +372,7 @@ function ViewTracksInQueue() {
                 </IconButton>
               </div>
             </div>
-            <div className="flex flex-col p-2 flex-auto max-h-48 overflow-auto text-white">
+            <div className="flex flex-col p-2 flex-auto max-h-48 overflow-x-hidden text-white">
               <TheLst />
             </div>
           </div>

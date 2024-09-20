@@ -17,7 +17,7 @@ export default function ShabadsDisplay({ audioRef }) {
   }, [hstIdx, indexTracks]);
 
   return (
-    <div className="border-2 border-sky-500 rounded text-white">
+    <div className="m-5 border-2 border-sky-500 rounded text-white">
       <DisplayShabads indexLst={indexLst} audioRef={audioRef} />
     </div>
   );
@@ -80,7 +80,7 @@ function DetailsModal({ modalOpen, setModal, indexedObj }) {
           <p className="flex">Timestamp: {timestamp}</p>
           <div className="flex flex-col">
             <p className="flex">Description: </p>
-            <div className="flex h-2/6 overflow-auto border-2 border-sky-500 rounded ">
+            <div className="flex h-[20vh] overflow-auto border-2 border-sky-500 rounded ">
               {description ? description : "N/A"}
             </div>
           </div>

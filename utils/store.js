@@ -156,6 +156,7 @@ export const useStore = create((set) => ({
       } else {
         const hist = state.history;
         let artist = hist[state.hstIdx].artist;
+        console.log(hist[state.hstIdx])
         let { typeIdx, linkIdx } = getTypeNLinkIdx(allOpts, hist[state.hstIdx]);
 
         if (allOpts[artist][typeIdx].checked) {

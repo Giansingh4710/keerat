@@ -233,7 +233,7 @@ export function getTypeNLinkIdx(allOpts, trkObj) {
   let typeIdx = trkObj.typeIdx;
   let linkIdx = trkObj.linkIdx;
   if (typeIdx !== undefined && linkIdx !== undefined)
-    return { typeIdx, linkIdx };
+    return { typeIdx: parseInt(typeIdx), linkIdx: parseInt(linkIdx) };
 
   const artist = trkObj.artist;
   const type = trkObj.type;
