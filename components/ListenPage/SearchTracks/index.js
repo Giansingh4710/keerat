@@ -5,11 +5,7 @@ import AlbumIcon from "@mui/icons-material/Album";
 import PersonIcon from "@mui/icons-material/Person";
 import { IconButton } from "@mui/material";
 
-import {
-  getNameOfTrack,
-  getSecondsFromTimeStamp,
-  searchTracks,
-} from "@/utils/helper_funcs";
+import { getNameOfTrack, getSecondsFromTimeStamp } from "@/utils/helper_funcs";
 import { useSearchStore, useStore } from "@/utils/store.js";
 import { SwitchLeft, ToggleOff, ToggleOn } from "@mui/icons-material";
 
@@ -48,7 +44,7 @@ export default function SearchTracks() {
           </div>
           <div className="basis-3/4 flex py-2 ">
             <select
-              className="text-black p-1 rounded h-5 text-xs"
+              className="text-black p-1 rounded h-5 text-[10px]"
               value={searchType}
               onChange={(e) => setSearchType(e.target.value)}
             >
@@ -165,26 +161,41 @@ function DisplayTracksByGurbani({ searchInput }) {
   const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
   const [results, setResults] = useState([]);
 
-  useEffect(() => {
-    if (searchInput !== "") {
-      const links = [];
-      const wordsEntered = searchInput.toLowerCase().split(" ");
-      for (const key in indexTracks) {
-        const indexes = indexTracks[key];
-        const { typeIdx, linkIdx, type } = getTypeNLink(
-          allOpts,
-          key,
-          indexes[0].artist,
-        );
-        for (const i in indexes) {
-          const index = indexes[i];
-          if (
-            wordsEntered.every((word) => {
-              return index.description?.toLowerCase().includes(word);
-            })
-          ) {
+  function searchGB(searchTerm, allOpts) {
+    const links = [];
+    const wordsEntered = searchTerm.toLowerCase().split(" ");
+    for (const key in indexTracks) {
+      const indexes = indexTracks[key];
+      const { typeIdx, linkIdx, type } = getTypeNLink(
+        allOpts,
+        key,
+        indexes[0].artist,
+      );
+      for (const i in indexes) {
+        const index = indexes[i];
+        if (
+          wordsEntered.every((word) => {
+            return index.description?.toLowerCase().includes(word);
+          })
+        ) {
+          links.push({
+            lineMatched: index.description,
+            timestamp: index.timestamp,
+
+            artist: index.artist,
+            link: key,
+            linkIdx,
+            typeIdx,
+            type,
+          });
+          continue;
+        }
+
+        if (index.shabadArr === undefined) continue;
+        for (const line of index.shabadArr) {
+          if (wordsEntered.every((word) => line.toLowerCase().includes(word))) {
             links.push({
-              lineMatched: index.description,
+              lineMatched: line,
               timestamp: index.timestamp,
 
               artist: index.artist,
@@ -195,28 +206,17 @@ function DisplayTracksByGurbani({ searchInput }) {
             });
             continue;
           }
-
-          if (index.shabadArr === undefined) continue;
-          for (const line of index.shabadArr) {
-            if (
-              wordsEntered.every((word) => line.toLowerCase().includes(word))
-            ) {
-              links.push({
-                lineMatched: line,
-                timestamp: index.timestamp,
-
-                artist: index.artist,
-                link: key,
-                linkIdx,
-                typeIdx,
-                type,
-              });
-              continue;
-            }
-          }
         }
       }
-      setResults(links);
+    }
+    return links;
+  }
+
+  useEffect(() => {
+    if (searchInput !== "") {
+      searchTracksAsync(searchInput, allOpts, searchGB).then((results) => {
+        setResults(results);
+      });
     }
   }, [searchInput, allOpts]);
 
@@ -272,11 +272,45 @@ function DisplayTracksByName({ searchInput }) {
   const appendHistory = useStore((state) => state.appendHistory);
   const [results, setResults] = useState([]);
 
+  function searchTracksByTitle(searchTerm, allOpts) {
+    const words = searchTerm.toLowerCase().split(" ");
+    const results = [];
+    for (const artist in allOpts) {
+      for (let typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
+        if (!allOpts[artist][typeIdx].checked) continue;
+        const links = allOpts[artist][typeIdx].links;
+
+        for (let linkIdx = 0; linkIdx < links.length; linkIdx++) {
+          const link = links[linkIdx].toLowerCase();
+          let allWordsFound = true;
+          for (const word of words) {
+            if (!link.includes(word)) {
+              allWordsFound = false;
+              break;
+            }
+          }
+          if (allWordsFound) {
+            results.push({
+              artist,
+              typeIdx,
+              linkIdx,
+              type: allOpts[artist][typeIdx].type,
+              link: links[linkIdx], // to get unlowered case
+            });
+          }
+        }
+      }
+    }
+    return results;
+  }
+
   useEffect(() => {
     if (searchInput !== "") {
-      searchTracksAsync(searchInput, allOpts).then((results) => {
-        setResults(results); // the async func makes input function lag less
-      });
+      searchTracksAsync(searchInput, allOpts, searchTracksByTitle).then(
+        (results) => {
+          setResults(results); // the async func makes input function lag less
+        },
+      );
     }
   }, [searchInput, allOpts]);
 
@@ -326,12 +360,12 @@ function DisplayTracksByName({ searchInput }) {
   );
 }
 
-async function searchTracksAsync(input, allOpts) {
+async function searchTracksAsync(input, allOpts, searchFunc) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const results = searchTracks(input, allOpts);
+      const results = searchFunc(input, allOpts);
       resolve(results);
-    }, 300); // The bigger the number, the less laggy the input function but the slower the results
+    }, 400); // The bigger the number, the less laggy the input function but the slower the results
   });
 }
 

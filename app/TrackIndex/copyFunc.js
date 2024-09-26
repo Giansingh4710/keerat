@@ -4,7 +4,7 @@ import { ALL_OPTS as opt3 } from "../Keertan/AkhandKeertan/TRACKS.js";
 import { ALL_OPTS as opt4 } from "../GianiSherSinghJi/TRACKS.js";
 import { ALL_OPTS as opt5 } from "../Paath/TRACKS.js";
 import { ALL_OPTS as opt6 } from "../MiscellaneousTopics/TRACKS.js";
-import { ALL_OPTS as opt7 } from "../RimmyRadio/TRACKS.js";
+import { ALL_OPTS as opt7 } from "../RandomRadio/TRACKS.js";
 import { ALL_OPTS as opt8 } from "../SantGianiGurbachanSinghJiSGGSKatha/TRACKS.js";
 import { ALL_OPTS as opt9 } from "../BhagatJaswantSinghJi/TRACKS.js";
 import { ALL_OPTS as opt10 } from "../SantWaryamSinghJi/TRACKS.js";
@@ -18,7 +18,7 @@ export function getLinkToKeerat(link, timestampInSecs) {
     "/GianiSherSinghJi",
     "/Paath",
     "/MiscellaneousTopics",
-    "/RimmyRadio",
+    "/RandomRadio",
     "/SantGianiGurbachanSinghJiSGGSKatha",
     "/BhagatJaswantSinghJi",
     "/SantWaryamSinghJi",
