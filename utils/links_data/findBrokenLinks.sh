@@ -58,7 +58,7 @@ while IFS= read -r file; do tracksJsFiles+=("$file"); done < <(find "$prefix" -t
 
 
 opts=( TimeBasedRaagKeertan DarbarSahibPuratanKeertanSGPC AkhandKeertan AllKeertan GianiSherSinghJi Paath MiscellaneousTopics RimmyRadio SantGianiGurbachanSinghJiSGGSKatha BhagatJaswantSinghJi)
-opt="AkhandKeertan"
+opt="DarbarSahibPuratanKeertanSGPC"
 
 for path in "${tracksJsFiles[@]}"; do
   type=$(getParentOfFile "$path")

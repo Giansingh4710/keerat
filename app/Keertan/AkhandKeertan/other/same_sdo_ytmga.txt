@@ -1,0 +1,137 @@
+# = commented out the track right of the ==
+! = not same
+## = both tracks already commented out
+
+# 003 MGA SDO 1003 smpk 01 Sub Dheavo Sub Dheavo Aad Sate.m4a  ==  127 MGA SDO 1092 Aad Steh Jugad Steh.m4a
+# 004 MGA SDO 1004 smpk 02 Bin Sabde Acchar Na Kinhee Pyiaa.m4a  ==  129 MGA SDO 1094 Bin Sabaday Achaar.m4a
+# 004 MGA SDO 1004 smpk 02 Bin Sabde Acchar Na Kinhee Pyiaa.m4a  ==  512 MGA SDO 1474 Bin Sabaday Achaar.m4a
+# 005 MGA SDO 1005 smpk 03 Mil Rehiea saad Jana.m4a  ==  131 MGA SDO 1096 Mil Rheeay Prubh.m4a
+# 005 MGA SDO 1005 smpk 03 Mil Rehiea saad Jana.m4a  ==  445 MGA SDO 1407 Mil Rheeay Prubh.m4a
+# 005 MGA SDO 1005 smpk 03 Mil Rehiea saad Jana.m4a  ==  594 MGA SDO 1556 Mil Raheea Prabh Saad MSA 003 ASR 1979.m4a
+# 006 MGA SDO 1006 smpk 04 Amrit Har Ka Naam.m4a  ==  128 MGA SDO 1093 Amrit Hri Ka Naam.m4a
+# 006 MGA SDO 1006 smpk 04 Amrit Har Ka Naam.m4a  ==  523 MGA SDO 1485 Amrit Har Ka Naam.m4a
+# 007 MGA SDO 1007 smpk 05 Hoh Savdaan Apne Prabh Seho.m4a  ==  130 MGA SDO 1095 Hoho Sabdaan Apney Prub Sion.m4a
+# 007 MGA SDO 1007 smpk 05 Hoh Savdaan Apne Prabh Seho.m4a  ==  495 MGA SDO 1457 Hoho Sabdaan Apney Prub Sion.m4a
+# 008 MGA SDO 1008 smpk 06 Laj Chhod Har Ke Gun Gao.m4a  ==  460 MGA SDO 1422 Laaj Shod Har Kay Guhn Gaavay.m4a
+# 010 MGA SDO 1010 smpk 08 Mere Ram Hum Papi Saran.m4a  ==  427 MGA SDO 1389 Satigur Gunee Nidhan Hay.m4a
+! 010 MGA SDO 1010 smpk 08 Mere Ram Hum Papi Saran.m4a  ==  700 MGA SDO 1662 Sadhu Bin Ase Abgat Jave 03 1962 Anp Sahib Spool KS 67.m4a
+# 011 MGA SDO 1011 smpk 09 Ik Hamara Anterjami.m4a  ==  498 MGA SDO 1460 Gur Kuhea Joothi Dhoi.m4a
+# 012 MGA SDO 1012 smpk 10 Rupi Bhukh Na Uttere.m4a  ==  503 MGA SDO 1465 Dukhee Dunee Suheyreeay.m4a
+# 012 MGA SDO 1012 smpk 10 Rupi Bhukh Na Uttere.m4a  ==  593 MGA SDO 1555 Rupi Bhukh Na Uttere MSA 02 B ASR 1979.m4a
+# 013 MGA SDO 1013 smpk 11 Sub Kishh Pura Hirde Naam.m4a  ==  089 MGA SDO 1070 M 24 B SIDE GURU LINE IN TRACK 02 110.m4a
+# 013 MGA SDO 1013 smpk 11 Sub Kishh Pura Hirde Naam.m4a  ==  595 MGA SDO 1557 Sab Kish Pura Hirde MSA 003 ASR 1979.m4a
+# 014 MGA SDO 1014 smpk 12 Uddeh Na kaga.m4a  ==  518 MGA SDO 1480 Apnay Raam Piaaray.m4a
+# 015 MGA SDO 1015 smpk 13 Jin Jun Gurmukh Sevian.m4a  ==  117 MGA SDO 1083 M 32 B GURU LINE IN TRACK 03.m4a
+# 015 MGA SDO 1015 smpk 13 Jin Jun Gurmukh Sevian.m4a  ==  472 MGA SDO 1434 Jinee Jinee Gurmukhey Dhiaya.m4a
+# 016 MGA SDO 1016 smpk 14 Bhagat Sohe Gun Gavande.m4a  ==  087 MGA SDO 1069 M 22 ART A SIDE.m4a
+# 016 MGA SDO 1016 smpk 14 Bhagat Sohe Gun Gavande.m4a  ==  511 MGA SDO 1473 Bhagat Sohey Guhn Gavday.m4a
+# 017 MGA SDO 1017 smpk 15 Jo Mai Vedan.m4a  ==  102 MGA SDO 1076 M 45 GURU LINE IN TRACK 08.m4a
+# 017 MGA SDO 1017 smpk 15 Jo Mai Vedan.m4a  ==  411 MGA SDO 1374 Vaar.m4a
+# 018 MGA SDO 1018 smpk 16 Sada Sach Samale.m4a  ==  112 MGA SDO 1081 BG A GURU LINE IN TRACK 03.m4a
+# 018 MGA SDO 1018 smpk 16 Sada Sach Samale.m4a  ==  487 MGA SDO 1449 Gur Sikhee Bareek Hai Bhai Gurdas.m4a
+# 019 MGA SDO 1019 smpk 17 Rogi Ander Rog Khandene.m4a  ==  086 MGA SDO 1068 M 14 ART line in track 02.m4a
+# 019 MGA SDO 1019 smpk 17 Rogi Ander Rog Khandene.m4a  ==  439 MGA SDO 1401 Nanak Gur Seyvaa.m4a
+# 020 MGA SDO 1020 smpk 18 Bin Sadhu Jo Jeevna.m4a  ==  474 MGA SDO 1436 Ja Din Bhetay Sadh Mohey.m4a
+# 021 MGA SDO 1021 smpk 19 Gur Satgur Vich Nave Ke Vaddi vaadai.m4a  ==  462 MGA SDO 1424 Koi Nindak Vadiaee.m4a
+# 022 MGA SDO 1022 smpk 20 Dhun Mai Dhiaan Dhiaan Mai Jainaee.m4a  ==  091 MGA SDO 1071 M 31 GURU LINE IN TRACK 02.m4a
+# 023 MGA SDO 1023 smpk 21 Ika Ikankar Likh.m4a  ==  516 MGA SDO 1478 Aykaa Aykunkar.m4a
+# 025 MGA SDO 1025 smpk 23 Har Bin Prem.m4a  ==  419 MGA SDO 1381 Sunho Loka Meh Praym.m4a
+# 026 MGA SDO 1026 smpk 24 Ik Khare Kareh Teri Chakri.m4a  ==  476 MGA SDO 1438 Ik Kharay Karay Teri 2.m4a
+# 027 MGA SDO 1027 smpk 25.m4a  ==  450 MGA SDO 1412  Mera Mun Laagaa.m4a
+# 028 MGA SDO 1028 smpk 26.m4a  ==  443 MGA SDO 1405 Naam Binaa Nahi.m4a
+! 030 MGA SDO 1030 smpk 28.m4a  ==  043 MGA SDO 1043 smpk 41.m4a
+# 030 MGA SDO 1030 smpk 28.m4a  ==  502 MGA SDO 1464 Dhunwant Naam Kay Vanjaray.m4a
+# 031 MGA SDO 1031 smpk 29.m4a  ==  521 MGA SDO 1483 Apnay Jun Prubh Aap.m4a
+# 032 MGA SDO 1032 smpk 30.m4a  ==  464 MGA SDO 1426 Kaatiaa Rog Maha Sukh Paya.m4a
+# 033 MGA SDO 1033 smpk 31.m4a  ==  456 MGA SDO 1418 Maee Sti Sti Sti.m4a
+# 034 MGA SDO 1034 smpk 32.m4a  ==  526 MGA SDO 1488 Aadhi Such Jugaadi Such.m4a
+# 037 MGA SDO 1037 smpk 35.m4a  ==  420 MGA SDO 1382 Sucha Souda Hri Naam Hai.m4a
+# 038 MGA SDO 1038 smpk 36.m4a  ==  447 MGA SDO 1409 Mil Mere Preetma Jeo.m4a
+# 039 MGA SDO 1039 smpk 37.m4a  ==  415 MGA SDO 1377 Too Mere Gur Kay Piaaray.m4a
+# 040 MGA SDO 1040 smpk 38.m4a  ==  481 MGA SDO 1443 Har Har Rasanaa.m4a
+# 041 MGA SDO 1041 smpk 39.m4a  ==  434 MGA SDO 1396 Ram Hum Satgur Parbram.m4a
+# 042 MGA SDO 1042 smpk 40.m4a  ==  483 MGA SDO 1445 Gursikhan Kee Bhukh.m4a
+! 043 MGA SDO 1043 smpk 41.m4a  ==  502 MGA SDO 1464 Dhunwant Naam Kay Vanjaray.m4a
+# 044 MGA SDO 1044 smpk 42.m4a  ==  441 MGA SDO 1403 Naktee Ko Thangan Baada.m4a
+# 045 MGA SDO 1045 smpk 43.m4a  ==  488 MGA SDO 1450 Har Sion Juray.m4a
+# 046 MGA SDO 1046 smpk 44.m4a  ==  475 MGA SDO 1437 Ik Kharay Karay Teri.m4a
+# 047 MGA SDO 1047 smpk 45.m4a  ==  500 MGA SDO 1462 Gobind Gun Gaavan Laagay.m4a
+# 048 MGA SDO 1048 smpk 46.m4a  ==  461 MGA SDO 1423 Kou Jagay Har Jun.m4a
+# 049 MGA SDO 1049 smpk 47.m4a  ==  457 MGA SDO 1419 Maaee Ree Matee Charan Sumoo.m4a
+# 051 MGA SDO 1051 smpk 49.m4a  ==  432 MGA SDO 1394 Saas Saas Dhiaavho.m4a
+# 052 MGA SDO 1052 smrs 01.m4a  ==  480 MGA SDO 1442 Har Japat Rahan 22nd May 1966.m4a
+## 086 MGA SDO 1068 M 14 ART line in track 02.m4a  ==  439 MGA SDO 1401 Nanak Gur Seyvaa.m4a
+## 087 MGA SDO 1069 M 22 ART A SIDE.m4a  ==  511 MGA SDO 1473 Bhagat Sohey Guhn Gavday.m4a
+## 089 MGA SDO 1070 M 24 B SIDE GURU LINE IN TRACK 02 110.m4a  ==  595 MGA SDO 1557 Sab Kish Pura Hirde MSA 003 ASR 1979.m4a
+! 090 MGA SDO 1071 M 31 GURU LINE IN TRACK 01.m4a  ==  543 MGA SDO 1505 123A Sabh Dhan kaho Gur Satgur.m4a
+# 098 MGA SDO 1075 M 44 A SIDE GURU LINE IN TRACK 01.m4a  ==  108 MGA SDO 1079 M 46 A GURU ASIDE.m4a
+! 098 MGA SDO 1075 M 44 A SIDE GURU LINE IN TRACK 01.m4a  ==  313 MGA SDO 1278 M 39 B 1.m4a
+# 099 MGA SDO 1075 M 44 B SIDE GURU LINE IN TRACK 02.m4a  ==  109 MGA SDO 1079 M 46 B GURU LINE IN TRACK 02.m4a
+## 102 MGA SDO 1076 M 45 GURU LINE IN TRACK 08.m4a  ==  411 MGA SDO 1374 Vaar.m4a
+! 108 MGA SDO 1079 M 46 A GURU ASIDE.m4a  ==  313 MGA SDO 1278 M 39 B 1.m4a
+## 112 MGA SDO 1081 BG A GURU LINE IN TRACK 03.m4a  ==  487 MGA SDO 1449 Gur Sikhee Bareek Hai Bhai Gurdas.m4a
+## 117 MGA SDO 1083 M 32 B GURU LINE IN TRACK 03.m4a  ==  472 MGA SDO 1434 Jinee Jinee Gurmukhey Dhiaya.m4a
+# 120 MGA SDO 1086 S.m4a  ==  126 MGA SDO 1091 SDO~4.m4a
+## 128 MGA SDO 1093 Amrit Hri Ka Naam.m4a  ==  523 MGA SDO 1485 Amrit Har Ka Naam.m4a
+## 129 MGA SDO 1094 Bin Sabaday Achaar.m4a  ==  512 MGA SDO 1474 Bin Sabaday Achaar.m4a
+## 130 MGA SDO 1095 Hoho Sabdaan Apney Prub Sion.m4a  ==  495 MGA SDO 1457 Hoho Sabdaan Apney Prub Sion.m4a
+## 131 MGA SDO 1096 Mil Rheeay Prubh.m4a  ==  445 MGA SDO 1407 Mil Rheeay Prubh.m4a
+## 131 MGA SDO 1096 Mil Rheeay Prubh.m4a  ==  594 MGA SDO 1556 Mil Raheea Prabh Saad MSA 003 ASR 1979.m4a
+# 134 MGA SDO 1099 Aanand aanand sabh ko kahai.m4a  ==  524 MGA SDO 1486 Aanand aanand sabh ko kahai.m4a
+! 140 MGA SDO 1105 Track No 01.m4a  ==  288 MGA SDO 1253 M 1 B 1.m4a
+! 145 MGA SDO 1110 Track No2 5 b.m4a  ==  230 MGA SDO 1195 48 b.m4a
+! 148 MGA SDO 1113 Track No 01.m4a  ==  305 MGA SDO 1270 M 12 B 1.m4a
+! 171 MGA SDO 1136 Track No 02.m4a  ==  309 MGA SDO 1274 12 B 1.m4a
+! 182 MGA SDO 1147 Track No 01 1.m4a  ==  307 MGA SDO 1272 8 B 1.m4a
+! 185 MGA SDO 1150 25 B 1.m4a  ==  275 MGA SDO 1240 71 A.m4a
+! 185 MGA SDO 1150 25 B 1.m4a  ==  277 MGA SDO 1242 72 A.m4a
+! 214 MGA SDO 1179 40 B 1.m4a  ==  394 MGA SDO 1359 110 A 1 Jagat Jot Jape Nisbaser 1.m4a
+! 218 MGA SDO 1183 42 B.m4a  ==  720 MGA SDO 1682 Mare Man Laga Hai 05 1963 Brali 1 Old Spool KS 87.m4a
+! 257 MGA SDO 1222 62 A.m4a  ==  281 MGA SDO 1246 74 A.m4a
+! 275 MGA SDO 1240 71 A.m4a  ==  277 MGA SDO 1242 72 A.m4a
+! 279 MGA SDO 1244 73 A.m4a  ==  298 MGA SDO 1263 M 18 A 1.m4a
+! 303 MGA SDO 1268 M 27 B 1.m4a  ==  319 MGA SDO 1284 M 43 A 1.m4a
+! 303 MGA SDO 1268 M 27 B 1.m4a  ==  321 MGA SDO 1286 M 44 A 1.m4a
+! 306 MGA SDO 1271 8 A 1.m4a  ==  308 MGA SDO 1273 12 A 1.m4a
+! 319 MGA SDO 1284 M 43 A 1.m4a  ==  321 MGA SDO 1286 M 44 A 1.m4a
+# 323 MGA SDO 1288 1970s Maaee man meyro bas naahe.m4a  ==  459 MGA SDO 1421 Maaee man meyro matwaro.m4a
+# 324 MGA SDO 1289 1970s Poorey gur kee kaar karam kamaaeeai.m4a  ==  673 MGA SDO 1635 Dooji Kare Lag Janam Gavayiaa 11 1967 Puna SPOOL KS 02 40.m4a
+# 324 MGA SDO 1289 1970s Poorey gur kee kaar karam kamaaeeai.m4a  ==  732 MGA SDO 1694 Poorey Gur Kee Kaar Karam Kamaaeeai 03 1974 Moga India.m4a
+# 326 MGA SDO 1291 Smethwick UK 01 10 83 Part 1.m4a  ==  328 MGA SDO 1293 UK 1983 Gurbaannee sunn mail gavaaey.m4a
+# 326 MGA SDO 1291 Smethwick UK 01 10 83 Part 1.m4a  ==  485 MGA SDO 1447 Gurbaannee sunn mail gavaaey Smethwick UK 1983.m4a
+# 326 MGA SDO 1291 Smethwick UK 01 10 83 Part 1.m4a  ==  486 MGA SDO 1448 Gurbaannee sunn mail gavaaey Smethwick UK 19831.m4a
+## 328 MGA SDO 1293 UK 1983 Gurbaannee sunn mail gavaaey.m4a  ==  485 MGA SDO 1447 Gurbaannee sunn mail gavaaey Smethwick UK 1983.m4a
+## 328 MGA SDO 1293 UK 1983 Gurbaannee sunn mail gavaaey.m4a  ==  486 MGA SDO 1448 Gurbaannee sunn mail gavaaey Smethwick UK 19831.m4a
+# 333 MGA SDO 1298 1980s Aisaa giaan veechaarey koee.m4a  ==  514 MGA SDO 1476 Aisaa giaan veechaarey koee.m4a
+# 334 MGA SDO 1299 1980s Bhagtaa kaa saahaaee jug jug jaaniaa.m4a  ==  467 MGA SDO 1429 SDO Punjab 1980 3.m4a
+# 334 MGA SDO 1299 1980s Bhagtaa kaa saahaaee jug jug jaaniaa.m4a  ==  510 MGA SDO 1472 Bhagtaa kaa saahaaee jug jug jaaniaa.m4a
+# 334 MGA SDO 1299 1980s Bhagtaa kaa saahaaee jug jug jaaniaa.m4a  ==  557 NGA SDO 1519 Bhagta Ka Sahai Jug Jug Janiae India 1980.m4a
+# 335 MGA SDO 1300 1980s Naam kahat Govind kaa.m4a  ==  360 MGA SDO 1325 Punjab 1980 1 Naam Kehat Govind ka 1.m4a
+# 335 MGA SDO 1300 1980s Naam kahat Govind kaa.m4a  ==  442 MGA SDO 1404 Naam kahat govind kaa.m4a
+! 337 MGA SDO 1302 Aisaa meyraa raam rahiaa bharpoor.m4a  ==  342 MGA SDO 1307 Chit cheytas kee nahee baavariaa.m4a
+# 339 MGA SDO 1304 Bibeyk budh beechaar gurmukh.m4a  ==  515 MGA SDO 1477 Bibeyk budh beechaar gurmukh.m4a
+# 340 MGA SDO 1305 Bikhamo Bikham Akhaarhaa Moga 1979.m4a  ==  527 MGA SDO 1489 Bikhamo bikham akhaarhaa mai gur mil jeetaa raam.m4a
+# 343 MGA SDO 1308 Deykhoh acharaj bheiaa.m4a  ==  501 MGA SDO 1463 Deykhoh acharaj bheiaa.m4a
+# 348 MGA SDO 1313 Maaee ree man meyro matvaaro.m4a  ==  458 MGA SDO 1420 Maaee ree man meyro matvaaro.m4a
+# 349 MGA SDO 1314 Man eyk na cheytas moorh manaa.m4a  ==  453 MGA SDO 1415 Man eyk na cheytas moorh manaa.m4a
+# 353 MGA SDO 1318 So kichh kar jit chhutteh paraanee.m4a  ==  424 MGA SDO 1386 So kichh kar jit chhutteh paraanee Part 1.m4a
+# 354 MGA SDO 1319 Vaah vaah gobind singh.m4a  ==  355 MGA SDO 1320 Saadhsangat kai aasrai prabh.m4a
+# 354 MGA SDO 1319 Vaah vaah gobind singh.m4a  ==  506 MGA SDO 1468 Saadhsangat kai aasrai prabh sio rang laaey.m4a
+## 355 MGA SDO 1320 Saadhsangat kai aasrai prabh.m4a  ==  506 MGA SDO 1468 Saadhsangat kai aasrai prabh sio rang laaey.m4a
+# 356 MGA SDO 1321 1960s Fareedaa raat kathooree.m4a  ==  504 MGA SDO 1466 Fareedaa raat kathooree vanddeeai.m4a
+# 357 MGA SDO 1322 1960s Tin ghar raakhiarhaa jo.m4a  ==  358 MGA SDO 1323 1960s Tin ghar raakhiarhaa.m4a
+# 357 MGA SDO 1322 1960s Tin ghar raakhiarhaa jo.m4a  ==  416 MGA SDO 1378 Tin ghar raakhiarhaa jo andin jaagai raam.m4a
+## 358 MGA SDO 1323 1960s Tin ghar raakhiarhaa.m4a  ==  416 MGA SDO 1378 Tin ghar raakhiarhaa jo andin jaagai raam.m4a
+# 359 MGA SDO 1324 1970s Bhinee rainarheeai.m4a  ==  508 MGA SDO 1470 Bhinee rainarheeai chaamkan taarey.m4a
+## 360 MGA SDO 1325 Punjab 1980 1 Naam Kehat Govind ka 1.m4a  ==  442 MGA SDO 1404 Naam kahat govind kaa.m4a
+! 390 MGA SDO 1355 Bhagta Ke Tek Too 1 M 108 A 1974.m4a  ==  409 MGA SDO 1372 116 B 1 Rasna Ram Naam Vakhan 11.m4a
+! 427 MGA SDO 1389 Satigur Gunee Nidhan Hay.m4a  ==  700 MGA SDO 1662 Sadhu Bin Ase Abgat Jave 03 1962 Anp Sahib Spool KS 67.m4a
+## 445 MGA SDO 1407 Mil Rheeay Prubh.m4a  ==  594 MGA SDO 1556 Mil Raheea Prabh Saad MSA 003 ASR 1979.m4a
+## 467 MGA SDO 1429 SDO Punjab 1980 3.m4a  ==  510 MGA SDO 1472 Bhagtaa kaa saahaaee jug jug jaaniaa.m4a
+## 467 MGA SDO 1429 SDO Punjab 1980 3.m4a  ==  557 NGA SDO 1519 Bhagta Ka Sahai Jug Jug Janiae India 1980.m4a
+# 468 MGA SDO 1430 Suast aath baannee barmaao.m4a  ==  596 MGA SDO 1558 Suast Aath Baannee Barmaao LD 1980.m4a
+## 485 MGA SDO 1447 Gurbaannee sunn mail gavaaey Smethwick UK 1983.m4a  ==  486 MGA SDO 1448 Gurbaannee sunn mail gavaaey Smethwick UK 19831.m4a
+# 490 MGA SDO 1452 Ik Jeej Mujai Deh India 1980s.m4a  ==  562 MGA SDO 1524 Ik Cheej Mujai Deh Batala 1979.m4a
+## 503 MGA SDO 1465 Dukhee Dunee Suheyreeay.m4a  ==  593 MGA SDO 1555 Rupi Bhukh Na Uttere MSA 02 B ASR 1979.m4a
+## 510 MGA SDO 1472 Bhagtaa kaa saahaaee jug jug jaaniaa.m4a  ==  557 NGA SDO 1519 Bhagta Ka Sahai Jug Jug Janiae India 1980.m4a
+## 673 MGA SDO 1635 Dooji Kare Lag Janam Gavayiaa 11 1967 Puna SPOOL KS 02 40.m4a  ==  732 MGA SDO 1694 Poorey Gur Kee Kaar Karam Kamaaeeai 03 1974 Moga India.m4a
