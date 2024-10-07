@@ -1,10 +1,8 @@
 import { create } from "zustand";
 import {
   getNextCheckedType,
-  getRandType,
   loopIncrement,
   loopDecrement,
-  randIdx,
   randItemFromArr,
   getTypeNLinkIdx,
   getAllLinkObjs,
@@ -17,6 +15,14 @@ export const useStore = create((set) => ({
   hstIdx: -1,
   history: [],
   setHistory: (lst) => set({ history: lst, hstIdx: lst.length - 1 }),
+  clearHistory: () =>
+    set((state) => {
+      const currentTrack = state.history[state.hstIdx];
+      return {
+        history: [currentTrack],
+        hstIdx: 0,
+      };
+    }),
   setHstIdx: (value) => set({ hstIdx: value }),
   appendHistory: (trackObj) =>
     set((state) => {
@@ -156,7 +162,7 @@ export const useStore = create((set) => ({
       } else {
         const hist = state.history;
         let artist = hist[state.hstIdx].artist;
-        console.log(hist[state.hstIdx])
+        console.log(hist[state.hstIdx]);
         let { typeIdx, linkIdx } = getTypeNLinkIdx(allOpts, hist[state.hstIdx]);
 
         if (allOpts[artist][typeIdx].checked) {
@@ -214,12 +220,6 @@ export const useStore = create((set) => ({
   paused: true,
   setPaused: (value) => set({ paused: value }),
 
-  optsShown: "none", // all, none, [artist]
-  setOptsShown: (value) =>
-    set(() => {
-      return { optsShown: value };
-    }),
-
   indexTracks: {},
   setIndexTracks: (value) => set({ indexTracks: value }),
   appendIndexObj: (trackObj) =>
@@ -267,4 +267,21 @@ export const useSavedTracksStore = create((set) => ({
 
   note: "",
   setNote: (value) => set({ note: value }),
+}));
+
+export const useModalStore = create((set) => ({
+  viewHistory: false,
+  setViewHistory: (value) => set({ viewHistory: value }),
+
+  viewAllTracks: false,
+  setViewAllTracks: (value) => set({ viewAllTracks: value }),
+
+  showArtists: false,
+  setShowArtists: (value) => set({ showArtists: value }),
+
+  artistToShowTypesFor: "", // "", [artist]
+  setArtistToShowTypesFor: (value) => set({ artistToShowTypesFor: value }),
+
+  typeToShowLinksFor: { artist: "", type: "" },
+  setTypeToShowLinksFor: (value) => set({ typeToShowLinksFor: value }),
 }));

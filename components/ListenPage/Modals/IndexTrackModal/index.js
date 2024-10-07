@@ -257,7 +257,7 @@ export default function IndexTrackBtnAndModal({ audioRef, saveTimeFunc }) {
         <div className="m-1 p-2 text-xs rounded bg-btn">Index Track</div>
       </IconButton>
       <Modal open={modalOpen} onClose={() => setModal(false)}>
-        <div className="flex justify-center items-center  overflow-y-auto bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
+        <div className="flex justify-center items-center  overflow-y-auto overflow-x-hidden bg-primary-100 text-white p-8 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">
           <form
             ref={formData}
             className="flex flex-col gap-4"

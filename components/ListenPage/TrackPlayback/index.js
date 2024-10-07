@@ -5,13 +5,11 @@ import { formatTime, getNameOfTrack } from "@/utils/helper_funcs";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import AlbumIcon from "@mui/icons-material/Album";
 import PersonIcon from "@mui/icons-material/Person";
-import { useStore } from "@/utils/store.js";
+import { useModalStore, useStore } from "@/utils/store.js";
 import toast from "react-hot-toast";
 import AudioPlayer from "@/components/AudioPlayer";
-import { Modal } from "@mui/material";
 import { PlayPauseBtn, PlayBackButtons } from "@/components/commonComps";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import FlipCameraAndroidIcon from "@mui/icons-material/FlipCameraAndroid";
+import { ListOfTracksByType } from "../Modals/smallModals";
 
 export default function TrackPlayback({ audioRef }) {
   const nextTrack = useStore((state) => state.nextTrack);
@@ -23,13 +21,19 @@ export default function TrackPlayback({ audioRef }) {
   const skipTime = useStore((state) => state.skipTime);
   const setSkipTime = useStore((state) => state.setSkipTime);
   const setPlayBackSpeed = useStore((state) => state.setPlayBackSpeed);
-  const setOptsShown = useStore((state) => state.setOptsShown);
+
+  const setShowArtists = useModalStore((state) => state.setShowArtists);
+  const setArtistToShowTypesFor = useModalStore(
+    (state) => state.setArtistToShowTypesFor,
+  );
+  const setTypeToShowLinksFor = useModalStore(
+    (state) => state.setTypeToShowLinksFor,
+  );
+
   // const { artist, link, typeIdx, linkIdx, type } = history[hstIdx]
   const artist = history[hstIdx]?.artist;
   const link = history[hstIdx]?.link;
   const type = history[hstIdx]?.type;
-
-  const [tracksModalOpen, setTracksModal] = useState(false);
 
   function copyLink() {
     const url = new URL(window.location.href.split("?")[0].split("#")[0]);
@@ -47,12 +51,6 @@ export default function TrackPlayback({ audioRef }) {
 
   return (
     <div className="flex flex-col align-top m-2 rounded-lg bg-primary-200 text-white">
-      <TracksModal
-        setModal={setTracksModal}
-        modalOpen={tracksModalOpen}
-        artist={artist}
-        type={type}
-      />
       <div className="p-1">
         <div className="flex  items-center">
           <IconButton
@@ -69,7 +67,7 @@ export default function TrackPlayback({ audioRef }) {
           <Typography
             className="shadow-xl pl-1 text-sm opacity-70 break-all"
             onClick={() => {
-              setTracksModal(true);
+              setTypeToShowLinksFor({ artist, type });
             }}
           >
             {getNameOfTrack(link)}
@@ -81,9 +79,7 @@ export default function TrackPlayback({ audioRef }) {
           </IconButton>
           <Typography
             className="shadow-xl pl-1 text-sm text-left opacity-70 font-medium tracking-tight"
-            onClick={() => {
-              setOptsShown("all");
-            }}
+            onClick={() => setShowArtists(true)}
           >
             {artist}
           </Typography>
@@ -94,9 +90,7 @@ export default function TrackPlayback({ audioRef }) {
           </IconButton>
           <Typography
             className="shadow-xl pl-1 text-sm opacity-70 font-medium tracking-tight"
-            onClick={() => {
-              setOptsShown(artist);
-            }}
+            onClick={() => setArtistToShowTypesFor(artist)}
           >
             {type}
           </Typography>
@@ -231,68 +225,5 @@ export default function TrackPlayback({ audioRef }) {
         />
       </div>
     </div>
-  );
-}
-
-function TracksModal({ setModal, modalOpen, artist, type }) {
-  const allOpts = useStore((state) => state.allOptsTracks);
-  const appendHistory = useStore((state) => state.appendHistory);
-  const [tracksObj, setTracksObj] = useState();
-  const typeIdx = allOpts[artist].findIndex((obj) => obj.type === type);
-
-  useEffect(() => {
-    if (type === undefined || artist === undefined) return;
-    setTracksObj(allOpts[artist][typeIdx].links);
-  }, [artist, type]);
-
-  if (type === undefined) {
-    return null;
-  }
-
-  return (
-    <Modal open={modalOpen} onClose={() => setModal(false)}>
-      <div className=" w-screen flex items-center overflow-y-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <div className="m-10 flex-1 bg-primary-100  rounded-lg border border-solid border-white ">
-          <div className=" text-white flex p-2 border-b border-solid border-white  ">
-            <p className="flex-1 text-left text-2xl font-bold">
-              {artist}: {type}
-            </p>
-            <div>
-              <IconButton
-                className="h-10 w-10 "
-                onClick={() => {
-                  const newRes = [...tracksObj.reverse()];
-                  setTracksObj(newRes);
-                }}
-              >
-                <FlipCameraAndroidIcon className="text-white" />
-              </IconButton>
-              <IconButton onClick={() => setModal(false)}>
-                <div className="text-white flex-1 flex">
-                  <HighlightOffIcon />
-                </div>
-              </IconButton>
-            </div>
-          </div>
-          <div className="flex flex-col p-2 flex-auto max-h-48 overflow-auto text-white">
-            {tracksObj?.map((link, idx) => {
-              const trkObj = { link, artist, type, typeIdx, linkIdx: idx };
-              return (
-                <button
-                  className="text-left border-b border-solid border-white"
-                  key={idx}
-                  onClick={() => {
-                    setModal(false);
-                    appendHistory(trkObj);
-                  }}
-                >
-                  {getNameOfTrack(link)}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </Modal>
   );
 }

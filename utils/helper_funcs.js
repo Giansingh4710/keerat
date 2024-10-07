@@ -246,3 +246,22 @@ export function getDateFromUnixTime(unixTimeStamp) {
   const the_date = new Date(unixTimeStamp * 1000);
   return the_date.toLocaleString();
 }
+
+
+export function getRatio(artistTracks) {
+  let checkedTracks = 0;
+  const checkedTypes = artistTracks.filter((type) => type.checked);
+  for (const type of checkedTypes) {
+    checkedTracks += type.links.length;
+  }
+  const total = artistTrackCount(artistTracks);
+  return `${checkedTracks}/${total}`;
+}
+
+function artistTrackCount(artistTracks) {
+  let count = 0;
+  for (const type of artistTracks) {
+    count += type.links.length;
+  }
+  return count;
+}

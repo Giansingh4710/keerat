@@ -17,7 +17,7 @@ export default function ShabadsDisplay({ audioRef }) {
   }, [hstIdx, indexTracks]);
 
   return (
-    <div className="m-5 border-2 border-sky-500 rounded text-white">
+    <div className="m-3 border-2 border-sky-500 rounded text-white">
       <DisplayShabads indexLst={indexLst} audioRef={audioRef} />
     </div>
   );

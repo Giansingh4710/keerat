@@ -9,12 +9,14 @@ export function ArtistOptBar({
   rightText,
   onRightTextClick,
 }) {
+  function Checkbox({ checked }) {
+    const Icon = checked ? MdCheckBox : MdCheckBoxOutlineBlank;
+    return <Icon className="basis-9 text-lg" />;
+  }
+
   return (
     <div className="flex p-1 w-full justify-start items-start border-b border-gray-200">
-      <Button
-        additionalClasses="basis-3/4 "
-        onClick={toggleCheckbox}
-      >
+      <Button additionalClasses="basis-3/4 " onClick={toggleCheckbox}>
         <Checkbox checked={checked} />
         <p className="w-10 text-left truncate flex-1 text-md text-white">
           {title}
@@ -31,9 +33,4 @@ export function ArtistOptBar({
       </IconButton>
     </div>
   );
-}
-
-function Checkbox({ checked }) {
-  const Icon = checked ? MdCheckBox : MdCheckBoxOutlineBlank;
-  return <Icon className="basis-9 text-lg" />;
 }

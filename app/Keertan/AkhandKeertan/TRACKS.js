@@ -1524,6 +1524,9 @@ const SDO_TRACK_LINKS = [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/194 Bhai Mohinder Singh Ji SDO Gravesend Uk October 1983 Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/195 Bhai Mohinder Singh Ji SDO AMS 1980 Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/196 Bhai Mohinder Singh Ji SDO Canada BC Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/197 Bhai Mohinder Singh Ji SDO Canda BC 1980 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/199 Bhai Mohinder Singh Ji SDO Chicago 1985 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/200 Bhai Mohinder Singh Ji SDO Detroit 1984 Smagam (heeraRattan).mp3",
 
     ],
   },
