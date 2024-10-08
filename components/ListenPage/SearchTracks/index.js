@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import FlipCameraAndroidIcon from "@mui/icons-material/FlipCameraAndroid";
 import AlbumIcon from "@mui/icons-material/Album";
@@ -13,15 +13,25 @@ export default function SearchTracks() {
   const searchInput = useSearchStore((state) => state.searchInput);
   const setSearchInput = useSearchStore((state) => state.setSearchInput);
   const [searchType, setSearchType] = useState("Track Name");
+  const [debouncedSearchInput, setDebouncedSearchInput] = useState(searchInput);
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchInput(searchInput);
+    }, 300); // Adjust this delay as needed
+
+    return () => clearTimeout(timer);
+  }, [searchInput]);
 
   function ShowTracks() {
-    if (searchInput === "") return <></>;
+    if (debouncedSearchInput === "") return <></>;
     else if (searchType === "Gurbani") {
-      return <DisplayTracksByGurbani searchInput={searchInput} />;
+      return <DisplayTracksByGurbani searchInput={debouncedSearchInput} />;
     } else if (searchType === "Track Name") {
-      return <DisplayTracksByName searchInput={searchInput} />;
+      return <DisplayTracksByName searchInput={debouncedSearchInput} />;
     } else if (searchType === "First Letter Search") {
-      return <DisplayTracksByFirstLetter searchInput={searchInput} />;
+      return <DisplayTracksByFirstLetter searchInput={debouncedSearchInput} />;
     }
   }
 
@@ -161,7 +171,7 @@ function DisplayTracksByGurbani({ searchInput }) {
   const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
   const [results, setResults] = useState([]);
 
-  function searchGB(searchTerm, allOpts) {
+  const searchGB = useCallback((searchTerm, allOpts) => {
     const links = [];
     const wordsEntered = searchTerm.toLowerCase().split(" ");
     for (const key in indexTracks) {
@@ -210,15 +220,16 @@ function DisplayTracksByGurbani({ searchInput }) {
       }
     }
     return links;
-  }
+  }, [indexTracks]);
 
   useEffect(() => {
     if (searchInput !== "") {
-      searchTracksAsync(searchInput, allOpts, searchGB).then((results) => {
-        setResults(results);
-      });
+      const results = searchGB(searchInput, allOpts);
+      setResults(results);
+    } else {
+      setResults([]);
     }
-  }, [searchInput, allOpts]);
+  }, [searchInput, allOpts, searchGB]);
 
   return (
     <div className="border-2 border-sky-500 rounded text-white">
@@ -272,7 +283,7 @@ function DisplayTracksByName({ searchInput }) {
   const appendHistory = useStore((state) => state.appendHistory);
   const [results, setResults] = useState([]);
 
-  function searchTracksByTitle(searchTerm, allOpts) {
+  const searchTracksByTitle = useCallback((searchTerm, allOpts) => {
     const words = searchTerm.toLowerCase().split(" ");
     const results = [];
     for (const artist in allOpts) {
@@ -302,17 +313,16 @@ function DisplayTracksByName({ searchInput }) {
       }
     }
     return results;
-  }
+  }, []);
 
   useEffect(() => {
     if (searchInput !== "") {
-      searchTracksAsync(searchInput, allOpts, searchTracksByTitle).then(
-        (results) => {
-          setResults(results); // the async func makes input function lag less
-        },
-      );
+      const results = searchTracksByTitle(searchInput, allOpts);
+      setResults(results);
+    } else {
+      setResults([]);
     }
-  }, [searchInput, allOpts]);
+  }, [searchInput, allOpts, searchTracksByTitle]);
 
   return (
     <div className="border-2 border-sky-500 rounded text-white">
@@ -358,15 +368,6 @@ function DisplayTracksByName({ searchInput }) {
       </div>
     </div>
   );
-}
-
-async function searchTracksAsync(input, allOpts, searchFunc) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const results = searchFunc(input, allOpts);
-      resolve(results);
-    }, 400); // The bigger the number, the less laggy the input function but the slower the results
-  });
 }
 
 function getTypeNLink(allOpts, link, artist) {

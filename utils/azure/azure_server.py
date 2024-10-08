@@ -221,7 +221,7 @@ def random_stuff():
 
 folder = "audios/"  # needs to end with /
 folder = "audios/keertan/dr_pritam_singh_anjaan/"
-folder = "audios/keertan/rimmyRadio/"
+folder = "audios/keertan/sdo/yt_kirtanSewa/"
 # folder = "audios/keertan/bhai_randhir_singh/"
 
 # curr = "audios/keertan/timeBased/3)6amto9am/Raag devgandhari - Att Sundar man Mohan piyare - Canada2019.mp3.mp3"
@@ -234,9 +234,9 @@ folder = "audios/keertan/rimmyRadio/"
 # files_map(folder, is_webm, delete_file)
 
 # upload_file("/Users/gians/Desktop/dev/webdev/keerat/app/Keertan/AkhandKeertan/scraping/dl_all_links_from_yt_link/HeeraRatan/114 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-1 Bombay (heeraRattan).mp3", "audios/keertan/114 Bhai Mohinder Singh Ji SDO ਬੰਬਈ ਅਤੇ ਪੂਨਾ 1979-1 Bombay (heeraRattan).mp3")
-# print_links(folder)
+print_links(folder)
 # read(folder)
 # upload_folder("../Keertan/", "Keertan2/")
-rename_folder(folder, "audios/keertan/random_radio/" )
+# rename_folder(folder, "audios/keertan/random_radio/" )
 # delete_folder(folder)  # very DANGAROUS
 

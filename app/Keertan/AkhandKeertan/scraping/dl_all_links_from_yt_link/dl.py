@@ -55,6 +55,7 @@ def get_json_data_from_playlist(link, filename):
 
     for i in range(len(currentPlaylistLinks)):
         if currentPlaylistLinks[i]["id"] == already_downloaded[0]["id"]:
+            print(i)
             return_obj["start_from_num"] = len(already_downloaded) + 1
             return_obj["data"] = currentPlaylistLinks[:i] # data is in reverse order
             return return_obj
@@ -72,8 +73,9 @@ def remove_bad_url_char(string):
 
 
 def download_videos(obj, dir_name, sign=""):
-    if not os.path.exists(dir_name):
-        os.mkdir(dir_name)
+    if os.path.exists(dir_name):
+        subprocess.run(["mv", dir_name, f"{dir_name}_old"])
+    os.mkdir(dir_name)
     os.chdir(dir_name)
 
     title_num = obj["start_from_num"]
@@ -165,12 +167,12 @@ def main(key):
 
 # no filtering needed for the links/channels below
 playlists = {
-    "lalli": {
-        "link": "https://www.youtube.com/playlist?list=PL34jslVRIs1ffryd-uXG3CCk5oVew1bW2",  # 166/154 files
-        "dir_name": "lalli_SDO",
-        "prefix": "audios/keertan/sdo/yt_lalli_pl/",
-        "sign": "",
-    },
+    # "lalli": {
+    #     "link": "https://www.youtube.com/playlist?list=PL34jslVRIs1ffryd-uXG3CCk5oVew1bW2",  # 166/154 files
+    #     "dir_name": "lalli_SDO",
+    #     "prefix": "audios/keertan/sdo/yt_lalli_pl/",
+    #     "sign": "",
+    # },
     "gas_kirtansewa": {
         "link": "https://www.youtube.com/playlist?list=PLJbQ7fetm0gpBOB1nWpqQeiYdfGy9HQu_",
         "dir_name": "Giani_Amolak_Singh_Kirtansewa",
@@ -198,5 +200,8 @@ playlists = {
 }
 
 # key = "karKeertan"
-key = "heeraRatan"
-main(key)
+# key = "heeraRatan"
+# key = "sdo_kirtansewa"
+keys = list(playlists.keys())
+for key in keys:
+    main(key)
