@@ -1,13 +1,16 @@
 import { ALL_OPTS as opt1 } from "../Keertan/TimeBasedRaagKeertan/TRACKS.js";
 import { ALL_OPTS as opt2 } from "../Keertan/DarbarSahibPuratanKeertanSGPC/TRACKS.js";
 import { ALL_OPTS as opt3 } from "../Keertan/AkhandKeertan/TRACKS.js";
-import { ALL_OPTS as opt4 } from "../GianiSherSinghJi/TRACKS.js";
+import { ALL_OPTS as opt7 } from "../Keertan/RandomRadio/TRACKS.js";
+
+import { ALL_OPTS as opt4 } from "../Katha/GianiSherSinghJi/TRACKS.js";
+import { ALL_OPTS as opt6 } from "../Katha/MiscellaneousTopics/TRACKS.js";
+import { ALL_OPTS as opt8 } from "../Katha/SantGianiGurbachanSinghJiSGGSKatha/TRACKS.js";
+import { ALL_OPTS as opt9 } from "../Katha/BhagatJaswantSinghJi/TRACKS.js";
+import { ALL_OPTS as opt10 } from "../Katha/SantWaryamSinghJi/TRACKS.js";
+
 import { ALL_OPTS as opt5 } from "../Paath/TRACKS.js";
-import { ALL_OPTS as opt6 } from "../MiscellaneousTopics/TRACKS.js";
-import { ALL_OPTS as opt7 } from "../RandomRadio/TRACKS.js";
-import { ALL_OPTS as opt8 } from "../SantGianiGurbachanSinghJiSGGSKatha/TRACKS.js";
-import { ALL_OPTS as opt9 } from "../BhagatJaswantSinghJi/TRACKS.js";
-import { ALL_OPTS as opt10 } from "../SantWaryamSinghJi/TRACKS.js";
+
 
 export function getLinkToKeerat(link, timestampInSecs) {
   const theOpts = [opt1, opt2, opt3, opt4, opt5, opt6, opt7, opt8, opt9, opt10];
@@ -15,13 +18,15 @@ export function getLinkToKeerat(link, timestampInSecs) {
     "/Keertan/TimeBasedRaagKeertan",
     "/Keertan/DarbarSahibPuratanKeertanSGPC",
     "/Keertan/AkhandKeertan",
-    "/GianiSherSinghJi",
+    "/Keertan/RandomRadio",
+
+    "/Katha/GianiSherSinghJi",
+    "/Katha/MiscellaneousTopics",
+    "/Katha/SantGianiGurbachanSinghJiSGGSKatha",
+    "/Katha/BhagatJaswantSinghJi",
+    "/Katha/SantWaryamSinghJi",
+
     "/Paath",
-    "/MiscellaneousTopics",
-    "/RandomRadio",
-    "/SantGianiGurbachanSinghJiSGGSKatha",
-    "/BhagatJaswantSinghJi",
-    "/SantWaryamSinghJi",
   ];
 
   for (let i = 0; i < theOpts.length; i++) {

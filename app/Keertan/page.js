@@ -1,10 +1,11 @@
-import OptsPage from '@/components/OptionsPage/index.js'
+import OptsPage from '@/components/OptionsPage.js'
 
 export default function Keertan() {
   const allOpts = [
     "Akhand Keertan",
     "Darbar Sahib Puratan Keertan SGPC",
     "Time Based Raag Keertan",
+    "Random Radio",
     "All Keertan",
   ]
   return <OptsPage opts={allOpts} />

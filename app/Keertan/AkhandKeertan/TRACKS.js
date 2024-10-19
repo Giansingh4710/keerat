@@ -1279,6 +1279,12 @@ const SDO_TRACK_LINKS = [
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/197 Bhai Mohinder Singh Ji SDO Canda BC 1980 Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/199 Bhai Mohinder Singh Ji SDO Chicago 1985 Smagam (heeraRattan).mp3",
       "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/200 Bhai Mohinder Singh Ji SDO Detroit 1984 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/201 Bhai Mohinder Singh Ji SDO 10,1983 Birmingham Day 2, savher Da,Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/202 Bhai Mohinder Singh Ji SDO Moga 1979 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/203 Bhai Mohinder Singh Ji SDO Parmjit Singh Bibi kirpal Kaur ji,Bombay 1979 Smagam (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/204 Bhai Mohinder Singh Ji SDO 1982 USA Smagam,ਵਾਰ ਸਲੋਕਾ ਨਾਲਿ (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/205 Bhai Mohinder Singh ji sdo Patiala Smagam 1979 (heeraRattan).mp3",
+      "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/206 Bhai Mohinder Singh Ji SDO London UK October 1983 Smagam (heeraRattan).mp3",
 
     ],
   },

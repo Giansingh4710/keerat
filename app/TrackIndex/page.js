@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import NavBar from "@/components/NavBar/index.js";
+import NavBar from "@/components/NavBar.js";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { getNameOfTrack } from "@/utils/helper_funcs";
 import { IconButton } from "@mui/material";

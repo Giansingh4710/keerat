@@ -2,7 +2,7 @@ from azure.storage.blob import BlobServiceClient
 import os
 import subprocess
 import json
-import pyperclip
+# import pyperclip
 
 
 def get_json_data_from_file(name):
@@ -138,7 +138,7 @@ def print_links_n_copy(prefix, dir_name):
             continue
         copyTxt+=f'"{link_pref}{file}",\n'
 
-    pyperclip.copy(copyTxt)
+    # pyperclip.copy(copyTxt)
     print("\nLinks:\n"+copyTxt)
 
 

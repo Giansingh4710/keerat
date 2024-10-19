@@ -1,6 +1,6 @@
 "use client";
 
-import NavBar from "../NavBar/index.js";
+import NavBar from "@/components/NavBar.js";
 import TrackPlayback from "./TrackPlayback/index.js";
 import SearchTracks from "./SearchTracks/index.js";
 import IndexTrackBtnAndModal from "./Modals/IndexTrackModal/index.js";
