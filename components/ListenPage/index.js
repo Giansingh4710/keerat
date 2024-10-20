@@ -1,10 +1,10 @@
 "use client";
 
 import NavBar from "@/components/NavBar.js";
-import TrackPlayback from "./TrackPlayback/index.js";
-import SearchTracks from "./SearchTracks/index.js";
+import TrackPlayback from "./TrackPlayback.js";
+import SearchTracks from "./SearchTracks.js";
+import ShabadsForTrack from "./ShabadsForTrack.js";
 import IndexTrackBtnAndModal from "./Modals/IndexTrackModal/index.js";
-import ShabadsForTrack from "./ShabadsForTrack/index.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   getLinkFromOldUrlDate,

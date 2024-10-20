@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ALL_THEMES from "@/utils/themes";
 import { Typography, IconButton } from "@mui/material";
 import { formatTime, getNameOfTrack } from "@/utils/helper_funcs";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
@@ -9,45 +8,34 @@ import { useModalStore, useStore } from "@/utils/store.js";
 import toast from "react-hot-toast";
 import AudioPlayer from "@/components/AudioPlayer";
 import { PlayPauseBtn, PlayBackButtons } from "@/components/commonComps";
-import { ListOfTracksByType } from "../Modals/smallModals";
 
 export default function TrackPlayback({ audioRef }) {
-  const nextTrack = useStore((state) => state.nextTrack);
-  const prevTrack = useStore((state) => state.prevTrack);
-  const shuffle = useStore((state) => state.shuffle);
-  const setShuffle = useStore((state) => state.setShuffle);
-  const hstIdx = useStore((state) => state.hstIdx);
-  const history = useStore((state) => state.history);
-  const skipTime = useStore((state) => state.skipTime);
-  const setSkipTime = useStore((state) => state.setSkipTime);
-  const setPlayBackSpeed = useStore((state) => state.setPlayBackSpeed);
+  const {
+    nextTrack,
+    prevTrack,
+    shuffle,
+    setShuffle,
+    hstIdx,
+    history,
+    skipTime,
+    setSkipTime,
+    setPlayBackSpeed,
+  } = useStore();
+  const { setShowArtists, setArtistToShowTypesFor, setTypeToShowLinksFor } =
+    useModalStore();
 
-  const setShowArtists = useModalStore((state) => state.setShowArtists);
-  const setArtistToShowTypesFor = useModalStore(
-    (state) => state.setArtistToShowTypesFor,
-  );
-  const setTypeToShowLinksFor = useModalStore(
-    (state) => state.setTypeToShowLinksFor,
-  );
-
-  // const { artist, link, typeIdx, linkIdx, type } = history[hstIdx]
   const artist = history[hstIdx]?.artist;
   const link = history[hstIdx]?.link;
   const type = history[hstIdx]?.type;
 
-  function copyLink() {
+  const copyLink = () => {
+    if (!audioRef) return toast.error("No Audio to Copy Link");
     const url = new URL(window.location.href.split("?")[0].split("#")[0]);
-    if (audioRef === null) {
-      toast.error("No Audio to Copy Link");
-      return;
-    }
-    url.searchParams.append("time", parseInt(audioRef.current.currentTime));
+    url.searchParams.append("time", Math.floor(audioRef.current.currentTime));
     url.searchParams.append("url", link);
     navigator.clipboard.writeText(url.href);
-    toast.success(
-      `Link with timestamp: ${formatTime(audioRef.current?.currentTime)} Copied`,
-    );
-  }
+    toast.success(`Link copied: ${formatTime(audioRef.current.currentTime)}`);
+  };
 
   return (
     <div className="flex flex-col align-top m-2 rounded-lg bg-primary-200 text-white">
