@@ -30,6 +30,7 @@ const GareebiLinks = [
   {
     type: 'main',
     links: [
+      'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/1. Gareebi Pothi/Full Gareebi Pothi 2x.mp3',
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/1. Gareebi Pothi/00 Intro.mp3',
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/1. Gareebi Pothi/01 (Ang44_ Ang52 No11).mp3',
       'https://daasstorage13.blob.core.windows.net/ds1/audios/BhagatJaswantSinghJi/Pothis/1. Gareebi Pothi/02 (Ang52 No12_Ang58 No15).mp3',

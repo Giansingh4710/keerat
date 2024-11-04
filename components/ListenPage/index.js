@@ -2,7 +2,7 @@
 
 import NavBar from "@/components/NavBar.js";
 import TrackPlayback from "./TrackPlayback.js";
-import SearchTracks from "./SearchTracks.js";
+import SearchTracks from "./Searching/SearchTracks.js";
 import ShabadsForTrack from "./ShabadsForTrack.js";
 import IndexTrackBtnAndModal from "./Modals/IndexTrackModal/index.js";
 import { useEffect, useMemo, useRef, useState } from "react";
