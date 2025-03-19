@@ -1,0 +1,181 @@
+// Base URL: /api/v1
+
+/**
+ * Track Management Endpoints
+ * ------------------------
+ */
+GET /tracks
+  Query params: {
+    type?: "keertan" | "katha" | "paath"
+    artist?: string
+    page?: number
+    limit?: number
+  }
+  Response: {
+    tracks: [{
+      id: string
+      title: string
+      artist: string
+      type: string
+      link: string
+      duration: number
+      createdAt: string
+    }]
+    totalPages: number
+    currentPage: number
+  }
+
+GET /tracks/indexed
+  Query params: {
+    artists?: string[]  // JSON stringified array
+  }
+  Response: {
+    [link: string]: [{
+      type: string
+      artist: string
+      timestamp: string
+      shabadID: string
+      description: string
+      created: number
+      link: string
+      shabadArr: string[]
+    }]
+  }
+
+POST /tracks/index
+  Headers: {
+    Authorization: "Bearer {token}"
+  }
+  Request body: {
+    description: string
+    shabadID: string
+    timestamp: string
+    trackType: string
+    artist: string
+    link: string
+  }
+  Response: {
+    message: string
+    indexedTrack: {
+      id: string
+      description: string
+      shabadID: string
+      timestamp: string
+      trackType: string
+      artist: string
+      link: string
+      created: number
+    }
+  }
+
+/**
+ * Playback History Endpoints
+ * -------------------------
+ */
+GET /history
+  Headers: {
+    Authorization: "Bearer {token}"
+  }
+  Query params: {
+    page?: number
+    limit?: number
+  }
+  Response: {
+    history: [{
+      id: string
+      trackId: string
+      timestamp: string
+      playbackPosition: number
+      title: string
+      artist: string
+      type: string
+      link: string
+    }]
+    totalPages: number
+    currentPage: number
+  }
+
+POST /history
+  Headers: {
+    Authorization: "Bearer {token}"
+  }
+  Request body: {
+    trackId: string
+    playbackPosition: number
+    title: string
+    artist: string
+    type: string
+    link: string
+  }
+  Response: {
+    id: string
+    created: string
+  }
+
+/**
+ * Favorites/Saved Tracks Endpoints
+ * ------------------------------
+ */
+GET /favorites
+  Headers: {
+    Authorization: "Bearer {token}"
+  }
+  Response: {
+    savedTracks: [{
+      id: string
+      trackId: string
+      note: string
+      title: string
+      artist: string
+      type: string
+      link: string
+      createdAt: string
+    }]
+  }
+
+POST /favorites
+  Headers: {
+    Authorization: "Bearer {token}"
+  }
+  Request body: {
+    trackId: string
+    note?: string
+    title: string
+    artist: string
+    type: string
+    link: string
+  }
+  Response: {
+    id: string
+    createdAt: string
+  }
+
+DELETE /favorites/:id
+  Headers: {
+    Authorization: "Bearer {token}"
+  }
+  Response: {
+    message: "Track removed from favorites"
+  }
+
+/**
+ * Search Endpoints
+ * --------------
+ */
+GET /search/shabads
+  Query params: {
+    query: string
+    page?: number
+    limit?: number
+  }
+  Response: {
+    results: [{
+      id: string
+      content: string
+      page: number
+      source: string
+      writer: string
+    }]
+    totalResults: number
+    currentPage: number
+  }
