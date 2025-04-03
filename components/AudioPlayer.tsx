@@ -10,7 +10,6 @@ interface AudioPlayerProps {
 
 interface AudioProgressBarProps {
   buffered: number;
-  currentTime: number;
   audioRef: React.RefObject<HTMLAudioElement>;
 }
 
@@ -22,12 +21,10 @@ export default function AudioPlayer({link, audioRef}: AudioPlayerProps): JSX.Ele
   const setPaused = useStore((state: any) => state.setPaused);
 
   const [buffered, setBuffered] = React.useState(0);
-  const [currentTime, setCurrentTime] = React.useState(0);
 
   const handleBufferProgress = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
     const audio = e.currentTarget;
     const dur = audio.duration;
-    setCurrentTime(audio.currentTime);
     if (dur > 0) {
       for (let i = 0; i < audio.buffered.length; i++) {
         if (audio.buffered.start(audio.buffered.length - 1 - i) < audio.currentTime) {
@@ -62,8 +59,8 @@ export default function AudioPlayer({link, audioRef}: AudioPlayerProps): JSX.Ele
         }}
         onLoadedData={() => {
           if (audioRef.current) {
-            audioRef.current.currentTime = timeToGoTo;
             audioRef.current.playbackRate = playbackSpeed;
+            audioRef.current.currentTime = timeToGoTo;
             setTimeToGoTo(0);
             setPaused(audioRef.current.paused); // for initial load. Browser blocks autoplay
             toast.success('Audio Loaded');
@@ -73,25 +70,39 @@ export default function AudioPlayer({link, audioRef}: AudioPlayerProps): JSX.Ele
         <source type="audio/mpeg" src={link} />
       </audio>
     );
-  }, [link, audioRef, timeToGoTo, playbackSpeed, setTimeToGoTo, setPaused, nextTrack]);
+  }, [link, audioRef, playbackSpeed, setTimeToGoTo, setPaused, nextTrack]);
 
   return (
     <div className="w-full py-4">
       {audioComponent}
-      <AudioProgressBar buffered={buffered} currentTime={currentTime} audioRef={audioRef} />
+      <AudioProgressBar buffered={buffered} audioRef={audioRef} />
     </div>
   );
 }
 
-function AudioProgressBar({buffered, currentTime, audioRef}: AudioProgressBarProps): JSX.Element | null {
-  if (!audioRef) return null;
+function AudioProgressBar({buffered, audioRef}: AudioProgressBarProps): JSX.Element | null {
+  const [currentTime, setCurrentTime] = React.useState(0);
   const duration = audioRef?.current?.duration || 0;
   const bufferedWidth = isNaN(buffered / duration) ? 0 : (buffered / duration) * 100;
+
+  React.useEffect(() => {
+    if (!audioRef.current) return;
+
+    setCurrentTime(audioRef.current.currentTime);
+    const intervalId = setInterval(() => {
+      if (audioRef.current) {
+        setCurrentTime(audioRef.current.currentTime);
+      }
+    }, 500);
+
+    return () => clearInterval(intervalId);
+  }, [audioRef]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(event.target.value);
     if (audioRef.current) {
       audioRef.current.currentTime = newValue;
+      setCurrentTime(newValue); // Update local state immediately
     }
   };
 

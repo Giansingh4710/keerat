@@ -1,3 +1,5 @@
+'use client';
+
 interface Urls {
   GET_INDEXED_TRACKS_URL: string;
   GET_INDEXED_TRACKS_BY_ARTISTS_URL: string;
@@ -8,7 +10,7 @@ interface Urls {
 function getUrls(): Urls {
   let isDev = false;
 
-  // if (typeof window !== 'undefined' && window.location.href.includes('localhost')) isDev = true;
+  if (typeof window !== 'undefined' && window.location.href.includes('localhost')) isDev = true;
   const SERVER_URL = isDev ? 'http://localhost:3000' : 'https://getshabads.xyz';
 
   const GET_INDEXED_TRACKS_URL = SERVER_URL + '/getIndexedTracks';

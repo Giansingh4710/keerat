@@ -11,10 +11,11 @@ import {
   TrackOptions,
   StoreState,
   Track,
-  IndexTracks,
+  IndexedTracks,
   SearchStoreState,
   SavedTracksStoreState,
   ModalStoreState,
+  IndexedTrack,
 } from './types';
 
 export const useStore = create<StoreState>()((set, get) => ({
@@ -216,8 +217,8 @@ export const useStore = create<StoreState>()((set, get) => ({
   setPaused: (value: boolean) => set({paused: value}),
 
   indexTracks: {},
-  setIndexTracks: (value: IndexTracks) => set({indexTracks: value}),
-  appendIndexObj: (trackObj: Track) =>
+  setIndexTracks: (value: IndexedTracks) => set({indexTracks: value}),
+  appendIndexObj: (trackObj: IndexedTrack) =>
     set((state: StoreState) => {
       const indexTracks = {...state.indexTracks};
       if (!indexTracks[trackObj.link]) {

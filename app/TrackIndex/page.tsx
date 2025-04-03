@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import NavBar from '@/components/NavBar';
-import {Suspense, useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {getNameOfTrack} from '@/utils/helper_funcs';
 import {IconButton} from '@mui/material';
 import getUrls from '@/utils/get_urls';
@@ -14,57 +14,46 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
 import toast, {Toaster} from 'react-hot-toast';
 import {getLinkToKeerat} from './copyFunc';
-import {Track} from '@/utils/types';
+import {IndexedTrack} from '@/utils/types';
 
 interface TopButtonsProps {
-  setCurrTrkLst: React.Dispatch<React.SetStateAction<Track[]>>;
+  setCurrTrkLst: React.Dispatch<React.SetStateAction<IndexedTrack[]>>;
 }
 
 interface SearchBarProps {
-  setCurrTrkLst: React.Dispatch<React.SetStateAction<Track[]>>;
-  allTracks: Track[];
+  setCurrTrkLst: React.Dispatch<React.SetStateAction<IndexedTrack[]>>;
+  allTracks: IndexedTrack[];
 }
 
 interface SelectInputsProps {
-  setCurrTrkLst: React.Dispatch<React.SetStateAction<Track[]>>;
-  allTracks: Track[];
+  setCurrTrkLst: React.Dispatch<React.SetStateAction<IndexedTrack[]>>;
+  allTracks: IndexedTrack[];
   allTypes: string[];
   allArtists: string[];
 }
 
-interface BarRowProps {
-  trkObj: Track;
-  setCurrTrk: React.Dispatch<React.SetStateAction<Track | null>>;
-}
-
-interface TrackPlayerProps {
-  currTrk: Track | null;
-  closePlayer: () => void;
-}
-
 export default function SGGS(): JSX.Element {
-  const [allTracks, setAllTracks] = useState<Track[]>([]);
+  const [allTracks, setAllTracks] = useState<IndexedTrack[]>([]);
   const [allArtists, setAllKeertanis] = useState<string[]>([]);
   const [allTypes, setAllTypes] = useState<string[]>([]);
 
-  const [currTrkLst, setCurrTrkLst] = useState<Track[]>([]);
-  const [currTrk, setCurrTrk] = useState<Track | null>(null);
+  const [currTrkLst, setCurrTrkLst] = useState<IndexedTrack[]>([]);
+  const [currTrk, setCurrTrk] = useState<IndexedTrack | null>(null);
 
   useEffect(() => {
     const {GET_INDEXED_TRACKS_URL} = getUrls();
-    console.log({GET_INDEXED_TRACKS_URL});
     axios({
       url: GET_INDEXED_TRACKS_URL,
       method: 'GET',
     })
-      .then(res => {
-        const lst = res.data.reverse();
+      .then((res: any) => {
+        const lst: IndexedTrack[] = res.data.reverse();
         setAllTracks(lst);
         setCurrTrkLst(lst);
 
         const types = ['All'];
         const keertanis = ['All'];
-        lst.forEach((trk: Track) => {
+        lst.forEach((trk: IndexedTrack) => {
           if (!types.includes(trk.type)) {
             types.push(trk.type);
           }
@@ -88,15 +77,22 @@ export default function SGGS(): JSX.Element {
 
       <SelectInputs setCurrTrkLst={setCurrTrkLst} allTracks={allTracks} allTypes={allTypes} allArtists={allArtists} />
       <TopButtons setCurrTrkLst={setCurrTrkLst} />
-      <TrackPlayer currTrk={currTrk} closePlayer={() => setCurrTrk(null)} />
-      <Suspense fallback={<p>Loading...</p>}>
-        <p>{currTrkLst.length}: Tracks</p>
-        <div className="flex flex-col gap-1 p-10">
-          {currTrkLst.map((trkObj, idx) => (
-            <BarRow trkObj={trkObj} key={idx} setCurrTrk={setCurrTrk} />
-          ))}
-        </div>
-      </Suspense>
+      {currTrk && <TrackPlayer currTrk={currTrk} closePlayer={() => setCurrTrk(null)} />}
+
+      <div>
+        {currTrkLst.length === 0 ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <p>{currTrkLst.length}: Tracks</p>
+            <div className="flex flex-col gap-1 p-10">
+              {currTrkLst.map((trkObj, idx) => (
+                <BarRow trkObj={trkObj} key={idx} setCurrTrk={setCurrTrk} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
     </body>
   );
 }
@@ -266,82 +262,138 @@ function SelectInputs({setCurrTrkLst, allTracks, allTypes, allArtists}: SelectIn
   );
 }
 
-function BarRow({trkObj, setCurrTrk}: BarRowProps): JSX.Element {
+function BarRow({
+  trkObj,
+  setCurrTrk,
+}: {
+  trkObj: IndexedTrack;
+  setCurrTrk: React.Dispatch<React.SetStateAction<IndexedTrack | null>>;
+}): JSX.Element {
   return (
-    <details className="flex flex-col rounded-md w-full border-b border-gray-200 hover:bg-blue-100 text-xl p-2">
-      <summary className="flex w-full text-sm">
-        <p className="pl-2 pr-2">{trkObj.artist}</p>
-        <p className="flex-1 text-left w-5/6 truncate break-words">{getNameOfTrack(trkObj.link)}</p>
-      </summary>
-      <div className="flex flex-row w-full text-xs">
-        <div className="basis-3/4 text-xs text-left w-full">{trkObj.description}</div>
-        <div className="basis-1/4 text-xs text-right truncate break-words">{trkObj.type}</div>
+    <div className="flex-1 w-full border border-gray-200 rounded text-white">
+      <div className="flex flex-row">
+        <p className="text-left px-1 m-1 rounded border">#{trkObj.ID}</p>
+        <p className="flex-1 flex items-center justify-center">{trkObj.artist}</p>
       </div>
-      <div className="flex flex-row w-full text-xs">
-        <div className="basis-3/4 text-xs text-left w-full">{trkObj.shabadArr?.join('\n')}</div>
-        <div className="basis-1/4 text-xs text-right truncate break-words">
-          {getDateFromUnixTime(parseInt(trkObj.timestamp || '0'))}
-        </div>
-      </div>
-      <div className="flex flex-row w-full text-xs">
-        <div className="basis-3/4 text-xs text-left w-full">
-          <button
-            onClick={() => {
-              setCurrTrk(trkObj);
-            }}
-            className="text-blue-500 hover:text-blue-700">
-            Play
-          </button>
-        </div>
-        <div className="basis-1/4 text-xs text-right truncate break-words">
-          <button
-            onClick={() => {
-              const link = getLinkToKeerat(trkObj.link, getSecondsFromTimeStamp(trkObj.timestamp || '0'));
-              if (link) {
-                copyLocalLink(link, getSecondsFromTimeStamp(trkObj.timestamp || '0'));
-                toast.success('Link copied to clipboard!');
-              }
-            }}
-            className="text-blue-500 hover:text-blue-700">
-            Copy Link
-          </button>
-        </div>
-      </div>
-    </details>
-  );
-}
+      <p className="flex bg-gray-800">{trkObj.description}</p>
+      <div className="flex flex-col gap-2 p-2">
+        <p className="flex-1 text-left">Type: {trkObj.type}</p>
+        <p className="flex-1 text-left">Added: {getDateFromUnixTime(trkObj.created)}</p>
+        <p className="flex-1 text-left">Time Stamp: {trkObj.timestamp}</p>
 
-function TrackPlayer({currTrk, closePlayer}: TrackPlayerProps): JSX.Element {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const setTimeToGoTo = useStore(state => state.setTimeToGoTo);
-  if (!currTrk) return <></>;
-
-  const timestampInSecs = getSecondsFromTimeStamp(currTrk.timestamp || '0');
-  setTimeToGoTo(timestampInSecs);
-
-  return (
-    <div className="fixed bottom-0 left-0 right-0 bg-primary-200 p-4">
-      <div className="flex flex-col">
-        <div className="flex flex-row justify-between">
-          <div className="flex-1">
-            <p className="text-sm">{currTrk.artist}</p>
-            <p className="text-sm">{getNameOfTrack(currTrk.link)}</p>
-          </div>
-          <IconButton onClick={closePlayer}>
-            <CancelIcon className="text-white" />
-          </IconButton>
-        </div>
-        <AudioPlayer link={currTrk.link} audioRef={audioRef} />
+        <IconButton onClick={() => copyLocalLink(trkObj.link, getSecondsFromTimeStamp(trkObj.timestamp || '0'))}>
+          <p className="flex-1 text-sm rounded bg-btn break-all text-white">Copy Link</p>
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            setCurrTrk(trkObj);
+          }}>
+          <p className="flex-1 text-sm rounded bg-btn break-all text-white">{getNameOfTrack(trkObj.link)}</p>
+        </IconButton>
+        <details>
+          <summary>Shabad ID {trkObj.shabadID}</summary>
+          {trkObj.shabadArr?.map((shabad, idx) => <p key={idx}>{shabad}</p>)}
+        </details>
       </div>
     </div>
   );
 }
 
-function getDateFromUnixTime(unixTimeStamp: number): string {
-  const date = new Date(unixTimeStamp * 1000);
-  return date.toLocaleDateString();
+function TrackPlayer({currTrk, closePlayer}: {currTrk: IndexedTrack; closePlayer: () => void}): JSX.Element {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  // const setTimeToGoTo = useStore(state => state.setTimeToGoTo);
+  const timestampInSecs = getSecondsFromTimeStamp(currTrk.timestamp || '0');
+
+  useEffect(() => {
+    // setTimeToGoTo(timestampInSecs);
+  }, []);
+
+  return (
+    <div className="flex-1 w-full bg-primary-200 rounded">
+      <div className="flex flex-row gap-3 h-10">
+        <p className="w-15 text-left px-1 m-1 rounded border">#{currTrk.ID}</p>
+        <p className="w-80 flex items-center justify-center">{currTrk.artist}</p>
+        <p className="w-10 flex items-center justify-center">
+          <IconButton onClick={closePlayer}>
+            <CancelIcon />
+          </IconButton>
+        </p>
+      </div>
+      <div className="flex flex-col m-1 p-1 bg-secondary-200 rounded">
+        <p className="w-full text-left">Description:</p>
+        <p className="w-full text-left max-h-20 overflow-auto">{currTrk.description}</p>
+      </div>
+      <div className="flex flex-col m-1 p-1 bg-secondary-200 rounded">
+        <a className="w-full text-left underline" href={currTrk.link} target="_blank">
+          Track: {getNameOfTrack(currTrk.link)}
+        </a>
+        <p className="w-full text-left">Type: {currTrk.type}</p>
+        <div className="w-full text-left flex">
+          <p>Time Stamp:</p>
+          <IconButton
+            onClick={() => {
+              if (audioRef.current) {
+                audioRef.current.currentTime = timestampInSecs;
+              }
+            }}>
+            <p className="text-xs bg-btn rounded">{currTrk.timestamp}</p>
+          </IconButton>
+        </div>
+        <p className="w-full text-left">Added: {getDateFromUnixTime(currTrk.created)}</p>
+        <details className="w-full text-left">
+          <summary>Shabad ID: {currTrk.shabadID}</summary>
+          <div className="border rounded max-h-24 overflow-auto">
+            {currTrk.shabadArr?.map((shabad, idx) => <p key={idx}>{shabad}</p>)}
+          </div>
+        </details>
+
+        <div className="w-full text-left flex">
+          <IconButton onClick={() => copyLocalLink(currTrk.link, timestampInSecs)}>
+            <p className="text-xs bg-btn rounded p-1">Copy Link</p>
+          </IconButton>
+        </div>
+      </div>
+      <div>
+        <AudioPlayer link={currTrk.link} audioRef={audioRef} />
+        <div className="flex justify-center">
+          <PlayBackButtons
+            onClick={() => {
+              if (audioRef.current) {
+                audioRef.current.currentTime -= 10;
+              }
+            }}
+            imgSrc={'/playbackImgs/skip-back.svg'}
+          />
+          <PlayPauseBtn audioRef={audioRef} />
+          <PlayBackButtons
+            onClick={() => {
+              if (audioRef.current) {
+                audioRef.current.currentTime += 10;
+              }
+            }}
+            imgSrc={'/playbackImgs/skip-forward.svg'}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function getDateFromUnixTime(unixTimeStamp: string): string {
+  const unixTime = Number(unixTimeStamp);
+  if (isNaN(unixTime)) {
+    return 'N/A';
+  }
+  const date = new Date(unixTime * 1000);
+  return date.toLocaleString();
 }
 
 function copyLocalLink(link: string, timestampInSecs: number): void {
-  navigator.clipboard.writeText(link);
+  const localLink = getLinkToKeerat(link, timestampInSecs);
+  if (!localLink) {
+    toast.error('Link not found!!!');
+    return;
+  }
+  navigator.clipboard.writeText(localLink);
+  toast.success('Link copied to clipboard');
 }

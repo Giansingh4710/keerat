@@ -37,9 +37,9 @@ export interface StoreState {
   setPlayBackSpeed: (value: number) => void;
   paused: boolean;
   setPaused: (value: boolean) => void;
-  indexTracks: IndexTracks;
-  setIndexTracks: (value: IndexTracks) => void;
-  appendIndexObj: (trackObj: Track) => void;
+  indexTracks: IndexedTracks;
+  setIndexTracks: (value: IndexedTracks) => void;
+  appendIndexObj: (trackObj: IndexedTrack) => void;
 }
 
 export interface Track {
@@ -53,8 +53,20 @@ export interface Track {
   shabadArr?: string[];
 }
 
-export interface IndexTracks {
-  [link: string]: Track[];
+interface IndexedTrack {
+  created: string;
+  type: string;
+  artist: string;
+  timestamp: string;
+  shabadID: string;
+  shabadArr?: string[];
+  description: string;
+  link: string;
+  ID: number;
+}
+
+export interface IndexedTracks {
+  [link: string]: IndexedTrack[];
 }
 
 export interface SearchStoreState {

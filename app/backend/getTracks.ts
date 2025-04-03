@@ -1,28 +1,41 @@
-import {NextResponse} from 'next/server';
-import axios from 'axios';
+'use server';
+import { MongoClient, Db, Collection, Document } from 'mongodb';
 
-interface Track {
-  id: string;
-  title: string;
-  artist: string;
-  link: string;
-  description?: string;
-  timestamp?: string;
-  shabadID?: string;
-  shabadArr?: string[];
-  type?: string;
-  created?: number;
+const MONGO_URL: string = 'mongodb://localhost:27017';
+const DB_NAME: string = 'keeratxyz';
+
+interface Track extends Document {
+  // Define your Track interface properties here based on your document structure
+  // Example:
+  // _id: ObjectId;
+  // title: string;
+  // artist: string;
+  // createdAt: Date;
+  // etc...
 }
 
-export async function GET(): Promise<NextResponse> {
+export async function getTracks(collection_name: string): Promise<Track[]> {
+  const client: MongoClient = new MongoClient(MONGO_URL);
+  
   try {
-    const response = await axios.get('https://api.github.com/repos/gians/keerat/contents/app/backend/tracks.json');
-    const content = response.data.content;
-    const decodedContent = Buffer.from(content, 'base64').toString('utf-8');
-    const tracks: Track[] = JSON.parse(decodedContent);
-    return NextResponse.json(tracks);
-  } catch (error) {
+    await client.connect();
+    console.log('Connected to MongoDB');
+
+    const db: Db = client.db(DB_NAME);
+    const collection: Collection<Track> = db.collection<Track>(collection_name);
+
+    const tracks: Track[] = await collection.find({}).toArray();
+    // console.log(`Fetched ${tracks.length} tracks from collection ${collection_name}`);
+    console.log(tracks);
+    return tracks;
+  } catch (error: unknown) {
     console.error('Error fetching tracks:', error);
-    return NextResponse.json({error: 'Failed to fetch tracks'}, {status: 500});
+    if (error instanceof Error) {
+      throw new Error(`Failed to fetch tracks: ${error.message}`);
+    }
+    throw new Error('Failed to fetch tracks due to unknown error');
+  } finally {
+    await client.close();
+    console.log('MongoDB connection closed');
   }
 }

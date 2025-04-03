@@ -2,18 +2,16 @@ import {AppRouterCacheProvider} from '@mui/material-nextjs/v13-appRouter';
 import './globals.css';
 import Script from 'next/script';
 import {Metadata, Viewport} from 'next';
-import {Inter} from 'next/font/google';
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-const inter = Inter({subsets: ['latin']});
 
 export default function RootLayout({children}: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </body>
       <Script id="google-analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-77S9XD0W9T"></Script>
