@@ -46,7 +46,7 @@ export default function SGGS(): JSX.Element {
       url: GET_INDEXED_TRACKS_URL,
       method: 'GET',
     })
-      .then((res: any) => {
+      .then((res) => {
         const lst: IndexedTrack[] = res.data.reverse();
         setAllTracks(lst);
         setCurrTrkLst(lst);

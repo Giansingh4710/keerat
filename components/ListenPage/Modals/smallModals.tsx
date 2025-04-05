@@ -8,33 +8,14 @@ import {ArtistOptBar} from './artistOptBar';
 import {useStore, useModalStore} from '@/utils/store';
 import {getNameOfTrack} from '@/utils/helper_funcs';
 import {isChecked, trackCount, getRatio} from '@/utils/helper_funcs';
-import {StoreState, ModalStoreState} from '@/utils/types';
-
-interface HistoryItem {
-  link: string;
-  artist: string;
-  type: string;
-}
-
-interface TrackObject {
-  link: string;
-  artist: string;
-  type: string;
-  description?: string;
-  shabadArr?: string[];
-}
-
-interface TypeToShowLinksFor {
-  type: string;
-  artist: string;
-}
+import {Track} from '@/utils/types';
 
 export function ViewHistoryModal(): JSX.Element {
-  const history = useStore((state: any) => state.history);
-  const clearHistory = useStore((state: any) => state.clearHistory);
-  const setHstIdx = useStore((state: any) => state.setHstIdx);
-  const modalOpen = useModalStore((state: any) => state.viewHistory);
-  const setModal = useModalStore((state: any) => state.setViewHistory);
+  const history = useStore(state => state.history);
+  const clearHistory = useStore(state => state.clearHistory);
+  const setHstIdx = useStore(state => state.setHstIdx);
+  const modalOpen = useModalStore(state => state.viewHistory);
+  const setModal = useModalStore(state => state.setViewHistory);
 
   function TheLst(): JSX.Element[] {
     const lst = [];
@@ -112,14 +93,14 @@ export function ListOfArtistsModal(): JSX.Element {
     });
 
     const checkedTypes: Record<string, string[]> = {};
-    Object.keys(allOpts).forEach(artist => {
+    allOpts.forEach(artist => {
       const lstOftypes: string[] = [];
-      allOpts[artist].forEach(linksType => {
+      artist.track_groups.forEach(linksType => {
         if (linksType.checked) {
           lstOftypes.push(linksType.type);
         }
       });
-      if (lstOftypes.length > 0) checkedTypes[artist] = lstOftypes;
+      if (lstOftypes.length > 0) checkedTypes[artist.artist_name] = lstOftypes;
     });
 
     localStorage.setItem(`Checked: ${title}`, JSON.stringify(checkedTypes));
@@ -139,22 +120,23 @@ export function ListOfArtistsModal(): JSX.Element {
           </div>
 
           <div ref={optionsDivRef} className="bg-secondary-200 h-72 overflow-auto text-white">
-            {Object.keys(allOpts).map(artist => {
-              const checked = isChecked(allOpts, artist);
-              const artistTracks = allOpts[artist];
-              const ratio = getRatio(artistTracks);
+            {allOpts.map(artist => {
+              const artistInd = allOpts.findIndex(a => a.artist_name === artist.artist_name);
+              const checked = isChecked(allOpts, artist.artist_name) > -1;
+              const artistTracks = allOpts[artistInd];
+              const ratio = getRatio(artistTracks.track_groups);
               return (
                 <ArtistOptBar
-                  key={artist}
+                  key={artistTracks.artist_name}
                   checked={checked}
-                  title={artist}
+                  title={artistTracks.artist_name}
                   toggleCheckbox={() => {
-                    toast.success(`${checked ? 'Un' : ''}selected: ${artist}`);
-                    setCheckedArtist(artist, !checked);
+                    toast.success(`${checked ? 'Un' : ''}selected: ${artistTracks.artist_name}`);
+                    setCheckedArtist(artist.artist_name, !checked);
                   }}
                   rightText={ratio}
                   onRightTextClick={() => {
-                    setArtistToShowTypesFor(artist);
+                    setArtistToShowTypesFor(artist.artist_name);
                   }}
                 />
               );
@@ -182,16 +164,17 @@ export function ListOfArtistsModal(): JSX.Element {
 }
 
 export function ListOfTypesModal(): JSX.Element | null {
-  const setCheckedType = useStore((state: any) => state.setCheckedType);
-  const setCheckedArtist = useStore((state: any) => state.setCheckedArtist);
-  const allOpts = useStore((state: any) => state.allOptsTracks);
+  const setCheckedType = useStore(state => state.setCheckedType);
+  const setCheckedArtist = useStore(state => state.setCheckedArtist);
+  const allOpts = useStore(state => state.allOptsTracks);
 
-  const artistToShowTypesFor = useModalStore((state: any) => state.artistToShowTypesFor);
-  const setArtistToShowTypesFor = useModalStore((state: any) => state.setArtistToShowTypesFor);
-  const setTypeToShowLinksFor = useModalStore((state: any) => state.setTypeToShowLinksFor);
+  const artistToShowTypesFor = useModalStore(state => state.artistToShowTypesFor);
+  const setArtistToShowTypesFor = useModalStore(state => state.setArtistToShowTypesFor);
+  const setTypeToShowLinksFor = useModalStore(state => state.setTypeToShowLinksFor);
 
   if (artistToShowTypesFor === '') return null;
-  const tracksLst = allOpts[artistToShowTypesFor];
+  const tracksLst = allOpts.find(artist => artist.artist_name === artistToShowTypesFor);
+  if (!tracksLst) return null;
 
   return (
     <Modal open={true} onClose={() => setArtistToShowTypesFor('')}>
@@ -206,9 +189,9 @@ export function ListOfTypesModal(): JSX.Element | null {
             </IconButton>
           </div>
           <div className="relative p-2 flex-auto max-h-48 overflow-auto text-white">
-            {tracksLst.map((obj: any, idx: number) => {
+            {tracksLst.track_groups.map((obj, idx) => {
               const typeName = obj.type;
-              const checked = obj.checked;
+              const checked = obj.checked || false;
               const linksLen = obj.links.length;
               const ratio = `${checked ? linksLen : 0}/${linksLen}`;
               return (
@@ -229,7 +212,7 @@ export function ListOfTypesModal(): JSX.Element | null {
             })}
           </div>
           <p className="border-t border-white rounded-b font-semibold flex-1 text-white  p-1">
-            Tracks Selected: {getRatio(tracksLst)}
+            Tracks Selected: {getRatio(tracksLst.track_groups)}
           </p>
           <div className="flex items-center justify-end p-2 text-sm justify-evenly">
             <button
@@ -252,19 +235,20 @@ export function ListOfTypesModal(): JSX.Element | null {
 }
 
 export function ListOfTracksByType(): JSX.Element | null {
-  const allOpts = useStore((state: any) => state.allOptsTracks);
-  const appendHistory = useStore((state: any) => state.appendHistory);
+  const allOpts = useStore(state => state.allOptsTracks);
+  const appendHistory = useStore(state => state.appendHistory);
 
-  const typeToShowLinksFor = useModalStore((state: any) => state.typeToShowLinksFor);
+  const typeToShowLinksFor = useModalStore(state => state.typeToShowLinksFor);
   const {artist, type} = typeToShowLinksFor;
-  const setTypeToShowLinksFor = useModalStore((state: any) => state.setTypeToShowLinksFor);
+  const setTypeToShowLinksFor = useModalStore(state => state.setTypeToShowLinksFor);
   const [tracksObj, setTracksObj] = useState<string[]>();
 
-  const typeIdx = allOpts[artist]?.findIndex((obj: any) => obj.type === type);
+  const artistIdx = allOpts.findIndex(a => a.artist_name === artist);
+  const typeIdx = allOpts[artistIdx].track_groups.findIndex(t => t.type === type);
 
   useEffect(() => {
     if (artist === '' || type === '') return;
-    setTracksObj(allOpts[artist][typeIdx].links);
+    setTracksObj(allOpts[artistIdx].track_groups[typeIdx].links);
   }, [typeToShowLinksFor]);
 
   if (type === '') return null;
@@ -295,7 +279,7 @@ export function ListOfTracksByType(): JSX.Element | null {
           </div>
           <div className="flex flex-col p-2 flex-auto max-h-48 overflow-auto text-white">
             {tracksObj?.map((link, idx) => {
-              const trkObj = {link, artist, type, typeIdx, linkIdx: idx};
+              const trkObj: Track = {link, artist_name: artist, type, typeIdx, linkIdx: idx};
               return (
                 <button
                   className="text-left border-b border-solid border-white"
@@ -315,11 +299,11 @@ export function ListOfTracksByType(): JSX.Element | null {
 }
 
 export function ViewTracksInQueueModal(): JSX.Element {
-  const tracksInQueue = useStore((state: any) => state.tracksInQueue);
-  const appendHistory = useStore((state: any) => state.appendHistory);
-  const modalOpen = useModalStore((state: any) => state.viewAllTracks);
-  const setModal = useModalStore((state: any) => state.setViewAllTracks);
-  const [results, setResults] = useState<TrackObject[]>([]);
+  const tracksInQueue = useStore(state => state.tracksInQueue);
+  const appendHistory = useStore(state => state.appendHistory);
+  const modalOpen = useModalStore(state => state.viewAllTracks);
+  const setModal = useModalStore(state => state.setViewAllTracks);
+  const [results, setResults] = useState<Track[]>([]);
 
   useEffect(() => {
     setResults(tracksInQueue);
@@ -331,7 +315,7 @@ export function ViewTracksInQueueModal(): JSX.Element {
         <button
           key={index}
           onClick={() => appendHistory(trkObj)}
-          className="flex flex-col w-full rounded-md w-full border-b border-gray-200 hover:bg-blue-100  text-xl p-2 ">
+          className="flex flex-col w-full rounded-md border-b border-gray-200 hover:bg-blue-100  text-xl p-2 ">
           <div className="flex text-sm w-full">
             <p className="pr-2">{index + 1}.</p>
             <div className="basis-5/6 text-xs text-left truncate break-words ">{getNameOfTrack(trkObj.link)}</div>
@@ -339,7 +323,7 @@ export function ViewTracksInQueueModal(): JSX.Element {
           <div className="flex flex-row w-full text-xs">
             <div className="basis-3/4 text-xs text-left w-full">
               <Person className="p-1" />
-              {trkObj.artist}
+              {trkObj.artist_name}
             </div>
             <div className="basis-1/4 text-xs text-right truncate break-words">
               <Album className="p-1" />

@@ -45,7 +45,6 @@ function linkInOpt(link: string, opts: TrackOptions): boolean {
   for (const opt of Object.values(opts)) {
     for (const typee of opt) {
       if (typee.links.some(l => l === link)) {
-        console.log(typee);
         return true;
       }
     }

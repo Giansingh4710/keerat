@@ -14,11 +14,11 @@ interface AudioProgressBarProps {
 }
 
 export default function AudioPlayer({link, audioRef}: AudioPlayerProps): JSX.Element {
-  const nextTrack = useStore((state: any) => state.nextTrack);
-  const timeToGoTo = useStore((state: any) => state.timeToGoTo);
-  const setTimeToGoTo = useStore((state: any) => state.setTimeToGoTo);
-  const playbackSpeed = useStore((state: any) => state.playBackSpeed);
-  const setPaused = useStore((state: any) => state.setPaused);
+  const nextTrack = useStore((state) => state.nextTrack);
+  const timeToGoTo = useStore((state) => state.timeToGoTo);
+  const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
+  const playbackSpeed = useStore((state) => state.playBackSpeed);
+  const setPaused = useStore((state) => state.setPaused);
 
   const [buffered, setBuffered] = React.useState(0);
 

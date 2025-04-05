@@ -51,9 +51,9 @@ export default function IndexTrackBtnAndModal({audioRef, saveTimeFunc}: IndexTra
 
   const {ADD_INDEX_URL, GET_SHABADS_URL} = getUrls();
 
-  const appendIndexObj = useStore((state: any) => state.appendIndexObj);
-  const history = useStore((state: any) => state.history);
-  const hstIdx = useStore((state: any) => state.hstIdx);
+  const appendIndexObj = useStore((state) => state.appendIndexObj);
+  const history = useStore((state) => state.history);
+  const hstIdx = useStore((state) => state.hstIdx);
   const artist = history[hstIdx]?.artist;
   const link = history[hstIdx]?.link;
 
@@ -139,7 +139,6 @@ export default function IndexTrackBtnAndModal({audioRef, saveTimeFunc}: IndexTra
         setDescription('');
 
         alert(res.data.message);
-        console.log(res);
       })
       .catch(err => {
         alert(err.response.data.message);
@@ -155,7 +154,6 @@ export default function IndexTrackBtnAndModal({audioRef, saveTimeFunc}: IndexTra
         <IconButton
           onClick={e => {
             e.preventDefault();
-            console.log(currShabad);
             setDescription(lineClicked);
             setFromShabadID('');
           }}>
@@ -302,7 +300,6 @@ export default function IndexTrackBtnAndModal({audioRef, saveTimeFunc}: IndexTra
                   const sbd = sbds[0];
                   const lineInd = sbd.lineInd;
                   const shabadArray = sbd.shabadArray;
-                  console.log(sbd);
                   setCurrShabad(sbd);
 
                   setLineClicked(shabadArray[lineInd]);

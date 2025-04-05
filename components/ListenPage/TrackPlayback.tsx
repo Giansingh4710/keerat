@@ -18,9 +18,10 @@ export default function TrackPlayback({audioRef}: TrackPlaybackProps): JSX.Eleme
     useStore();
   const {setShowArtists, setArtistToShowTypesFor, setTypeToShowLinksFor} = useModalStore();
 
-  const artist = history[hstIdx]?.artist;
+  const artist = history[hstIdx]?.artist_name;
   const link = history[hstIdx]?.link;
   const type = history[hstIdx]?.type;
+  // console.log(history[hstIdx]);
 
   const copyLink = () => {
     if (!audioRef.current) return toast.error('No Audio to Copy Link');

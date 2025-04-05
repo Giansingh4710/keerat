@@ -8,6 +8,11 @@ export interface TrackOptions {
   [key: string]: TrackOption[];
 }
 
+export interface ArtistOpt {
+  artist_name: string;
+  track_groups: TrackOption[];
+}
+
 // ---------------- for store.ts
 export interface StoreState {
   title: string;
@@ -20,8 +25,8 @@ export interface StoreState {
   appendHistory: (trackObj: Track) => void;
   getCurrentTrack: () => Track;
   tracksInQueue: Track[];
-  allOptsTracks: TrackOptions;
-  setTracks: (allOpts: TrackOptions) => void;
+  allOptsTracks: ArtistOpt[];
+  setTracks: (allOpts: ArtistOpt[]) => void;
   setCheckedForAllArtists: (checked: boolean) => void;
   setCheckedArtist: (artist: string, checked: boolean) => void;
   setCheckedType: (artist: string, typeIdx: number, checked: boolean) => void;
@@ -43,7 +48,7 @@ export interface StoreState {
 }
 
 export interface Track {
-  artist: string;
+  artist_name: string;
   typeIdx: number;
   linkIdx: number;
   type: string;

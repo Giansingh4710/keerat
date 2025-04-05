@@ -1,14 +1,7 @@
 import {create} from 'zustand';
+import {getAllLinkObjs, getNextTrackInLst, getPrevTrackInLst} from './helper_funcs';
 import {
-  getNextCheckedType,
-  loopIncrement,
-  loopDecrement,
-  randItemFromArr,
-  getTypeNLinkIdx,
-  getAllLinkObjs,
-} from './helper_funcs';
-import {
-  TrackOptions,
+  ArtistOpt,
   StoreState,
   Track,
   IndexedTracks,
@@ -50,8 +43,8 @@ export const useStore = create<StoreState>()((set, get) => ({
   },
 
   tracksInQueue: [],
-  allOptsTracks: {},
-  setTracks: (allOpts: TrackOptions) =>
+  allOptsTracks: [],
+  setTracks: (allOpts: ArtistOpt[]) =>
     set(() => {
       const tracksLst = getAllLinkObjs(allOpts);
       return {allOptsTracks: allOpts, tracksInQueue: tracksLst};
@@ -59,74 +52,44 @@ export const useStore = create<StoreState>()((set, get) => ({
 
   setCheckedForAllArtists: (checked: boolean) =>
     set((state: StoreState) => {
-      const allOpts = {...state.allOptsTracks};
-      for (const artist in allOpts) {
-        for (const typeInd in allOpts[artist]) {
-          allOpts[artist][typeInd].checked = checked;
+      const allOpts = [...state.allOptsTracks];
+      for (const artist of allOpts) {
+        for (const trackGroup of artist.track_groups) {
+          trackGroup.checked = checked;
         }
       }
       const tracksLst = getAllLinkObjs(allOpts);
       return {allOptsTracks: allOpts, tracksInQueue: tracksLst};
     }),
-  setCheckedArtist: (artist: string, checked: boolean) =>
+  setCheckedArtist: (artist_name: string, checked: boolean) =>
     set((state: StoreState) => {
-      const allOpts = {...state.allOptsTracks};
-      for (const typeInd in allOpts[artist]) {
-        allOpts[artist][typeInd].checked = checked;
+      const allOpts = [...state.allOptsTracks];
+      for (const artist of allOpts) {
+        if (artist.artist_name !== artist_name) continue;
+        for (const trackGroup of artist.track_groups) {
+          trackGroup.checked = checked;
+        }
       }
       const tracksLst = getAllLinkObjs(allOpts);
       return {allOptsTracks: allOpts, tracksInQueue: tracksLst};
     }),
-  setCheckedType: (artist: string, typeIdx: number, checked: boolean) =>
+  setCheckedType: (artist_name: string, typeIdx: number, checked: boolean) =>
     set((state: StoreState) => {
-      const allOpts = {...state.allOptsTracks};
-      allOpts[artist][typeIdx].checked = checked;
+      const allOpts = [...state.allOptsTracks];
+      for (const artist of allOpts) {
+        if (artist.artist_name === artist_name) {
+          artist.track_groups[typeIdx].checked = checked;
+        }
+      }
       const tracksLst = getAllLinkObjs(allOpts);
       return {allOptsTracks: allOpts, tracksInQueue: tracksLst};
     }),
 
   prevTrack: () =>
     set((state: StoreState) => {
-      if (state.history.length === 0) return state;
+      if (state.history.length === 0) return {history: [state.tracksInQueue[0]], hstIdx: 0};
       if (state.hstIdx === 0) {
-        const hist = state.history;
-        const allOpts = state.allOptsTracks;
-        let artist = hist[state.hstIdx].artist;
-        let typeIdx = hist[state.hstIdx].typeIdx;
-        let linkIdx = hist[state.hstIdx].linkIdx - 1;
-
-        if (linkIdx === -1 || !allOpts[artist][typeIdx].checked) {
-          const allArtists = Object.keys(allOpts);
-          const validOpts = [];
-          let chosenOptFromValidOpts = 0;
-          for (let i = 0; i < allArtists.length; i++) {
-            const artist = allArtists[i];
-            const types = allOpts[artist];
-            for (let j = 0; j < types.length; j++) {
-              if (types[j].checked) {
-                validOpts.push({typeInd: j, artistInd: i});
-                if (artist === artist && j === typeIdx) {
-                  chosenOptFromValidOpts = validOpts.length - 1;
-                }
-              }
-            }
-          }
-
-          if (validOpts.length === 0) return state;
-
-          const newOpt = validOpts[loopDecrement(validOpts, chosenOptFromValidOpts)];
-          typeIdx = newOpt.typeInd;
-          const artInd = newOpt.artistInd;
-          artist = allArtists[artInd];
-          linkIdx = allOpts[artist][typeIdx].links.length - 1;
-        }
-        const trackObj = {
-          artist: artist,
-          typeIdx: typeIdx,
-          linkIdx: linkIdx,
-          type: allOpts[artist][typeIdx].type,
-          link: allOpts[artist][typeIdx].links[linkIdx],
-        };
+        const trackObj = getPrevTrackInLst(state.tracksInQueue, state.history[0]);
         return {
           hstIdx: 0,
           history: [trackObj, ...state.history],
@@ -137,68 +100,17 @@ export const useStore = create<StoreState>()((set, get) => ({
 
   nextTrack: () =>
     set((state: StoreState) => {
+      if (state.history.length === 0) return {history: [state.tracksInQueue[0]], hstIdx: 0};
+
       const nextIdx = state.hstIdx + 1;
-      if (nextIdx !== state.history.length) {
-        return {hstIdx: nextIdx};
-      }
-
-      let trackObj: Track = {} as Track;
-      const allOpts = state.allOptsTracks;
-      const artists = Object.keys(allOpts).filter(artist => {
-        return allOpts[artist].some(type => type.checked);
-      });
-
-      if (artists.length === 0) return state;
-
-      if (state.hstIdx === -1) {
-        const firstArtist = artists[0];
-        const typeIdx = 0;
-        const linkIdx = 0;
-        trackObj = {
-          artist: firstArtist,
-          typeIdx: typeIdx,
-          linkIdx: linkIdx,
-          type: allOpts[firstArtist][typeIdx].type,
-          link: allOpts[firstArtist][typeIdx].links[linkIdx],
-        };
-      } else if (state.shuffle) {
-        trackObj = randItemFromArr(state.tracksInQueue);
-      } else {
-        const hist = state.history;
-        let artist = hist[state.hstIdx].artist;
-        let {typeIdx, linkIdx} = getTypeNLinkIdx(allOpts, hist[state.hstIdx]);
-
-        if (allOpts[artist][typeIdx].checked) {
-          linkIdx = loopIncrement(allOpts[artist][typeIdx].links, linkIdx);
-
-          if (linkIdx === 0) {
-            typeIdx = loopIncrement(allOpts[artist], typeIdx);
-            if (typeIdx === 0) {
-              const artInd = loopIncrement(artists, artists.indexOf(artist));
-              artist = artists[artInd];
-            }
-          }
-        } else {
-          linkIdx = 0;
-          typeIdx = getNextCheckedType(allOpts[artist], typeIdx);
-          if (typeIdx === -1) {
-            const artInd = loopIncrement(artists, artists.indexOf(artist));
-            artist = artists[artInd];
-            typeIdx = 0;
-          }
-        }
-        trackObj = {
-          artist: artist,
-          typeIdx: typeIdx,
-          linkIdx: linkIdx,
-          type: allOpts[artist][typeIdx].type,
-          link: allOpts[artist][typeIdx].links[linkIdx],
+      if (nextIdx === state.history.length) {
+        const trackObj = getNextTrackInLst(state.tracksInQueue, state.history[state.hstIdx]);
+        return {
+          history: [...state.history, trackObj],
+          hstIdx: state.history.length,
         };
       }
-      return {
-        history: [...state.history, trackObj],
-        hstIdx: state.history.length,
-      };
+      return {hstIdx: nextIdx};
     }),
 
   shuffle: false,

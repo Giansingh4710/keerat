@@ -7,7 +7,6 @@ import ShabadsForTrack from './ShabadsForTrack';
 import IndexTrackBtnAndModal from './Modals/IndexTrackModal/index';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {
-  getLinkFromOldUrlDate,
   getNameOfTrack,
   getObjFromUrl,
   getSecondsFromTimeStamp,
@@ -25,46 +24,36 @@ import {
   ListOfTypesModal,
   ListOfTracksByType,
 } from './Modals/smallModals';
-import {IconButton, Modal} from '@mui/material';
-
-interface ListenPageProps {
-  title: string;
-  allTheOpts: Record<string, any[]>;
-}
+import {IconButton} from '@mui/material';
+import {ArtistOpt} from '@/utils/types';
 
 interface BottomBtnProps {
   setter: (value: boolean) => void;
   text: string;
 }
 
-interface TrackData {
-  type: string;
-  artist: string;
-  link: string;
-  [key: string]: any;
-}
 
-export default function ListenPage({title, allTheOpts}: ListenPageProps): JSX.Element {
-  const prevTrack = useStore((state: any) => state.prevTrack);
-  const nextTrack = useStore((state: any) => state.nextTrack);
-  const setShuffle = useStore((state: any) => state.setShuffle);
-  const setHistory = useStore((state: any) => state.setHistory);
-  const setCheckedType = useStore((state: any) => state.setCheckedType);
-  const setCheckedForAllArtists = useStore((state: any) => state.setCheckedForAllArtists);
-  const history = useStore((state: any) => state.history);
-  const hstIdx = useStore((state: any) => state.hstIdx);
-  const setTracks = useStore((state: any) => state.setTracks);
-  const setSearchInput = useSearchStore((state: any) => state.setSearchInput);
-  const setTitle = useStore((state: any) => state.setTitle);
+export default function ListenPage({title, allTheOpts}: {title: string; allTheOpts: ArtistOpt[]}): JSX.Element {
+  const prevTrack = useStore((state) => state.prevTrack);
+  const nextTrack = useStore((state) => state.nextTrack);
+  const setShuffle = useStore((state) => state.setShuffle);
+  const setHistory = useStore((state) => state.setHistory);
+  const setCheckedType = useStore((state) => state.setCheckedType);
+  const setCheckedForAllArtists = useStore((state) => state.setCheckedForAllArtists);
+  const history = useStore((state) => state.history);
+  const hstIdx = useStore((state) => state.hstIdx);
+  const setTracks = useStore((state) => state.setTracks);
+  const setSearchInput = useSearchStore((state) => state.setSearchInput);
+  const setTitle = useStore((state) => state.setTitle);
 
-  const setTimeToGoTo = useStore((state: any) => state.setTimeToGoTo);
-  const setIndexTracks = useStore((state: any) => state.setIndexTracks);
-  const skipTime = useStore((state: any) => state.skipTime);
+  const setTimeToGoTo = useStore((state) => state.setTimeToGoTo);
+  const setIndexTracks = useStore((state) => state.setIndexTracks);
+  const skipTime = useStore((state) => state.skipTime);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const setShowArtists = useModalStore((state: any) => state.setShowArtists);
-  const setViewHistory = useModalStore((state: any) => state.setViewHistory);
-  const setViewAllTracks = useModalStore((state: any) => state.setViewAllTracks);
+  const setShowArtists = useModalStore((state) => state.setShowArtists);
+  const setViewHistory = useModalStore((state) => state.setViewHistory);
+  const setViewAllTracks = useModalStore((state) => state.setViewAllTracks);
 
   useMemo(() => {
     setTitle(title);
@@ -112,18 +101,6 @@ export default function ListenPage({title, allTheOpts}: ListenPageProps): JSX.El
 
           return true;
         }
-      } else {
-        const artist = urlParams.get('artist');
-        const trackIndex = urlParams.get('trackIndex');
-        if (artist && trackIndex) {
-          const url = getLinkFromOldUrlDate(artist, parseInt(trackIndex, 10), allTheOpts);
-          const trkObj = getObjFromUrl(url, allTheOpts);
-          if (validTrackObj(trkObj)) {
-            toast('Old copied link', {duration: 3000});
-            setHistory([trkObj]);
-            return true;
-          }
-        }
       }
       return false;
     }
@@ -151,27 +128,6 @@ export default function ListenPage({title, allTheOpts}: ListenPageProps): JSX.El
       }
     }
 
-    function getLocalStorage(): void {
-      if (localStorage.getItem('shuffle') === 'true') setShuffle(true);
-
-      const checkedTracksStr = localStorage.getItem(`Checked: ${title}`);
-      if (checkedTracksStr) {
-        const checkedTracks = JSON.parse(checkedTracksStr);
-        setCheckedForAllArtists(false);
-
-        Object.keys(allTheOpts).forEach(artist => {
-          const validTypes = checkedTracks[artist];
-          if (!validTypes) return;
-          allTheOpts[artist].forEach((linksType, idx) => {
-            if (validTypes.includes(linksType.type)) {
-              setCheckedType(artist, idx, true);
-            }
-          });
-        });
-      }
-    }
-
-    getLocalStorage();
     if (!urlStuff()) {
       if (!getLastPlayedTrackLocalStorage()) {
         nextTrack();
@@ -233,7 +189,7 @@ export default function ListenPage({title, allTheOpts}: ListenPageProps): JSX.El
     album = album === 'main' || album === 'other' ? title : album;
     navigator.mediaSession.metadata = new MediaMetadata({
       title: getNameOfTrack(history[hstIdx].link),
-      artist: history[hstIdx].artist,
+      artist: history[hstIdx].artist_name,
       album: album,
       artwork: [{src: '/logos/ios/1024.png', sizes: '1024x1024', type: 'image/png'}],
     });

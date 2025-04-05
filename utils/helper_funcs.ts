@@ -1,14 +1,14 @@
-import {TrackOption, TrackOptions, Track} from './types';
+import {TrackOption, ArtistOpt, Track} from './types';
 
-export function randItemFromArr<T>(arr: T[]): T {
+function randItemFromArr<T>(arr: T[]): T {
   return arr.splice((Math.random() * arr.length) | 0, 1)[0];
 }
 
-export function loopIncrement<T>(arr: T[], currentIdx: number): number {
+function loopIncrement<T>(arr: T[], currentIdx: number): number {
   return (currentIdx + 1) % arr.length;
 }
 
-export function loopDecrement<T>(arr: T[], currentIdx: number): number {
+function loopDecrement<T>(arr: T[], currentIdx: number): number {
   if (currentIdx === 0) {
     return arr.length - 1;
   }
@@ -28,7 +28,71 @@ export function getRandType(aristTracks: TrackOption[]): number {
   return randItemFromArr(checkedTypesIdx);
 }
 
-export function getNextCheckedType(aristTracks: TrackOption[], currentTypeIdx: number): number {
+export function getNextTrackInLst(tracks: Track[], currTrack: Track): Track {
+  const ind = tracks.findIndex(track => track.link === currTrack.link);
+  if (ind === -1) return tracks[0];
+  return tracks[loopIncrement(tracks, ind)];
+}
+
+export function getPrevTrackInLst(tracks: Track[], currTrack: Track): Track {
+  const ind = tracks.findIndex(track => track.link === currTrack.link);
+  if (ind === -1) return tracks[0];
+  return tracks[loopDecrement(tracks, ind)];
+}
+
+export function getNextTrackInLst_(allOpts: ArtistOpt[], currTrack: Track): Track | null {
+  let artistIdx = allOpts.findIndex(artist => artist.artist_name === currTrack.artist_name);
+  let artist_tracks = allOpts[artistIdx];
+  let track_group = artist_tracks.track_groups[currTrack.typeIdx];
+
+  // next link
+  if (currTrack.linkIdx < track_group.links.length - 1 && track_group.checked) {
+    return {
+      artist_name: currTrack.artist_name,
+      typeIdx: currTrack.typeIdx,
+      linkIdx: currTrack.linkIdx + 1,
+      type: track_group.type,
+      link: track_group.links[currTrack.linkIdx + 1],
+    };
+  }
+
+  // next type
+  const typeIdx = getNextCheckedType(artist_tracks.track_groups, currTrack.typeIdx);
+  if (typeIdx !== -1) {
+    return {
+      artist_name: currTrack.artist_name,
+      typeIdx,
+      linkIdx: 0,
+      type: artist_tracks.track_groups[typeIdx].type,
+      link: artist_tracks.track_groups[typeIdx].links[0],
+    };
+  }
+
+  // next artist with checked type
+  while (true) {
+    if (artistIdx < allOpts.length - 1) artistIdx = artistIdx + 1;
+    else artistIdx = 0;
+
+    if (allOpts[artistIdx].artist_name === currTrack.artist_name) break;
+
+    artist_tracks = allOpts[artistIdx];
+    for (let i = 0; i < artist_tracks.track_groups.length; i++) {
+      if (artist_tracks.track_groups[i].checked) {
+        return {
+          artist_name: artist_tracks.artist_name,
+          typeIdx: i,
+          linkIdx: 0,
+          type: artist_tracks.track_groups[i].type,
+          link: artist_tracks.track_groups[i].links[0],
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+function getNextCheckedType(aristTracks: TrackOption[], currentTypeIdx: number): number {
   for (let idx = currentTypeIdx + 1; idx < aristTracks.length; idx++) {
     const obj = aristTracks[idx];
     if (obj.checked) return idx;
@@ -51,15 +115,13 @@ export function getNameOfTrack(link: string): string {
   return decodeURIComponent(decodeURIComponent(title));
 }
 
-export function getTrackLinks(allOpts: TrackOptions): string[] {
+export function getTrackLinks(allOpts: ArtistOpt[]): string[] {
   const links: string[] = [];
-  Object.keys(allOpts).forEach(artist => {
-    if (allOpts[artist].some(type => type.checked)) {
-      allOpts[artist].forEach(type => {
-        if (type.checked) {
-          links.push(...type.links);
-        }
-      });
+  allOpts.forEach(artist => {
+    for (const type of artist.track_groups) {
+      if (type.checked) {
+        links.push(...type.links);
+      }
     }
   });
   return links;
@@ -93,30 +155,34 @@ export function containsOnlyDigits(str: string): boolean {
   return /^\d+$/.test(str);
 }
 
-export function addCheckedKey(allOpts: TrackOptions, checked = true): TrackOptions {
-  for (const artist in allOpts) {
-    for (const obj of allOpts[artist]) {
-      obj.checked = checked;
+export function addCheckedKey(allOpts: ArtistOpt[], checked = true): ArtistOpt[] {
+  for (const artist of allOpts) {
+    for (const trackGroup of artist.track_groups) {
+      trackGroup.checked = checked;
     }
   }
   return allOpts;
 }
 
-export function trackCount(allOpts: TrackOptions): number {
+export function trackCount(allOpts: ArtistOpt[]): number {
   let count = 0;
-  for (const artist in allOpts) {
-    for (const obj of allOpts[artist]) {
-      if (obj.checked) count += obj.links.length;
+  for (const artist of allOpts) {
+    for (const trackGroup of artist.track_groups) {
+      if (trackGroup.checked) count += trackGroup.links.length;
     }
   }
   return count;
 }
 
-export function isChecked(allOpts: TrackOptions, artist: string): boolean {
-  for (const obj of allOpts[artist]) {
-    if (obj.checked) return true;
+export function isChecked(allOpts: ArtistOpt[], artist_name: string): number {
+  // returns index of first checked type
+  for (const artist of allOpts) {
+    if (artist.artist_name !== artist_name) continue;
+    for (let i = 0; i < artist.track_groups.length; i++) {
+      if (artist.track_groups[i].checked) return i;
+    }
   }
-  return false;
+  return -1;
 }
 
 export function getSecondsFromTimeStamp(the_time?: string): number {
@@ -153,35 +219,21 @@ export function validTrackObj(trkObj: unknown): trkObj is Track {
   return hasKeys(trkObj as Record<string, unknown>, keys);
 }
 
-export function getObjFromUrl(link: string, allOpts: TrackOptions): Track {
-  for (const artist in allOpts) {
-    for (let typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
-      const linkIdx = allOpts[artist][typeIdx].links.indexOf(link);
+export function getObjFromUrl(link: string, allOpts: ArtistOpt[]): Track {
+  for (const artist of allOpts) {
+    for (let typeIdx = 0; typeIdx < artist.track_groups.length; typeIdx++) {
+      const linkIdx = artist.track_groups[typeIdx].links.indexOf(link);
       if (linkIdx === -1) continue;
       return {
-        artist,
+        artist_name: artist.artist_name,
         typeIdx,
         linkIdx,
-        type: allOpts[artist][typeIdx].type,
+        type: artist.track_groups[typeIdx].type,
         link: link,
       };
     }
   }
   return {} as Track;
-}
-
-export function getLinkFromOldUrlDate(artist: string, trackIndex: number, allOpts: TrackOptions): string {
-  const artistTypes = allOpts[artist];
-  if (!artistTypes) return '';
-  const allLinks: string[] = [];
-  for (const typeObj of artistTypes) {
-    allLinks.push(...typeObj.links);
-  }
-
-  if (trackIndex > allLinks.length - 1) {
-    return '';
-  }
-  return allLinks[trackIndex];
 }
 
 export function secondsToHMS(seconds: number): string {
@@ -200,40 +252,19 @@ export function secondsToHMS(seconds: number): string {
   }
 }
 
-export function getTypeNLinkIdx(allOpts: TrackOptions, trkObj: Track): {typeIdx: number; linkIdx: number} {
-  let typeIdx = trkObj.typeIdx;
-  let linkIdx = trkObj.linkIdx;
-  if (typeIdx !== undefined && linkIdx !== undefined)
-    return {typeIdx: parseInt(typeIdx.toString()), linkIdx: parseInt(linkIdx.toString())};
-
-  const artist = trkObj.artist;
-  const type = trkObj.type;
-  const link = trkObj.link;
-  for (typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
-    if (allOpts[artist][typeIdx].type === type) {
-      for (linkIdx = 0; linkIdx < allOpts[artist][typeIdx].links.length; linkIdx++) {
-        if (allOpts[artist][typeIdx].links[linkIdx] === link) {
-          console.log('Found typeIdx from zustand');
-          return {typeIdx, linkIdx};
-        }
-      }
-    }
-  }
-  return {typeIdx: 0, linkIdx: 0};
-}
-
-export function getAllLinkObjs(allOpts: TrackOptions): Track[] {
+export function getAllLinkObjs(allOpts: ArtistOpt[]): Track[] {
   const tracksLst: Track[] = [];
-  for (const artist in allOpts) {
-    for (const typeInd in allOpts[artist]) {
-      if (!allOpts[artist][typeInd].checked) continue;
-      for (const linkInd in allOpts[artist][typeInd].links) {
+  for (const artist of allOpts) {
+    for (let typeInd = 0; typeInd < artist.track_groups.length; typeInd++) {
+      const trackGroup = artist.track_groups[typeInd];
+      if (!trackGroup.checked) continue;
+      for (let linkInd = 0; linkInd < trackGroup.links.length; linkInd++) {
         tracksLst.push({
-          artist: artist,
-          typeIdx: parseInt(typeInd),
-          linkIdx: parseInt(linkInd),
-          type: allOpts[artist][typeInd].type,
-          link: allOpts[artist][typeInd].links[parseInt(linkInd)],
+          artist_name: artist.artist_name,
+          typeIdx: typeInd,
+          linkIdx: linkInd,
+          type: artist.track_groups[typeInd].type,
+          link: trackGroup.links[linkInd],
         });
       }
     }

@@ -20,7 +20,7 @@ interface ButtonProps {
 }
 
 export function PlayPauseBtn({audioRef}: PlayPauseBtnProps): JSX.Element {
-  const paused = useStore((state: any) => state.paused);
+  const paused = useStore((state) => state.paused);
   function togglePlayPause() {
     if (audioRef === null) return;
     // || audioRef... is for initial load. Browser blocks autoplay

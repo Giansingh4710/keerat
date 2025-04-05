@@ -93,7 +93,7 @@ function DisplayTracksByName({searchTerm}: {searchTerm: string}): JSX.Element {
 
             if (allWordsFound) {
               searchResults.push({
-                artist,
+                artist_name: artist,
                 typeIdx,
                 linkIdx,
                 type: allOpts[artist][typeIdx].type,
@@ -129,7 +129,7 @@ function DisplayTracksByName({searchTerm}: {searchTerm: string}): JSX.Element {
             onClick={() => appendHistory(trkObj)}
             liNum={index + 1}
             title={getNameOfTrack(trkObj.link)}
-            bottomLeftTxt={trkObj.artist}
+            bottomLeftTxt={trkObj.artist_name}
             bottomRightTxt={trkObj.type}
           />
         ))}
@@ -165,7 +165,7 @@ function DisplayTracksByGurbani({searchTerm}: {searchTerm: string}): JSX.Element
             searchResults.push({
               lineMatched: index.description || '',
               timestamp: index.timestamp,
-              artist: index.artist,
+              artist_name: index.artist,
               link: key,
               linkIdx,
               typeIdx,
@@ -180,7 +180,7 @@ function DisplayTracksByGurbani({searchTerm}: {searchTerm: string}): JSX.Element
               searchResults.push({
                 lineMatched: line,
                 timestamp: index.timestamp,
-                artist: index.artist,
+                artist_name: index.artist,
                 link: key,
                 linkIdx,
                 typeIdx,

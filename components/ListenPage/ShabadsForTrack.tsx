@@ -30,9 +30,9 @@ interface ShabadDetailsProps {
 }
 
 export default function ShabadsDisplay({audioRef}: ShabadsDisplayProps): JSX.Element {
-  const indexTracks = useStore((state: any) => state.indexTracks);
-  const getCurrentTrack = useStore((state: any) => state.getCurrentTrack);
-  const hstIdx = useStore((state: any) => state.hstIdx);
+  const indexTracks = useStore((state) => state.indexTracks);
+  const getCurrentTrack = useStore((state) => state.getCurrentTrack);
+  const hstIdx = useStore((state) => state.hstIdx);
   const [indexLst, setIndexLst] = useState<any[]>([]);
 
   useEffect(() => {
