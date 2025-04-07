@@ -1,8 +1,9 @@
-import { ALL_OPTS } from './TRACKS';
-import ListenPage from '@/components/ListenPage';
-import { addCheckedKey } from '@/utils/helper_funcs';
+import ListenPage from '@/components/ListenPage/index';
+import {addCheckedKey} from '@/utils/helper_funcs';
+import { getTracks } from '@/backend/getTracks';
 
-export default function PaathPage() {
-  const allTheOptions = addCheckedKey(ALL_OPTS)
-  return <ListenPage title='Sant Waryam Singh Ji' allTheOpts={allTheOptions} />
+export default async function SantWJ() {
+  const dbData = await getTracks(['SantWaryamSinghJi']); 
+  const allTheOptions = addCheckedKey(dbData);
+  return <ListenPage title="Sant Waryam Singh Ji" allTheOpts={allTheOptions} />;
 }

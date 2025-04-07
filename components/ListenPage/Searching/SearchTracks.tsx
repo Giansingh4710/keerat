@@ -6,7 +6,7 @@ import ResultBar from './ResultBar';
 
 import {getNameOfTrack, getSecondsFromTimeStamp} from '@/utils/helper_funcs';
 import {useSearchStore, useStore} from '@/utils/store';
-import {Track, TrackOptions} from '@/utils/types';
+import {ArtistOpt, Track} from '@/utils/types';
 
 const MemoizedResultBar = React.memo(ResultBar);
 
@@ -75,10 +75,11 @@ function DisplayTracksByName({searchTerm}: {searchTerm: string}): JSX.Element {
       const words = searchTerm.toLowerCase().split(' ');
       const searchResults: Track[] = [];
 
-      for (const artist in allOpts) {
-        for (let typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
-          if (!allOpts[artist][typeIdx].checked) continue;
-          const links = allOpts[artist][typeIdx].links;
+      for (const artist of allOpts) {
+        for (let typeIdx = 0; typeIdx < artist.track_groups.length; typeIdx++) {
+          const track_group = artist.track_groups[typeIdx];
+          if (!track_group.checked) continue;
+          const links = track_group.links;
 
           for (let linkIdx = 0; linkIdx < links.length; linkIdx++) {
             const link = links[linkIdx].toLowerCase();
@@ -93,10 +94,10 @@ function DisplayTracksByName({searchTerm}: {searchTerm: string}): JSX.Element {
 
             if (allWordsFound) {
               searchResults.push({
-                artist_name: artist,
+                artist_name: artist.artist_name,
                 typeIdx,
                 linkIdx,
-                type: allOpts[artist][typeIdx].type,
+                type: track_group.type,
                 link: links[linkIdx], // to get unlowered case
               });
             }
@@ -234,14 +235,16 @@ function DisplayTracksByGurbani({searchTerm}: {searchTerm: string}): JSX.Element
 }
 
 function getTypeNLink(
-  allOpts: TrackOptions,
+  allOpts: ArtistOpt[],
   link: string,
   artist: string,
 ): {typeIdx: number; linkIdx: number; type: string} {
-  for (let typeIdx = 0; typeIdx < allOpts[artist].length; typeIdx++) {
-    for (let linkIdx = 0; linkIdx < allOpts[artist][typeIdx].links.length; linkIdx++) {
-      if (allOpts[artist][typeIdx].links[linkIdx] === link) {
-        return {typeIdx, linkIdx, type: allOpts[artist][typeIdx].type};
+  const artistIdx = allOpts.findIndex(a => a.artist_name === artist);
+  if (artistIdx === -1) return {typeIdx: -1, linkIdx: -1, type: ''};
+  for (let typeIdx = 0; typeIdx < allOpts[artistIdx].track_groups.length; typeIdx++) {
+    for (let linkIdx = 0; linkIdx < allOpts[artistIdx].track_groups[typeIdx].links.length; linkIdx++) {
+      if (allOpts[artistIdx].track_groups[typeIdx].links[linkIdx] === link) {
+        return {typeIdx, linkIdx, type: allOpts[artistIdx].track_groups[typeIdx].type};
       }
     }
   }

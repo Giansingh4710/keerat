@@ -1,8 +1,9 @@
-import { ALL_OPTS } from './TRACKS'
-import ListenPage from '@/components/ListenPage'
-import { addCheckedKey } from '@/utils/helper_funcs'
+import ListenPage from '@/components/ListenPage/index';
+import {addCheckedKey} from '@/utils/helper_funcs';
+import { getTracks } from '@/backend/getTracks';
 
-export default function PaathPage() {
-  const allTheOptions = addCheckedKey(ALL_OPTS)
-  return <ListenPage title='Giani Sher Singh Ji' allTheOpts={allTheOptions} />
+export default async function GSSJ() {
+  const dbData = await getTracks(['GianiSherSinghJi']); 
+  const allTheOptions = addCheckedKey(dbData);
+  return <ListenPage title="Giani Sher Singh Ji" allTheOpts={allTheOptions} />;
 }

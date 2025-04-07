@@ -1,8 +1,9 @@
-import { ALL_OPTS } from './TRACKS';
-import ListenPage from '@/components/ListenPage';
-import { addCheckedKey } from '@/utils/helper_funcs';
+import ListenPage from '@/components/ListenPage/index';
+import {addCheckedKey} from '@/utils/helper_funcs';
+import {getTracks} from '@/backend/getTracks';
 
-export default function akj() {
-  const allTheOptions = addCheckedKey(ALL_OPTS)
-  return <ListenPage title='Darbar Sahib Keertan' allTheOpts={allTheOptions} />
+export default async function SGPC() {
+  const dbData = await getTracks(['DarbarSahibPuratanKeertanSGPC']);
+  const allTheOptions = addCheckedKey(dbData);
+  return <ListenPage title="Darbar Sahib SGPC Keertan" allTheOpts={allTheOptions} />;
 }

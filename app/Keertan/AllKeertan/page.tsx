@@ -1,8 +1,14 @@
-import {ALL_OPTS} from './TRACKS';
-import ListenPage from '@/components/ListenPage';
+import ListenPage from '@/components/ListenPage/index';
 import {addCheckedKey} from '@/utils/helper_funcs';
+import {getTracks} from '@/backend/getTracks';
 
-export default function ALL() {
-  const allTheOptions = addCheckedKey(ALL_OPTS);
+export default async function AllKeertan() {
+  const dbData = await getTracks([
+    'AkhandKeertan',
+    'DarbarSahibPuratanKeertanSGPC',
+    'RandomRadio',
+    'TimeBasedRaagKeertan',
+  ]);
+  const allTheOptions = addCheckedKey(dbData);
   return <ListenPage title="All Keertan" allTheOpts={allTheOptions} />;
 }

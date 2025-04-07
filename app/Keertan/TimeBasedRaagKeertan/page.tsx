@@ -1,8 +1,9 @@
-import { ALL_OPTS } from './TRACKS'
-import ListenPage from '@/components/ListenPage'
-import { addCheckedKey } from '@/utils/helper_funcs'
+import ListenPage from '@/components/ListenPage/index';
+import {addCheckedKey} from '@/utils/helper_funcs';
+import {getTracks} from '@/backend/getTracks';
 
-export default function timeBased() {
-  const allTheOptions = addCheckedKey(ALL_OPTS)
-  return <ListenPage title='Time Based Keertan' allTheOpts={allTheOptions} />
+export default async function TimeBased() {
+  const dbData = await getTracks(['TimeBasedRaagKeertan']);
+  const allTheOptions = addCheckedKey(dbData);
+  return <ListenPage title="Time Based Raag Keertan" allTheOpts={allTheOptions} />;
 }

@@ -1,8 +1,9 @@
-import { ALL_OPTS } from './TRACKS';
 import ListenPage from '@/components/ListenPage';
 import { addCheckedKey } from '@/utils/helper_funcs';
+import { getTracks } from '@/backend/getTracks';
 
-export default function BhagatJi() {
-  const allTheOptions = addCheckedKey(ALL_OPTS)
+export default async function BSS() {
+  const dbData = await getTracks(['BhSukhaS']); 
+  const allTheOptions = addCheckedKey(dbData);
   return <ListenPage title='Bhai Sukha Singh' allTheOpts={allTheOptions} />
 }

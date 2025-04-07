@@ -243,10 +243,12 @@ export function ListOfTracksByType(): JSX.Element | null {
   const setTypeToShowLinksFor = useModalStore(state => state.setTypeToShowLinksFor);
   const [tracksObj, setTracksObj] = useState<string[]>();
 
-  const artistIdx = allOpts.findIndex(a => a.artist_name === artist);
-  const typeIdx = allOpts[artistIdx].track_groups.findIndex(t => t.type === type);
-
+  let typeIdx = -1;
   useEffect(() => {
+    const artistIdx = allOpts.findIndex(a => a.artist_name === artist);
+    if (artistIdx === -1) return;
+    typeIdx = allOpts[artistIdx].track_groups.findIndex(t => t.type === type);
+
     if (artist === '' || type === '') return;
     setTracksObj(allOpts[artistIdx].track_groups[typeIdx].links);
   }, [typeToShowLinksFor]);

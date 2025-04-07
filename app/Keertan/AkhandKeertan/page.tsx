@@ -1,8 +1,9 @@
-import { ALL_OPTS } from './TRACKS';
-import ListenPage from '@/components/ListenPage';
-import { addCheckedKey } from '@/utils/helper_funcs';
+import ListenPage from '@/components/ListenPage/index';
+import {addCheckedKey} from '@/utils/helper_funcs';
+import { getTracks } from '@/backend/getTracks';
 
-export default function akj() {
-  const allTheOptions = addCheckedKey(ALL_OPTS)
-  return <ListenPage title='Classic Akhand Keertan' allTheOpts={allTheOptions} />
+export default async function AKJ() {
+  const dbData = await getTracks(['AkhandKeertan']); 
+  const allTheOptions = addCheckedKey(dbData);
+  return <ListenPage title="Classic Akhand Keertan" allTheOpts={allTheOptions} />;
 }

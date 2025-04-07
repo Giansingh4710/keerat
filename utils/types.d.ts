@@ -67,7 +67,7 @@ interface IndexedTrack {
   shabadArr?: string[];
   description: string;
   link: string;
-  ID: number;
+  ID?: number;
 }
 
 export interface IndexedTracks {

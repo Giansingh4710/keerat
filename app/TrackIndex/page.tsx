@@ -13,7 +13,6 @@ import {PlayPauseBtn, PlayBackButtons} from '@/components/commonComps';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
 import toast, {Toaster} from 'react-hot-toast';
-import {getLinkToKeerat} from './copyFunc';
 import {IndexedTrack} from '@/utils/types';
 
 interface TopButtonsProps {
@@ -389,7 +388,8 @@ function getDateFromUnixTime(unixTimeStamp: string): string {
 }
 
 function copyLocalLink(link: string, timestampInSecs: number): void {
-  const localLink = getLinkToKeerat(link, timestampInSecs);
+  // const localLink = getLinkToKeerat(link, timestampInSecs);
+  const localLink = undefined;
   if (!localLink) {
     toast.error('Link not found!!!');
     return;

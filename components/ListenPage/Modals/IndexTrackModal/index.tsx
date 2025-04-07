@@ -54,7 +54,7 @@ export default function IndexTrackBtnAndModal({audioRef, saveTimeFunc}: IndexTra
   const appendIndexObj = useStore((state) => state.appendIndexObj);
   const history = useStore((state) => state.history);
   const hstIdx = useStore((state) => state.hstIdx);
-  const artist = history[hstIdx]?.artist;
+  const artist = history[hstIdx]?.artist_name;
   const link = history[hstIdx]?.link;
 
   const [timestamp, setTimestamp] = useState<Timestamp>({
@@ -120,7 +120,7 @@ export default function IndexTrackBtnAndModal({audioRef, saveTimeFunc}: IndexTra
     })
       .then(res => {
         appendIndexObj({
-          created: Date.now(),
+          created: Date.now().toString(),
           type: theTrackType,
           artist,
           timestamp: theTimeStamp,
