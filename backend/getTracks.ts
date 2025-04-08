@@ -3,24 +3,26 @@ import {ArtistOpt} from '@/utils/types';
 import {MongoClient, Db} from 'mongodb';
 
 const MONGO_URL: string = 'mongodb://localhost:27017';
-const DB_NAME: string = 'keeratxyz';
+const DB_NAME: string = 'keerat';
 
-export async function getTracks(collection_names: string[]): Promise<ArtistOpt[]> {
-  const client: MongoClient = new MongoClient(MONGO_URL);
+interface TrackGroupDocument {
+  group_name: string;
+  group_type: string;
+  artist_entries: ArtistOpt[];
+}
+
+export async function getTracks(group_types: string[]): Promise<ArtistOpt[]> {
+  const client = new MongoClient(MONGO_URL);
 
   try {
     await client.connect();
     console.log('Connected to MongoDB');
 
     const db: Db = client.db(DB_NAME);
-    let allTracks: ArtistOpt[] = [];
+    const collection = db.collection<TrackGroupDocument>('all_tracks'); // Replace with your collection name
 
-    for (const name of collection_names) {
-      const collection = db.collection<ArtistOpt>(name);
-      const tracks = await collection.find({}, {projection: {_id: 0, __v: 0}}).toArray();
-      allTracks = allTracks.concat(tracks);
-    }
-
+    const matchingGroups = await collection.find({group_name: {$in: group_types}}, {projection: {_id: 0}}).toArray();
+    const allTracks: ArtistOpt[] = matchingGroups.flatMap(group => group.artist_entries);
     return allTracks;
   } catch (error: unknown) {
     console.error('Error fetching tracks:', error);
