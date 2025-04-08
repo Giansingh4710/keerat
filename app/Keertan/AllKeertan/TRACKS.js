@@ -1238,7 +1238,25 @@ const ALL_OPTS = {
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/231 Bhai Mohinder Singh Ji SDO Prince George Bc Canada 1989 Smagam (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/232 Bhai Mohinder Singh Ji SDO Bhai Pritam Singh ji (Channi ji) Derby October 1983 Smagam (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/233 Bhai Mohinder Singh Ji SDO UK Smethwick Smagam 1983 (heeraRattan).mp3",
-        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/234 Bhai Mohinder Singh Ji SDO UK Smethwick Smagam 1983 (heeraRattan).mp3"
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/234 Bhai Mohinder Singh Ji SDO UK Smethwick Smagam 1983 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/235 Bhai Mohinder Singh Ji SDO Los Angeles ca 1981 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/236 Bhai Mohinder Singh Ji SDO Parmjit Singh Ludhiana 1979 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/237 Bhai Mohinder Singh Ji SDO 1975 to 1980 Various Smagams kirtanai, Punjab. K S G spool. (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/238 Bhai Mohinder Singh Ji SDO Moga Smagam 1977 Spool KSG (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/239 Bhai Mohinder Singh Ji SDO Bhai Joginder Singh Ji Talwara 1977 Moga Smagam old Spool (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/240 Bhai Mohinder Singh Ji SDO Bradford October 1983 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/241 Bhai Mohinder Singh Ji SDO Chicago 1983 Smagam, psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/242 Bhai Mohinder Singh Ji SDO Detroit December 1982 Smagam Bhai Rajinder Singh singapore,psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/243 Bhai Mohinder Singh Ji SDO Patiala 1966 Smagam old Spool pms (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/244 Bhai Mohinder Singh Ji SDO Chicago 1983 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/245 Bhai Mohinder Singh Ji SDO Los Angeles Smagam 1981 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/246 Bhai Mohinder Singh Ji SDO Bhai Tajindpal ji Singh-Bhai Varinder singh Ji old Spool. (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/247 Bhai Mohinder Singh Ji SDO Delhi smagam 1977 Rakab Ganj spool A-B (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/248 Bhai Mohinder Singh Ji SDO - Bibi Kipal Kaur ji Old Spool Patiala Smagam A - B (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/249 Bhai Mohinder Singh Ji SDO 1974 Patiala Smagam Old Spool psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/250 Bhai Mohinder Singh Ji SDO Patiala Smagam 1974 Old Spool psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/251 Bhai Mohinder Singh Ji SDO Toronto 1990 Smagam Complete. (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/252 Bhai Mohinder Singh Ji SDO - Bhao Joginder Singh Ji Moga Smagam 1980 Old Spool psm (heeraRattan).mp3"
       ]
     },
     {
