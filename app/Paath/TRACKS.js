@@ -622,6 +622,16 @@ const bhai_sarvan_singh_adi = [
   },
 ]
 
+const fullPaath = [
+  {
+    type: 'main',
+    links: [
+      'https://daasstorage13.blob.core.windows.net/ds1/audios/paath/Giani Jagtar Singh Jachak - Sri Guru Granth Sahib Santhia Path.mp3',
+      'https://www.sikhnet.com/gurbani/audio/download/75811/Bhai%20Sarvan%20Singh%20-%20Akhand%20Path%20-%20Siri%20Guru%20Granth%20Sahib.mp3',
+    ],
+  },
+]
+
 const ALL_OPTS = {
   'Panj Granthi - Bhai Jaswant Singh Ji TO': PanjGranthi,
   'Bhai Sarvan Singh Ji Adi Guru Granth Sahib Ji Paath': bhai_sarvan_singh_adi,
@@ -632,6 +642,7 @@ const ALL_OPTS = {
   'Bhai Onkar Singh Ji Sri Dasam Mahraj Bani':
     bhai_onkar_singhji_dasam_paath_links,
   'Bhai Kabaal Singh Ji (Hazoor Sahib wale)': kabaal_singh_dasam,
+  'Full Sehaj Paath Tracks': fullPaath,
 }
 
 module.exports = { ALL_OPTS }

@@ -140,6 +140,19 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
       if (checkedTracks) {
         // toast.success("Got Checked Tracks From Storage", { duration: 1000 });
         checkedTracks = JSON.parse(checkedTracks);
+        const oldKeys = Object.keys(checkedTracks) 
+        const newKeys = Object.keys(allTheOpts)
+        if (oldKeys.length !== newKeys.length) {
+          toast.error(`Invalid Checked Tracks From Storage`, { duration: 1000 });
+          return;
+        }
+        oldKeys.forEach((artist) => {
+          if (!newKeys.includes(artist)) {
+            toast.error(`Invalid Checked Tracks From Storage`, { duration: 1000 });
+            return;
+          }
+        });
+
         setCheckedForAllArtists(false);
 
         Object.keys(allTheOpts).forEach((artist) => {
