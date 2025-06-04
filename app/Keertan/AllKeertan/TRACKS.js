@@ -1256,7 +1256,22 @@ const ALL_OPTS = {
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/249 Bhai Mohinder Singh Ji SDO 1974 Patiala Smagam Old Spool psm (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/250 Bhai Mohinder Singh Ji SDO Patiala Smagam 1974 Old Spool psm (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/251 Bhai Mohinder Singh Ji SDO Toronto 1990 Smagam Complete. (heeraRattan).mp3",
-        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/252 Bhai Mohinder Singh Ji SDO - Bhao Joginder Singh Ji Moga Smagam 1980 Old Spool psm (heeraRattan).mp3"
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/252 Bhai Mohinder Singh Ji SDO - Bhao Joginder Singh Ji Moga Smagam 1980 Old Spool psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/253 Bhai Mohinder Singh Ji SDO April 1983 Smagam CA (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/254 Bhai Mohinder Singh Ji SDO Gravesend Smagam October 1983. (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/255 Bhai Mohinder Singh SDO Hoshiapur Smagam 1978 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/256 Bhai Mohinder Singh Ji SDO 1974 - 1979 Punjab various smagams old spool pms (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/257 Bhai Mohinder Singh Ji SDO Patiala Smagam 1972 old spool psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/258 Bhai Mohinder Singh Ji SDO Milwaukee 1981 Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/259 Bhai Mohinder Singh Ji SDO USA (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/260 Bhai Mohinder Singh Ji New Delhi Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/261 Bhai Mohinder Singh Ji SDO New Delhi (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/262 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/263 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/264 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/265 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/266 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/267 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3"
       ]
     },
     {
@@ -1612,7 +1627,9 @@ const ALL_OPTS = {
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/057 Bhai Mohinder Singh SDO and Bibi Kirpal Kaur Ji 70s Samagam (karKeertan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/058 Bhai Mohinder Singh SDO Late 70s ਮਾਧੋਸਾਧੂਜਨਦੇਹੁਮਿਲਾਇ ॥ (karKeertan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/059 Bhai Mohinder Singh SDO ਗੁਰ ਕਾ ਸਬਦੁ ਮੇਰੈ ਅੰਤਰਿ ਧਿਆਨੁ ॥ਹਉ ਕਬਹੁ ਨ ਛੋਡਉ ਹਰਿ ਕਾ ਨਾਮੁ ॥੧॥ ਰਹਾਉ ॥ (karKeertan).mp3",
-        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/060 Bhai Mohinder Singh SDO 1966 Patiala Samagam (karKeertan).mp3"
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/060 Bhai Mohinder Singh SDO 1966 Patiala Samagam (karKeertan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/061 ਸਚੈ ਤਖਤੁ ਰਚਾਇਆ ਬੈਸਣ ਕਉ ਜਾਂਈ ॥ Bhai Mohinder Singh SDO 1971 Anandpur Sahib Samagam (karKeertan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_karKeertan/062 ਜੇਤੂਮਿਤ੍ਰੁਅਸਾਡੜਾਹਿਕਭੋਰੀਨਾਵੇਛੋੜਿ॥ Bhai Mohinder Singh SDO 70s Samagam (karKeertan).mp3"
       ]
     },
     {
