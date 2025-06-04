@@ -29,7 +29,7 @@ interface ShabadDetailsProps {
   shabadArray: string[];
 }
 
-export default function ShabadsDisplay({audioRef}: ShabadsDisplayProps): JSX.Element {
+export default function ShabadsForTrack({audioRef}: ShabadsDisplayProps): JSX.Element {
   const indexTracks = useStore((state) => state.indexTracks);
   const getCurrentTrack = useStore((state) => state.getCurrentTrack);
   const hstIdx = useStore((state) => state.hstIdx);

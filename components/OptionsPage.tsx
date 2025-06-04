@@ -1,11 +1,14 @@
 import React from 'react';
 import NavBar from './NavBar';
+import {PageDocument} from '@/utils/types';
+import Link from 'next/link';
 
 interface OptionsPageProps {
-  opts: string[];
+  opts: PageDocument[];
+  children?: PageDocument[];
 }
 
-export default function OptionsPage({opts}: OptionsPageProps): JSX.Element {
+export default function OptionsPage({opts, children}: OptionsPageProps): JSX.Element {
   return (
     <div className="min-h-screen bg-primary-100 flex flex-col">
       <NavBar title="Keerat" />
@@ -19,7 +22,8 @@ export default function OptionsPage({opts}: OptionsPageProps): JSX.Element {
           <div className="rounded-lg shadow-lg overflow-hidden">
             <div className="p-6 sm:p-8">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {opts.map(str => {
+                {(children || opts).map((pageItem: PageDocument) => {
+                  const str = pageItem.page_name;
                   const href = str.replaceAll(' ', '');
                   return (
                     <a

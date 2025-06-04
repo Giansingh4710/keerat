@@ -4,3 +4,5 @@ wait no. Just changes get data from Mongodb and use that in Paath/page.tsx and
 then if that works, change all the page.tsx. Then fix the small bugs
 
 will there be a checked
+
+Make Struct for the paths

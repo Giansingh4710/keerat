@@ -36,10 +36,7 @@ interface BottomBtnProps {
 export default function ListenPage({title, allTheOpts}: {title: string; allTheOpts: ArtistOpt[]}): JSX.Element {
   const prevTrack = useStore((state) => state.prevTrack);
   const nextTrack = useStore((state) => state.nextTrack);
-  const setShuffle = useStore((state) => state.setShuffle);
   const setHistory = useStore((state) => state.setHistory);
-  const setCheckedType = useStore((state) => state.setCheckedType);
-  const setCheckedForAllArtists = useStore((state) => state.setCheckedForAllArtists);
   const history = useStore((state) => state.history);
   const hstIdx = useStore((state) => state.hstIdx);
   const setTracks = useStore((state) => state.setTracks);
@@ -53,7 +50,6 @@ export default function ListenPage({title, allTheOpts}: {title: string; allTheOp
 
   const setShowArtists = useModalStore((state) => state.setShowArtists);
   const setViewHistory = useModalStore((state) => state.setViewHistory);
-  const setViewAllTracks = useModalStore((state) => state.setViewAllTracks);
 
   useMemo(() => {
     setTitle(title);

@@ -1,12 +1,17 @@
+interface PageDocument {
+  page_name: string;
+  order: number;
+  hide?: boolean;
+  group_names?: string[];
+  childern?: PageDocument[];
+}
+
 interface TrackOption {
   type: string;
   links: string[];
   checked?: boolean;
 }
 
-export interface TrackOptions {
-  [key: string]: TrackOption[];
-}
 
 export interface ArtistOpt {
   artist_name: string;
