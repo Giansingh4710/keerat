@@ -5,9 +5,9 @@
 function getUrls() {
   let isDev = false;
 
-  if (window.location.href.includes("localhost")) isDev = true;
+  // if (window.location.href.includes("localhost")) isDev = true;
   // isDev = false;
-  const SERVER_URL = isDev ? "http://localhost:3000" : "https://getshabads.xyz";
+  const SERVER_URL = isDev ? "http://localhost:3000" : "https://giansingh4710.xyz";
 
   const GET_INDEXED_TRACKS_URL = SERVER_URL + "/getIndexedTracks";
   const GET_INDEXED_TRACKS_BY_ARTISTS_URL = SERVER_URL + "/getIndexedTracksByArtists?artists=";

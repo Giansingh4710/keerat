@@ -1271,7 +1271,19 @@ const ALL_OPTS = {
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/264 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/265 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
         "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/266 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
-        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/267 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3"
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/267 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/268 Bhai Mohinder Singh Ji SDO 1979 Bombay Smagam old spool 65 psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/269 Bhai Mohinder Singh Ji SDO New Delhi Smagam (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/270 Bhai Mohinder Singh Ji SDO New Delhi Smagam -1 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/271 Bhai Mohinder Singh Ji SDO-Bhai Parmjit Singh Ji-Bibi Kirpal kaur Ji Mumbai 1979 Smagam old spool ps (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/272 Bhai Mohinder Singh Ji SDO Patiala 1971 Smagam old spool bs (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/273 Bhai Mohinder Singh Ji SDO Moga 1974 Smagam old spool psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/274 Bhai Mohinder Singh Ji SDO 1970 Patiala Smagam old spool BS (P-1) (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/275 Bhai Mohinder Singh Ji SDO Patiala 1973 Smagam Old Spool psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/276 Bhai Mohinder Singh Ji SDO Patiala 1969 1977 Smagam old spool ms (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/277 Bhai Mohinder Singh Ji SDO Patiala 1969 Smagam old Spool psm (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/278 Bhai Mohinder Singh Ji SDO New Delhi Smagam, Importance of Naam Abhiaas Shabad Kohj - 1 (heeraRattan).mp3",
+        "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_heeraRattan/279 Bhai Mohinder Singh Ji SDO New Delhi Smagam, Importance of Naam Abhiaas Shabad de Kohj - 2 (heeraRattan).mp3"
       ]
     },
     {
