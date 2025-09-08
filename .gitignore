@@ -41,7 +41,7 @@ utils/local.js
 .DS_Store
 *.mp3
 *.zip
-utils/azure/env.py
+utils/aws/env.py
 *__pycache__/
 geckodriver.log
 

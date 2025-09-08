@@ -1,7 +1,9 @@
-from azure.storage.blob import BlobServiceClient
 import os
 import subprocess
 import json
+import boto3
+from botocore.exceptions import ClientError
+import mimetypes
 # import pyperclip
 
 
@@ -106,28 +108,26 @@ def download_videos(obj, dir_name, sign=""):
     os.chdir("..")
 
 
-def upload_to_azure(prefix, dir):
-    # f = open("../../../../azure/env.py", "r")
-    f = open("../../../../../utils/azure/env.py", "r")
-    CONNECTION_STRING = f.read().split()[-1][1:-1]
-
-    connection_string = CONNECTION_STRING
-    container_name = "ds1"
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    container_client = blob_service_client.get_container_client(container_name)
-
+def upload_to_aws(prefix, dir):
+    bucket_name = "keerat.xyz"
+    s3_client = boto3.client("s3")
     for i in os.listdir(dir):
         if i[0] == ".":
             continue
-        blob_name = prefix + i
-        blob_client = container_client.get_blob_client(blob_name)
-        print(f"Uploading '{i}'")
-        with open(os.path.join(dir, i), "rb") as data:
-            blob_client.upload_blob(data, overwrite=True,connection_timeout=1000)
+        s3_key = prefix + i
 
-        blob_props = blob_client.get_blob_properties()
-        blob_props.content_settings.content_type = "audio/mpeg"
-        blob_client.set_http_headers(blob_props.content_settings)
+        try:
+            local_file_path = os.path.join(dir, i)
+            content_type, _ = mimetypes.guess_type(local_file_path)
+            extra_args = {}
+            if content_type:
+                extra_args["ContentType"] = content_type
+                extra_args["ContentDisposition"] = "inline"   # tells browser to play instead of download
+
+            s3_client.upload_file(local_file_path, bucket_name, s3_key,ExtraArgs=extra_args)
+            print(f"Uploaded '{s3_key}'")
+        except ClientError as e:
+            print(f"Error uploading '{s3_key}': {e}")
 
 
 def print_links_n_copy(prefix, dir_name):
@@ -157,7 +157,7 @@ def main(key):
 
     download_videos(dl_obj, dir_name, sign)
 
-    upload_to_azure(prefix, dir_name)
+    upload_to_aws(prefix, dir_name)
     saveNewDownloadedVids(dl_obj, f"{key}.json")
 
     print_links_n_copy(prefix, dir_name)
@@ -176,25 +176,25 @@ playlists = {
     "gas_kirtansewa": {
         "link": "https://www.youtube.com/playlist?list=PLJbQ7fetm0gpBOB1nWpqQeiYdfGy9HQu_",
         "dir_name": "Giani_Amolak_Singh_Kirtansewa",
-        "prefix": "audios/keertan/giani_amolak_singh/yt_kirtanSewa/",
+        "prefix": "keertan/giani_amolak_singh/yt_kirtanSewa/",
         "sign": "kirtanSewa",
     },
     "sdo_kirtansewa": {
         "link": "https://www.youtube.com/playlist?list=PLJbQ7fetm0gqfGken8dUkHPTP5BIQpqNb",
         "dir_name": "SDO_Kirtansewa",
-        "prefix": "audios/keertan/sdo/yt_kirtanSewa/",
+        "prefix": "keertan/sdo/yt_kirtanSewa/",
         "sign": "kirtanSewa",
     },
     "heeraRatan": {
         "link": "https://www.youtube.com/@heerarattan5973/videos",
         "dir_name": "HeeraRatan",
-        "prefix": "audios/keertan/sdo/yt_heeraRattan/",
+        "prefix": "keertan/sdo/yt_heeraRattan/",
         "sign": "heeraRattan",
     },
     "karKeertan": {
         "link": "https://www.youtube.com/playlist?list=PLnHYMNVRCwh51tSOUjJf5ToO7POmGJtZ9",
         "dir_name": "karKeertan",
-        "prefix": "audios/keertan/sdo/yt_karKeertan/",
+        "prefix": "keertan/sdo/yt_karKeertan/",
         "sign": "karKeertan",
     },
 }

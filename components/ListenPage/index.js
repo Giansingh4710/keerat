@@ -185,6 +185,7 @@ export default function ListenPage({ title, allTheOpts, changesOpts }) {
     })
       .then((res) => {
         setIndexTracks(res.data);
+        // console.log("Index Tracks by Artists Fetched", res.data);
       })
       .catch((err) => {
         console.log("URL: " + GET_INDEXED_TRACKS_BY_ARTISTS_URL);
