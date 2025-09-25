@@ -132,7 +132,9 @@ def upload_to_aws(prefix, dir):
 
 def print_links_n_copy(prefix, dir_name):
     copyTxt = ""
-    link_pref = "https://daasstorage13.blob.core.windows.net/ds1/" + prefix
+    # link_pref = "https://daasstorage13.blob.core.windows.net/ds1/" + prefix
+    link_pref = "https://s3.us-east-1.amazonaws.com/keerat.xyz/" + prefix
+
     for file in sorted(os.listdir(dir_name)):
         if file[0] == ".":
             continue
