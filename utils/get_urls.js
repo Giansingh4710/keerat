@@ -3,7 +3,7 @@
 // const isDev = DEV === "TRUE";
 
 function getUrls() {
-  let isDev = false;
+  let isDev = true;
 
   // if (window.location.href.includes("localhost")) isDev = true;
   // isDev = false;

@@ -1312,7 +1312,22 @@ const ALL_OPTS = {
         "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/305 Bhai Mohinder Singh Ji SDO Lajpat Nagar 5 ॥ਵਾਰ॥ \"New\" Delhi (heeraRattan).mp3",
         "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/306 Bhai Mohinder Singh Ji SDO ॥ਵਾਰ॥ 6 Lajpat Nagar New Delhi (heeraRattan).mp3",
         "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/307 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 7 New Delhi (heeraRattan).mp3",
-        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/308 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 8 \"New\" Delhi (heeraRattan).mp3"
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/308 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 8 \"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/309 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 9 \"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/310 Bhai Mohinder Singh Ji SDO California 1982 Smagam (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/311 Bhai Mohinder Singh Ji SDO Bangla Sahib 1977 Smagam A-M (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/312 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 10 \"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/313 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 11 \"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/314 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 12 \"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/315 Bhai Mohinder Singh Ji SDO California 1982 Smagam (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/316 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 13 \"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/317 Bhai Mohinder Singh Ji SDO 25.05.1983 Milwaukee . (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/318 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 14 \"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/319 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 15 \"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/320 Bhai Mohinder Singh Ji SDO Patiala 1968 smagam (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/321 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 16\"New\" Delhi\" (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/322 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 17\"New\" Delhi (heeraRattan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/323 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 18\"New\" Delhi (heeraRattan).mp3"
       ]
     },
     {
@@ -1670,7 +1685,8 @@ const ALL_OPTS = {
         "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_karKeertan/059 Bhai Mohinder Singh SDO ਗੁਰ ਕਾ ਸਬਦੁ ਮੇਰੈ ਅੰਤਰਿ ਧਿਆਨੁ ॥ਹਉ ਕਬਹੁ ਨ ਛੋਡਉ ਹਰਿ ਕਾ ਨਾਮੁ ॥੧॥ ਰਹਾਉ ॥ (karKeertan).mp3",
         "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_karKeertan/060 Bhai Mohinder Singh SDO 1966 Patiala Samagam (karKeertan).mp3",
         "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_karKeertan/061 ਸਚੈ ਤਖਤੁ ਰਚਾਇਆ ਬੈਸਣ ਕਉ ਜਾਂਈ ॥ Bhai Mohinder Singh SDO 1971 Anandpur Sahib Samagam (karKeertan).mp3",
-        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_karKeertan/062 ਜੇਤੂਮਿਤ੍ਰੁਅਸਾਡੜਾਹਿਕਭੋਰੀਨਾਵੇਛੋੜਿ॥ Bhai Mohinder Singh SDO 70s Samagam (karKeertan).mp3"
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_karKeertan/062 ਜੇਤੂਮਿਤ੍ਰੁਅਸਾਡੜਾਹਿਕਭੋਰੀਨਾਵੇਛੋੜਿ॥ Bhai Mohinder Singh SDO 70s Samagam (karKeertan).mp3",
+        "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_karKeertan/063 Bhai Mohinder Singh SDO 1987 Toronto (karKeertan).mp3"
       ]
     },
     {
