@@ -1402,6 +1402,8 @@ const SDO_TRACK_LINKS = [
       "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/321 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 16\"New\" Delhi\" (heeraRattan).mp3",
       "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/322 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 17\"New\" Delhi (heeraRattan).mp3",
       "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/323 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 18\"New\" Delhi (heeraRattan).mp3",
+      "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/325 Bhai Mohinder Singh Ji SDO Lajpat Nagar ॥ਵਾਰ॥ 20\"New\" Delhi (heeraRattan).mp3",
+      "https://s3.us-east-1.amazonaws.com/keerat.xyz/keertan/sdo/yt_heeraRattan/326 Bhai Mohinder Singh Ji SDO Chicago July 1982 Smagam T.1 (heeraRattan).mp3",
 
     ],
   },
