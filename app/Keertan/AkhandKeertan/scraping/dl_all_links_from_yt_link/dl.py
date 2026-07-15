@@ -158,6 +158,9 @@ def main(key):
         return
 
     download_videos(dl_obj, dir_name, sign)
+    if not os.path.isdir(dir_name):
+        print(f"Directory '{dir_name}' does not exist")
+        return
 
     upload_to_aws(prefix, dir_name)
     saveNewDownloadedVids(dl_obj, f"{key}.json")
