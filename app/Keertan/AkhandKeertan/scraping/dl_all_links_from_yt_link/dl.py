@@ -109,8 +109,10 @@ def download_videos(obj, dir_name, sign=""):
 
 
 def upload_to_aws(prefix, dir):
-    bucket_name = "keerat.xyz"
-    s3_client = boto3.client("s3")
+    # Cloudflare R2 bucket (migrated from S3 "keerat.xyz" in Oct 2026); creds in ~/.aws/credentials [keerat-r2].
+    bucket_name = "keerat"
+    s3_client = boto3.Session(profile_name="keerat-r2").client(
+        "s3", endpoint_url="https://5110f1a69bb1675b619dc2257748e6bb.r2.cloudflarestorage.com", region_name="auto")
     for i in os.listdir(dir):
         if i[0] == ".":
             continue
@@ -133,7 +135,7 @@ def upload_to_aws(prefix, dir):
 def print_links_n_copy(prefix, dir_name):
     copyTxt = ""
     # link_pref = "https://daasstorage13.blob.core.windows.net/ds1/" + prefix
-    link_pref = "https://s3.us-east-1.amazonaws.com/keerat.xyz/" + prefix
+    link_pref = "https://audio.keerat.xyz/" + prefix
 
     for file in sorted(os.listdir(dir_name)):
         if file[0] == ".":

@@ -4,16 +4,17 @@ from urllib.parse import unquote
 from botocore.exceptions import ClientError
 import mimetypes
 
-# AWS S3 Configuration
-# Make sure to set vars set in ~/.aws/credentials (gotten after making User in IAM. That user will need s3 access permissions)
-# [default]
-# aws_access_key_id = <YOUR_ACCESS_KEY>
-# aws_secret_access_key = <YOUR_SECRET_KEY>
+# Cloudflare R2 (S3-compatible). Audio moved here from the S3 bucket "keerat.xyz" in Oct 2026
+# (R2 has no egress fees). Creds: ~/.aws/credentials [keerat-r2] (R2 API token, Object Read & Write
+# on bucket "keerat"). Public URLs: https://audio.keerat.xyz/<key>.
+# Old S3 setup, kept for reference: profile [default], bucket "keerat.xyz", region us-east-1.
 
-AWS_DEFAULT_REGION="us-east-1"
-bucket_name = "keerat.xyz"  # Replace with your S3 bucket name
-s3_client = boto3.client("s3")
-s3_resource = boto3.resource("s3")
+R2_ENDPOINT = "https://5110f1a69bb1675b619dc2257748e6bb.r2.cloudflarestorage.com"
+PUBLIC_BASE = "https://audio.keerat.xyz"
+bucket_name = "keerat"
+session = boto3.Session(profile_name="keerat-r2")
+s3_client = session.client("s3", endpoint_url=R2_ENDPOINT, region_name="auto")
+s3_resource = session.resource("s3", endpoint_url=R2_ENDPOINT, region_name="auto")
 bucket = s3_resource.Bucket(bucket_name)
 
 
@@ -162,8 +163,7 @@ def print_links(folder_path=""):
 
     for obj in bucket.objects.filter(Prefix=folder_path):
         if not obj.key.endswith("/"):
-            # url = f"https://{bucket_name}.s3.{AWS_DEFAULT_REGION}.amazonaws.com/{obj.key}"
-            url = f"https://s3.{AWS_DEFAULT_REGION}.amazonaws.com/{bucket_name}/{obj.key}"
+            url = f"{PUBLIC_BASE}/{obj.key}"
             print(url)
 
 
@@ -174,8 +174,7 @@ def print_public_links(folder_path):
     for obj in bucket.objects.filter(Prefix=folder_path):
         if not obj.key.endswith("/"):
             # Public URL format
-            region = s3_client.meta.region_name
-            url = f"https://{bucket_name}.s3.{region}.amazonaws.com/{obj.key}"
+            url = f"{PUBLIC_BASE}/{obj.key}"
             print(f'"{url}",')
 
 
